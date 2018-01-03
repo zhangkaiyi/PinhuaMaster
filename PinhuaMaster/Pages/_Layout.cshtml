@@ -1,3 +1,6 @@
+﻿@inject PinhuaMaster.Services.INavMenuService NavMenuService;
+@using PinhuaMaster.Services;
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -33,6 +36,10 @@
                     <li><a asp-page="/Index">Home</a></li>
                     <li><a asp-page="/About">About</a></li>
                     <li><a asp-page="/Contact">Contact</a></li>
+                    @await Html.PartialAsync("_NavMenu", new NavMenuVM
+                    {
+                        NavMenus = NavMenuService.GetNavMenus(),
+                    })
                 </ul>
                 @await Html.PartialAsync("_LoginPartial")
             </div>

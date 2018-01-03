@@ -1,0 +1,75 @@
+﻿@page
+@model PinhuaMaster.Pages.MenuSystem.EditModel
+@{
+    ViewData["Title"] = "菜单编辑";
+}
+
+<div class="row" style="margin-top:20px">
+    <div class="col-md-8">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title">编辑</h3>
+            </div>
+            <form asp-action="Edit">
+                <div asp-validation-summary="All" class="text-danger"></div>
+                <div class="panel-body">
+                    <div class="form-group col-md-6">
+                        <label asp-for="_menu.Id">菜单编号</label>
+                        <input asp-for="_menu.Id" class="form-control input-sm" readonly>
+                    </div>
+                    <div class="form-group  col-md-6">
+                        <label asp-for="_menu.Name">菜单名称</label>
+                        <input asp-for="_menu.Name" class="form-control input-sm">
+                    </div>
+                    <div class="form-group  col-md-6">
+                        <label asp-for="_menu.ParentId">父级菜单</label>
+                        <select asp-for="_menu.ParentId" class="form-control input-sm select2" asp-items="ViewBag.ParentIds">
+                            <option value="">-- 请选择 --</option>
+                        </select>
+                    </div>
+                    <div class="form-group  col-md-6">
+                        <label asp-for="_menu.IndexCode">组内排序</label>
+                        <input asp-for="_menu.IndexCode" class="form-control input-sm">
+                    </div>
+                    <div class="form-group  col-md-6">
+                        <label asp-for="_menu.MenuType">菜单类型</label>
+                        <select asp-for="_menu.MenuType" class="form-control input-sm" asp-items="ViewBag.MenuTypes">
+                            <option value="">-- 请选择 --</option>
+                        </select>
+                    </div>
+                    <div class="form-group  col-md-6">
+                        <label asp-for="_menu.Icon">菜单图标</label>
+                        <div class="input-group">
+                            <span class="input-group-addon"><i id="IconfShow" class="fa @Model._menu.Icon"></i></span>
+                            <input asp-for="_menu.Icon" class="form-control input-sm">
+                        </div>
+                    </div>
+                    <div class="form-group  col-md-6">
+                        <label asp-for="Url">菜单路径</label>
+                        @if (Model._menu.MenuType == MenuTypes.操作菜单)
+                        {
+                            <input asp-for="_menu.Url" class="form-control input-sm">
+                        }
+                        else
+                        {
+                            <input asp-for="_menu.Url" class="form-control input-sm" readonly>
+                        }
+                    </div>
+                    <div class="form-group  col-md-6">
+                        <label asp-for="_menu.Remarks">备注</label>
+                        <input asp-for="_menu.Remarks" class="form-control input-sm">
+                    </div>
+                </div>
+                <div class="panel-footer">
+                    <button type="submit" class="btn btn-primary"><i id="IconfShow" class="fa fa-save"></i>&nbsp;保存</button>
+                    <a asp-action="Index" class="btn btn-default"><i id="IconfShow" class="fa fa-undo"></i>&nbsp;返回</a>
+                </div>
+            </form>
+        </div>
+
+    </div>
+</div>
+@section Scripts {
+    <script src="~/js/Configuration/Menu.js"></script>
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

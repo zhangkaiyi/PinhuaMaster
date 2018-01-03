@@ -1,0 +1,45 @@
+﻿@page
+@model PinhuaMaster.Pages.MenuSystem.IndexModel
+@{
+    ViewData["Title"] = "Index";
+}
+
+<div class="panel panel-default" style="margin-top:20px;">
+    <div class="panel-heading">
+        <div class="panel-title">Index</div>
+    </div>
+    <div class="table-responsive">
+        <table class="table table-bordered table-hover table-striped">
+            <tr>
+                <th>#</th>
+                <th>菜单名称</th>
+                <th>菜单编号</th>
+                <th>父级编号</th>
+                <th>组内排序</th>
+                <th>菜单类型</th>
+                <th>菜单图标</th>
+                <th>菜单路径</th>
+                <th>操作</th>
+            </tr>
+            @foreach (var menu in Model._menus)
+        {
+            <tr>
+                <td></td>
+                <td>@menu.Name</td>
+                <td>@menu.Id</td>
+                <td>@menu.ParentId</td>
+                <td>@menu.IndexCode</td>
+                <td>@menu.MenuType</td>
+                <td>@menu.Icon</td>
+                <td>@menu.Url</td>
+                <td>
+                    <a asp-page="Edit" id="@menu.Id" asp-route-id="@menu.Id">编辑</a>
+                    <a asp-page="Details" id="@menu.Id" asp-route-id="@menu.Id">详情</a>
+                    <a href="#" onclick="onDelete('@menu.Id', '@menu.Name');">删除</a>
+                </td>
+            </tr>
+    }
+        </table>
+    </div>
+    <div class="panel-footer"></div>
+</div>

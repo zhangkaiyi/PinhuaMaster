@@ -34,46 +34,61 @@ namespace PinhuaMaster.Data
                 }
                 if (db.Menus.Count() == 0)
                 {
-
                     var menus = new List<Menu>
                     {
                         new Menu
                         {
-                            Id = "M99",
-                            Icon = "glyphicon glyphicon-alert",
+                            Id = "INDEX",
+                            Icon = "",
                             IndexCode = 1,
-                            MenuType = MenuTypes.导航菜单,
-                            ParentId = "无",
-                            Url = "/Index",
-                            Name = "测试菜单"
+                            MenuType = MenuTypes.操作菜单,
+                            Name = "首页",
+                            Url = "/Index"
+                        },
+                        new Menu
+                        {
+                            Id = "ABOUT",
+                            Icon = "",
+                            IndexCode = 2,
+                            MenuType = MenuTypes.操作菜单,
+                            Name = "关于",
+                            Url = "/About"
+                        },
+                        new Menu
+                        {
+                            Id = "CONTACT",
+                            Icon = "",
+                            IndexCode = 3,
+                            MenuType = MenuTypes.操作菜单,
+                            Name = "联系方式",
+                            Url = "/Contact"
                         },
                         new Menu
                         {
                             Id = "M01",
                             Icon = "glyphicon glyphicon-alert",
-                            IndexCode = 2,
+                            IndexCode = 11,
                             MenuType = MenuTypes.导航菜单,
-                            ParentId = "无",
                             Name = "菜单管理"
                         },
                         new Menu
                         {
                             Id = "M01_01",
                             Icon = "glyphicon glyphicon-alert",
-                            IndexCode = 2,
+                            IndexCode = 11,
                             MenuType = MenuTypes.操作菜单,
                             ParentId = "M01",
-                            Url = "/NavMenus/Index",
+                            Url = "/MenuSystem/Index",
                             Name = "列表"
                         },
                         new Menu
                         {
                             Id = "M01_02",
                             Icon = "glyphicon glyphicon-alert",
-                            IndexCode = 3,
+                            IndexCode = 11,
                             MenuType = MenuTypes.操作菜单,
                             ParentId = "M01",
-                            Url = "/NavMenus/Create",
+                            Url = "/MenuSystem/Create",
                             Name = "新建"
                         }
                     };
