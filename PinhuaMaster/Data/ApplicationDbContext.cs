@@ -23,5 +23,6 @@ namespace PinhuaMaster.Data
         }
 
         public DbSet<Menu> Menus { get; set; }
+        public DbSet<Icon> Icons { get; set; }
     }
 }

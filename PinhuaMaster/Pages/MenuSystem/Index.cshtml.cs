@@ -6,25 +6,63 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.FileProviders;
 using PinhuaMaster.Data;
 using PinhuaMaster.Extensions;
+using PinhuaMaster.Services;
 
 namespace PinhuaMaster.Pages.MenuSystem
 {
     public class IndexModel : PageModel
     {
-        public IndexModel(ApplicationDbContext dbContext)
+        public IndexModel(ApplicationDbContext dbContext, INavMenuService navMenuService, IFileProvider fileProvider)
         {
             _dbContext = dbContext;
+            _navMenuService = navMenuService;
+            _fileProvider = fileProvider;
         }
 
         public ApplicationDbContext _dbContext { get; set; }
 
+        public INavMenuService _navMenuService { get; set; }
+
+        public IFileProvider _fileProvider { get; set; }
+
+        [BindProperty]
         public IEnumerable<Menu> _menus { get; set; }
 
         public void OnGet()
         {
             _menus = _dbContext.Menus.AsNoTracking();
+
+        }
+
+        public IActionResult OnPostDelete(string id)
+        {
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    _dbContext.Menus.Remove(_dbContext.Menus.Find(id));
+                    _dbContext.SaveChanges();
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    if (!_dbContext.Menus.Any(x => x.Id == id))
+                    {
+                        return NotFound();
+                    }
+                    else
+                    {
+                        throw;
+                    }
+                }
+                _navMenuService.InitOrUpdate();
+            }
+
+            _menus = _dbContext.Menus.AsNoTracking();
+
+            return RedirectToPage("Index");
         }
 
         /// <summary>

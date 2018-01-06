@@ -8,18 +8,23 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using PinhuaMaster.Data;
 using PinhuaMaster.Extensions;
+using PinhuaMaster.Services;
 
 namespace PinhuaMaster.Pages.MenuSystem
 {
     public class CreateModel : PageModel
     {
-        public CreateModel(ApplicationDbContext dbContext)
+        public CreateModel(ApplicationDbContext dbContext, INavMenuService navMenuService)
         {
             _dbContext = dbContext;
+            _navMenuService = navMenuService;
         }
 
         public ApplicationDbContext _dbContext { get; set; }
 
+        public INavMenuService _navMenuService { get; set; }
+
+        [BindProperty]
         public Menu _menu { get; set; } = new Menu {
             IndexCode = 1,
             Icon = "fa fa-circle-o"
@@ -28,6 +33,27 @@ namespace PinhuaMaster.Pages.MenuSystem
         public void OnGet()
         {
             UpdateDropDownList();
+        }
+
+        public IActionResult OnPost()
+        {
+            if (ModelState.IsValid)
+            {
+                if (!_dbContext.Menus.Any(x=>x.Id == _menu.Id))
+                {
+                    _dbContext.Add(_menu);
+                    _dbContext.SaveChanges();
+
+                    _navMenuService.InitOrUpdate();
+                    return RedirectToPage("Index");
+                }
+                else
+                {
+                    ModelState.AddModelError("Id", "菜单编号已存在，请修改菜单编号.");
+                }
+            }
+            UpdateDropDownList(_menu);
+            return Page();
         }
 
         /// <summary>

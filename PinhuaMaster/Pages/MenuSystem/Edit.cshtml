@@ -39,9 +39,9 @@
                     </div>
                     <div class="form-group  col-md-6">
                         <label asp-for="_menu.Icon">菜单图标</label>
-                        <div class="input-group">
-                            <span class="input-group-addon"><i id="IconfShow" class="fa @Model._menu.Icon"></i></span>
-                            <input asp-for="_menu.Icon" class="form-control input-sm">
+                        <div class="input-group" id="iconSelector">
+                            <span class="input-group-addon"><i class="fa @Model._menu.Icon"></i></span>
+                            <input asp-for="_menu.Icon" class="form-control input-sm" data-toggle="modal" data-target="#iconDialog" readonly="readonly">
                         </div>
                     </div>
                     <div class="form-group  col-md-6">
@@ -62,14 +62,28 @@
                 </div>
                 <div class="panel-footer">
                     <button type="submit" class="btn btn-primary"><i id="IconfShow" class="fa fa-save"></i>&nbsp;保存</button>
-                    <a asp-action="Index" class="btn btn-default"><i id="IconfShow" class="fa fa-undo"></i>&nbsp;返回</a>
+                    <a asp-page="Index" class="btn btn-default"><i id="IconfShow" class="fa fa-undo"></i>&nbsp;返回</a>
                 </div>
             </form>
         </div>
 
     </div>
 </div>
+@Html.Partial("_IconSelector")
+
 @section Scripts {
     <script src="~/js/Configuration/Menu.js"></script>
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <script>
+        $(document).ready(function () {
+            var iconSelector = $('#iconSelector');
+            var iconSelector_i = $('i', iconSelector);
+            var iconSelector_input = $('input', iconSelector);
+            $('.bs-glyphicons-list>li').on('click', function () {
+                var clsName = $('span', this)[0].className;
+                iconSelector_i[0].className = clsName;
+                iconSelector_input[0].value = clsName;
+            })
+        })
+    </script>
 }

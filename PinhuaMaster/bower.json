@@ -1,0 +1,18 @@
+{
+  "name": "asp.net",
+  "private": true,
+  "dependencies": {
+    "bootstrap": "v3.3.7",
+    "jquery": "3.2.1",
+    "jquery-validation": "1.17.0",
+    "jquery-validation-unobtrusive": "3.2.6",
+    "font-awesome": "Font-Awesome#v4.7.0",
+    "Ionicons": "ionicons#v2.0.1",
+    "fastclick": "v1.0.6",
+    "jquery-slimscroll": "slimScroll#v1.3.8"
+  },
+  "resolutions": {
+    "jquery": "^3.2.1",
+    "jquery-validation": "1.17.0"
+  }
+}

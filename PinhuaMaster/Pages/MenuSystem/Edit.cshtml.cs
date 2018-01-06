@@ -8,18 +8,23 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using PinhuaMaster.Data;
 using PinhuaMaster.Extensions;
+using PinhuaMaster.Services;
 
 namespace PinhuaMaster.Pages.MenuSystem
 {
     public class EditModel : PageModel
     {
-        public EditModel(ApplicationDbContext dbContext)
+        public EditModel(ApplicationDbContext dbContext, INavMenuService navMenuService)
         {
             _dbContext = dbContext;
+            _navMenuService = navMenuService;
         }
 
         public ApplicationDbContext _dbContext { get; set; }
 
+        public INavMenuService _navMenuService { get; set; }
+
+        [BindProperty]
         public Menu _menu { get; set; }
 
         public void OnGet(string id)
@@ -27,6 +32,39 @@ namespace PinhuaMaster.Pages.MenuSystem
             UpdateDropDownList();
 
             _menu = _dbContext.Menus.SingleOrDefault(x => x.Id == id);
+        }
+
+        public IActionResult OnPost(string id)
+        {
+            if (id != _menu.Id)
+            {
+                return NotFound();
+            }
+
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    _dbContext.Update(_menu);
+                    _dbContext.SaveChanges();
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    if (!_dbContext.Menus.Any(x=>x.Id == _menu.Id))
+                    {
+                        return NotFound();
+                    }
+                    else
+                    {
+                        throw;
+                    }
+                }
+                _navMenuService.InitOrUpdate();
+                return RedirectToPage("Index");
+            }
+
+            UpdateDropDownList(_menu);
+            return Page();
         }
 
         /// <summary>

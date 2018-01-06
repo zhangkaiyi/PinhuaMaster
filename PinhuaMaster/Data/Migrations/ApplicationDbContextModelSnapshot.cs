@@ -179,6 +179,23 @@ namespace PinhuaMaster.Data.Migrations
                     b.ToTable("AspNetUsers");
                 });
 
+            modelBuilder.Entity("PinhuaMaster.Data.Icon", b =>
+                {
+                    b.Property<string>("Id");
+
+                    b.Property<string>("ClassName")
+                        .IsRequired();
+
+                    b.Property<string>("Name")
+                        .IsRequired();
+
+                    b.Property<int>("SourceType");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Icons");
+                });
+
             modelBuilder.Entity("PinhuaMaster.Data.Menu", b =>
                 {
                     b.Property<string>("Id");

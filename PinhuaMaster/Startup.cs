@@ -11,6 +11,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using PinhuaMaster.Data;
 using PinhuaMaster.Services;
+using Microsoft.Extensions.FileProviders;
+using System.IO;
 
 namespace PinhuaMaster
 {
@@ -29,7 +31,8 @@ namespace PinhuaMaster
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("IdentityConnection")));
 
-            services.AddIdentity<ApplicationUser, IdentityRole>(options => {
+            services.AddIdentity<ApplicationUser, IdentityRole>(options =>
+            {
                 options.Password.RequireUppercase = false;
                 options.Password.RequireNonAlphanumeric = false;
             })
@@ -48,6 +51,11 @@ namespace PinhuaMaster
             services.AddSingleton<IEmailSender, EmailSender>();
             // 注册导航菜单生成服务
             services.AddTransient<INavMenuService, NavMenuService>();
+            // 访问本地文件所需的服务
+            services.AddSingleton<IFileProvider>(new PhysicalFileProvider(Directory.GetCurrentDirectory()));
+            // 提取网页字体中图标到数据库的服务
+            services.AddTransient<IWebfontExtractor, WebfontExtractor>();
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
