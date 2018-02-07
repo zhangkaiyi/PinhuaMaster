@@ -9,7 +9,11 @@
     "font-awesome": "Font-Awesome#v4.7.0",
     "Ionicons": "ionicons#v2.0.1",
     "fastclick": "v1.0.6",
-    "jquery-slimscroll": "slimScroll#v1.3.8"
+    "jquery-slimscroll": "slimScroll#v1.3.8",
+    "jstree": "3.3.5",
+    "vue": "v2.5.13",
+    "nestable": "*",
+    "jquery-confirm2": "v3.3.2"
   },
   "resolutions": {
     "jquery": "^3.2.1",

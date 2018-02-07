@@ -2,6 +2,7 @@
 using PinhuaMaster.Data;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -31,8 +32,15 @@ namespace PinhuaMaster.Services
     public class NavMenuVM
     {
         public IList<NavMenu> NavMenus { get; set; }
+    }
 
-        public string[] MenuidsOpen { get; set; }
+    public class NavbarMenu
+    {
+        public string name { get; set; }
+        public string icon { get; set; }
+        public string url { get; set; }
+
+        public IList<NavbarMenu> children { get; set; }
     }
 
     /// <summary>
@@ -108,6 +116,28 @@ namespace PinhuaMaster.Services
             }
 
             return navMenu;
+        }
+
+        public IList<NavbarMenu> GetNavbarMenus()
+        {
+            var file_path = "NavbarMenus.json";
+            using (var fs = new FileStream(file_path, FileMode.Open))
+            using (var sr = new StreamReader(fs, System.Text.Encoding.Default))
+            {
+                var jsonString = sr.ReadToEnd();
+                return Newtonsoft.Json.Linq.JObject.Parse(jsonString)["NavbarMenus"].ToObject<List<NavbarMenu>>();
+            }
+        }
+
+        public void UpdateNavbarMenus(string navbarMenus)
+        {
+            var file_path = "NavbarMenus.json";
+
+            using (var fs = new FileStream(file_path, FileMode.Create))
+            using (var sw = new StreamWriter(fs, System.Text.Encoding.Default))
+            {
+                sw.Write(navbarMenus);
+            }
         }
     }
 }

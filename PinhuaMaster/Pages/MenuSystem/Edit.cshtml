@@ -74,16 +74,5 @@
 @section Scripts {
     <script src="~/js/Configuration/Menu.js"></script>
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-    <script>
-        $(document).ready(function () {
-            var iconSelector = $('#iconSelector');
-            var iconSelector_i = $('i', iconSelector);
-            var iconSelector_input = $('input', iconSelector);
-            $('.bs-glyphicons-list>li').on('click', function () {
-                var clsName = $('span', this)[0].className;
-                iconSelector_i[0].className = clsName;
-                iconSelector_input[0].value = clsName;
-            })
-        })
-    </script>
+    @Html.RenderScripts()
 }

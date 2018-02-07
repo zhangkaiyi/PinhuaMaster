@@ -8,5 +8,7 @@ namespace PinhuaMaster.Services
         IList<NavMenu> GetNavMenus();
         NavMenu GetOneNavMenu(Menu menu);
         void InitOrUpdate();
+        IList<NavbarMenu> GetNavbarMenus();
+        void UpdateNavbarMenus(string navbarMenus);
     }
 }

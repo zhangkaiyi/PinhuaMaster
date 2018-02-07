@@ -24,12 +24,13 @@ namespace PinhuaMaster.Data
                         {
                             UserName = "116307766@qq.com",
                             Email = "116307766@qq.com",
+                            Password = "Benny0922"
                         }
                     };
                     var userManager = serviceScope.ServiceProvider.GetService<UserManager<ApplicationUser>>();
                     list.ForEach(async user =>
                     {
-                        await userManager.CreateAsync(user, "benny0922");
+                        await userManager.CreateAsync(user, user.Password);
                     });
                 }
                 if (db.Menus.Count() == 0)

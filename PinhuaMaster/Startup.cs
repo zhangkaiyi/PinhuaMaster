@@ -56,6 +56,9 @@ namespace PinhuaMaster
             // 提取网页字体中图标到数据库的服务
             services.AddTransient<IWebfontExtractor, WebfontExtractor>();
 
+            //初始化应用配置
+            //InitAppConfig(services);
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -83,5 +86,20 @@ namespace PinhuaMaster
                     template: "{controller}/{action=Index}/{id?}");
             });
         }
+
+        /// <summary>
+        /// 初始化配置
+        /// </summary>
+        /// <param name="services"></param>
+        //private void InitAppConfig(IServiceCollection services)
+        //{
+        //    var builder = new ConfigurationBuilder()
+        //        .SetBasePath(Directory.GetCurrentDirectory())
+        //        .AddJsonFile("NavbarMenus.json", optional: true, reloadOnChange: true);
+
+        //    var config = builder.Build();
+
+        //    services.Configure<List<NavbarMenu>>(config.GetSection("NavBarMenus"));
+        //}
     }
 }

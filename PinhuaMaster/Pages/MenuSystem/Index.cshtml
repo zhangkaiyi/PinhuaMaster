@@ -1,57 +1,81 @@
 ﻿@page
 @model PinhuaMaster.Pages.MenuSystem.IndexModel
-@inject Microsoft.Extensions.FileProviders.IFileProvider fileProvider;
-@inject ApplicationDbContext DbContext;
+@using PinhuaMaster.Services
+@inject INavMenuService navMenuService
+@inject ApplicationDbContext DbContext
+@*@inject IOptionsSnapshot<List<NavbarMenu>> _navbarMenus*@
+
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "菜单列表";
 }
 
 <div class="panel panel-default" style="margin-top:20px;">
     <div class="panel-heading" style="position:relative">
-        <div class="panel-title">Index</div>
+        <div class="panel-title">列表</div>
         <div style="position:absolute;top:5px;right:10px;" class="pull-right"><a class="btn btn-primary btn-sm" asp-page="Create"><i class="fa fa-plus"></i>　新建</a></div>
     </div>
     <form method="post">
         <div class="table-responsive">
             <table class="table table-bordered table-hover table-striped">
                 <tr>
-                    <th>#</th>
-                    <th>菜单名称</th>
+                    <th>类型</th>
+                    <th>名称</th>
                     <th>菜单编号</th>
                     <th>父级编号</th>
                     <th>组内排序</th>
-                    <th>菜单类型</th>
-                    <th>菜单图标</th>
                     <th>菜单路径</th>
                     <th>操作</th>
                 </tr>
-                @foreach (var menu in Model._menus)
-            {
-                <tr>
-                    <td></td>
-                    <td>@menu.Name</td>
-                    <td>@menu.Id</td>
-                    <td>@menu.ParentId</td>
-                    <td>@menu.IndexCode</td>
-                    <td>@menu.MenuType</td>
-                    <td>@menu.Icon</td>
-                    <td>@menu.Url</td>
-                    <td>
-                        <div class="btn-toolbar" role="toolbar" aria-label="...">
-                            <div class="btn-group btn-group-sm" role="group" aria-label="...">
-                                <a class="btn btn-default" asp-page="Edit" id="@menu.Id" asp-route-id="@menu.Id">编辑</a>
-                                <a class="btn btn-default" asp-page="Details" id="@menu.Id" asp-route-id="@menu.Id">详情</a>
-                            </div>
-                            <div class="btn-group btn-group-sm" role="group" aria-label="...">
-                                <input type="submit" class="btn btn-danger" asp-page-handler="delete" asp-route-id="@menu.Id" value="删除" />
-                            </div>
-                        </div>
-                    </td>
-                </tr>
-        }
+                @{
+                    foreach (var menu in Model._menus)
+                    {
+                        <tr>
+                            <td><i class="@(menu.MenuType==MenuTypes.导航菜单? "fa fa-circle-o":"fa fa-navicon")"></i></td>
+                            <td><i class="@menu.Icon"></i> @menu.Name</td>
+                            <td>@menu.Id</td>
+                            <td>@menu.ParentId</td>
+                            <td>@menu.IndexCode</td>
+                            <td>@menu.Url</td>
+                            <td>
+                                <div class="btn-toolbar" role="toolbar" aria-label="..." style="width:180px">
+                                    <div class="btn-group btn-group-sm" role="group" aria-label="...">
+                                        <a class="btn btn-default" asp-page="Details" id="@menu.Id" asp-route-id="@menu.Id"><i class="fa fa-search"></i> 查看</a>
+                                        <a class="btn btn-default" asp-page="Edit" id="@menu.Id" asp-route-id="@menu.Id"><i class="fa fa-edit"></i> 编辑</a>
+                                    </div>
+                                    <div class="btn-group btn-group-sm" role="group" aria-label="...">
+                                        <button type="submit" class="btn btn-danger" asp-page-handler="delete" asp-route-id="@menu.Id"><i class="fa fa-times"></i></button>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                }
             </table>
         </div>
     </form>
     <div class="panel-footer">
+        <!-- the demo root element -->
+
     </div>
 </div>
+
+<div class="panel panel-default" style="margin-top:20px;">
+    <div class="panel-heading" style="position:relative">
+        <div class="panel-title">列表</div>
+    </div>
+    <div class="panel-body">
+        <div id="app">
+            <div class="row">
+                @await Html.PartialAsync("_NavMenuManagement", navMenuService.GetNavbarMenus())
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Styles{
+    <script src="~/lib/vue/dist/vue.js"></script>
+}
+
+@section Scripts{
+    @Html.RenderScripts()
+}

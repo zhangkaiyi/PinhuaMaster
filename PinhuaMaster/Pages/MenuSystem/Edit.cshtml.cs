@@ -64,7 +64,7 @@ namespace PinhuaMaster.Pages.MenuSystem
             }
 
             UpdateDropDownList(_menu);
-            return Page();
+            return RedirectToPage("/Index");
         }
 
         /// <summary>

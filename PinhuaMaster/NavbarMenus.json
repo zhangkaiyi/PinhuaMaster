@@ -1,0 +1,48 @@
+{
+  "NavbarMenus": [
+    {
+      "name": "初始菜单",
+      "icon": "fa fa-windows",
+      "url": "",
+      "children": [
+        {
+          "name": "首页",
+          "icon": "fa fa-television",
+          "url": "/Index"
+        },
+        {
+          "name": "关于",
+          "icon": "fa fa-at",
+          "url": "/About"
+        },
+        {
+          "name": "联系方式",
+          "icon": "fa fa-comments-o",
+          "url": "/Contact"
+        }
+      ]
+    },
+    {
+      "name": "菜单管理",
+      "icon": "fa fa-align-justify",
+      "url": "/MenuSystem/Index"
+    },
+    {
+      "name": "用户管理",
+      "icon": "fa fa-address-card-o",
+      "url": ""
+    },
+    {
+      "name": "ROOT",
+      "icon": "fa fa-circle-o",
+      "url": "/Index",
+      "children": [
+        {
+          "name": "ITEM",
+          "icon": "fa fa-circle-o",
+          "url": "/About"
+        }
+      ]
+    }
+  ]
+}

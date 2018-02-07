@@ -42,7 +42,7 @@
                         <label asp-for="_menu.Icon">菜单图标</label>
                         <div class="input-group" id="iconSelector">
                             <span class="input-group-addon"><i class="fa @Model._menu.Icon"></i></span>
-                            <input asp-for="_menu.Icon" class="form-control input-sm" type="button" data-toggle="modal" data-target="#iconDialog">
+                            <input asp-for="_menu.Icon" class="form-control input-sm" data-toggle="modal" data-target="#iconDialog">
                         </div>
                     </div>
                     <div class="form-group  col-md-6">
@@ -74,16 +74,5 @@
 @Html.Partial("_IconSelector")
 
 @section Scripts{
-    <script>
-        $(document).ready(function () {
-            var iconSelector = $('#iconSelector');
-            var iconSelector_i = $('i', iconSelector);
-            var iconSelector_input = $('input', iconSelector);
-            $('.bs-glyphicons-list>li').on('click', function () {
-                var clsName = $('span', this)[0].className;
-                iconSelector_i[0].className = clsName;
-                iconSelector_input[0].value = clsName;
-            })
-        })
-    </script>
+    @Html.RenderScripts();
 }

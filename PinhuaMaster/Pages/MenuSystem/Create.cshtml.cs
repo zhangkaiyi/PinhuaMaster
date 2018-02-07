@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.FileProviders;
 using PinhuaMaster.Data;
 using PinhuaMaster.Extensions;
 using PinhuaMaster.Services;
@@ -14,18 +16,22 @@ namespace PinhuaMaster.Pages.MenuSystem
 {
     public class CreateModel : PageModel
     {
-        public CreateModel(ApplicationDbContext dbContext, INavMenuService navMenuService)
+        public CreateModel(ApplicationDbContext dbContext, INavMenuService navMenuService, IFileProvider fileProvider)
         {
             _dbContext = dbContext;
             _navMenuService = navMenuService;
+            _fileProvider = fileProvider;
         }
 
-        public ApplicationDbContext _dbContext { get; set; }
+        private ApplicationDbContext _dbContext { get; set; }
 
-        public INavMenuService _navMenuService { get; set; }
+        private INavMenuService _navMenuService { get; set; }
+
+        private IFileProvider _fileProvider { get; set; }
 
         [BindProperty]
-        public Menu _menu { get; set; } = new Menu {
+        public Menu _menu { get; set; } = new Menu
+        {
             IndexCode = 1,
             Icon = "fa fa-circle-o"
         };
@@ -39,7 +45,7 @@ namespace PinhuaMaster.Pages.MenuSystem
         {
             if (ModelState.IsValid)
             {
-                if (!_dbContext.Menus.Any(x=>x.Id == _menu.Id))
+                if (!_dbContext.Menus.Any(x => x.Id == _menu.Id))
                 {
                     _dbContext.Add(_menu);
                     _dbContext.SaveChanges();

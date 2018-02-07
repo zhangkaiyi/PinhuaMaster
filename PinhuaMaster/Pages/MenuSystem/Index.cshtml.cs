@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
@@ -7,6 +8,8 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.FileProviders;
+using Microsoft.Extensions.Options;
+using Newtonsoft.Json.Linq;
 using PinhuaMaster.Data;
 using PinhuaMaster.Extensions;
 using PinhuaMaster.Services;
@@ -15,11 +18,12 @@ namespace PinhuaMaster.Pages.MenuSystem
 {
     public class IndexModel : PageModel
     {
-        public IndexModel(ApplicationDbContext dbContext, INavMenuService navMenuService, IFileProvider fileProvider)
+        public IndexModel(ApplicationDbContext dbContext, INavMenuService navMenuService, IFileProvider fileProvider, IOptionsSnapshot<List<NavbarMenu>> navbarMenus)
         {
             _dbContext = dbContext;
             _navMenuService = navMenuService;
             _fileProvider = fileProvider;
+            _navbarMenus = navbarMenus;
         }
 
         public ApplicationDbContext _dbContext { get; set; }
@@ -31,10 +35,12 @@ namespace PinhuaMaster.Pages.MenuSystem
         [BindProperty]
         public IEnumerable<Menu> _menus { get; set; }
 
+        public IOptionsSnapshot<List<NavbarMenu>> _navbarMenus { get; set; }
+
         public void OnGet()
         {
             _menus = _dbContext.Menus.AsNoTracking();
-
+            //ViewData["NavMenuManagementData"] = _navbarMenus.Value;
         }
 
         public IActionResult OnPostDelete(string id)
@@ -64,6 +70,24 @@ namespace PinhuaMaster.Pages.MenuSystem
 
             return RedirectToPage("Index");
         }
+
+        public IActionResult OnPostSaveMenu(string navMenuJson)
+        {
+            if (!string.IsNullOrEmpty(navMenuJson))
+                _navMenuService.UpdateNavbarMenus(navMenuJson);
+
+            return RedirectToPage("Index");
+        }
+
+        //public IActionResult OnGetNavMenu (){
+        //    var file_path = "NavbarMenus.json";
+
+        //    using (var fs = new FileStream(file_path, FileMode.Open))
+        //    using (var sr = new StreamReader(fs, System.Text.Encoding.Default))
+        //    {
+        //        return Content(sr.ReadToEnd());
+        //    }
+        //}
 
         /// <summary>
         /// 初始化下拉选择框
