@@ -1,0 +1,24 @@
+﻿@using PinhuaMaster.Services
+@model IList<NavbarMenu>
+
+@foreach (var navMenu in Model)
+{
+    if (navMenu.children == null || !navMenu.children.Any())
+    {
+        <li is-active-page="@navMenu.url"><a asp-page="@navMenu.url"><i class="@navMenu.icon"></i><span> @navMenu.name</span></a></li>
+    }
+        else
+        {
+        <li is-active-page="@navMenu.url" class="treeview">
+            <a href="#">
+                <i class="@navMenu.icon"></i> <span> @navMenu.name</span>
+                <span class="pull-right-container">
+                    <i class="fa fa-angle-left pull-right"></i>
+                </span>
+            </a>
+            <ul class="treeview-menu">
+                @await Html.PartialAsync("_Navbar_For_AdminLTE", navMenu.children)
+            </ul>
+        </li>
+    }
+}

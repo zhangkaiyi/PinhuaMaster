@@ -1,46 +1,39 @@
 {
   "NavbarMenus": [
     {
-      "name": "初始菜单",
-      "icon": "fa fa-windows",
-      "url": "",
+      "name": "主页",
+      "icon": "fa fa-home",
+      "url": "/Index"
+    },
+    {
+      "name": "订单系统",
+      "icon": "fa fa-pencil-square-o",
+      "url": 1
+    },
+    {
+      "name": "采购系统",
+      "icon": "fa fa-500px",
+      "url": "2"
+    },
+    {
+      "name": "管理员菜单",
+      "icon": "fa fa-cog",
+      "url": 3,
       "children": [
         {
-          "name": "首页",
-          "icon": "fa fa-television",
-          "url": "/Index"
-        },
-        {
-          "name": "关于",
-          "icon": "fa fa-at",
-          "url": "/About"
-        },
-        {
-          "name": "联系方式",
-          "icon": "fa fa-comments-o",
-          "url": "/Contact"
-        }
-      ]
-    },
-    {
-      "name": "菜单管理",
-      "icon": "fa fa-align-justify",
-      "url": "/MenuSystem/Index"
-    },
-    {
-      "name": "用户管理",
-      "icon": "fa fa-address-card-o",
-      "url": ""
-    },
-    {
-      "name": "ROOT",
-      "icon": "fa fa-circle-o",
-      "url": "/Index",
-      "children": [
-        {
-          "name": "ITEM",
+          "name": "菜单管理",
           "icon": "fa fa-circle-o",
-          "url": "/About"
+          "url": "/MenuManagement/Index"
+        },
+        {
+          "name": "用户管理",
+          "icon": "fa fa-circle-o",
+          "url": ""
+        },
+        {
+          "name": "权限管理",
+          "icon": "fa fa-circle-o",
+          "url": 4
         }
       ]
     }

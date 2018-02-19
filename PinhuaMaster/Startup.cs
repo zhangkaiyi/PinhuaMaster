@@ -13,6 +13,7 @@ using PinhuaMaster.Data;
 using PinhuaMaster.Services;
 using Microsoft.Extensions.FileProviders;
 using System.IO;
+using PinhuaMaster.Data.Entities.Pinhua;
 
 namespace PinhuaMaster
 {
@@ -28,6 +29,11 @@ namespace PinhuaMaster
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            // Add DbContext
+            services.AddDbContext<PinhuaContext>(
+                options => options.UseSqlServer("Data Source=122.225.47.230,6012;Initial Catalog=Pinhua;Persist Security Info=True;User ID=sa;Password=Benny0922")
+                );
+
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("IdentityConnection")));
 

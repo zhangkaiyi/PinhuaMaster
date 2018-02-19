@@ -26,21 +26,23 @@
     </div>
 </div>
 <div class="col-md-5">
-    <div style="max-width:600px;">
+    <div style="max-width:600px;margin-top:5px;" class="form-horizontal">
         <div class="form-group form-group-sm">
-            <label for="name">菜单名称:</label>
-            <input class="form-control" type="text" id="name">
+            <label for="name" class="col-xs-4 control-label">菜单名称</label>
+            <div class="col-xs-8"><input class="form-control" type="text" id="name"></div>
         </div>
         <div class="form-group form-group-sm">
-            <label for="icon">菜单图标:</label>
-            <div class="input-group" id="iconSelector">
-                <span class="input-group-addon"><i id="showEditIcon" class="fa fa-circle-o"></i></span>
-                <input class="form-control" type="text" id="icon" readonly data-toggle="modal" data-target="#iconDialog">
+            <label for="icon" class="col-xs-4 control-label">菜单图标</label>
+            <div class="col-xs-8">
+                <div class="input-group" id="iconSelector">
+                    <span class="input-group-addon"><i id="showEditIcon" class="fa fa-circle-o"></i></span>
+                    <input class="form-control" type="text" id="icon" readonly data-toggle="modal" data-target="#iconDialog">
+                </div>
             </div>
         </div>
         <div class="form-group form-group-sm">
-            <label for="url">菜单路径:</label>
-            <input class="form-control" type="text" id="url">
+            <label for="url" class="col-xs-4 control-label">菜单路径</label>
+            <div class="col-xs-8"><input class="form-control" type="text" id="url"></div>
         </div>
         <div class="pull-right">
             <div class="btn-group btn-group-sm">
@@ -65,67 +67,100 @@
 </div>
 
 @Html.Partial("_IconSelector")
-
+@Html.Style(
+    @<text>
+    <!--HtmlResourceExtensions Begin-->
+    <link rel="stylesheet" href="~/lib/jquery-confirm2/css/jquery-confirm.css" />
+    <link rel="stylesheet" href="~/css/bootstrap-docs.css" />
+    <!--HtmlResourceExtensions End-->
+    </text>
+                            )
 @Html.Script(
-    @<script>
-         $(document).ready(function () {
-             var list = $('#_NavMenuManagement')
-             list.nestable()
-             list.on('change', function () {
-                 var json = JSON.stringify(list.nestable('serialize'), null, 2)
-                 console.log(json)
-             })
+    @<text>
+    <!--HtmlResourceExtensions Begin-->
+    <script src="~/lib/jquery-confirm2/js/jquery-confirm.js"></script>
+    <script src="~/lib/nestable/jquery.nestable.js"></script>
+    <script>
+        $(document).ready(function () {
+            var list = $('#_NavMenuManagement')
+            list.nestable()
+            list.on('change', function () {
+                var json = JSON.stringify(list.nestable('serialize'), null, 2)
+                console.log(json)
+            })
 
-             var liTarget = null
-             $(document).on('click', '.dd3-content', function () {
-                 liTarget = $(this).closest('li')
-                 $('#name').val(liTarget.data('name'))
-                 $('#icon').val(liTarget.data('icon'))
-                 $('#url').val(liTarget.data('url'))
-                 $('#showEditIcon').removeClass().addClass($('#icon').val())
-             })
+            var liTarget = null
+            $(document).on('click', '.dd3-content', function () {
+                liTarget = $(this).closest('li')
+                $('#name').val(liTarget.data('name'))
+                $('#icon').val(liTarget.data('icon'))
+                $('#url').val(liTarget.data('url'))
+                $('#showEditIcon').removeClass().addClass($('#icon').val())
+            })
 
-             var listRoot = $('#root')
-             var newLine = $('#newLine')
-             newLine.on('click', function () {
-                 var el = listRoot.append('\
-                                 <li class="dd-item dd3-item" data-url="/Index" data-icon="fa fa-circle-o" data-name="新菜单">\
-                                 <div class="dd-handle dd3-handle" > Drag</div >\
-                                 <div class="dd3-content">\
-                                 <i class="fa fa-circle-o" id="showIcon"></i> <span id="showName">新菜单</span>\
-                                 <span class="pull-right">\
-                                 <a style="cursor: pointer" class="removeBtn">\
-                                 <i class="fa fa-times text-primary"></i>\
-                                 </a>\
-                                 </span>\
-                                 </div></li>')
-                 console.log(el.html())
-             })
-             var updateIt = $('#updateIt')
-             updateIt.on('click', function () {
-                 if (liTarget) {
-                     liTarget.data('name', $('#name').val())
-                     liTarget.data('icon', $('#icon').val())
-                     liTarget.data('url', $('#url').val())
-                     $('i[id=showIcon]', liTarget).eq(0).removeClass().addClass($('#icon').val())
-                     $('span[id=showName]', liTarget).eq(0).text($('#name').val())
-                 }
+            var listRoot = $('#root')
+            var newLine = $('#newLine')
+            newLine.on('click', function () {
+                var el = listRoot.append('\
+                                                                 <li class="dd-item dd3-item" data-url="/Index" data-icon="fa fa-circle-o" data-name="新菜单">\
+                                                                 <div class="dd-handle dd3-handle" > Drag</div >\
+                                                                 <div class="dd3-content">\
+                                                                 <i class="fa fa-circle-o" id="showIcon"></i> <span id="showName">新菜单</span>\
+                                                                 <span class="pull-right">\
+                                                                 <a style="cursor: pointer" class="removeBtn">\
+                                                                 <i class="fa fa-times text-primary"></i>\
+                                                                 </a>\
+                                                                 </span>\
+                                                                 </div></li>')
+                console.log(el.html())
+            })
+            var updateIt = $('#updateIt')
+            updateIt.on('click', function () {
+                if (liTarget) {
+                    liTarget.data('name', $('#name').val())
+                    liTarget.data('icon', $('#icon').val())
+                    liTarget.data('url', $('#url').val())
+                    $('i[id=showIcon]', liTarget).eq(0).removeClass().addClass($('#icon').val())
+                    $('span[id=showName]', liTarget).eq(0).text($('#name').val())
+                }
 
-             })
+            })
 
-             $(document).on('click', '.removeBtn', function () {
-                 $(this).closest('li').remove()
-             })
+            $(document).on('click', '.removeBtn', function () {
+                $.confirm({
+                    icon: 'fa fa-info',
+                    title: '删除',
+                    content: '确认删除菜单[' + $(this).closest('li').data('name') + ']？',
+                    type: 'dark',
+                    closeIcon: true,
+                    typeAnimated: true,
+                    buttons: {
+                        confirm: {
+                            text: '确定',
+                            btnClass: 'btn-dark',
+                            action: function () {
+                                $(this).closest('li').remove()
+                            }.bind(this)
+                        },
+                        cancel: {
+                            text: '取消',
+                            btnClass: 'btn-dark'
+                        }
+                    }
+                });
+            })
 
-             var saveAll = $('#saveAll')
-             saveAll.on('click', function () {
-                 var obj = { NavbarMenus: list.nestable('serialize') }
-                 //var obj = list.nestable('serialize')
-                 var json = JSON.stringify(obj, null, 2)
-                 $('#NavMenuJson').val(json)
-                 $('#saveForm').submit()
-             })
+            var saveAll = $('#saveAll')
+            saveAll.on('click', function () {
+                var obj = { NavbarMenus: list.nestable('serialize') }
+                //var obj = list.nestable('serialize')
+                var json = JSON.stringify(obj, null, 2)
+                $('#NavMenuJson').val(json)
+                $('#saveForm').submit()
+            })
 
-         })
+        })
     </script>
-                        )
+    <!--HtmlResourceExtensions End-->
+    </text>
+                                )
