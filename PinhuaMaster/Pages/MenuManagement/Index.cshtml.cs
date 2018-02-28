@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -68,7 +69,7 @@ namespace PinhuaMaster.Pages.MenuSystem
 
             _menus = _dbContext.Menus.AsNoTracking();
 
-            return RedirectToPage("Index");
+            return RedirectToPage("Index"); 
         }
 
         public IActionResult OnPostSaveMenu(string navMenuJson)

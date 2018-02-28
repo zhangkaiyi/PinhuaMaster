@@ -118,10 +118,11 @@ namespace PinhuaMaster.Services
             return navMenu;
         }
 
+        private string _filename { get; set; } = "NavbarMenus.json";
+
         public IList<NavbarMenu> GetNavbarMenus()
         {
-            var file_path = "NavbarMenus.json";
-            using (var fs = new FileStream(file_path, FileMode.Open))
+            using (var fs = new FileStream(_filename, FileMode.Open))
             using (var sr = new StreamReader(fs, System.Text.Encoding.Default))
             {
                 var jsonString = sr.ReadToEnd();
@@ -131,9 +132,7 @@ namespace PinhuaMaster.Services
 
         public void UpdateNavbarMenus(string navbarMenus)
         {
-            var file_path = "NavbarMenus.json";
-
-            using (var fs = new FileStream(file_path, FileMode.Create))
+            using (var fs = new FileStream(_filename, FileMode.Create))
             using (var sw = new StreamWriter(fs, System.Text.Encoding.Default))
             {
                 sw.Write(navbarMenus);

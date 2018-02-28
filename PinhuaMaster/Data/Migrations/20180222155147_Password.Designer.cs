@@ -11,9 +11,10 @@ using System;
 namespace PinhuaMaster.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20180222155147_Password")]
+    partial class Password
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -126,17 +127,6 @@ namespace PinhuaMaster.Data.Migrations
                     b.HasKey("UserId", "LoginProvider", "Name");
 
                     b.ToTable("AspNetUserTokens");
-                });
-
-            modelBuilder.Entity("PinhuaMaster.Data.ApplicationRolePage", b =>
-                {
-                    b.Property<string>("RoleId");
-
-                    b.Property<string>("Page");
-
-                    b.HasKey("RoleId", "Page");
-
-                    b.ToTable("RolePages");
                 });
 
             modelBuilder.Entity("PinhuaMaster.Data.ApplicationUser", b =>

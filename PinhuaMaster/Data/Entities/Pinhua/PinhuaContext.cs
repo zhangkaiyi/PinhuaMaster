@@ -118,6 +118,7 @@ namespace PinhuaMaster.Data.Entities.Pinhua
         public virtual DbSet<EsWitodo> EsWitodo { get; set; }
         public virtual DbSet<EsWorkFlow> EsWorkFlow { get; set; }
         public virtual DbSet<EsWorkItem> EsWorkItem { get; set; }
+        public virtual DbSet<NCollectionMain> NCollectionMain { get; set; }
         public virtual DbSet<NewDeliveryDetails> NewDeliveryDetails { get; set; }
         public virtual DbSet<NewDeliveryMain> NewDeliveryMain { get; set; }
         public virtual DbSet<NewOrderDetails> NewOrderDetails { get; set; }
@@ -206,7 +207,6 @@ namespace PinhuaMaster.Data.Entities.Pinhua
         // Unable to generate entity type for table 'dbo.人员调动历史'. Please see the warning messages.
         // Unable to generate entity type for table 'dbo.工艺信息'. Please see the warning messages.
         // Unable to generate entity type for table 'dbo.工资计算_辅表'. Please see the warning messages.
-        // Unable to generate entity type for table 'dbo.N_Collection_Main'. Please see the warning messages.
         // Unable to generate entity type for table 'dbo.图形一览_1'. Please see the warning messages.
         // Unable to generate entity type for table 'dbo.借款单'. Please see the warning messages.
         // Unable to generate entity type for table 'dbo.物料登记_Old_木种'. Please see the warning messages.
@@ -4280,6 +4280,62 @@ namespace PinhuaMaster.Data.Entities.Pinhua
                 entity.Property(e => e.WiType)
                     .HasColumnName("wiType")
                     .HasDefaultValueSql("((0))");
+            });
+
+            modelBuilder.Entity<NCollectionMain>(entity =>
+            {
+                entity.HasKey(e => e.CollectionId);
+
+                entity.ToTable("N_Collection_Main");
+
+                entity.HasIndex(e => new { e.ExcelServerRcid, e.ExcelServerWiid })
+                    .HasName("idx1");
+
+                entity.Property(e => e.CollectionId)
+                    .HasMaxLength(20)
+                    .ValueGeneratedNever();
+
+                entity.Property(e => e.CollectionAccount).HasMaxLength(100);
+
+                entity.Property(e => e.CollectionAmount).HasColumnType("decimal(20, 2)");
+
+                entity.Property(e => e.CollectionDate).HasColumnType("datetime");
+
+                entity.Property(e => e.CollectionType).HasMaxLength(20);
+
+                entity.Property(e => e.CreatedBy).HasMaxLength(20);
+
+                entity.Property(e => e.CreatedDate).HasColumnType("datetime");
+
+                entity.Property(e => e.CustomerId).HasMaxLength(20);
+
+                entity.Property(e => e.CustomerName).HasMaxLength(100);
+
+                entity.Property(e => e.ExcelServerChg).HasColumnName("ExcelServerCHG");
+
+                entity.Property(e => e.ExcelServerCn).HasColumnName("ExcelServerCN");
+
+                entity.Property(e => e.ExcelServerRc1)
+                    .HasColumnName("ExcelServerRC1")
+                    .HasMaxLength(20);
+
+                entity.Property(e => e.ExcelServerRcid)
+                    .HasColumnName("ExcelServerRCID")
+                    .HasMaxLength(20);
+
+                entity.Property(e => e.ExcelServerRn).HasColumnName("ExcelServerRN");
+
+                entity.Property(e => e.ExcelServerRtid)
+                    .HasColumnName("ExcelServerRTID")
+                    .HasMaxLength(20);
+
+                entity.Property(e => e.ExcelServerWiid)
+                    .HasColumnName("ExcelServerWIID")
+                    .HasMaxLength(20);
+
+                entity.Property(e => e.OrderSource).HasMaxLength(20);
+
+                entity.Property(e => e.Remarks).HasMaxLength(50);
             });
 
             modelBuilder.Entity<NewDeliveryDetails>(entity =>

@@ -48,20 +48,32 @@ namespace PinhuaMaster
             services.AddMvc()
                 .AddRazorPagesOptions(options =>
                 {
-                    options.Conventions.AuthorizeFolder("/Account/Manage");
-                    options.Conventions.AuthorizePage("/Account/Logout");
+                    //options.Conventions.AuthorizeFolder("/Account/Manage");
+                    //options.Conventions.AuthorizePage("/Account/Logout");
+                    options.Conventions.AuthorizeFolder("/", "Permissons").AllowAnonymousToFolder("/Account");
                 });
+
+            services.AddAuthorization(options =>
+            {
+                options.AddPolicy("Permissons", policy =>
+                    {
+                        policy.Requirements.Add(new PermissionRequirement());
+                    });
+            });
 
             // Register no-op EmailSender used by account confirmation and password reset during development
             // For more information on how to enable account confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=532713
             services.AddSingleton<IEmailSender, EmailSender>();
             // 注册导航菜单生成服务
             services.AddTransient<INavMenuService, NavMenuService>();
+            // 注册PinhuaTimeline服务
+            services.AddTransient<ITimelineService,TimelineService>();
             // 访问本地文件所需的服务
             services.AddSingleton<IFileProvider>(new PhysicalFileProvider(Directory.GetCurrentDirectory()));
             // 提取网页字体中图标到数据库的服务
             services.AddTransient<IWebfontExtractor, WebfontExtractor>();
 
+            services.AddTransient<IActionPermissionService,ActionPermissionService>();
             //初始化应用配置
             //InitAppConfig(services);
 

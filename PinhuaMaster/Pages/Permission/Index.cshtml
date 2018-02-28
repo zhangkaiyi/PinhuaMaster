@@ -1,0 +1,51 @@
+﻿@page
+@model PinhuaMaster.Pages.Permission.IndexModel
+@using PinhuaMaster.Services
+@inject IActionPermissionService permissionService
+@inject UserManager<ApplicationUser> _userManager
+@inject RoleManager<IdentityRole> _roleManager
+@{
+    ViewData["Title"] = "Index";
+}
+
+<div class="row">
+    <div class="col-md-3">
+        <div class="box box-primary">
+            <ul class="nav nav-pills nav-stacked">
+                @foreach (var role in _roleManager.Roles)
+                {
+                    var count = @_userManager.GetUsersInRoleAsync(role.Name).GetAwaiter().GetResult().Count;
+                    var color = count > 0 ? "bg-blue" : "bg-red";
+                    <li><a asp-page="Index" asp-route-id="@role.Id">@role.Name<span class="pull-right badge @color">@count</span></a></li>
+                }
+            </ul>
+        </div>
+    </div>
+    <div class="col-md-9">
+        <div class="box box-primary">
+            <table class="table table-striped table-bordered no-margin">
+                <tr>
+                    <th>
+                        Path
+                    </th>
+                    <th>
+                        Type
+                    </th>
+                </tr>
+
+                @foreach (var permission in permissionService.GetAllPermissions().Select(p => p.Page).Distinct())
+                {
+                    <tr>
+                        <td>
+                            @permission
+                        </td>
+                        <td>
+                            Folder
+                        </td>
+                    </tr>
+                }
+            </table>
+        </div>
+    </div>
+
+</div>

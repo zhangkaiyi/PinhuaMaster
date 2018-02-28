@@ -20,9 +20,15 @@ namespace PinhuaMaster.Data
             // Customize the ASP.NET Identity model and override the defaults if needed.
             // For example, you can rename the ASP.NET Identity table names and more.
             // Add your customizations after calling base.OnModelCreating(builder);
+            builder.Entity<ApplicationRolePage>(entity =>
+            {
+                entity.HasKey(e => new { e.RoleId, e.Page });
+            });
+            
         }
 
         public DbSet<Menu> Menus { get; set; }
         public DbSet<Icon> Icons { get; set; }
+        public DbSet<ApplicationRolePage> RolePages { get; set; }
     }
 }

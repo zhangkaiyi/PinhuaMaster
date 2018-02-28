@@ -11,12 +11,12 @@ using PinhuaMaster.Data;
 namespace PinhuaMaster.Controllers
 {
     [Route("[controller]/[action]")]
-    public class ApitController : Controller
+    public class ApiController : Controller
     {
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly ILogger _logger;
 
-        public ApitController(SignInManager<ApplicationUser> signInManager, ILogger<AccountController> logger)
+        public ApiController(SignInManager<ApplicationUser> signInManager, ILogger<AccountController> logger)
         {
             _signInManager = signInManager;
             _logger = logger;

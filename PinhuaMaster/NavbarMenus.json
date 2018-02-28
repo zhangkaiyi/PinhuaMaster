@@ -13,7 +13,7 @@
     {
       "name": "采购系统",
       "icon": "fa fa-500px",
-      "url": "2"
+      "url": 2
     },
     {
       "name": "管理员菜单",
@@ -28,12 +28,17 @@
         {
           "name": "用户管理",
           "icon": "fa fa-circle-o",
-          "url": ""
+          "url": "/User/Index"
+        },
+        {
+          "name": "角色管理",
+          "icon": "fa fa-circle-o",
+          "url": "/Role/Index"
         },
         {
           "name": "权限管理",
           "icon": "fa fa-circle-o",
-          "url": 4
+          "url": "/Permission/Index"
         }
       ]
     }
