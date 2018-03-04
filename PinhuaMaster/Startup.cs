@@ -31,7 +31,8 @@ namespace PinhuaMaster
         {
             // Add DbContext
             services.AddDbContext<PinhuaContext>(
-                options => options.UseSqlServer("Data Source=122.225.47.230,6012;Initial Catalog=Pinhua;Persist Security Info=True;User ID=sa;Password=Benny0922")
+                options => options.UseSqlServer("Data Source=122.225.47.230,6012;Initial Catalog=Pinhua;Persist Security Info=True;User ID=sa;Password=Benny0922",
+                o => o.UseRowNumberForPaging())
                 );
 
             services.AddDbContext<ApplicationDbContext>(options =>
@@ -67,13 +68,13 @@ namespace PinhuaMaster
             // 注册导航菜单生成服务
             services.AddTransient<INavMenuService, NavMenuService>();
             // 注册PinhuaTimeline服务
-            services.AddTransient<ITimelineService,TimelineService>();
+            services.AddTransient<ITimelineService, TimelineService>();
             // 访问本地文件所需的服务
             services.AddSingleton<IFileProvider>(new PhysicalFileProvider(Directory.GetCurrentDirectory()));
             // 提取网页字体中图标到数据库的服务
             services.AddTransient<IWebfontExtractor, WebfontExtractor>();
 
-            services.AddTransient<IActionPermissionService,ActionPermissionService>();
+            services.AddTransient<IActionPermissionService, ActionPermissionService>();
             //初始化应用配置
             //InitAppConfig(services);
 

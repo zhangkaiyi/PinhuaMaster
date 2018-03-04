@@ -54,8 +54,18 @@
             </table>
             <div class="box-footer">
                 <a asp-page="Create" class="btn btn-default btn-flat">创建角色</a>
+                <a class="btn btn-info btn-flat" href="javascript:myAddHtml();">打印预览</a>
             </div>
         </div>
     </div>
 </div>
 
+@section Scripts{
+    <script>
+        function myAddHtml() {
+            LODOP.PRINT_INIT("");
+            LODOP.ADD_PRINT_HTM(10, 55, "100%", "100%", $('table')[0].outerHTML);
+            LODOP.PREVIEW();
+        };
+    </script>
+}

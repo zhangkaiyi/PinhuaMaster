@@ -8,7 +8,21 @@
     {
       "name": "订单系统",
       "icon": "fa fa-pencil-square-o",
-      "url": 1
+      "url": 1,
+      "children": [
+        {
+          "name": "旧版",
+          "icon": "fa fa-circle-o",
+          "url": "",
+          "children": [
+            {
+              "name": "发货单",
+              "icon": "fa fa-circle-o",
+              "url": "/OrderManagement/Old/DeliveryOrder/Index"
+            }
+          ]
+        }
+      ]
     },
     {
       "name": "采购系统",
