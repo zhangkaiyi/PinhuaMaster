@@ -138,5 +138,45 @@ namespace PinhuaMaster.Services
                 sw.Write(navbarMenus);
             }
         }
+
+        public IList<string> GetPathName(string path)
+        {
+            var menus = GetNavbarMenus();
+            var succeeded = false;
+            var pathName = new List<string>();
+            BuildPathName(path, menus, ref pathName, ref succeeded);
+            return pathName;
+        }
+
+        private void BuildPathName(string path, IList<NavbarMenu> menus, ref List<string> pathName, ref bool succeeded)
+        {
+            foreach (var menu in menus)
+            {
+                if (menu.children == null)
+                {
+                    if (menu.url == path)
+                    {
+                        pathName.Add(menu.name);  // 找到匹配菜单，跳出循环
+                        succeeded = true;
+                        break;
+                    }
+                    if (menu.url != path)
+                    {
+                        if (menus.IndexOf(menu) == menus.Count - 1) // 找不到匹配菜单，清空列表，找下一个父节点
+                            pathName.Clear();
+                        else
+                            continue;   // 找不到，继续循环
+                    }
+                }
+                if (menu.children != null && menu.children.Any())
+                {
+                    pathName.Add(menu.name);
+                    BuildPathName(path, menu.children, ref pathName, ref succeeded);    // 递归查找子节点
+                    if (succeeded)  // 找到匹配菜单，就跳出循环，不再尝试匹配后面的节点
+                        break;
+                }
+            }
+
+        }
     }
 }

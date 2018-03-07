@@ -8,7 +8,7 @@
     {
       "name": "订单系统",
       "icon": "fa fa-pencil-square-o",
-      "url": 1,
+      "url": "",
       "children": [
         {
           "name": "旧版",
@@ -27,12 +27,12 @@
     {
       "name": "采购系统",
       "icon": "fa fa-500px",
-      "url": 2
+      "url": ""
     },
     {
       "name": "管理员菜单",
       "icon": "fa fa-cog",
-      "url": 3,
+      "url": "",
       "children": [
         {
           "name": "菜单管理",

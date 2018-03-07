@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
@@ -10,6 +11,7 @@ using PinhuaMaster.Extensions.TagHelpers;
 
 namespace PinhuaMaster.Pages.OrderManagement.Old.DeliveryOrder
 {
+    [Description("旧版送货单")]
     public class IndexModel : PageModel
     {
         private PinhuaContext _pinhuaContext { get; set; }

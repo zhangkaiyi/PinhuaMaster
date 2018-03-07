@@ -10,5 +10,6 @@ namespace PinhuaMaster.Services
         void InitOrUpdate();
         IList<NavbarMenu> GetNavbarMenus();
         void UpdateNavbarMenus(string navbarMenus);
+        IList<string> GetPathName(string pagePath);
     }
 }

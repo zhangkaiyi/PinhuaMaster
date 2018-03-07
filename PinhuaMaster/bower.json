@@ -12,7 +12,8 @@
     "vue": "v2.5.13",
     "nestable": "*",
     "jquery-confirm2": "v3.3.2",
-    "bootstrap": "v3.3.7"
+    "bootstrap": "v3.3.7",
+    "jquery.cookie": "jquery-cookie#v1.4.1"
   },
   "resolutions": {
     "jquery": ">= 1.7.2",

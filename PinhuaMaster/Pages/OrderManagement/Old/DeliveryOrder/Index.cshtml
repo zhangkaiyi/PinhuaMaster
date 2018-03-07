@@ -5,6 +5,7 @@
     ViewData["Title"] = "Index";
 }
 
+@(Newtonsoft.Json.JsonConvert.SerializeObject(navMenuService.GetPathName(PageContext.RouteData.Values["Page"].ToString())))
 <div class="row">
     <div class="col-lg-6">
         <div class="box box-primary">
@@ -27,15 +28,15 @@
                     <tbody>
                         @foreach (var delivery in Model.DeliveryOrders)
                         {
-                        <tr id="@delivery.DeliveryId">
-                            <td class="no-print"><a class="btn btn-flat btn-xs btn-primary" asp-page="Details" asp-route-id="@delivery.DeliveryId">打印</a></td>
-                            <td>@delivery.CName</td>
-                            <td>@delivery.DeliveryDate.Value.ToShortDateString()</td>
-                            <td class="hidden">@delivery.CAddress</td>
-                            <td class="hidden-xs">@delivery.Remarks</td>
-                            <td class="hidden-xs">@delivery.OrderDescription</td>
-                            <td class="text-right">@delivery.Details.Sum(p => p.Amount).Value.ToString("￥#,##0.00")</td>
-                        </tr>
+                            <tr id="@delivery.DeliveryId">
+                                <td class="no-print"><a class="btn btn-flat btn-xs btn-primary" asp-page="Details" asp-route-id="@delivery.DeliveryId">打印</a></td>
+                                <td>@delivery.CName</td>
+                                <td>@delivery.DeliveryDate.Value.ToShortDateString()</td>
+                                <td class="hidden">@delivery.CAddress</td>
+                                <td class="hidden-xs">@delivery.Remarks</td>
+                                <td class="hidden-xs">@delivery.OrderDescription</td>
+                                <td class="text-right">@delivery.Details.Sum(p => p.Amount).Value.ToString("￥#,##0.00")</td>
+                            </tr>
                         }
                     </tbody>
                 </table>
@@ -73,7 +74,7 @@
 </div>
 
 @section Scripts{
-<script>
+    <script>
     function myToFixed(val, franctiondigits) {
         if (val === null)
             return ""
@@ -105,5 +106,5 @@
                 $('#details>tbody').html(tbody)
             })
         })
-</script>
+    </script>
 }

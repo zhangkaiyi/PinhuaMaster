@@ -1,6 +1,10 @@
 ﻿@using PinhuaMaster.Services;
 @inject INavMenuService NavMenuService;
-
+@{
+    var cookieMenuidsOpen = httpContextAccessor.HttpContext.Request.Cookies["menuids_open"] ?? "";
+    var cookieMenuidOpen = httpContextAccessor.HttpContext.Request.Cookies["menuid_open"] ?? "";
+    var pathName = navMenuService.GetPathName(ViewContext.RouteData.Values["Page"].ToString());
+}
 <!DOCTYPE html>
 <!--
 This is a starter template page. Use this page to start your new project from
@@ -113,11 +117,25 @@ desired effect
             <section class="content-header">
                 <h1>
                     @ViewBag.Title
-                    @*<small>@ViewContext.RouteData.Values["Page"]</small>*@
+                    @*<small>@httpContextAccessor.HttpContext.Request.Cookies["menuids_open"]</small>*@
                 </h1>
                 <ol class="breadcrumb">
-                    <li><a href="#"><i class="fa fa-dashboard"></i> Level</a></li>
-                    <li class="active">@ViewContext.RouteData.Values["page"]</li>
+                    @foreach (var node in pathName)
+                    {
+                        if (pathName.IndexOf(node) == 0)
+                        {
+                            <li><i class="fa fa-dashboard"></i> @node</li>
+
+                        }
+                        else if (pathName.IndexOf(node) == pathName.Count - 1)
+                        {
+                            <li class="active"> @node</li>
+                        }
+                        else
+                        {
+                            <li> @node</li>
+                        }
+                    }
                 </ol>
             </section>
             <!-- Main content -->
@@ -149,6 +167,7 @@ desired effect
     <!-- jQuery 3 -->
     <script src="~/lib/jquery/dist/jquery.js"></script>
     <script src="~/lib/jquery-slimscroll/jquery.slimscroll.js"></script>
+    <script src="~/lib/jquery.cookie/jquery.cookie.js"></script>
     <!-- Bootstrap 3.3.7 -->
     <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
     <!-- AdminLTE App -->
@@ -159,6 +178,21 @@ desired effect
     <script>
         $(function () {
             FastClick.attach(document.body)
+
+            $('.main-sidebar a').click(function () {
+                var clickthis = this;
+                //记录菜单展开状态
+                var href = $(this).attr('href')
+                if (href === null || href === "#") return
+                var menuids = [];
+                var menuid = [];
+                $('.menu-open').each(function () {
+                    menuids.push($(this).attr('menuid'))
+                })
+                menuid = ($(clickthis).closest('li').attr('menuid'))
+                $.cookie('menuids_open', menuids.join(','), { path: "/" })
+                $.cookie('menuid_open', menuid, { path: "/" })
+            })
         })
     </script>
     @RenderSection("Scripts", required: false)

@@ -1,22 +1,26 @@
 ﻿@using PinhuaMaster.Services
 @model IList<NavbarMenu>
 
+@{
+    var cookieMenuidsOpen = httpContextAccessor.HttpContext.Request.Cookies["menuids_open"] ?? "";
+}
+
 @foreach (var navMenu in Model)
 {
     if (navMenu.children == null || !navMenu.children.Any())
     {
-        <li is-active-page="@navMenu.url"><a asp-page="@navMenu.url"><i class="@navMenu.icon"></i><span> @navMenu.name</span></a></li>
+        <li is-active-page="@navMenu.url" menuid="@navMenu.name"><a asp-page="@navMenu.url"><i class="@navMenu.icon"></i> <span>@navMenu.name</span></a></li>
     }
-        else
-        {
-        <li is-active-page="@navMenu.url" class="treeview">
+    else
+    {
+        <li menuid="@navMenu.name" class="treeview @(cookieMenuidsOpen.Contains(navMenu.name) ? "menu-open" : "")">
             <a href="#">
-                <i class="@navMenu.icon"></i> <span> @navMenu.name</span>
+                <i class="@navMenu.icon"></i> <span>@navMenu.name</span>
                 <span class="pull-right-container">
                     <i class="fa fa-angle-left pull-right"></i>
                 </span>
             </a>
-            <ul class="treeview-menu">
+            <ul class="treeview-menu" @(cookieMenuidsOpen.Contains(navMenu.name) ? @"style=display:block;" : "")>
                 @await Html.PartialAsync("_Navbar_For_AdminLTE", navMenu.children)
             </ul>
         </li>
