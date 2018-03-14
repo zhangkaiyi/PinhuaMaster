@@ -1,0 +1,45 @@
+﻿@page "{year}/{month}/{id}"
+@model PinhuaMaster.Pages.Attendance.DetailsModel
+@{
+    ViewData["Title"] = "Details";
+    Layout = "~/Pages/_Layout.cshtml";
+}
+
+<div class="box box-solid">
+    <div class="box-header">
+        <div class="box-title">
+            @Model.AttendanceData.Name - @(Model.AttendanceData.Year)年@(Model.AttendanceData.Month)月
+        </div>
+    </div>
+    <table class="table table-striped">
+        <tr>
+            <th>日期</th>
+            <th>状态</th>
+            <th class="hidden-xs">上班1</th>
+            <th class="hidden-xs">下班1</th>
+            <th class="hidden-xs">上班2</th>
+            <th class="hidden-xs">下班2</th>
+            <th class="hidden visible-xs">时间</th>
+            <th class="text-right">正班</th>
+            <th class="hidden-xs">上班3</th>
+            <th class="hidden-xs">下班3</th>
+            <th class="text-right">加班</th>
+        </tr>
+        @foreach (var detail in Model.AttendanceData.Details)
+        {
+            <tr>
+                <td>@detail.日期.Day</td>
+                <td>@detail.状态</td>
+                <td class="hidden-xs">@detail.上班1</td>
+                <td class="hidden-xs">@detail.下班1</td>
+                <td class="hidden-xs">@detail.上班2</td>
+                <td class="hidden-xs">@detail.下班2</td>
+                <td class="hidden visible-xs">@detail.上班1 - @detail.下班2, @detail.上班3 - @detail.下班3</td>
+                <td class="text-right">@detail.正常出勤?.ToString("0.0")</td>
+                <td class="hidden-xs">@detail.上班3</td>
+                <td class="hidden-xs">@detail.下班3</td>
+                <td class="text-right">@detail.加班?.ToString("0.0")</td>
+            </tr>
+        }
+    </table>
+</div>

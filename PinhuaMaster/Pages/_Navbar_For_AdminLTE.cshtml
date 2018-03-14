@@ -2,25 +2,27 @@
 @model IList<NavbarMenu>
 
 @{
-    var cookieMenuidsOpen = httpContextAccessor.HttpContext.Request.Cookies["menuids_open"] ?? "";
+    //var page = ViewContext.RouteData.Values["Page"].ToString();
+    //var pathName = navMenuService.GetPathName(page);
+    var pathName = ViewBag.PathName as IList<string>;
 }
 
 @foreach (var navMenu in Model)
 {
     if (navMenu.children == null || !navMenu.children.Any())
     {
-        <li is-active-page="@navMenu.url" menuid="@navMenu.name"><a asp-page="@navMenu.url"><i class="@navMenu.icon"></i> <span>@navMenu.name</span></a></li>
+        <li class="@(pathName.Contains(navMenu.name) ? "active" : "")"><a asp-page="@navMenu.url"><i class="@navMenu.icon"></i> <span>@navMenu.name</span></a></li>
     }
     else
     {
-        <li menuid="@navMenu.name" class="treeview @(cookieMenuidsOpen.Contains(navMenu.name) ? "menu-open" : "")">
+        <li class="treeview @(pathName.Contains(navMenu.name) ? "menu-open active" : "")">
             <a href="#">
                 <i class="@navMenu.icon"></i> <span>@navMenu.name</span>
                 <span class="pull-right-container">
                     <i class="fa fa-angle-left pull-right"></i>
                 </span>
             </a>
-            <ul class="treeview-menu" @(cookieMenuidsOpen.Contains(navMenu.name) ? @"style=display:block;" : "")>
+            <ul class="treeview-menu" @(pathName.Contains(navMenu.name) ? @"style=display:block;" : "")>
                 @await Html.PartialAsync("_Navbar_For_AdminLTE", navMenu.children)
             </ul>
         </li>

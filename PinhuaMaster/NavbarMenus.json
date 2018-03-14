@@ -11,12 +11,32 @@
       "url": "",
       "children": [
         {
-          "name": "旧版",
+          "name": "概览",
+          "icon": "fa fa-list",
+          "url": "/OrderManagement/Index"
+        },
+        {
+          "name": "订单",
           "icon": "fa fa-circle-o",
+          "url": "/OrderManagement/Sales/Index"
+        },
+        {
+          "name": "交货",
+          "icon": "fa fa-circle-o",
+          "url": "/OrderManagement/Delivery/Index"
+        },
+        {
+          "name": "收款",
+          "icon": "fa fa-circle-o",
+          "url": "/OrderManagement/Collection/Index"
+        },
+        {
+          "name": "旧订单管理",
+          "icon": "fa fa-exchange",
           "url": "",
           "children": [
             {
-              "name": "发货单",
+              "name": "送货单",
               "icon": "fa fa-circle-o",
               "url": "/OrderManagement/Old/DeliveryOrder/Index"
             }
@@ -26,31 +46,41 @@
     },
     {
       "name": "采购系统",
-      "icon": "fa fa-500px",
-      "url": ""
+      "icon": "fa fa-stack-overflow",
+      "url": "/OrderManagement/Purchase/Index"
     },
     {
-      "name": "管理员菜单",
+      "name": "考勤管理",
+      "icon": "fa fa-calendar",
+      "url": "/Attendance/Index"
+    },
+    {
+      "name": "工资管理",
+      "icon": "fa fa-money",
+      "url": "/Payroll/Index"
+    },
+    {
+      "name": "后台管理",
       "icon": "fa fa-cog",
       "url": "",
       "children": [
         {
-          "name": "菜单管理",
+          "name": "菜单",
           "icon": "fa fa-circle-o",
           "url": "/MenuManagement/Index"
         },
         {
-          "name": "用户管理",
+          "name": "用户",
           "icon": "fa fa-circle-o",
           "url": "/User/Index"
         },
         {
-          "name": "角色管理",
+          "name": "角色",
           "icon": "fa fa-circle-o",
           "url": "/Role/Index"
         },
         {
-          "name": "权限管理",
+          "name": "权限",
           "icon": "fa fa-circle-o",
           "url": "/Permission/Index"
         }

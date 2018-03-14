@@ -5,12 +5,16 @@
     <MvcRazorCompileOnPublish>false</MvcRazorCompileOnPublish>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Remove="Pages\Attendance\aaa\**" />
     <Compile Remove="wwwroot\lib\vue\packages\**" />
     <Compile Remove="wwwroot\lib\vue\types\**" />
+    <Content Remove="Pages\Attendance\aaa\**" />
     <Content Remove="wwwroot\lib\vue\packages\**" />
     <Content Remove="wwwroot\lib\vue\types\**" />
+    <EmbeddedResource Remove="Pages\Attendance\aaa\**" />
     <EmbeddedResource Remove="wwwroot\lib\vue\packages\**" />
     <EmbeddedResource Remove="wwwroot\lib\vue\types\**" />
+    <None Remove="Pages\Attendance\aaa\**" />
     <None Remove="wwwroot\lib\vue\packages\**" />
     <None Remove="wwwroot\lib\vue\types\**" />
   </ItemGroup>

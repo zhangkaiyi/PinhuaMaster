@@ -123,6 +123,8 @@ namespace PinhuaMaster.Data.Entities.Pinhua
         public virtual DbSet<NewDeliveryMain> NewDeliveryMain { get; set; }
         public virtual DbSet<NewOrderDetails> NewOrderDetails { get; set; }
         public virtual DbSet<NewOrderMain> NewOrderMain { get; set; }
+        public virtual DbSet<Test明细> Test明细 { get; set; }
+        public virtual DbSet<Test主表> Test主表 { get; set; }
         public virtual DbSet<WeixinClock> WeixinClock { get; set; }
         public virtual DbSet<WeixinClockOptions> WeixinClockOptions { get; set; }
         public virtual DbSet<WeixinOptions> WeixinOptions { get; set; }
@@ -184,9 +186,7 @@ namespace PinhuaMaster.Data.Entities.Pinhua
         // Unable to generate entity type for table 'dbo.往来单位_单位类型'. Please see the warning messages.
         // Unable to generate entity type for table 'dbo.打卡登记_wi'. Please see the warning messages.
         // Unable to generate entity type for table 'dbo.木种登记'. Please see the warning messages.
-        // Unable to generate entity type for table 'dbo.test_主表'. Please see the warning messages.
         // Unable to generate entity type for table 'dbo.外协加工'. Please see the warning messages.
-        // Unable to generate entity type for table 'dbo.test_明细'. Please see the warning messages.
         // Unable to generate entity type for table 'dbo.人员工资变动'. Please see the warning messages.
         // Unable to generate entity type for table 'dbo.人员工资变动_bak'. Please see the warning messages.
         // Unable to generate entity type for table 'dbo.销售发货_Old_D'. Please see the warning messages.
@@ -4619,6 +4619,84 @@ namespace PinhuaMaster.Data.Entities.Pinhua
 
                 entity.Property(e => e.OrderType)
                     .HasColumnName("ORDER_TYPE")
+                    .HasMaxLength(20);
+            });
+
+            modelBuilder.Entity<Test明细>(entity =>
+            {
+                entity.HasKey(e => e.UniqueId);
+
+                entity.ToTable("test_明细");
+
+                entity.HasIndex(e => new { e.ExcelServerRcid, e.ExcelServerWiid })
+                    .HasName("idx1");
+
+                entity.Property(e => e.ExcelServerChg).HasColumnName("ExcelServerCHG");
+
+                entity.Property(e => e.ExcelServerCn).HasColumnName("ExcelServerCN");
+
+                entity.Property(e => e.ExcelServerRc1)
+                    .HasColumnName("ExcelServerRC1")
+                    .HasMaxLength(20);
+
+                entity.Property(e => e.ExcelServerRcid)
+                    .HasColumnName("ExcelServerRCID")
+                    .HasMaxLength(20);
+
+                entity.Property(e => e.ExcelServerRn).HasColumnName("ExcelServerRN");
+
+                entity.Property(e => e.ExcelServerRtid)
+                    .HasColumnName("ExcelServerRTID")
+                    .HasMaxLength(20);
+
+                entity.Property(e => e.ExcelServerWiid)
+                    .HasColumnName("ExcelServerWIID")
+                    .HasMaxLength(20);
+
+                entity.Property(e => e.姓名).HasMaxLength(20);
+
+                entity.Property(e => e.工资项名称).HasMaxLength(20);
+
+                entity.Property(e => e.截止日期).HasColumnType("datetime");
+
+                entity.Property(e => e.编号).HasMaxLength(20);
+
+                entity.Property(e => e.计算金额).HasColumnType("decimal(20, 2)");
+
+                entity.Property(e => e.设定金额).HasColumnType("decimal(20, 2)");
+
+                entity.Property(e => e.起始日期).HasColumnType("datetime");
+            });
+
+            modelBuilder.Entity<Test主表>(entity =>
+            {
+                entity.HasKey(e => new { e.年份, e.月份 });
+
+                entity.ToTable("test_主表");
+
+                entity.HasIndex(e => new { e.ExcelServerRcid, e.ExcelServerWiid })
+                    .HasName("idx1");
+
+                entity.Property(e => e.ExcelServerChg).HasColumnName("ExcelServerCHG");
+
+                entity.Property(e => e.ExcelServerCn).HasColumnName("ExcelServerCN");
+
+                entity.Property(e => e.ExcelServerRc1)
+                    .HasColumnName("ExcelServerRC1")
+                    .HasMaxLength(20);
+
+                entity.Property(e => e.ExcelServerRcid)
+                    .HasColumnName("ExcelServerRCID")
+                    .HasMaxLength(20);
+
+                entity.Property(e => e.ExcelServerRn).HasColumnName("ExcelServerRN");
+
+                entity.Property(e => e.ExcelServerRtid)
+                    .HasColumnName("ExcelServerRTID")
+                    .HasMaxLength(20);
+
+                entity.Property(e => e.ExcelServerWiid)
+                    .HasColumnName("ExcelServerWIID")
                     .HasMaxLength(20);
             });
 

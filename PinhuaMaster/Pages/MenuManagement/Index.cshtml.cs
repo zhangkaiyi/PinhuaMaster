@@ -33,14 +33,14 @@ namespace PinhuaMaster.Pages.MenuSystem
 
         public IFileProvider _fileProvider { get; set; }
 
-        [BindProperty]
-        public IEnumerable<Menu> _menus { get; set; }
+        //[BindProperty]
+        //public IEnumerable<Menu> _menus { get; set; }
 
         public IOptionsSnapshot<List<NavbarMenu>> _navbarMenus { get; set; }
 
         public void OnGet()
         {
-            _menus = _dbContext.Menus.AsNoTracking();
+            //_menus = _dbContext.Menus.AsNoTracking();
             //ViewData["NavMenuManagementData"] = _navbarMenus.Value;
         }
 
@@ -64,10 +64,10 @@ namespace PinhuaMaster.Pages.MenuSystem
                         throw;
                     }
                 }
-                _navMenuService.InitOrUpdate();
+                //_navMenuService.InitOrUpdate();
             }
 
-            _menus = _dbContext.Menus.AsNoTracking();
+            //_menus = _dbContext.Menus.AsNoTracking();
 
             return RedirectToPage("Index"); 
         }
@@ -79,16 +79,6 @@ namespace PinhuaMaster.Pages.MenuSystem
 
             return RedirectToPage("Index");
         }
-
-        //public IActionResult OnGetNavMenu (){
-        //    var file_path = "NavbarMenus.json";
-
-        //    using (var fs = new FileStream(file_path, FileMode.Open))
-        //    using (var sr = new StreamReader(fs, System.Text.Encoding.Default))
-        //    {
-        //        return Content(sr.ReadToEnd());
-        //    }
-        //}
 
         /// <summary>
         /// 初始化下拉选择框

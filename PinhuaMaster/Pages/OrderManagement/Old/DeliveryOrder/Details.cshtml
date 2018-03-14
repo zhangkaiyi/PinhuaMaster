@@ -25,16 +25,17 @@
             font-size: 12px;
         }
 
+        .table > tbody > tr > td, .table > tfoot > tr > td, .table > tfoot > tr > th, .table > thead > tr > td, .table > thead > tr > th {
+            border-top: 1px dashed #000
+        }
+
         .table > caption + thead > tr:first-child > td, .table > caption + thead > tr:first-child > th, .table > colgroup + thead > tr:first-child > td, .table > colgroup + thead > tr:first-child > th, .table > thead:first-child > tr:first-child > td, .table > thead:first-child > tr:first-child > th {
-            border: 1px solid #000
+            border-top: 1px solid #000 !important;
+            border-bottom: 1px solid #000 !important
         }
 
-        .table > thead > tr > th {
-            border-bottom: 1px solid #000
-        }
-
-        .table > tbody > tr > td, .table > tbody > tr > th, .table > tfoot > tr > td, .table > tfoot > tr > th, .table > thead > tr > td, .table > thead > tr > th {
-            border: 1px solid #000
+        .table > tbody > tr:last-child > td {
+            border-bottom: 1px solid #000 !important
         }
     </style>
 </head>
@@ -45,7 +46,7 @@
             <!-- title row -->
             <div class="row">
                 <div class="col-xs-12 text-center">
-                    <div style="font-size:26px">
+                    <div style="font-size:26px;margin-top:5px;">
                         嘉善县胜美木业厂
                         <span style="font-size:20px;">（送货单）</span>
                     </div>

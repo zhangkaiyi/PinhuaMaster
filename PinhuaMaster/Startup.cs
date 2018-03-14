@@ -14,6 +14,7 @@ using PinhuaMaster.Services;
 using Microsoft.Extensions.FileProviders;
 using System.IO;
 using PinhuaMaster.Data.Entities.Pinhua;
+using PinhuaMaster.Data.Entities.EastRiver;
 
 namespace PinhuaMaster
 {
@@ -31,7 +32,12 @@ namespace PinhuaMaster
         {
             // Add DbContext
             services.AddDbContext<PinhuaContext>(
-                options => options.UseSqlServer("Data Source=122.225.47.230,6012;Initial Catalog=Pinhua;Persist Security Info=True;User ID=sa;Password=Benny0922",
+                options => options.UseSqlServer(@"Data Source=122.225.47.230,6012;Initial Catalog=Pinhua;Persist Security Info=True;User ID=sa;Password=Benny0922",
+                o => o.UseRowNumberForPaging())
+                );
+
+            services.AddDbContext<EastRiverContext>(
+                options => options.UseSqlServer(@"Data Source=122.225.47.230,6012;Initial Catalog=EastRiver;Persist Security Info=True;User ID=sa;Password=Benny0922",
                 o => o.UseRowNumberForPaging())
                 );
 
