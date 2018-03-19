@@ -39,6 +39,16 @@
               "name": "送货单",
               "icon": "fa fa-circle-o",
               "url": "/OrderManagement/Old/DeliveryOrder/Index"
+            },
+            {
+              "name": "送货单WEB版",
+              "icon": "fa fa-circle-o",
+              "url": "/OrderManagement/Old/DeliveryOrder/Index2"
+            },
+            {
+              "name": "新建送货单",
+              "icon": "fa fa-circle-o",
+              "url": "/OrderManagement/Old/DeliveryOrder/Create"
             }
           ]
         }

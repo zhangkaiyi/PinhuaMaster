@@ -33,5 +33,11 @@
     },
     // Optionally generate .map file
     "sourceMap": false
+  },
+  {
+    "outputFileName": "wwwroot/css/nestable.min.css",
+    "inputFiles": [
+      "wwwroot/css/nestable.css"
+    ]
   }
 ]
