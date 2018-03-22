@@ -1,13 +1,14 @@
 ﻿@page "{Id?}"
-@model PinhuaMaster.Pages.OrderManagement.Old.DeliveryOrder.Edit2Model
+@using PinhuaMaster.Pages.OrderManagement.EasyDelivery.ViewModel
+@model PinhuaMaster.Pages.OrderManagement.EasyDelivery.EditModel
 @{
     ViewData["Title"] = "Edit2";
 
-    var emptyRecord = Newtonsoft.Json.JsonConvert.SerializeObject(new CreateModel.ItemModel
+    var emptyRecord = Newtonsoft.Json.JsonConvert.SerializeObject(new Gi2DetaislDTO
     {
         Unit = "平方米",
     });
-    var emptyRecordList = Newtonsoft.Json.JsonConvert.SerializeObject(Model?.Input?.DeliveryItems ?? new List<CreateModel.ItemModel>());
+    var emptyRecordList = Newtonsoft.Json.JsonConvert.SerializeObject(Model?.Order?.Details ?? new List<Gi2DetaislDTO>());
 }
 
 <div id="vueScope" v-cloak>
@@ -26,37 +27,37 @@
             <div class="row invoice-info">
                 <div class="col-sm-4 invoice-col">
                     <div class="form-group has-error">
-                        <label class="control-label" asp-for="Input.DeliveryType"><i class="fa fa-angle-double-right"></i> @Html.DisplayNameFor(x => x.Input.DeliveryType)</label>
+                        <label class="control-label" asp-for="Order.Main.DeliveryType"><i class="fa fa-angle-double-right"></i> @Html.DisplayNameFor(x => x.Order.Main.DeliveryType)</label>
                         <div class="input-group">
-                            <select class="form-control" name="Input.DeliveryType" asp-for="Input.DeliveryType" asp-items="Model.DeliveryTypes"></select>
+                            <select class="form-control" name="Order.Main.DeliveryType" asp-for="Order.Main.DeliveryType" asp-items="Model.DeliveryTypes"></select>
                             <span class="input-group-btn">
                                 <button type="button" class="btn btn-danger btn-flat" style="width:40px"><i class="fa fa-bars"></i></button>
                             </span>
                         </div>
                     </div>
                     <div class="form-group has-error">
-                        <label class="control-label" asp-for="Input.CustomerId"><i class="fa fa-angle-double-right"></i> @Html.DisplayNameFor(x => x.Input.CustomerId)</label>
+                        <label class="control-label" asp-for="Order.Main.CustomerId"><i class="fa fa-angle-double-right"></i> @Html.DisplayNameFor(x => x.Order.Main.CustomerId)</label>
                         <div class="input-group">
-                            <select class="form-control" name="Input.CustomerId" asp-for="Input.CustomerId" asp-items="Model.Customers"></select>
+                            <select class="form-control" name="Order.Main.CustomerId" asp-for="Order.Main.CustomerId" asp-items="Model.Customers"></select>
                             <span class="input-group-btn">
                                 <button type="button" class="btn btn-danger btn-flat" style="width:40px"><i class="fa fa-truck"></i></button>
                             </span>
                         </div>
                     </div>
                     <div class="form-group has-error">
-                        <label class="control-label" asp-for="Input.DeliveryDate"><i class="fa fa-angle-double-right"></i> @Html.DisplayNameFor(x => x.Input.DeliveryDate)</label>
+                        <label class="control-label" asp-for="Order.Main.DeliveryDate"><i class="fa fa-angle-double-right"></i> @Html.DisplayNameFor(x => x.Order.Main.DeliveryDate)</label>
                         <div class="input-group">
-                            <input type="text" asp-for="Input.DeliveryDate" data-provide="datepicker" data-date-format="yyyy-mm-dd" readonly class="form-control pull-right" />
+                            <input type="text" asp-for="Order.Main.DeliveryDate" data-provide="datepicker" data-date-format="yyyy-mm-dd" value="@Model.Order.Main.DeliveryDate.Value.ToString("yyyy-MM-dd")" readonly class="form-control pull-right" />
                             <span class="input-group-btn">
                                 <button type="button" class="btn btn-danger btn-flat" style="width:40px"><i class="fa fa-calendar-o"></i></button>
                             </span>
                         </div>
-                        <span class="help-block" asp-validation-for="Input.DeliveryDate"></span>
+                        <span class="help-block" asp-validation-for="Order.Main.DeliveryDate"></span>
                     </div>
                     <div class="form-group has-error">
-                        <label class="control-label" asp-for="Input.DeliveryAddress"><i class="fa fa-angle-double-right"></i> 地址</label>
+                        <label class="control-label" asp-for="Order.Main.DeliveryAddress"><i class="fa fa-angle-double-right"></i> 地址</label>
                         <div class="input-group">
-                            <input asp-for="Input.DeliveryAddress" class="form-control" />
+                            <input asp-for="Order.Main.DeliveryAddress" class="form-control" />
                             <span class="input-group-btn">
                                 <button type="button" class="btn btn-danger btn-flat" style="width:40px"><i class="fa fa-map-o"></i></button>
                             </span>
@@ -66,29 +67,29 @@
                 <!-- /.col -->
                 <div class="col-sm-4 invoice-col">
                     <div class="form-group has-warning">
-                        <label class="control-label" asp-for="Input.Contact"><i class="fa fa-angle-double-right"></i> @Html.DisplayNameFor(x => x.Input.Contact)</label>
+                        <label class="control-label" asp-for="Order.Main.Contact"><i class="fa fa-angle-double-right"></i> @Html.DisplayNameFor(x => x.Order.Main.Contact)</label>
                         <div class="input-group">
-                            <input type="text" asp-for="Input.Contact" class="form-control" />
+                            <input type="text" asp-for="Order.Main.Contact" class="form-control" />
                             <span class="input-group-btn">
                                 <button type="button" class="btn btn-warning btn-flat" style="width:40px"><i class="fa fa-user"></i></button>
                             </span>
                         </div>
                     </div>
                     <div class="form-group has-warning">
-                        <label class="control-label" asp-for="Input.ContactNumber"><i class="fa fa-angle-double-right"></i> @Html.DisplayNameFor(x => x.Input.ContactNumber)</label>
+                        <label class="control-label" asp-for="Order.Main.ContactNumber"><i class="fa fa-angle-double-right"></i> @Html.DisplayNameFor(x => x.Order.Main.ContactNumber)</label>
                         <div class="input-group">
-                            <input type="text" asp-for="Input.ContactNumber" class="form-control" />
+                            <input type="text" asp-for="Order.Main.ContactNumber" class="form-control" />
                             <span class="input-group-btn">
                                 <button type="button" class="btn btn-warning btn-flat" style="width:40px"><i class="fa fa-phone"></i></button>
                             </span>
                         </div>
                     </div>
                     <div class="form-group has-warning">
-                        <label class="control-label" asp-for="Input.Remarks">
-                            <i class="fa fa-bell-o"></i> @Html.DisplayNameFor(x => x.Input.Remarks)
+                        <label class="control-label" asp-for="Order.Main.Remarks">
+                            <i class="fa fa-bell-o"></i> @Html.DisplayNameFor(x => x.Order.Main.Remarks)
                         </label>
                         <div class="input-group">
-                            <textarea asp-for="Input.Remarks" class="form-control" rows="3"></textarea>
+                            <textarea asp-for="Order.Main.Remarks" class="form-control" rows="3"></textarea>
                             <span class="input-group-addon"><i class="fa fa-ellipsis-h"></i></span>
                         </div>
                         <span class="help-block">在此输入你的备注信息</span>
@@ -97,27 +98,27 @@
                 <!-- /.col -->
                 <div class="col-sm-4 invoice-col">
                     <div class="form-group">
-                        <label class="control-label" asp-for="Input.DeliveryId"><i class="fa fa-angle-double-right"></i> @Html.DisplayNameFor(x => x.Input.DeliveryId)</label>
+                        <label class="control-label" asp-for="Order.Main.DeliveryId"><i class="fa fa-angle-double-right"></i> @Html.DisplayNameFor(x => x.Order.Main.DeliveryId)</label>
                         <div class="input-group">
-                            <input type="text" asp-for="Input.DeliveryId" class="form-control" readonly />
+                            <input type="text" asp-for="Order.Main.DeliveryId" class="form-control" readonly />
                             <span class="input-group-btn">
                                 <button type="button" class="btn btn-default btn-flat" style="width:40px"><i class="fa fa-sticky-note-o"></i></button>
                             </span>
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="control-label" asp-for="Input.CreatedBy"><i class="fa fa-angle-double-right"></i> @Html.DisplayNameFor(x => x.Input.CreatedBy)</label>
+                        <label class="control-label" asp-for="Order.Main.CreatedBy"><i class="fa fa-angle-double-right"></i> @Html.DisplayNameFor(x => x.Order.Main.CreatedBy)</label>
                         <div class="input-group">
-                            <input type="text" asp-for="Input.CreatedBy" class="form-control" readonly />
+                            <input type="text" asp-for="Order.Main.CreatedBy" class="form-control" readonly />
                             <span class="input-group-btn">
                                 <button type="button" class="btn btn-default btn-flat" style="width:40px"><i class="fa fa-user-o"></i></button>
                             </span>
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="control-label" asp-for="Input.CreatedDate"><i class="fa fa-angle-double-right"></i> @Html.DisplayNameFor(x => x.Input.CreatedDate)</label>
+                        <label class="control-label" asp-for="Order.Main.CreatedDate"><i class="fa fa-angle-double-right"></i> @Html.DisplayNameFor(x => x.Order.Main.CreatedDate)</label>
                         <div class="input-group">
-                            <input type="text" asp-for="Input.CreatedDate" class="form-control" readonly />
+                            <input type="text" asp-for="Order.Main.CreatedDate" class="form-control" value="@Model.Order.Main.CreatedDate.Value.ToString("yyyy-MM-dd HH:mm:ss")" readonly />
                             <span class="input-group-btn">
                                 <button type="button" class="btn btn-default btn-flat" style="width:40px"><i class="fa fa-calendar-o"></i></button>
                             </span>
@@ -162,7 +163,7 @@
                                 <tbody>
                                     <tr v-if="items.length == 0"><td colspan="20" class="text-center">出库清单空</td></tr>
                                     <tr v-for="(todo,index) in items">
-                                        <td>{{ index + 1 }}<input :name="buildName(index,'Index')" type="hidden" v-bind:value="index + 1" /></td>
+                                        <td>{{ index + 1 }}<input :name="buildName(index,'Id')" type="hidden" v-bind:value="index + 1" /></td>
                                         <td>{{ todo.Description }}<input :name="buildName(index,'Description')" type="hidden" v-model="todo.Description" /></td>
                                         <td>{{ computeSpecification(todo) }}<input :name="buildName(index,'Specification')" type="hidden" v-bind:value="computeSpecification(todo)" /></td>
                                         <td class="hidden-xs">{{ todo.Length }}<input :name="buildName(index,'Length')" type="hidden" v-bind:value="todo.Length" /></td>
@@ -411,7 +412,7 @@
             },
             methods: {
                 buildName: function (index, name) {
-                    return "Input.DeliveryItems[" + index + "]." + name
+                    return "Order.Details[" + index + "]." + name
                 },
                 newRecord: function () {
                     this.isNew = true;
@@ -435,7 +436,7 @@
                 computeSpecification: function (item) {
                     if (!item.Length || !item.Width || !item.Height)
                         return ""
-                    return [item.Length, item.Width, item.Height].join("x")
+                    return [item.Length, item.Width, item.Height].join("*")
                 },
                 computeUnitQty: function (item) {
                     if (!item.Qty || !item.Unit || !item.Length || !item.Width || !item.Height)

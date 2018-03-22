@@ -1,0 +1,38 @@
+﻿@page
+@model PinhuaMaster.Pages.Statement.IndexModel
+@{
+    ViewData["Title"] = "Index";
+}
+
+<div class="box box-solid">
+    <div class="box-header with-border">
+        <div class="box-title">
+            对帐企业
+        </div>
+    </div>
+    <div class="box-body">
+        <table data-toggle="table" 
+               data-classes="table table-striped table-hover"
+               data-search="true">
+            <thead>
+                <tr>
+                    <th>编号</th>
+                    <th>单位名称</th>
+                    <th class="hidden-xs">单位地址</th>
+                    <th class="hidden-xs">优先级</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var cus in Model.Customers)
+                {
+                    <tr>
+                        <td><a asp-page="Details" asp-route-id="@cus.单位编号">@cus.单位编号</a></td>
+                        <td>@cus.单位名称</td>
+                        <td>@cus.单位地址</td>
+                        <td>@cus.Rank</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

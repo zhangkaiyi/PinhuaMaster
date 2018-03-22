@@ -5,14 +5,13 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
-namespace PinhuaMaster.Pages.OrderManagement.Old.DeliveryOrder
+namespace PinhuaMaster.Pages.Finance.Payment
 {
-    public class Print2Model : PageModel
+    public class IndexModel : PageModel
     {
-        public string Id { get; set; }
-        public void OnGet(string Id)
+        public void OnGet()
         {
-            this.Id = Id;
+
         }
     }
 }

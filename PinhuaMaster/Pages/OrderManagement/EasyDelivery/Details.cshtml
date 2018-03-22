@@ -1,5 +1,5 @@
 ﻿@page "{id?}"
-@model PinhuaMaster.Pages.OrderManagement.Old.DeliveryOrder.Details2Model
+@model PinhuaMaster.Pages.OrderManagement.EasyDelivery.DetailsModel
 @{
     ViewData["Title"] = "Details2";
     Layout = "~/Pages/_Layout.cshtml";
@@ -20,10 +20,10 @@
             <div class="row invoice-info form-horizontal">
                 <div class="col-sm-4 invoice-col">
                     <div class="form-group has-error">
-                        <label class="control-label col-xs-3" asp-for="Input.DeliveryType">类型</label>
+                        <label class="control-label col-xs-3" asp-for="Order.Main.DeliveryType">类型</label>
                         <div class="col-xs-9">
                             <div class="input-group">
-                                <input class="form-control" asp-for="Input.DeliveryTypeDescription" readonly />
+                                <input class="form-control" asp-for="Order.Main.DeliveryTypeDescription" readonly />
                                 <span class="input-group-btn">
                                     <button type="button" class="btn btn-danger btn-flat" style="width:40px"><i class="fa fa-bars"></i></button>
                                 </span>
@@ -31,10 +31,10 @@
                         </div>
                     </div>
                     <div class="form-group has-error">
-                        <label class="control-label col-xs-3" asp-for="Input.CustomerName">客户</label>
+                        <label class="control-label col-xs-3" asp-for="Order.Main.CustomerName">客户</label>
                         <div class="col-xs-9">
                             <div class="input-group">
-                                <input class="form-control" name="Input.CustomerId" asp-for="Input.CustomerName" readonly />
+                                <input class="form-control" name="Order.Main.CustomerId" asp-for="Order.Main.CustomerName" readonly />
                                 <span class="input-group-btn">
                                     <button type="button" class="btn btn-danger btn-flat" style="width:40px"><i class="fa fa-truck"></i></button>
                                 </span>
@@ -42,22 +42,22 @@
                         </div>
                     </div>
                     <div class="form-group has-error">
-                        <label class="control-label col-xs-3" asp-for="Input.DeliveryDate">日期</label>
+                        <label class="control-label col-xs-3" asp-for="Order.Main.DeliveryDate">日期</label>
                         <div class="col-xs-9">
                             <div class="input-group">
-                                <input type="text" asp-for="Input.DeliveryDate" class="form-control pull-right" readonly />
+                                <input type="text" asp-for="Order.Main.DeliveryDate" class="form-control pull-right" value="@Model.Order.Main.DeliveryDate.Value.ToString("yyyy-MM-dd")" readonly />
                                 <span class="input-group-btn">
                                     <button type="button" class="btn btn-danger btn-flat" style="width:40px"><i class="fa fa-calendar-o"></i></button>
                                 </span>
                             </div>
                         </div>
-                        <span class="help-block" asp-validation-for="Input.DeliveryDate"></span>
+                        <span class="help-block" asp-validation-for="Order.Main.DeliveryDate"></span>
                     </div>
                     <div class="form-group has-error">
-                        <label class="control-label col-xs-3" asp-for="Input.DeliveryAddress">地址</label>
+                        <label class="control-label col-xs-3" asp-for="Order.Main.DeliveryAddress">地址</label>
                         <div class="col-xs-9">
                             <div class="input-group">
-                                <input asp-for="Input.DeliveryAddress" class="form-control" readonly />
+                                <input asp-for="Order.Main.DeliveryAddress" class="form-control" readonly />
                                 <span class="input-group-btn">
                                     <button type="button" class="btn btn-danger btn-flat" style="width:40px"><i class="fa fa-map-o"></i></button>
                                 </span>
@@ -68,10 +68,10 @@
                 <!-- /.col -->
                 <div class="col-sm-4 invoice-col">
                     <div class="form-group has-warning">
-                        <label class="control-label col-xs-3" asp-for="Input.Contact"></label>
+                        <label class="control-label col-xs-3" asp-for="Order.Main.Contact"></label>
                         <div class="col-xs-9">
                             <div class="input-group">
-                                <input type="text" asp-for="Input.Contact" class="form-control" readonly />
+                                <input type="text" asp-for="Order.Main.Contact" class="form-control" readonly />
                                 <span class="input-group-btn">
                                     <button type="button" class="btn btn-warning btn-flat" style="width:40px"><i class="fa fa-user"></i></button>
                                 </span>
@@ -79,10 +79,10 @@
                         </div>
                     </div>
                     <div class="form-group has-warning">
-                        <label class="control-label col-xs-3" asp-for="Input.ContactNumber"></label>
+                        <label class="control-label col-xs-3" asp-for="Order.Main.ContactNumber"></label>
                         <div class="col-xs-9">
                             <div class="input-group">
-                                <input type="text" asp-for="Input.ContactNumber" class="form-control" readonly />
+                                <input type="text" asp-for="Order.Main.ContactNumber" class="form-control" readonly />
                                 <span class="input-group-btn">
                                     <button type="button" class="btn btn-warning btn-flat" style="width:40px"><i class="fa fa-phone"></i></button>
                                 </span>
@@ -90,10 +90,10 @@
                         </div>
                     </div>
                     <div class="form-group has-warning">
-                        <label class="control-label col-xs-3" asp-for="Input.Remarks"></label>
+                        <label class="control-label col-xs-3" asp-for="Order.Main.Remarks"></label>
                         <div class="col-xs-9">
                             <div class="input-group">
-                                <textarea asp-for="Input.Remarks" class="form-control" rows="3" readonly></textarea>
+                                <textarea asp-for="Order.Main.Remarks" class="form-control" rows="3" readonly></textarea>
                                 <span class="input-group-addon"><i class="fa fa-ellipsis-h"></i></span>
                             </div>
                         </div>
@@ -102,10 +102,10 @@
                 <!-- /.col -->
                 <div class="col-sm-4 invoice-col">
                     <div class="form-group">
-                        <label class="control-label col-xs-3" asp-for="Input.DeliveryId">送货单号</label>
+                        <label class="control-label col-xs-3" asp-for="Order.Main.DeliveryId">送货单号</label>
                         <div class="col-xs-9">
                             <div class="input-group">
-                                <input type="text" asp-for="Input.DeliveryId" class="form-control" readonly />
+                                <input type="text" asp-for="Order.Main.DeliveryId" class="form-control" readonly />
                                 <span class="input-group-btn">
                                     <button type="button" class="btn btn-default btn-flat" style="width:40px"><i class="fa fa-sticky-note-o"></i></button>
                                 </span>
@@ -113,10 +113,10 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="control-label col-xs-3" asp-for="Input.CreatedBy"></label>
+                        <label class="control-label col-xs-3" asp-for="Order.Main.CreatedBy"></label>
                         <div class="col-xs-9">
                             <div class="input-group">
-                                <input type="text" asp-for="Input.CreatedBy" class="form-control" readonly />
+                                <input type="text" asp-for="Order.Main.CreatedBy" class="form-control" readonly />
                                 <span class="input-group-btn">
                                     <button type="button" class="btn btn-default btn-flat" style="width:40px"><i class="fa fa-user-o"></i></button>
                                 </span>
@@ -124,10 +124,10 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="control-label col-xs-3" asp-for="Input.CreatedDate"></label>
+                        <label class="control-label col-xs-3" asp-for="Order.Main.CreatedDate"></label>
                         <div class="col-xs-9">
                             <div class="input-group">
-                                <input type="text" asp-for="Input.CreatedDate" class="form-control" readonly />
+                                <input type="text" asp-for="Order.Main.CreatedDate" class="form-control" value="@Model.Order.Main.CreatedDate.Value.ToString("yyyy-MM-dd HH:mm:ss")" readonly />
                                 <span class="input-group-btn">
                                     <button type="button" class="btn btn-default btn-flat" style="width:40px"><i class="fa fa-calendar-o"></i></button>
                                 </span>
@@ -165,15 +165,15 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @if (Model.Input.DeliveryItems.Count == 0)
+                                @if (Model.Order.Details.Count == 0)
                                 {
                                     <tr><td colspan="20" class="text-center">出库清单空</td></tr>
 
                                 }
-                                @foreach (var item in Model.Input.DeliveryItems)
+                                @foreach (var item in Model.Order.Details)
                                 {
                                     <tr>
-                                        <td>@item.Index</td>
+                                        <td>@item.Id</td>
                                         <td>@item.Description</td>
                                         <td>@item.Specification</td>
                                         <td>@item.Length</td>

@@ -2,25 +2,29 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using PinhuaMaster.Data.Entities.Pinhua;
+using PinhuaMaster.Pages.OrderManagement.EasyDelivery.ViewModel;
 
-namespace PinhuaMaster.Pages.OrderManagement.Old.DeliveryOrder
+namespace PinhuaMaster.Pages.OrderManagement.EasyDelivery
 {
-    public class Details2Model : PageModel
+    public class DetailsModel : PageModel
     {
-        private PinhuaContext _pinhuaContext { get; set; }
+        private readonly PinhuaContext _pinhuaContext;
+        private readonly IMapper _mapper;
 
-        public Details2Model(PinhuaContext pinhuaContext)
+        public DetailsModel(PinhuaContext pinhuaContext, IMapper mapper)
         {
             _pinhuaContext = pinhuaContext;
+            _mapper = mapper;
         }
 
         [BindProperty]
-        public CreateModel.InputModel Input { get; set; }
+        public Gi2ViewModel Order { get; set; }
         public List<SelectListItem> DeliveryTypes { get; set; } = new List<SelectListItem>();
         public List<SelectListItem> Customers { get; set; } = new List<SelectListItem>();
 
@@ -29,43 +33,17 @@ namespace PinhuaMaster.Pages.OrderManagement.Old.DeliveryOrder
             DeliveryTypes = BuildTypes();
             Customers = BuildCustomers();
 
-            var order = _pinhuaContext.Gi2Main.FirstOrDefault(p => p.DeliveryId == Id);
-            Input = new CreateModel.InputModel
+            var remoteOrder = _pinhuaContext.Gi2Main.AsNoTracking().FirstOrDefault(p => p.DeliveryId == Id);
+            if (remoteOrder == null)
+                return;
+
+            Order = new Gi2ViewModel
             {
-                Rcid = order.ExcelServerRcid,
-                DeliveryId = order.DeliveryId,
-                Contact = order.Contact,
-                ContactNumber = order.ContactNumber,
-                CreatedBy = order.CreatedBy,
-                CreatedDate = order.CreatedDate,
-                CustomerId = order.CustomerId,
-                CustomerName = order.CustomerName,
-                DeliveryAddress = order.DeliveryAddress,
-                DeliveryDate = order.DeliveryDate.Value.ToString("yyyy-MM-dd"),
-                DeliveryType = order.DeliveryType,
-                DeliveryTypeDescription = _pinhuaContext.业务类型.AsNoTracking().FirstOrDefault(p => p.业务类型1 == order.DeliveryType)?.类型描述 ?? string.Empty,
-                Remarks = order.Remarks,
-                DeliveryItems = new List<CreateModel.ItemModel>()
+                Main = _mapper.Map<Gi2Main, Gi2MainDTO>(remoteOrder),
+                Details = _mapper.Map<List<Gi2Details>, List<Gi2DetaislDTO>>(_pinhuaContext.Gi2Details.AsNoTracking().Where(p => p.DeliveryId == remoteOrder.DeliveryId).ToList()),
             };
-            var items = from p in _pinhuaContext.Gi2Details.AsNoTracking()
-                        where p.ExcelServerRcid == Input.Rcid
-                        select new CreateModel.ItemModel
-                        {
-                            DeliveryId = p.DeliveryId,
-                            Index = p.Id.ToString(),
-                            Description = p.Description,
-                            Specification = p.Specification,
-                            Length = p.Length,
-                            Width = p.Width,
-                            Height = p.Height,
-                            Qty = p.Qty,
-                            UnitQty = p.UnitQty,
-                            Unit = p.Unit,
-                            Price = p.Price,
-                            Amount = p.Amount,
-                            Remarks = string.Empty
-                        };
-            Input.DeliveryItems.AddRange(items);
+
+            Order.Main.DeliveryTypeDescription = _pinhuaContext.业务类型.FirstOrDefault(p => p.业务类型1 == Order.Main.DeliveryType).类型描述;
         }
 
         private List<SelectListItem> BuildTypes()

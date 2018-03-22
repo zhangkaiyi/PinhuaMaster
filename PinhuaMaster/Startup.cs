@@ -15,6 +15,7 @@ using Microsoft.Extensions.FileProviders;
 using System.IO;
 using PinhuaMaster.Data.Entities.Pinhua;
 using PinhuaMaster.Data.Entities.EastRiver;
+using AutoMapper;
 
 namespace PinhuaMaster
 {
@@ -52,6 +53,8 @@ namespace PinhuaMaster
                 .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddDefaultTokenProviders();
 
+            services.AddAutoMapper();
+
             services.AddMvc()
                 .AddRazorPagesOptions(options =>
                 {
@@ -59,6 +62,11 @@ namespace PinhuaMaster
                     //options.Conventions.AuthorizePage("/Account/Logout");
                     options.Conventions.AuthorizeFolder("/", "Permissons").AllowAnonymousToFolder("/Account");
                 });
+
+            services.AddAuthentication().AddCookie(options =>
+            {
+                options.ExpireTimeSpan = TimeSpan.FromDays(1);
+            });
 
             services.AddAuthorization(options =>
             {

@@ -6,6 +6,16 @@
       "url": "/Index"
     },
     {
+      "name": "简易送货单",
+      "icon": "fa fa-circle-o",
+      "url": "/OrderManagement/EasyDelivery/Index"
+    },
+    {
+      "name": "对帐单",
+      "icon": "fa fa-circle-o",
+      "url": "/Statement/Index"
+    },
+    {
       "name": "订单系统",
       "icon": "fa fa-pencil-square-o",
       "url": "",
@@ -41,11 +51,6 @@
               "url": "/OrderManagement/Old/DeliveryOrder/Index"
             },
             {
-              "name": "送货单WEB版",
-              "icon": "fa fa-circle-o",
-              "url": "/OrderManagement/Old/DeliveryOrder/Index2"
-            },
-            {
               "name": "新建送货单",
               "icon": "fa fa-circle-o",
               "url": "/OrderManagement/Old/DeliveryOrder/Create"
@@ -58,6 +63,23 @@
       "name": "采购系统",
       "icon": "fa fa-stack-overflow",
       "url": "/OrderManagement/Purchase/Index"
+    },
+    {
+      "name": "财务管理",
+      "icon": "fa fa-exchange",
+      "url": "",
+      "children": [
+        {
+          "name": "收款",
+          "icon": "fa fa-angle-double-right",
+          "url": "/Finance/Collection/Index"
+        },
+        {
+          "name": "付款",
+          "icon": "fa fa-angle-double-left",
+          "url": "/Finance/Payment/Index"
+        }
+      ]
     },
     {
       "name": "考勤管理",

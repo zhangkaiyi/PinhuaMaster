@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
 using PinhuaMaster.Data.Entities.Pinhua;
 using System;
 using System.Collections.Generic;
@@ -41,6 +42,112 @@ namespace PinhuaMaster.Extensions
             var rcId = "rc" + DateTime.Now.ToString("yyyyMMdd") + newId.ToString("D5");
 
             return newId == 0 ? "" : rcId;
+        }
+
+        /// <summary>
+        /// 获取指定模板对应的RtId
+        /// </summary>
+        /// <param name="context"></param>
+        /// <returns></returns>
+        static public string GetRtId(this PinhuaContext context, string templateName)
+        {
+                var rtId = from p in context.EsTmp
+                           where p.RtName == templateName
+                           select p.RtId;
+                return rtId.First() ?? string.Empty;
+        }
+
+        /// <summary>
+        /// 获取客户列表的下拉框数据
+        /// </summary>
+        /// <param name="_pinhuaContext"></param>
+        /// <returns></returns>
+        static public List<SelectListItem> GetCustomerSelectList(this PinhuaContext _pinhuaContext)
+        {
+            var customers = from p in _pinhuaContext.往来单位.ToList()
+                            select p;
+
+            var groups = from p in customers
+                         orderby p.Rank descending
+                         group p by p.Rank into g
+                         select g.Key;
+            var groupingCustomers = new List<SelectListItem>();
+            foreach (var key in groups)
+            {
+                var optGroup = new SelectListGroup
+                {
+                    Name = key?.ToString()
+                };
+                foreach (var customer in customers)
+                {
+                    if (customer.Rank == key)
+                    {
+                        groupingCustomers.Add(new SelectListItem
+                        {
+                            Group = optGroup,
+                            Text = customer.单位编号 + " - " + customer.单位名称,
+                            Value = customer.单位编号
+                        });
+                    }
+                }
+            }
+            return groupingCustomers;
+        }
+
+        /// <summary>
+        /// 获取收款付款类型的下拉列表
+        /// </summary>
+        /// <param name="context"></param>
+        /// <returns></returns>
+        static public List<SelectListItem> GetCollectionTypeSelectList(this PinhuaContext context)
+        {
+            var collectionTypes = new List<SelectListItem>
+            {
+                new SelectListItem
+                {
+                    Text = "银行"
+                },
+                new SelectListItem
+                {
+                    Text = "现金"
+                },
+                new SelectListItem
+                {
+                    Text = "微信"
+                },
+                new SelectListItem
+                {
+                    Text = "支付宝"
+                },
+            };
+            return collectionTypes;
+        }
+
+        public static class Copy
+        {
+            public static void ShadowCopy(object from, object to)
+            {
+                if (from.GetType() == to.GetType())
+                {
+                    System.Reflection.PropertyInfo[] properties = from.GetType().GetProperties();
+
+                    foreach (var p in properties)
+                    {
+                        var value = p.GetValue(from, null);
+                        if (value != GetDefault(p.GetType()))
+                            p.SetValue(to, value, null);
+                    }
+                }
+            }
+
+            public static object GetDefault(Type type)
+            {
+                if (type.IsValueType)
+                {
+                    return Activator.CreateInstance(type);
+                }
+                return null;
+            }
         }
     }
 }

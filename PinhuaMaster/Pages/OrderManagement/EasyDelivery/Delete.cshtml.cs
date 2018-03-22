@@ -6,12 +6,12 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using PinhuaMaster.Data.Entities.Pinhua;
 
-namespace PinhuaMaster.Pages.OrderManagement.Old.DeliveryOrder
+namespace PinhuaMaster.Pages.OrderManagement.EasyDelivery
 {
-    public class Delete2Model : PageModel
+    public class DeleteModel : PageModel
     {
         private PinhuaContext _pinhuaContext { get; set; }
-        public Delete2Model(PinhuaContext pinhuaContext)
+        public DeleteModel(PinhuaContext pinhuaContext)
         {
             _pinhuaContext = pinhuaContext;
         }
@@ -36,7 +36,7 @@ namespace PinhuaMaster.Pages.OrderManagement.Old.DeliveryOrder
             if (c != null)
                 _pinhuaContext.Gi2Details.RemoveRange(c);
             _pinhuaContext.SaveChanges();
-            return RedirectToPage("Index2");
+            return RedirectToPage("Index");
         }
     }
 }

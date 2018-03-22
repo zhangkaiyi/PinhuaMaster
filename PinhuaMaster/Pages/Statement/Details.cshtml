@@ -1,0 +1,58 @@
+﻿@page "{Id}"
+@model PinhuaMaster.Pages.Statement.DetailsModel
+@{
+    ViewData["Title"] = "Details";
+    Layout = "~/Pages/_Layout.cshtml";
+}
+
+<div class="box box-solid">
+    <div class="box-header">
+        <div class="box-title">@Model.StatementData.应收合计 @Model.StatementData.应付合计</div>
+    </div>
+    <div class="box-body">
+        <table data-toggle="table"
+               data-show-columns="true"
+               data-search="true"
+               data-striped="true"
+               data-pagination="true"
+               data-page-size="50"
+               data-page-list="[50, 100, 200, ALL]"
+               style="white-space:nowrap">
+            <thead>
+                <tr>
+                    <th data-visible="false">业务类型</th>
+                    <th data-visible="false">业务描述</th>
+                    <th>日期</th>
+                    <th data-visible="false">单号</th>
+                    <th>产品描述</th>
+                    <th>规格</th>
+                    <th data-align="right" data-halign="center">片数</th>
+                    <th data-align="right" data-halign="center">单位数量</th>
+                    <th>计价单位</th>
+                    <th data-align="right" data-halign="center">单价</th>
+                    <th data-align="right">应收</th>
+                    <th data-align="right">应付</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var record in Model.StatementData.明细)
+                {
+                    <tr>
+                        <td>@record.业务类型</td>
+                        <td>@record.业务描述</td>
+                        <td>@record.日期.Value.ToString("yyyy-MM-dd")</td>
+                        <td>@record.单号</td>
+                        <td>@record.产品描述</td>
+                        <td>@record.规格</td>
+                        <td>@record?.片数?.ToString("0.00")</td>
+                        <td>@record?.单位数量?.ToString("0.0000")</td>
+                        <td>@record.计价单位</td>
+                        <td>@record?.单价?.ToString("0.00")</td>
+                        <td>@record?.应收?.ToString("0.00")</td>
+                        <td>@record?.应付?.ToString("0.00")</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

@@ -162,7 +162,7 @@ desired effect
                 </ol>
             </section>
             <!-- Main content -->
-            <section class="content container-fluid">
+            <section class="content container-fluid" id="mainContent" style="display:none">
                 <!--------------------------
                   | Your Page Content Here |
                   -------------------------->
@@ -227,7 +227,21 @@ desired effect
             $.fn.datepicker.defaults.todayHighlight = true;
             $.fn.datepicker.defaults.autoclose = true;
         })
+        //解决IOS后退不刷新的问题
+        $(function () {
+            window.onpageshow = function (event) {
+                if (event.persisted) {
+                    window.location.reload();
+                }
+            }
+        });
     </script>
     @RenderSection("Scripts", required: false)
+
+    <script>
+        $(function () { 
+            $('#mainContent').show()
+        })
+    </script>
 </body>
 </html>
