@@ -2,7 +2,7 @@
 @using PinhuaMaster.Pages.OrderManagement.EasyDelivery.ViewModel
 @model PinhuaMaster.Pages.OrderManagement.EasyDelivery.EditModel
 @{
-    ViewData["Title"] = "Edit2";
+    ViewData["Title"] = "编辑";
 
     var emptyRecord = Newtonsoft.Json.JsonConvert.SerializeObject(new Gi2DetaislDTO
     {
@@ -18,7 +18,7 @@
                 <div class="col-xs-12">
                     <h2 class="page-header">
                         <i class="fa fa-globe"></i> 胜美木业, Inc.
-                        @*<small class="pull-right">Date:  @DateTime.UtcNow.ToString("yyyy/M/d")</small>*@
+                        @*<small class="pull-right">Date:  @DateTime.Now.ToString("yyyy/M/d")</small>*@
                     </h2>
                 </div>
                 <!-- /.col -->
@@ -47,7 +47,7 @@
                     <div class="form-group has-error">
                         <label class="control-label" asp-for="Order.Main.DeliveryDate"><i class="fa fa-angle-double-right"></i> @Html.DisplayNameFor(x => x.Order.Main.DeliveryDate)</label>
                         <div class="input-group">
-                            <input type="text" asp-for="Order.Main.DeliveryDate" data-provide="datepicker" data-date-format="yyyy-mm-dd" value="@Model.Order.Main.DeliveryDate.Value.ToString("yyyy-MM-dd")" readonly class="form-control pull-right" />
+                            <input type="text" asp-for="Order.Main.DeliveryDate" data-provide="datepicker" data-date-format="yyyy-mm-dd" value="@Model?.Order?.Main?.DeliveryDate?.ToString("yyyy-MM-dd")" class="form-control" readonly />
                             <span class="input-group-btn">
                                 <button type="button" class="btn btn-danger btn-flat" style="width:40px"><i class="fa fa-calendar-o"></i></button>
                             </span>

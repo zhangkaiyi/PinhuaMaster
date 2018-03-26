@@ -57,6 +57,21 @@ namespace PinhuaMaster.Extensions
                 return rtId.First() ?? string.Empty;
         }
 
+        static public string CreatePersonnelFileId(this PinhuaContext context, string prefix, int indexLength)
+        {
+            var year = DateTime.Now.ToString("yy");
+            var prefixId = prefix + year;
+            var exsistedMaxId = (from p in context.人员档案
+                                 where p.人员编号.Substring(0, prefixId.Length) == prefixId
+                                 && p.人员编号.Length == prefixId.Length + indexLength
+                                 && p.登记时间.Value.Year == DateTime.Now.Year
+                                 orderby p.人员编号 descending
+                                 select p.人员编号)
+                             .FirstOrDefault();
+            var idIndex = int.Parse(string.IsNullOrEmpty(exsistedMaxId) ? "0" : exsistedMaxId.Substring(prefixId.Length, indexLength)) + 1;
+            return prefixId + idIndex.ToString($"D{indexLength}");
+        }
+
         /// <summary>
         /// 获取客户列表的下拉框数据
         /// </summary>

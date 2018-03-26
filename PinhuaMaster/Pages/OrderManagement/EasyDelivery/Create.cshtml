@@ -4,7 +4,7 @@
 @using Microsoft.EntityFrameworkCore
 @model CreateModel
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = "录入";
     var emptyRecord = Newtonsoft.Json.JsonConvert.SerializeObject(new Gi2DetaislDTO
     {
         Unit = "平方米",
@@ -35,7 +35,7 @@
                 <div class="col-xs-12">
                     <h2 class="page-header">
                         <i class="fa fa-globe"></i> 胜美木业, Inc.
-                        @*<small class="pull-right">Date:  @DateTime.UtcNow.ToString("yyyy/M/d")</small>*@
+                        @*<small class="pull-right">Date:  @DateTime.Now.ToString("yyyy/M/d")</small>*@
                     </h2>
                 </div>
                 <!-- /.col -->
@@ -55,7 +55,7 @@
                     <div class="form-group has-error">
                         <label class="control-label" asp-for="Order.Main.CustomerId"><i class="fa fa-angle-double-right"></i> @Html.DisplayNameFor(x => x.Order.Main.CustomerId)</label>
                         <div class="input-group">
-                            <select class="form-control" name="Order.Main.CustomerId" asp-for="Order.Main.CustomerId" asp-items="Model.Customers"></select>
+                            <select class="form-control" name="Order.Main.CustomerId" asp-for="Order.Main.CustomerId" asp-items="Model.CustomerSelectList"></select>
                             <span class="input-group-btn">
                                 <button type="button" class="btn btn-danger btn-flat" style="width:40px"><i class="fa fa-truck"></i></button>
                             </span>
@@ -64,7 +64,7 @@
                     <div class="form-group has-error">
                         <label class="control-label" asp-for="Order.Main.DeliveryDate"><i class="fa fa-angle-double-right"></i> @Html.DisplayNameFor(x => x.Order.Main.DeliveryDate)</label>
                         <div class="input-group">
-                            <input type="text" asp-for="Order.Main.DeliveryDate" data-provide="datepicker" data-date-format="yyyy-mm-dd" readonly class="form-control pull-right" />
+                            <input type="text" asp-for="Order.Main.DeliveryDate" data-provide="datepicker" data-date-format="yyyy-mm-dd" readonly class="form-control" />
                             <span class="input-group-btn">
                                 <button type="button" class="btn btn-danger btn-flat" style="width:40px"><i class="fa fa-calendar-o"></i></button>
                             </span>

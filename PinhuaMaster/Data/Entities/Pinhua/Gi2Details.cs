@@ -24,5 +24,6 @@ namespace PinhuaMaster.Data.Entities.Pinhua
         public int? ExcelServerChg { get; set; }
         public int Id { get; set; }
         public string DeliveryId { get; set; }
+        public string Remarks { get; set; }
     }
 }

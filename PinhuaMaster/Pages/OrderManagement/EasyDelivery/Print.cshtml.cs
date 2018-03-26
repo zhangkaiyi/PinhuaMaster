@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace PinhuaMaster.Pages.OrderManagement.EasyDelivery
 {
-    public class Print2Model : PageModel
+    public class PrintModel : PageModel
     {
         public string Id { get; set; }
         public void OnGet(string Id)

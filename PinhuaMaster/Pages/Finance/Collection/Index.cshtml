@@ -3,7 +3,6 @@
 @{
     ViewData["Title"] = "Index";
 
-    var shoukuanCount = pinhuaContext.收款单.Count();
     var collectionList = pinhuaContext.收款单.OrderByDescending(x => x.收款日期).ThenBy(x => x.单位编号);
 }
 <div class="row">
@@ -11,7 +10,6 @@
         <div class="box box-solid">
             <div class="box-header with-border">
                 <h3 class="box-title">收款清单</h3>
-                <span class="label label-primary pull-right">@shoukuanCount</span>
             </div><!-- /.box-header -->
             <div class="box-body">
                 <div class="mailbox-controls no-padding" id="toolbar">
@@ -38,7 +36,7 @@
                             <th>收款日期</th>
                             <th class="hidden-xs">收款单号</th>
                             <th>收款单位</th>
-                            <th>收款金额</th>
+                            <th data-align="right">收款金额</th>
                             <th>收款类型</th>
                             <th data-visible="false">ExcelServerRcid</th>
                         </tr>
@@ -71,7 +69,7 @@
 @section Scripts{
     <script>
         function toDelete(rcid) {
-            if (confirm('确定删除这条收款记录吗？')) {
+            if (confirm('确定删除这条记录吗？')) {
                 $('#toDeleteRcid').val(rcid);
                 $('#toDeleteForm').submit();
             }

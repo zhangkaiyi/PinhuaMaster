@@ -3,22 +3,21 @@
 @{
     ViewData["Title"] = "Index";
 
-    var fukuanCount = pinhuaContext.付款单.Count();
     var paymentList = pinhuaContext.付款单.OrderByDescending(x => x.付款日期).ThenBy(x => x.单位编号);
-
 }
 
 <div class="row">
     <section class="col-sm-9">
         <div class="box box-solid">
             <div class="box-header with-border">
-                <h3 class="box-title">付款清单</h3>
-                <span class="label label-primary pull-right">@fukuanCount</span>
+                <h3 class="box-title">
+                    付款清单
+                </h3>
             </div><!-- /.box-header -->
             <div class="box-body">
                 <div class="mailbox-controls no-padding" id="toolbar">
                     <!-- Check all button -->
-                    <a href="@Url.Action("FukuanAdd")" class="btn btn-default btn-sm"><i class="fa fa-plus"></i><span> 新增记录</span></a>
+                    <a asp-page="Create" class="btn btn-default btn-sm"><i class="fa fa-plus"></i><span> 新增记录</span></a>
 
                     <div class="btn-group">
                         <button type="button" class="btn btn-default btn-sm"><i class="fa fa-trash-o"></i></button>
@@ -34,6 +33,8 @@
                        data-classes="table table-bordered table-striped">
                     <thead>
                         <tr>
+                            <th data-width="20px"></th>
+                            <th data-width="20px"></th>
                             <th>收款日期</th>
                             <th class="hidden-xs">收款单号</th>
                             <th>收款单位</th>
@@ -42,14 +43,16 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach (var collection in paymentList)
+                        @foreach (var payment in paymentList)
                         {
                             <tr>
-                                <td>@collection.付款日期?.ToString("yyyy-MM-dd")</td>
-                                <td>@collection.付款单号</td>
-                                <td>@collection.付款单位</td>
-                                <td>@collection.付款金额</td>
-                                <td>@collection.付款类型</td>
+                                <td><a asp-page="Edit" asp-route-id="@payment.付款单号"><i class="fa fa-edit"></i></a></td>
+                                <td><a href="javascript:toDelete('@payment.ExcelServerRcid')"><i class="fa fa-times"></i></a></td>
+                                <td>@payment.付款日期?.ToString("yyyy-MM-dd")</td>
+                                <td>@payment.付款单号</td>
+                                <td>@payment.付款单位</td>
+                                <td>@payment.付款金额</td>
+                                <td>@payment.付款类型</td>
                             </tr>
                         }
                     </tbody>
@@ -57,9 +60,19 @@
             </div><!-- /.box-body -->
         </div><!-- /.box -->
 
-        @using (Html.BeginForm("FukuanDelete", "Caiwu", FormMethod.Post, new { id = "del_form" }))
-        {
-            <input type="hidden" id="del_rcid" name="rcId" />
-        }
+        <form method="post" asp-page="Delete" id="toDeleteForm">
+            <input type="hidden" id="toDeleteRcid" name="rcId" />
+        </form>
     </section>
 </div>
+
+@section Scripts{
+    <script>
+        function toDelete(rcid) {
+            if (confirm('确定删除这条记录吗？')) {
+                $('#toDeleteRcid').val(rcid);
+                $('#toDeleteForm').submit();
+            }
+        }
+    </script>
+}

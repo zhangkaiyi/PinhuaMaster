@@ -24,6 +24,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
         <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css">
         <!-- Bootstrap Table -->
         <link rel="stylesheet" href="~/lib/bootstrap-table/dist/bootstrap-table.css" />
+        <link rel="stylesheet" href="~/lib/bootstrap-table/dist/extensions/group-by-v2/bootstrap-table-group-by.css" />
         <!-- Font Awesome -->
         <link rel="stylesheet" href="~/lib/font-awesome/css/font-awesome.css">
         <!-- Ionicons -->
@@ -40,6 +41,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
         <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css">
         <!-- Bootstrap Table -->
         <link rel="stylesheet" href="~/lib/bootstrap-table/dist/bootstrap-table.min.css" />
+        <link rel="stylesheet" href="~/lib/bootstrap-table/dist/extensions/group-by-v2/bootstrap-table-group-by.css" />
         <!-- Font Awesome -->
         <link rel="stylesheet" href="~/lib/font-awesome/css/font-awesome.min.css">
         <!-- Ionicons -->
@@ -62,6 +64,13 @@ scratch. This page gets rid of all links and provides the needed markup only.
 
         body {
             font-size: 13px;
+        }
+
+        /*解决.form-horizontal在手机xs模式下无效的问题*/
+        .form-horizontal .control-label {
+            text-align: right;
+            margin-bottom: 0;
+            padding-top: 7px;
         }
     </style>
     @RenderSection("Styles", false)
@@ -139,7 +148,7 @@ desired effect
             <!-- Content Header (Page header) -->
             <section class="content-header">
                 <h1>
-                    @ViewBag.Title
+                    @(pathName?.LastOrDefault() ?? ViewBag.Title)
                     @*<small>@httpContextAccessor.HttpContext.Request.Cookies["menuids_open"]</small>*@
                 </h1>
                 <ol class="breadcrumb">
@@ -195,6 +204,7 @@ desired effect
         <!-- Bootstrap Table -->
         <script src="~/lib/bootstrap-table/dist/bootstrap-table.js"></script>
         <script src="~/lib/bootstrap-table/dist/locale/bootstrap-table-zh-CN.js"></script>
+        <script src="~/lib/bootstrap-table/dist/extensions/group-by-v2/bootstrap-table-group-by.js"></script>
         <!-- AdminLTE App -->
         <script src="~/lib/AdminLTE-2.4.3/dist/js/adminlte.js"></script>
         <!-- Vue -->
@@ -211,6 +221,7 @@ desired effect
         <!-- Bootstrap Table -->
         <script src="~/lib/bootstrap-table/dist/bootstrap-table.min.js"></script>
         <script src="~/lib/bootstrap-table/dist/locale/bootstrap-table-zh-CN.min.js"></script>
+        <script src="~/lib/bootstrap-table/dist/extensions/group-by-v2/bootstrap-table-group-by.min.js"></script>
         <!-- AdminLTE App -->
         <script src="~/lib/AdminLTE-2.4.3/dist/js/adminlte.min.js"></script>
         <!-- Vue -->
@@ -221,7 +232,7 @@ desired effect
     </environment>
     <script>
         $(function () {
-            FastClick.attach(document.body)
+            //FastClick.attach(document.body)
 
             $.fn.datepicker.defaults.language = 'zh-CN';
             $.fn.datepicker.defaults.todayHighlight = true;
@@ -239,7 +250,7 @@ desired effect
     @RenderSection("Scripts", required: false)
 
     <script>
-        $(function () { 
+        $(function () {
             $('#mainContent').show()
         })
     </script>

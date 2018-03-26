@@ -1,0 +1,56 @@
+﻿@page "{year}/{month}/{id}"
+@using Microsoft.EntityFrameworkCore;
+@model PinhuaMaster.Pages.Attendance.EastRiver.DetailsModel
+@{
+    ViewData["Title"] = "Details";
+    var id = @PageContext.RouteData.Values["id"] as string;
+    var name = pinhuaContext.人员档案.AsNoTracking().FirstOrDefault(p => p.人员编号 == id).姓名;
+    var year = @PageContext.RouteData.Values["year"] as string;
+    var month = @PageContext.RouteData.Values["month"] as string;
+}
+
+<div class="box box-solid">
+    <div class="box-header">
+        <div class="box-title">@name - @(year)年@(month)月</div>
+    </div>
+    <div class="box-body">
+        <table data-toggle="table">
+            <thead>
+                <tr>
+                    <th>编号</th>
+                    <th class="hidden-xs">卡号</th>
+                    <th>打卡时间</th>
+                    <th class="hidden-xs">收录时间</th>
+                    <th data-width="20"></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var timeRecord in Model.timeRecords)
+                {
+                <tr>
+                    <td>@timeRecord.Id</td>
+                    <td>@timeRecord.CardId</td>
+                    <td>@timeRecord.SignTime.ToString("yyyy-MM-dd HH:mm:ss")</td>
+                    <td>@timeRecord.DCollectTime</td>
+                    <td><a href="javascript:toDelete(@timeRecord.Id)"><i class="fa fa-times"></i></a></td>
+                </tr>
+
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+<form method="post" asp-page="Delete" id="toDeleteForm">
+    <input type="hidden" id="toDeleteRcid" name="id" />
+</form>
+
+@section Scripts{
+    <script>
+        function toDelete(id) {
+            if (confirm('确定删除这条记录吗？')) {
+                $('#toDeleteRcid').val(id);
+                $('#toDeleteForm').submit();
+            }
+        }
+    </script>
+}

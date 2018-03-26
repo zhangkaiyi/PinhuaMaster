@@ -14,23 +14,21 @@ namespace PinhuaMaster.Pages.Statement.ViewModel
     }
     public class Model应收应付明细
     {
-        public string rcId { get; set; }
-        public string 业务类型 { get; set; }
-        public string 业务描述 { get; set; }
-        public DateTime? 日期 { get; set; }
-        public string 单号 { get; set; }
-        public string 产品编号 { get; set; }
-        public string 产品描述 { get; set; }
-        public string 规格 { get; set; }
-        public decimal? 片数 { get; set; }
-        public decimal? 单位数量 { get; set; }
-        public string 计价单位 { get; set; }
-        public decimal? 单价 { get; set; }
-        public decimal? 应收 { get; set; }
-        public decimal? 应付 { get; set; }
-        public string 备注 { get; set; }
-        public decimal? 单据应收合计 { get; set; }
-        public decimal? 单据应付合计 { get; set; }
+        public string RcId { get; set; }
+        public string Type { get; set; }
+        public string TypeDescription { get; set; }
+        public DateTime? Date { get; set; }
+        public string OrderId { get; set; }
+        public string ItemId { get; set; }
+        public string ItemDescription { get; set; }
+        public string Specification { get; set; }
+        public decimal? Qty { get; set; }
+        public decimal? UnitQty { get; set; }
+        public string Unit { get; set; }
+        public decimal? Price { get; set; }
+        public decimal? Amount { get; set; }
+        public string Remarks { get; set; }
+        public decimal? TotalAmount { get; set; }
     }
     public class Model出库入库
     {
@@ -39,22 +37,22 @@ namespace PinhuaMaster.Pages.Statement.ViewModel
     }
     public class Model出库入库条目
     {
-        public string 单号 { get; set; }
-        public string 客户编号 { get; set; }
-        public DateTime? 送货日期 { get; set; }
-        public string 业务类型 { get; set; }
-        public string 业务描述 { get; set; }
-        public string 备注 { get; set; }
+        public string OrderId { get; set; }
+        public string CustomerId { get; set; }
+        public DateTime? Date { get; set; }
+        public string Type { get; set; }
+        public string TypeDescription { get; set; }
+        public string Remarks { get; set; }
     }
     public class Model出库入库明细
     {
-        public string 编号 { get; set; }
-        public string 描述 { get; set; }
-        public string 规格 { get; set; }
-        public decimal? 片数 { get; set; }
-        public string 计价单位 { get; set; }
-        public decimal? 单位数量 { get; set; }
-        public decimal? 单价 { get; set; }
-        public decimal? 金额 { get; set; }
+        public string ItemId { get; set; }
+        public string Description { get; set; }
+        public string Specification { get; set; }
+        public decimal? Qty { get; set; }
+        public string Unit { get; set; }
+        public decimal? UnitQty { get; set; }
+        public decimal? Price { get; set; }
+        public decimal? Amount { get; set; }
     }
 }

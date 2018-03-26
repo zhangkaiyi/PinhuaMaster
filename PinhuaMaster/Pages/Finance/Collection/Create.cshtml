@@ -2,15 +2,6 @@
 @model PinhuaMaster.Pages.Finance.Collection.CreateModel
 @{
     ViewData["Title"] = "Create";
-
-    var partners = from p in pinhuaContext.往来单位
-                   orderby p.Rank descending
-                   select p;
-
-    var selectGroups = from p in partners
-                       group p by p.Rank into g
-                       orderby g.Key descending
-                       select g.Key;
 }
 
 <div class="row">
@@ -32,7 +23,7 @@
                     <div class="form-group">
                         <label class="control-label col-xs-3 col-md-2" for="单位编号">收款单位</label>
                         <div class="col-xs-9 col-md-10">
-                            <select class="form-control" id="单位编号" asp-for="Collection.单位编号" asp-items="Model.CustomerSelectList">                            </select>
+                            <select class="form-control" id="单位编号" asp-for="Collection.单位编号" asp-items="Model.CustomerSelectList"></select>
                         </div>
                     </div>
                     <div class="form-group">
@@ -44,7 +35,12 @@
                     <div class="form-group">
                         <label class="control-label col-xs-3 col-md-2" for="收款日期">日期</label>
                         <div class="col-xs-9 col-md-10">
-                            <input type="date" class="form-control" id="收款日期" asp-for="Collection.收款日期" placeholder="Date" value="@DateTime.UtcNow.ToString("yyyy-MM-dd")">
+                            <input asp-for="Collection.收款日期" value="@DateTime.Now.ToString("yyyy-MM-dd")" type="text"
+                                   id="收款日期"
+                                   class="form-control"
+                                   data-provide="datepicker"
+                                   data-date-format="yyyy-mm-dd" 
+                                   readonly />
                         </div>
                     </div>
                     <div class="form-group">
@@ -67,7 +63,7 @@
                             <button type="submit" class="btn btn-primary pull-right">
                                 <i class="fa fa-check"></i> 确认提交
                             </button>
-                            <a asp-page="Index" class="btn btn-danger pull-right" style="margin-right: 5px;">
+                            <a asp-page="Index" class="btn btn-default pull-right" style="margin-right: 5px;">
                                 <i class="fa fa-reply"></i> 取消
                             </a>
                         </div>

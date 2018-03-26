@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using PinhuaMaster.Data.Entities.Pinhua;
+using PinhuaMaster.Extensions;
 using PinhuaMaster.Pages.OrderManagement.EasyDelivery.ViewModel;
 
 namespace PinhuaMaster.Pages.OrderManagement.EasyDelivery
@@ -32,7 +33,7 @@ namespace PinhuaMaster.Pages.OrderManagement.EasyDelivery
         public void OnGet(string Id)
         {
             DeliveryTypes = BuildTypes();
-            Customers = BuildCustomers();
+            Customers = _pinhuaContext.GetCustomerSelectList();
 
             Order.Main = _mapper.Map<Gi2Main, Gi2MainDTO>(_pinhuaContext.Gi2Main.AsNoTracking().Where(p => p.DeliveryId == Id).FirstOrDefault());
             Order.Details = _mapper.Map<List<Gi2Details>, List<Gi2DetaislDTO>>(_pinhuaContext.Gi2Details.AsNoTracking().Where(p => p.DeliveryId == Id).ToList());
@@ -115,38 +116,6 @@ namespace PinhuaMaster.Pages.OrderManagement.EasyDelivery
                 }
             }
             return groupingTypes;
-        }
-
-        private List<SelectListItem> BuildCustomers()
-        {
-            var customers = from p in _pinhuaContext.往来单位.ToList()
-                            select p;
-
-            var groups = from p in customers
-                         orderby p.Rank descending
-                         group p by p.Rank into g
-                         select g.Key;
-            var groupingCustomers = new List<SelectListItem>();
-            foreach (var key in groups)
-            {
-                var optGroup = new SelectListGroup
-                {
-                    Name = key?.ToString()
-                };
-                foreach (var customer in customers)
-                {
-                    if (customer.Rank == key)
-                    {
-                        groupingCustomers.Add(new SelectListItem
-                        {
-                            Group = optGroup,
-                            Text = customer.单位编号 + " - " + customer.单位名称,
-                            Value = customer.单位编号
-                        });
-                    }
-                }
-            }
-            return groupingCustomers;
         }
     }
 }

@@ -125,8 +125,12 @@ namespace PinhuaMaster.Data.Entities.Pinhua
         public virtual DbSet<NewDeliveryMain> NewDeliveryMain { get; set; }
         public virtual DbSet<NewOrderDetails> NewOrderDetails { get; set; }
         public virtual DbSet<NewOrderMain> NewOrderMain { get; set; }
+        public virtual DbSet<PayrollDetails> PayrollDetails { get; set; }
+        public virtual DbSet<PayrollMain> PayrollMain { get; set; }
         public virtual DbSet<Test明细> Test明细 { get; set; }
         public virtual DbSet<Test主表> Test主表 { get; set; }
+        public virtual DbSet<WageSchema> WageSchema { get; set; }
+        public virtual DbSet<WageSchemaTime> WageSchemaTime { get; set; }
         public virtual DbSet<WeixinClock> WeixinClock { get; set; }
         public virtual DbSet<WeixinClockOptions> WeixinClockOptions { get; set; }
         public virtual DbSet<WeixinOptions> WeixinOptions { get; set; }
@@ -139,6 +143,7 @@ namespace PinhuaMaster.Data.Entities.Pinhua
         public virtual DbSet<发货> 发货 { get; set; }
         public virtual DbSet<发货Detail> 发货Detail { get; set; }
         public virtual DbSet<付款单> 付款单 { get; set; }
+        public virtual DbSet<岗位主表> 岗位主表 { get; set; }
         public virtual DbSet<工资档案主表> 工资档案主表 { get; set; }
         public virtual DbSet<工资计算备份年月> 工资计算备份年月 { get; set; }
         public virtual DbSet<工资计算年月> 工资计算年月 { get; set; }
@@ -4329,6 +4334,8 @@ namespace PinhuaMaster.Data.Entities.Pinhua
 
                 entity.Property(e => e.Qty).HasColumnType("decimal(20, 3)");
 
+                entity.Property(e => e.Remarks).HasMaxLength(500);
+
                 entity.Property(e => e.Specification).HasMaxLength(100);
 
                 entity.Property(e => e.Unit).HasMaxLength(20);
@@ -4734,6 +4741,80 @@ namespace PinhuaMaster.Data.Entities.Pinhua
                     .HasMaxLength(20);
             });
 
+            modelBuilder.Entity<PayrollDetails>(entity =>
+            {
+                entity.HasKey(e => new { e.Id, e.Y, e.M });
+
+                entity.HasIndex(e => new { e.ExcelServerRcid, e.ExcelServerWiid })
+                    .HasName("idx1");
+
+                entity.Property(e => e.Id).HasMaxLength(20);
+
+                entity.Property(e => e.Amount).HasColumnType("decimal(20, 3)");
+
+                entity.Property(e => e.AttendanceHours).HasColumnType("decimal(20, 3)");
+
+                entity.Property(e => e.DaytimeHours).HasColumnType("decimal(20, 3)");
+
+                entity.Property(e => e.ExcelServerChg).HasColumnName("ExcelServerCHG");
+
+                entity.Property(e => e.ExcelServerCn).HasColumnName("ExcelServerCN");
+
+                entity.Property(e => e.ExcelServerRc1)
+                    .HasColumnName("ExcelServerRC1")
+                    .HasMaxLength(20);
+
+                entity.Property(e => e.ExcelServerRcid)
+                    .HasColumnName("ExcelServerRCID")
+                    .HasMaxLength(20);
+
+                entity.Property(e => e.ExcelServerRn).HasColumnName("ExcelServerRN");
+
+                entity.Property(e => e.ExcelServerRtid)
+                    .HasColumnName("ExcelServerRTID")
+                    .HasMaxLength(20);
+
+                entity.Property(e => e.ExcelServerWiid)
+                    .HasColumnName("ExcelServerWIID")
+                    .HasMaxLength(20);
+
+                entity.Property(e => e.FullAttendance).HasMaxLength(20);
+
+                entity.Property(e => e.Name).HasMaxLength(20);
+
+                entity.Property(e => e.OvertimeHours).HasColumnType("decimal(20, 3)");
+            });
+
+            modelBuilder.Entity<PayrollMain>(entity =>
+            {
+                entity.HasKey(e => new { e.Y, e.M });
+
+                entity.HasIndex(e => new { e.ExcelServerRcid, e.ExcelServerWiid })
+                    .HasName("idx1");
+
+                entity.Property(e => e.ExcelServerChg).HasColumnName("ExcelServerCHG");
+
+                entity.Property(e => e.ExcelServerCn).HasColumnName("ExcelServerCN");
+
+                entity.Property(e => e.ExcelServerRc1)
+                    .HasColumnName("ExcelServerRC1")
+                    .HasMaxLength(20);
+
+                entity.Property(e => e.ExcelServerRcid)
+                    .HasColumnName("ExcelServerRCID")
+                    .HasMaxLength(20);
+
+                entity.Property(e => e.ExcelServerRn).HasColumnName("ExcelServerRN");
+
+                entity.Property(e => e.ExcelServerRtid)
+                    .HasColumnName("ExcelServerRTID")
+                    .HasMaxLength(20);
+
+                entity.Property(e => e.ExcelServerWiid)
+                    .HasColumnName("ExcelServerWIID")
+                    .HasMaxLength(20);
+            });
+
             modelBuilder.Entity<Test明细>(entity =>
             {
                 entity.HasKey(e => e.UniqueId);
@@ -4810,6 +4891,92 @@ namespace PinhuaMaster.Data.Entities.Pinhua
                 entity.Property(e => e.ExcelServerWiid)
                     .HasColumnName("ExcelServerWIID")
                     .HasMaxLength(20);
+            });
+
+            modelBuilder.Entity<WageSchema>(entity =>
+            {
+                entity.HasIndex(e => new { e.ExcelServerRcid, e.ExcelServerWiid })
+                    .HasName("idx1");
+
+                entity.Property(e => e.Id)
+                    .HasMaxLength(20)
+                    .ValueGeneratedNever();
+
+                entity.Property(e => e.DateEnd).HasColumnType("datetime");
+
+                entity.Property(e => e.DateFrom).HasColumnType("datetime");
+
+                entity.Property(e => e.ExcelServerChg).HasColumnName("ExcelServerCHG");
+
+                entity.Property(e => e.ExcelServerCn).HasColumnName("ExcelServerCN");
+
+                entity.Property(e => e.ExcelServerRc1)
+                    .HasColumnName("ExcelServerRC1")
+                    .HasMaxLength(20);
+
+                entity.Property(e => e.ExcelServerRcid)
+                    .HasColumnName("ExcelServerRCID")
+                    .HasMaxLength(20);
+
+                entity.Property(e => e.ExcelServerRn).HasColumnName("ExcelServerRN");
+
+                entity.Property(e => e.ExcelServerRtid)
+                    .HasColumnName("ExcelServerRTID")
+                    .HasMaxLength(20);
+
+                entity.Property(e => e.ExcelServerWiid)
+                    .HasColumnName("ExcelServerWIID")
+                    .HasMaxLength(20);
+
+                entity.Property(e => e.SchemaName).HasMaxLength(100);
+
+                entity.Property(e => e.Type).HasMaxLength(20);
+            });
+
+            modelBuilder.Entity<WageSchemaTime>(entity =>
+            {
+                entity.HasKey(e => new { e.SchemaId, e.Id, e.Sex });
+
+                entity.ToTable("WageSchema_Time");
+
+                entity.HasIndex(e => new { e.ExcelServerRcid, e.ExcelServerWiid })
+                    .HasName("idx1");
+
+                entity.Property(e => e.SchemaId).HasMaxLength(20);
+
+                entity.Property(e => e.Id).HasMaxLength(20);
+
+                entity.Property(e => e.Sex).HasMaxLength(1);
+
+                entity.Property(e => e.DaytimePrice).HasColumnType("decimal(20, 2)");
+
+                entity.Property(e => e.ExcelServerChg).HasColumnName("ExcelServerCHG");
+
+                entity.Property(e => e.ExcelServerCn).HasColumnName("ExcelServerCN");
+
+                entity.Property(e => e.ExcelServerRc1)
+                    .HasColumnName("ExcelServerRC1")
+                    .HasMaxLength(20);
+
+                entity.Property(e => e.ExcelServerRcid)
+                    .HasColumnName("ExcelServerRCID")
+                    .HasMaxLength(20);
+
+                entity.Property(e => e.ExcelServerRn).HasColumnName("ExcelServerRN");
+
+                entity.Property(e => e.ExcelServerRtid)
+                    .HasColumnName("ExcelServerRTID")
+                    .HasMaxLength(20);
+
+                entity.Property(e => e.ExcelServerWiid)
+                    .HasColumnName("ExcelServerWIID")
+                    .HasMaxLength(20);
+
+                entity.Property(e => e.FullAttendancePrice).HasColumnType("decimal(20, 2)");
+
+                entity.Property(e => e.OperatingPost).HasMaxLength(20);
+
+                entity.Property(e => e.OvertimePrice).HasColumnType("decimal(20, 2)");
             });
 
             modelBuilder.Entity<WeixinClock>(entity =>
@@ -5324,6 +5491,42 @@ namespace PinhuaMaster.Data.Entities.Pinhua
                 entity.Property(e => e.备注).HasMaxLength(100);
             });
 
+            modelBuilder.Entity<岗位主表>(entity =>
+            {
+                entity.ToTable("岗位_主表");
+
+                entity.HasIndex(e => new { e.ExcelServerRcid, e.ExcelServerWiid })
+                    .HasName("idx1");
+
+                entity.Property(e => e.Id)
+                    .HasMaxLength(20)
+                    .ValueGeneratedNever();
+
+                entity.Property(e => e.ExcelServerChg).HasColumnName("ExcelServerCHG");
+
+                entity.Property(e => e.ExcelServerCn).HasColumnName("ExcelServerCN");
+
+                entity.Property(e => e.ExcelServerRc1)
+                    .HasColumnName("ExcelServerRC1")
+                    .HasMaxLength(20);
+
+                entity.Property(e => e.ExcelServerRcid)
+                    .HasColumnName("ExcelServerRCID")
+                    .HasMaxLength(20);
+
+                entity.Property(e => e.ExcelServerRn).HasColumnName("ExcelServerRN");
+
+                entity.Property(e => e.ExcelServerRtid)
+                    .HasColumnName("ExcelServerRTID")
+                    .HasMaxLength(20);
+
+                entity.Property(e => e.ExcelServerWiid)
+                    .HasColumnName("ExcelServerWIID")
+                    .HasMaxLength(20);
+
+                entity.Property(e => e.OperatingPost).HasMaxLength(20);
+            });
+
             modelBuilder.Entity<工资档案主表>(entity =>
             {
                 entity.HasKey(e => e.流水号);
@@ -5816,6 +6019,8 @@ namespace PinhuaMaster.Data.Entities.Pinhua
                 entity.Property(e => e.状态).HasMaxLength(20);
 
                 entity.Property(e => e.登记时间).HasColumnType("datetime");
+
+                entity.Property(e => e.离职或辞退原因).HasMaxLength(100);
 
                 entity.Property(e => e.离职时间).HasColumnType("datetime");
 

@@ -15,12 +15,14 @@
     "bootstrap": "v3.3.7",
     "jquery.cookie": "jquery-cookie#v1.4.1",
     "bootstrap-datepicker": "v1.7.1",
-    "bootstrap-table": "1.12.1"
+    "bootstrap-table": "1.12.1",
+    "datatables": "DataTables#1.10.16"
   },
   "resolutions": {
     "jquery": ">= 1.7.2",
     "jquery-validation": "1.17.0",
     "bootstrap": "v4.0.0",
-    "vue": "v2.5.16"
+    "vue": "v2.5.16",
+    "datatables": "1.10.16"
   }
 }

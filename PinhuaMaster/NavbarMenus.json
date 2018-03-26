@@ -7,13 +7,8 @@
     },
     {
       "name": "简易送货单",
-      "icon": "fa fa-circle-o",
+      "icon": "fa fa-sticky-note-o",
       "url": "/OrderManagement/EasyDelivery/Index"
-    },
-    {
-      "name": "对帐单",
-      "icon": "fa fa-circle-o",
-      "url": "/Statement/Index"
     },
     {
       "name": "订单系统",
@@ -71,13 +66,35 @@
       "children": [
         {
           "name": "收款",
-          "icon": "fa fa-angle-double-right",
+          "icon": "fa fa-arrow-circle-o-right",
           "url": "/Finance/Collection/Index"
         },
         {
           "name": "付款",
-          "icon": "fa fa-angle-double-left",
+          "icon": "fa fa-arrow-circle-o-left",
           "url": "/Finance/Payment/Index"
+        },
+        {
+          "name": "对帐单",
+          "icon": "fa fa-random",
+          "url": "/Statement/Index"
+        }
+      ]
+    },
+    {
+      "name": "人事管理",
+      "icon": "fa fa-address-book-o",
+      "url": "",
+      "children": [
+        {
+          "name": "人员档案",
+          "icon": "fa fa-list",
+          "url": "/Personnel/Files/Index"
+        },
+        {
+          "name": "新建档案",
+          "icon": "fa fa-user-plus",
+          "url": "/Personnel/Files/Create"
         }
       ]
     },

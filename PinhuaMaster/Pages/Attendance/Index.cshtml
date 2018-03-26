@@ -37,6 +37,7 @@
             </div>
             <table class="table table-striped">
                 <tr>
+                    <th></th>
                     <th>姓名</th>
                     @*<th>全勤</th>*@
                     <th>出勤</th>
@@ -71,6 +72,7 @@
                     var EsPayroll = (Model.esPayrollData?.Data?.FirstOrDefault(p => p.Id == detail.Id)?.Details?.Where(p => p.工资项名称 == "抹零")?.Sum(p => p.计算金额) + Meals * 2) ?? 0;
                     var IsHigher = NewPayroll - EsPayroll > 0;
                     <tr>
+                        <td><a asp-page="/Attendance/EastRiver/Details" asp-route-year="@Model.attendanceData.Year" asp-route-month="@Model.attendanceData.Month" asp-route-id="@detail.Id">ER</a></td>
                         <td>
                             <a asp-page="/Attendance/Details" asp-route-year="@Model.attendanceData.Year" asp-route-month="@Model.attendanceData.Month" asp-route-id="@detail.Id">
                                 @detail.Name
