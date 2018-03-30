@@ -18,15 +18,15 @@ namespace PinhuaMaster.Pages.Payroll
             _pinhuaContext = pinhuaContext;
         }
 
-        public WageSchema Schema { get; set; }
-        public IList<WageSchemaTime> SchemaDetails { get; set; }
+        public WageSchemaMain Schema { get; set; }
+        public IList<WageSchemaDetailsByTime> SchemaDetails { get; set; }
 
         public IList<PayrollMain> PayrollList { get; set; }
 
         public void OnGet()
         {
-            Schema = _pinhuaContext.WageSchema.FirstOrDefault(p => p.Id == "1");
-            SchemaDetails = _pinhuaContext.WageSchemaTime.Where(p => p.SchemaId == Schema.Id).ToList();
+            Schema = _pinhuaContext.WageSchemaMain.FirstOrDefault(p => p.Id == "1");
+            SchemaDetails = _pinhuaContext.WageSchemaDetailsByTime.Where(p => p.SchemaId == Schema.Id).ToList();
             PayrollList = _pinhuaContext.PayrollMain.AsNoTracking().ToList();
         }
     }

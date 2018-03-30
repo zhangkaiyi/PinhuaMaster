@@ -14,7 +14,8 @@
             <div class="box-body">
                 <table data-toggle="table"
                        data-toolbar="#toolbar"
-                       class="table table-striped table-hover">
+                       class="table table-striped table-hover"
+                       style="white-space:nowrap">
                     <thead>
                         <tr>
                             <th>年</th>
@@ -24,13 +25,13 @@
                     </thead>
                     <tbody>
                         @foreach (var payroll in Model.PayrollList)
-            {
-                <tr>
-                    <td>@payroll.Y</td>
-                    <td>@payroll.M</td>
-                    <th><a>查看</a></th>
-                </tr>
-}
+                        {
+                            <tr>
+                                <td>@payroll.Y</td>
+                                <td>@payroll.M</td>
+                                <td><a asp-page="Details" asp-route-y="@payroll.Y" asp-route-m="@payroll.M">查看</a></td>
+                            </tr>
+                        }
                     </tbody>
                 </table>
             </div>

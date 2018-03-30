@@ -7,11 +7,11 @@ namespace PinhuaMaster.Data.Entities.Pinhua
     {
         public string Id { get; set; }
         public string Name { get; set; }
-        public decimal? AttendanceHours { get; set; }
+        public decimal? AllHours { get; set; }
         public decimal? DaytimeHours { get; set; }
         public decimal? OvertimeHours { get; set; }
-        public string FullAttendance { get; set; }
-        public decimal? Amount { get; set; }
+        public string IsFullAttendance { get; set; }
+        public decimal? FinalAmount { get; set; }
         public int Y { get; set; }
         public int M { get; set; }
         public string ExcelServerRcid { get; set; }
@@ -21,5 +21,14 @@ namespace PinhuaMaster.Data.Entities.Pinhua
         public string ExcelServerWiid { get; set; }
         public string ExcelServerRtid { get; set; }
         public int? ExcelServerChg { get; set; }
+        public decimal? DaytimeAmount { get; set; }
+        public decimal? OvertimeAmount { get; set; }
+        public decimal? DinnerAmount { get; set; }
+        public int? TimesOfDinner { get; set; }
+        public int? DaysOfWork { get; set; }
+        public int? DaysOfLeave { get; set; }
+        public string PriceOverview { get; set; }
+        public string Post { get; set; }
+        public decimal? FullAttendanceAmount { get; set; }
     }
 }

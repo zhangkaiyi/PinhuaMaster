@@ -1,0 +1,130 @@
+﻿@page
+@model PinhuaMaster.Pages.Payroll.CreateModel
+@{
+    ViewData["Title"] = "生成工资单";
+}
+
+<div class="row">
+    <div class="col-md-8">
+        <div class="box box-solid">
+            <div class="box-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <div class="input-group">
+                                <input type="text" class="form-control" id="ym" placeholder="YYYYMM ..." />
+                                <span class="input-group-btn">
+                                    <button class="btn btn-default" onclick="computePayroll()"><i class="fa fa-calculator"></i> 计算</button>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+</div>
+<div class="row">
+    <div class="col-md-8">
+        <div class="box box-solid">
+            <div class="box-body">
+                <table id="table"
+                       data-toggle="table"
+                       data-classes="table table-striped"
+                       data-row-style="rowStyle"
+                       style="white-space:nowrap;">
+                    <thead>
+                        <tr>
+                            <th data-field="Id" data-visible="false">编号</th>
+                            <th data-field="Name" data-formatter="fmtName">姓名</th>
+                            <th data-field="Post">岗位</th>
+                            <th data-field="Sex" data-visible="false">性别</th>
+                            <th data-field="IsFullAttendance" data-visible="false">是否全勤</th>
+                            <th data-field="PriceOverview">工价</th>
+                            <th data-field="AllHours" data-formatter="ftmHours">工时</th>
+                            <th data-field="AllHoursAmountWithFullAttendance" data-formatter="fmtAmount" data-sortable="true">工资</th>
+                            <th data-field="TimesOfDinner">用餐</th>
+                            <th data-field="DinnerAmount">餐费</th>
+                            <th data-field="FinalAmount" data-formatter="fmtAmount" class="hidden-xs">实发</th>
+                            <th data-field="DaysOfWork" data-formatter="ftmHours" data-visible="false">出勤天数</th>
+                            <th data-field="DaysOfLeave" data-formatter="ftmHours" data-visible="false">缺勤天数</th>
+                        </tr>
+                    </thead>
+                </table>
+            </div>
+            <div class="box-footer">
+                <button class="btn btn-default pull-right" onclick="save()"><i class="fa fa-save"></i> 保存</button>
+            </div>
+        </div>
+    </div>
+
+</div>
+<form method="post" id="toSaveForm">
+    <input type="hidden" id="yyyy" name="yyyy" />
+    <input type="hidden" id="mm" name="mm" />
+    <input type="hidden" id="jsonStr" name="jsonStr" />
+</form>
+
+@section Scripts{
+    <script>
+        function computePayroll() {
+            var text = $('#ym').val()
+            var y = text.substr(0, 4)
+            var m = text.substr(4, 2);
+            //var url = '/Payroll/Create?handler=AjaxComputePayroll&year=' + y + '&month=' + m
+            var url = '@Url.Page("Create","AjaxComputePayroll")&year=' + y + '&month=' + m
+            var $table = $('#table');
+            $table.bootstrapTable('refresh', { url: url });
+
+            $('#toSaveForm #yyyy').val(y)
+            $('#toSaveForm #mm').val(m)
+        }
+
+        function save() {
+            var jsonStr = JSON.stringify($('#table').bootstrapTable('getData'))
+            var url = '@Url.Page("Create","AjaxSavePayroll")'
+            $('#toSaveForm #jsonStr').val(jsonStr)
+            $('#toSaveForm').submit()
+        }
+
+        function fmtName(value, row) {
+            var b = row.IsFullAttendance
+
+            var el = ""
+            if (b)
+                el = '<div class="text-red">' + value + '</div>'
+            else
+                el = '<div class="text-green">' + value + '</div>'
+
+            return value
+        }
+
+        function ftmHours(value, row) {
+            if (!value)
+                return ""
+            return value.toFixed(1)
+        }
+
+        function fmtAmount(value, row) {
+            return value.toFixed(2)
+        }
+
+        function rowStyle(row, index) {
+            var classes = ['active', 'success', 'info', 'warning', 'danger'];
+
+            if (row.IsFullAttendance) {
+                return {
+                    classes: 'text-danger'
+                    //classes: 'text-bold'
+                };
+            }
+            else
+                return {
+                    //classes: 'text-success'
+                    classes: ''
+                };
+        }
+    </script>
+}

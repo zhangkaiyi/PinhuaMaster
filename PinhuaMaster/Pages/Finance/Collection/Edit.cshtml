@@ -1,7 +1,7 @@
 ﻿@page
 @model PinhuaMaster.Pages.Finance.Collection.EditModel
 @{
-    ViewData["Title"] = "Edit";
+    ViewData["Title"] = "收款修改";
 
     var partners = from p in pinhuaContext.往来单位
                    orderby p.Rank descending
@@ -17,13 +17,6 @@
     <div class="col-sm-9">
         <form method="post" id="EditForm">
             <div class="box box-solid" id="formBox">
-                <div class="box-header with-border">
-                    <h3 class="box-title">收款修改</h3>
-                    <div class="box-tools pull-right">
-                        <!-- Buttons, labels, and many other things can be placed here! -->
-
-                    </div><!-- /.box-tools -->
-                </div><!-- /.box-header -->
                 <div class="box-body form-horizontal">
                     <div class="form-group">
                         <label class="control-label col-xs-3 col-md-2" for="单位编号">收款单位</label>

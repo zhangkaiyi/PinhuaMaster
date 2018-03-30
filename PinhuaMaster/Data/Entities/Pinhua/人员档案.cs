@@ -25,5 +25,7 @@ namespace PinhuaMaster.Data.Entities.Pinhua
         public DateTime? 入职时间 { get; set; }
         public string 考勤班次 { get; set; }
         public string 离职或辞退原因 { get; set; }
+        public string 工作岗位 { get; set; }
+        public string 工资方案 { get; set; }
     }
 }
