@@ -136,6 +136,32 @@
             </div>
         </div>
     </div>
+    <div class="box box-solid">
+        <div class="box-body">
+            <table class="table table-bordered table-striped table-hover">
+                <thead>
+                    <tr>
+                        <th>卡号</th>
+                        <th>状态</th>
+                        <th>起始日期</th>
+                        <th>截止日期</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach(var card_info in Model.AttendanceCards)
+                    {
+                    <tr>
+                        <td>@card_info.卡号</td>
+                        <td>@card_info.状态</td>
+                        <td>@card_info.起始日期</td>
+                        <td>@card_info.截止日期</td>
+                    </tr>
+
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
 </form>
 
 <form method="post" asp-page="Delete" id="toDeleteForm">

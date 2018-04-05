@@ -16,6 +16,8 @@ using System.IO;
 using PinhuaMaster.Data.Entities.Pinhua;
 using PinhuaMaster.Data.Entities.EastRiver;
 using AutoMapper;
+using PinhuaMaster.Extensions;
+using Zky.Utility;
 
 namespace PinhuaMaster
 {
@@ -118,6 +120,10 @@ namespace PinhuaMaster
                     name: "default",
                     template: "{controller}/{action=Index}/{id?}");
             });
+
+            app.UseStaticHttpContext();
+
+            app.UseUtility();
         }
 
         /// <summary>

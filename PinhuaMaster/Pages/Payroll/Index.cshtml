@@ -24,7 +24,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach (var payroll in Model.PayrollList)
+                        @foreach (var payroll in Model.PayrollList.OrderByDescending(p => p.Y).ThenByDescending(p => p.M))
                         {
                             <tr>
                                 <td>@payroll.Y</td>

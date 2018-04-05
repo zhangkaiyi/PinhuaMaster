@@ -19,11 +19,25 @@ namespace PinhuaMaster.Pages.Statement
             _pinhuaContext = pinhuaContext;
         }
 
+        public string Id { get; set; }
         public Model应收应付 StatementData { get; set; }
 
         public void OnGet(string Id)
         {
+            this.Id = Id;
             StatementData = 应收应付及明细(Id);
+        }
+
+        public IActionResult OnGetAjax(string Id)
+        {
+            var dto = 应收应付及明细(Id);
+            var settings = new Newtonsoft.Json.JsonSerializerSettings();
+            //EF Core中默认为驼峰样式序列化处理key
+            //settings.ContractResolver = new CamelCasePropertyNamesContractResolver();
+            //使用默认方式，不更改元数据的key的大小写
+            settings.ContractResolver = new Newtonsoft.Json.Serialization.DefaultContractResolver();
+
+            return new JsonResult(dto, settings);
         }
 
         private IEnumerable<对账结算主表> statementResultList(string Id) // 对应Id的对账结算数据
@@ -185,8 +199,8 @@ namespace PinhuaMaster.Pages.Statement
                 .Select(x => new Model应收应付明细
                 {
                     Date = x.日期,
-                    Amount = x.应收,
-                    TypeDescription = "上期结算",
+                    Amount = x.应收 - x.应付,
+                    TypeDescription = "结算",
                     OrderId = "Settlement"
                 }); // 最新对账金额
 
@@ -202,7 +216,7 @@ namespace PinhuaMaster.Pages.Statement
                                     Amount = -p.收款金额,
                                     Remarks = p.备注,
                                     TypeDescription = "收款",
-                                    OrderId = "ShouRu",
+                                    OrderId = p.收款单号,
                                     RcId = p.ExcelServerRcid
                                 };
             var hello = from p in listOf出库After
@@ -248,15 +262,15 @@ namespace PinhuaMaster.Pages.Statement
         private Model应收应付 PayableWithDetails(string Id)
         {
             var last日期 = statementResultList(Id).Any() ? statementResultList(Id).Max(x => x.日期) : new DateTime(1900, 1, 1); // 最新对账日期
-            var last金额 = statementResultList(Id)
-                .Where(x => x.日期 == last日期)
-                .Select(x => new Model应收应付明细
-                {
-                    Date = x.日期,
-                    Amount = -x.应付,
-                    TypeDescription = "上期结算",
-                    OrderId = "Settlement"
-                }); // 最新对账金额
+            //var last金额 = statementResultList(Id)
+            //    .Where(x => x.日期 == last日期)
+            //    .Select(x => new Model应收应付明细
+            //    {
+            //        Date = x.日期,
+            //        Amount = -x.应付,
+            //        TypeDescription = "结算",
+            //        OrderId = "Settlement"
+            //    }); // 最新对账金额
 
             // 对账后的收发详情
             // var listOf出库After = listOf出库(Id).Where(x => x.Record.送货日期 > last日期);
@@ -270,7 +284,7 @@ namespace PinhuaMaster.Pages.Statement
                                     Amount = p.付款金额,
                                     Remarks = p.备注,
                                     TypeDescription = "付款",
-                                    OrderId = "ZhiChu",
+                                    OrderId = p.付款单号,
                                 };
             var hello = from p in listOf入库After
                         group p by p.Record.OrderId into g
@@ -298,8 +312,8 @@ namespace PinhuaMaster.Pages.Statement
                               Amount = -p.RecordDetail.Amount,
                               TotalAmount = -p2.单据应付合计
                           })
-                           .Union(listOf付款After)
-                           .Union(last金额);
+                           .Union(listOf付款After);
+            //.Union(last金额);
 
             // 应收与明细
             var yingFuWithDetails = new Model应收应付
@@ -320,6 +334,7 @@ namespace PinhuaMaster.Pages.Statement
             var yingShouYingFu = new Model应收应付
             {
                 单位编号 = Id,
+                单位名称 = _pinhuaContext.往来单位.AsNoTracking().FirstOrDefault(p => p.单位编号 == Id)?.单位名称,
                 应收合计 = (yingShou.应收合计 ?? 0) + (yingFu.应收合计 ?? 0),
                 明细 = yingShou.明细.Union(yingFu.明细).OrderByDescending(x => x.Date).ThenByDescending(x => x.OrderId).ToList()
             };

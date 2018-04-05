@@ -7,59 +7,32 @@
 <div class="row">
     <div class="col-md-8">
         <div class="box box-solid">
-            <div class="box-body">
-                <button class="btn btn-default pull-right" onclick="toDelete('@Model.RcId')"><i class="fa fa-remove"></i> 删除</button>
-
+            <div class="box-header">
+                <a asp-page="Index" class="btn btn-default"><i class="fa fa-arrow-left"></i> 返 回</a>
+                <button class="btn btn-default pull-right" onclick="toDelete('@Model.RcId')"><i class="fa fa-remove"></i> 删 除</button>
             </div>
-        </div>
-    </div>
-
-</div>
-<div class="row">
-    <div class="col-md-8">
-        <div class="box box-solid">
             <div class="box-body">
                 <table id="table"
                        data-toggle="table"
+                       data-url="@Url.Page("Details","AjaxGetDetails",new { Model.Y, Model.M})"
                        data-classes="table table-striped"
                        data-row-style="rowStyle"
                        style="white-space:nowrap;">
                     <thead>
                         <tr>
-                            <th data-visible="false">编号</th>
-                            <th>姓名</th>
-                            <th>岗位</th>
-                            <th data-visible="false">性别</th>
-                            <th data-visible="false">是否全勤</th>
-                            <th>工价</th>
-                            <th>工时</th>
-                            <th>工资</th>
-                            <th>用餐</th>
-                            <th class="hidden-xs">实发</th>
+                            <th data-field="@(nameof(ViewModel.PayrollDetailsDTO.Id))" data-visible="false">编号</th>
+                            <th data-field="@(nameof(ViewModel.PayrollDetailsDTO.Name))">姓名</th>
+                            <th data-field="@(nameof(ViewModel.PayrollDetailsDTO.Post))">岗位</th>
+                            <th data-field="@(nameof(ViewModel.PayrollDetailsDTO.IsFullAttendance))" data-visible="false">是否全勤</th>
+                            <th data-field="@(nameof(ViewModel.PayrollDetailsDTO.PriceOverview))">工价</th>
+                            <th data-field="@(nameof(ViewModel.PayrollDetailsDTO.AllHours))" data-formatter="fmtHours">工时</th>
+                            <th data-field="@(nameof(ViewModel.PayrollDetailsDTO.AllHoursAmountWithFullAttendance))" data-formatter="fmtAmount">工资</th>
+                            <th data-field="@(nameof(ViewModel.PayrollDetailsDTO.TimesOfDinner))">用餐</th>
+                            <th data-field="@(nameof(ViewModel.PayrollDetailsDTO.DinnerAmount))">餐费</th>
+                            <th data-field="@(nameof(ViewModel.PayrollDetailsDTO.FinalAmount))" data-formatter="fmtAmount" class="hidden-xs">实发</th>
                         </tr>
                     </thead>
-                    <tbody>
-                        @foreach (var payroll in Model.PayrollList)
-                        {
-                            <tr>
-                                <td>@payroll.Id</td>
-                                <td>@payroll.Name</td>
-                                <td>@payroll.Post</td>
-                                <td>@payroll.Sex</td>
-                                <td>@payroll.IsFullAttendance</td>
-                                <td>@payroll.PriceOverview</td>
-                                <td>@payroll.AllHours</td>
-                                <td>@payroll.AllHoursAmountWithFullAttendance</td>
-                                <td>@payroll.DinnerAmount</td>
-                                <td>@payroll.FinalAmount</td>
-                            </tr>
-
-                        }
-                    </tbody>
                 </table>
-            </div>
-            <div class="box-footer">
-                
             </div>
         </div>
     </div>
@@ -77,6 +50,34 @@
                 $('#toDeleteRcid').val(rcid);
                 $('#toDeleteForm').submit();
             }
+        }
+    </script>
+
+    <script>
+        function rowStyle(row, index) {
+            var classes = ['active', 'success', 'info', 'warning', 'danger'];
+            console.log(row.IsFullAttendance)
+            if (row.IsFullAttendance) {
+                return {
+                    classes: 'text-danger'
+                    //classes: 'text-bold'
+                };
+            }
+            else
+                return {
+                    //classes: 'text-success'
+                    classes: ''
+                };
+        }
+
+        function fmtHours(value, row) {
+            if (!value)
+                return ""
+            return value.toFixed(1)
+        }
+
+        function fmtAmount(value, row) {
+            return value.toFixed(2)
         }
     </script>
 }

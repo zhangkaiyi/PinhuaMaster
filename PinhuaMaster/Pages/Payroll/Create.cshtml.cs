@@ -90,7 +90,15 @@ namespace PinhuaMaster.Pages.Payroll
             _pinhuaContext.EsRepCase.Add(repCase);
             _pinhuaContext.PayrollMain.Add(payrollMain);
             _pinhuaContext.PayrollDetails.AddRange(payrollDetails);
-            _pinhuaContext.SaveChanges();
+            try
+            {
+                _pinhuaContext.SaveChanges();
+            }
+            catch(DbUpdateException e)
+            {
+                ModelState.AddModelError("", e.InnerException.Message); 
+                return Page();
+            }
 
             return RedirectToPage("Index");
         }

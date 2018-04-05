@@ -16,7 +16,8 @@
     "jquery.cookie": "jquery-cookie#v1.4.1",
     "bootstrap-datepicker": "v1.7.1",
     "bootstrap-table": "1.12.1",
-    "datatables": "DataTables#1.10.16"
+    "datatables": "DataTables#1.10.16",
+    "datatables-responsive": "2.2.1"
   },
   "resolutions": {
     "jquery": ">= 1.7.2",

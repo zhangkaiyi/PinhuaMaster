@@ -23,11 +23,13 @@ namespace PinhuaMaster.Pages.Personnel.Files
         }
 
         public PersonnelFilesDTO PersonnelFile { get; set; }
+        public IEnumerable<考勤卡号变动> AttendanceCards { get; set; }
 
         public void OnGet(string Id)
         {
             var result = _pinhuaContext.人员档案.AsNoTracking().FirstOrDefault(p => p.人员编号 == Id);
             PersonnelFile = _mapper.Map<人员档案, PersonnelFilesDTO>(result);
+            AttendanceCards = _pinhuaContext.考勤卡号变动.AsNoTracking().Where(p => p.ExcelServerRcid == result.ExcelServerRcid);
         }
     }
 }
