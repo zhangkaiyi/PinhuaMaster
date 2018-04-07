@@ -5173,6 +5173,8 @@ namespace PinhuaMaster.Data.Entities.Pinhua
                 entity.Property(e => e.必须打上班卡).HasMaxLength(20);
 
                 entity.Property(e => e.必须打下班卡).HasMaxLength(20);
+
+                entity.Property(e => e.计算全勤).HasMaxLength(20);
             });
 
             modelBuilder.Entity<Wx异常说明>(entity =>

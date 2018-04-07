@@ -87,7 +87,7 @@ namespace PinhuaMaster.Extensions
                         {
                             if (clock.Clocktype == (int)Enum打卡类型.签到)
                             {
-                                range.指定日期的签到区间(pp.date, out var subbegin, out var subend);
+                                range.指定日期的签到起止(pp.date, out var subbegin, out var subend);
                                 if (clock.Clocktime.Value.IsBetween(subbegin, subend))
                                 {
                                     dt1 = clock.Clocktime.Value;
@@ -95,14 +95,14 @@ namespace PinhuaMaster.Extensions
                             }
                             if (clock.Clocktype == (int)Enum打卡类型.签退)
                             {
-                                range.指定日期的签退区间(pp.date, out var subbegin, out var subend);
+                                range.指定日期的签退起止(pp.date, out var subbegin, out var subend);
                                 if (clock.Clocktime.Value.IsBetween(subbegin, subend))
                                 {
                                     dt2 = clock.Clocktime.Value;
                                 }
                             }
                         }
-                        range.指定日期的工作时间区间(pp.date, out var worktime1, out var worktime2);
+                        range.指定日期的班段起止(pp.date, out var worktime1, out var worktime2);
 
                         if (dt1 < worktime1 && dt1 != DateTime.MaxValue)
                             dt1fix = worktime1;

@@ -25,5 +25,6 @@ namespace PinhuaMaster.Data.Entities.Pinhua
         public string 必须打下班卡 { get; set; }
         public string 延迟算加班 { get; set; }
         public int? RangeId { get; set; }
+        public string 计算全勤 { get; set; }
     }
 }

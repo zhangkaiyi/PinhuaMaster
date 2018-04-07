@@ -91,6 +91,8 @@ namespace PinhuaMaster
             services.AddTransient<IWebfontExtractor, WebfontExtractor>();
 
             services.AddTransient<IActionPermissionService, ActionPermissionService>();
+            services.AddTransient<IAttendanceService, AttendanceService>();
+
             //初始化应用配置
             //InitAppConfig(services);
 

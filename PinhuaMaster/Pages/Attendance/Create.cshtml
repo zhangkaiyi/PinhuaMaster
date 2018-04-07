@@ -1,95 +1,60 @@
 ﻿@page
 @using PinhuaMaster.Extensions
 @model PinhuaMaster.Pages.Attendance.CreateModel
+@inject PinhuaMaster.Services.IAttendanceService attendanceService
 @{
     ViewData["Title"] = "Create";
+    var dto = attendanceService.GetAttendanceData(2018, 3);
 
-    var Y = 2018;
-    var M = 3;
-    var result = Model.GetTargetMonthClockRecords(Y, M).OrderBy(p => p.Id).ThenBy(p => p.SignTime);
-
-    var groupby = from p in result
-                  group p by new { p.Id, p.Name } into g
-                  select new
-                  {
-                      g.Key.Id,
-                      g.Key.Name,
-                      SignTimes = g.Select(p => p.SignTime)
-                  };
-    var num = DateTime.DaysInMonth(Y, M);
-
-    var x = new List<Person>();
-    foreach (var record in groupby)
-    {
-        var a = new Person
-        {
-            Id = record.Id,
-            Name = record.Name,
-            Results = new List<Result>()
-        };
-        for (int i = 0; i != num; i++)
-        {
-            var D = i + 1;
-
-            var b = new Result
-            {
-                Date = new DateTime(Y, M, D),
-                Details = new List<ResultDetail>()
-            };
-            var planDetails = Model.GetAttendancePlan();
-            foreach (var plan in planDetails)
-            {
-                plan.指定日期的签到区间(new DateTime(Y, M, D), out var from, out var to);
-                var d1 = record.SignTimes.Where(p => p.IsBetween(from, to)).OrderBy(p => p).FirstOrDefault();
-                plan.指定日期的签退区间(new DateTime(Y, M, D), out var from2, out var to2);
-                var d2 = record.SignTimes.Where(p => p.IsBetween(from2, to2)).OrderBy(p => p).LastOrDefault();
-                var t = d2.DropSeconds().Subtract(d1.DropSeconds());
-                var minutes = t.TotalMinutes > 0 && d2 != DateTime.MaxValue && d1 != DateTime.MaxValue ? Math.Floor(t.TotalMinutes) : 0;
-                var hours = (minutes - minutes % 6) / 60;
-                b.Details.Add(new ResultDetail
-                {
-                    Range = plan.ToRangeString(),
-                    Time1 = d1.ToShortTimeString(),
-                    Time2 = d2.ToShortTimeString(),
-                    Hours = (decimal)hours
-                });
-            }
-            a.Results.Add(b);
-        }
-        x.Add(a);
-    }
 }
 
 <div class="box box-solid">
-    <table class="table table-bordered table-striped">
-        <thead>
-            <tr></tr>
-        </thead>
-        <tbody>
-            @foreach (var a in x)
-            {
+    <div class="box-header">
+        @dto.TotalHours
+    </div>
+    <div class="table-responsive">
+        <table class="table table-bordered table-striped table-hover">
+            <thead>
                 <tr>
-                    <td>@a.Id</td>
-                    <td>@a.Name</td>
+                    <th>日期</th>
+                    <th>状态</th>
+                    <th class="hidden-xs">班段</th>
+                    <th>上班1</th>
+                    <th>下班1</th>
+                    <th class="hidden-xs">出勤</th>
+                    <th class="hidden-xs">班段</th>
+                    <th>上班2</th>
+                    <th>下班2</th>
+                    <th class="hidden-xs">出勤</th>
+                    <th>合计</th>
                 </tr>
-                @foreach (var b in a.Results)
+            </thead>
+            <tbody>
+                @foreach (var a in dto.PersonList)
                 {
-                    <tr>
-                        <td>@b.Date</td>
+                    <tr class="warning" style="font-weight:bold">
+                        <td colspan="20">@(new DateTime(dto.Y.Value, dto.M.Value, 1).ToString("yyyy-MM")) - @a.Name - 合计：@a.TotalHours</td>
                     </tr>
-                    @foreach (var c in b.Details)
+                    @foreach (var b in a.Results)
                     {
                         <tr>
-                            <td>@c.Range</td>
-                            <td>@c.Time1</td>
-                            <td>@c.Time2</td>
-                            <td>@c.Hours</td>
-                        </tr>
+                            <td>@b.Date.ToString("yyyy-MM-dd")</td>
+                            <td class="@(b.State != "正常" ? "text-danger" : "text-primary")">@b.State</td>
+                            @foreach (var c in b.Details)
+                            {
 
+                                <td class="hidden-xs">@c.Range</td>
+                                <td>@c.Time1?.ToShortTimeString()</td>
+                                <td>@c.Time2?.ToShortTimeString()</td>
+                                <td class="hidden-xs">@c.Hours</td>
+
+                            }
+                            <td>@(b.DayHours == 0 ? null : b.DayHours)</td>
+                        </tr>
                     }
                 }
-            }
 
-        </tbody>
-    </table>
+            </tbody>
+        </table>
+    </div>
 </div>

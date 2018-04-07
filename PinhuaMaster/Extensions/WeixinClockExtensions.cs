@@ -26,7 +26,7 @@ namespace PinhuaMaster.Extensions
         {
             var now = DateTime.Now;
             
-            if (!item.指定日期的工作时间区间(now, out begin, out end))
+            if (!item.指定日期的班段起止(now, out begin, out end))
                 return false;
          
             if (now <= begin)   // 比最早时间早，说明在第二天，那就要返回前一天的区间
@@ -38,7 +38,7 @@ namespace PinhuaMaster.Extensions
             return true;
         }
 
-        public static bool 指定日期的工作时间区间(this WeixinWorkPlanDetail item, DateTime target, out DateTime begin, out DateTime end)
+        public static bool 指定日期的班段起止(this WeixinWorkPlanDetail item, DateTime target, out DateTime begin, out DateTime end)
         {
             begin = DateTime.MinValue;
             end = DateTime.MinValue;
@@ -54,7 +54,7 @@ namespace PinhuaMaster.Extensions
 
         public static string 指定日期的工作时间区间转文字(this WeixinWorkPlanDetail item, DateTime target)
         {
-            item.指定日期的工作时间区间(target, out var begin, out var end);
+            item.指定日期的班段起止(target, out var begin, out var end);
             return begin.ToShortTimeString() + " 到 " + end.ToShortTimeString();
         }
 
@@ -88,26 +88,26 @@ namespace PinhuaMaster.Extensions
             return true;
         }
 
-        public static bool 今天的签到区间(this WeixinWorkPlanDetail item, out DateTime begin, out DateTime end)
+        public static bool 今天的签到区间(this WeixinWorkPlanDetail item, out DateTime? begin, out DateTime? end)
         {
             var now = DateTime.Now;
 
-            if (!item.指定日期的签到区间(now, out begin, out end))
+            if (!item.指定日期的签到起止(now, out begin, out end))
                 return false;
 
             if (now <= begin)   // 比最早时间早，说明在第二天，那就要返回前一天的区间
             {
-                begin = begin.AddDays(-1);
-                end = end.AddDays(-1);
+                begin = begin?.AddDays(-1);
+                end = end?.AddDays(-1);
             }
 
             return true;
         }
 
-        public static bool 指定日期的签到区间(this WeixinWorkPlanDetail item,DateTime target, out DateTime begin, out DateTime end)
+        public static bool 指定日期的签到起止(this WeixinWorkPlanDetail item,DateTime target, out DateTime? begin, out DateTime? end)
         {
-            begin = DateTime.MinValue;
-            end = DateTime.MinValue;
+            begin = null;
+            end = null;
             var now = DateTime.Now;
             if (!item.IsEveryDatetimeNotNull())
                 return false;
@@ -118,26 +118,26 @@ namespace PinhuaMaster.Extensions
             return true;
         }
 
-        public static bool 今天的签退区间(this WeixinWorkPlanDetail item, out DateTime begin, out DateTime end)
+        public static bool 今天的签退区间(this WeixinWorkPlanDetail item, out DateTime? begin, out DateTime? end)
         {
             var now = DateTime.Now;
 
-            if (!item.指定日期的签退区间(now, out begin, out end))
+            if (!item.指定日期的签退起止(now, out begin, out end))
                 return false;
 
             if (now <= begin)   // 比最早时间早，说明在第二天，那就要返回前一天的区间
             {
-                begin = begin.AddDays(-1);
-                end = end.AddDays(-1);
+                begin = begin?.AddDays(-1);
+                end = end?.AddDays(-1);
             }
 
             return true;
         }
 
-        public static bool 指定日期的签退区间(this WeixinWorkPlanDetail item, DateTime target, out DateTime begin, out DateTime end)
+        public static bool 指定日期的签退起止(this WeixinWorkPlanDetail item, DateTime target, out DateTime? begin, out DateTime? end)
         {
-            begin = DateTime.MinValue;
-            end = DateTime.MinValue;
+            begin = null;
+            end = null;
             var now = DateTime.Now;
             if (!item.IsEveryDatetimeNotNull())
                 return false;

@@ -16,5 +16,6 @@ namespace PinhuaMaster.Data.Entities.Pinhua
         public string ExcelServerWiid { get; set; }
         public string ExcelServerRtid { get; set; }
         public int? ExcelServerChg { get; set; }
+        public int? MinSpan { get; set; }
     }
 }
