@@ -15,7 +15,7 @@ namespace PinhuaMaster.Pages.Payroll.ViewModel
         public IEnumerable<考勤明细> Details { get; set; }
     }
 
-    public class AttendanceReport
+    public class AttendanceReportDTO
     {
         public string Id { get; set; }
         public string Name { get; set; }
@@ -29,7 +29,7 @@ namespace PinhuaMaster.Pages.Payroll.ViewModel
         public string Sex { get; set; }
     }
 
-    public class PayrollDetailsDTO : AttendanceReport
+    public class PayrollDetailsDTO : AttendanceReportDTO
     {
         public string Post { get; set; }
         public string PriceOverview { get; set; }

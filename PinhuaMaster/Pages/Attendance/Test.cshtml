@@ -1,0 +1,149 @@
+﻿@page
+@model PinhuaMaster.Pages.Attendance.TestModel
+@using PinhuaMaster.Services
+@inject IAttendanceService attendanceService
+@{
+    ViewData["Title"] = "Test";
+
+    Model.Y = 2018;
+    Model.M = 3;
+    var dto = attendanceService.GetAttendanceData(Model.Y, Model.M);
+}
+
+<div id="test">
+    <div class="row">
+        <div class="col-md-3">
+            <div class="box box-solid">
+                <div class="box-body">
+                    <div class="form-horizontal">
+                        <div class="form-group">
+                            <label class="control-label col-xs-3">年</label>
+                            <div class="col-xs-9">
+                                <div class="input-group">
+                                    <select class="form-control" v-model="Y" v-on:change="getMList" id="refreshY">
+                                        <option v-for="(item,index) in YMList">{{item.Year}}</option>
+                                    </select>
+                                    <span class="input-group-addon">
+                                        <i class=" fa fa-calendar-o"></i>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-xs-3">月</label>
+                            <div class="col-xs-9">
+                                <div class="input-group">
+                                    <select class="form-control" v-model="M" id="refreshM">
+                                        <option v-for="(item,index) in MList">{{item}}</option>
+                                    </select>
+                                    <span class="input-group-addon">
+                                        <i class=" fa fa-calendar-o"></i>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-xs-9 col-xs-offset-3">
+                                <button class="form-control btn btn-default btn-flat" onclick="toRefresh()">查询</button>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-xs-9 col-xs-offset-3">
+                                <form method="post" asp-page="Create">
+                                    <button class="form-control btn btn-default btn-flat" type="submit">保存</button>
+                                    <input type="hidden" id="refreshJSON" name="jsonStr" />
+                                </form>
+                            </div>
+                        </div>
+                        <input type="hidden" value="@Url.Page("Create", "Ajax")" id="refreshUrl" />
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-9">
+            <div class="box box-solid">
+                <div class="box-body">
+                    <table data-toggle="table" class="table table-bordered table-striped table-hover" data-response-handler="responseHandler" id="computedTable">
+                        <thead>
+                            <tr>
+                                <th data-width="1" data-formatter="fmtEastriver"></th>
+                                <th data-sortable="true" class="hidden-xs" data-field="@(nameof(AttendanceServicePerson.Id))">编号</th>
+                                <th data-sortable="true" data-field="@(nameof(AttendanceServicePerson.Name))">姓名</th>
+                                <th data-sortable="true" data-formatter="fmtIsFullAttendance" data-field="@(nameof(AttendanceServicePerson.IsFullAttendance))">全勤</th>
+                                <th data-field="@(nameof(AttendanceServicePerson.DaytimeHours))">正班</th>
+                                <th data-field="@(nameof(AttendanceServicePerson.OvertimeHours))">加班</th>
+                                <th data-field="@(nameof(AttendanceServicePerson.TotalHours))">出勤合计</th>
+                                <th class="hidden-xs" data-field="@(nameof(AttendanceServicePerson.TimesOfDinner))">用餐</th>
+                            </tr>
+                        </thead>
+
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@section Scripts{
+    <script>
+        $(function () {
+
+        })
+
+        function toRefresh() {
+            var refreshY = $('#refreshY').val()
+            var refreshM = $('#refreshM').val()
+            var refreshUrl = [$('#refreshUrl').val(), '&Y=', refreshY, '&M=', refreshM].join('')
+            var $table = $('#computedTable')
+            $table.bootstrapTable('refresh', { url: refreshUrl });
+        }
+
+        function fmtEastriver(value, row) {
+            var refreshY = $('#refreshY').val()
+            var refreshM = $('#refreshM').val()
+            return '<a href="/Attendance/EastRiver/Details/' + Y + '/' + M + '/' + row.Id + '"><i class="fa fa-search"></i></a>'
+        }
+
+        function fmtIsFullAttendance(value, row) {
+            if (value)
+                return '<span class="text-danger">是</span>'
+            else
+                return '<span class="text-success">否</span>'
+        }
+
+        function responseHandler(res) {
+            Y = res.Y
+            M = res.M
+            $('#refreshJSON').val(JSON.stringify(res))
+            return res.PersonList
+        }
+    </script>
+
+    <script>
+        var data = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model.ABC));
+        vm = new Vue({
+            el: '#test',
+            data: {
+                YMList: data,
+                MList:[],
+                Y: {},
+                M: {},
+
+            },
+            methods: {
+                getMList: function () {
+                    var tempMList = []
+                    this.MList = []
+                    this.M = {}
+                    for (var item of this.YMList) {
+                        if (item.Year == this.Y) {
+                            for (var M of item.MonthList) {
+                                tempMList.push(M)
+                            }
+                        }
+                    }
+                    this.MList = tempMList
+                }
+            }
+        })
+    </script>
+}

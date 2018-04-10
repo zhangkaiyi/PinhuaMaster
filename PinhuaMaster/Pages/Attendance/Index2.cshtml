@@ -1,0 +1,95 @@
+﻿@page "{year?}/{month?}"
+@model PinhuaMaster.Pages.Attendance.Index2Model
+
+@{
+    ViewData["Title"] = "Attendance";
+
+    var attendanceData = from p in pinhuaContext.考勤期间.OrderByDescending(p => p.年).ThenByDescending(p => p.月).Take(12)
+                         join d in pinhuaContext.考勤明细 on p.ExcelServerRcid equals d.ExcelServerRcid into details
+                         orderby p.年 descending, p.月 descending
+                         select new
+                         {
+                             Date = p,
+                             Details = details
+                         };
+}
+<div class="row">
+    <div class="col-md-4 hidden-print">
+        <div class="box box-solid">
+            <ul class="nav nav-pills nav-stacked">
+                @foreach (var record in attendanceData)
+                {
+                    <li class="@((record.Date.年 == Model.attendanceData.Year && record.Date.月 == Model.attendanceData.Month) ? "active" : "")">
+                        <a asp-page="Index" asp-route-year="@record.Date.年" asp-route-month="@record.Date.月">
+                            @record.Date.年 - @record.Date.月.ToString("00")
+                            <span class="pull-right badge bg-blue">@((record.Details.Sum(p => p.正常出勤) + record.Details.Sum(p => p.加班)).Value.ToString("0.0"))</span>
+                        </a>
+                    </li>
+
+                }
+            </ul>
+        </div>
+    </div>
+    <div class="col-md-8">
+        <div class="box box-solid">
+            <div class="box-header">
+                <div class="box-title">考勤汇总 - @(Model.attendanceData.Year)年@(Model.attendanceData.Month)月</div>
+                <a asp-page="Create" class="btn btn-default">Create</a>
+            </div>
+            <table class="table table-striped">
+                <tr>
+                    <th></th>
+                    <th>姓名</th>
+                    @*<th>全勤</th>*@
+                    <th>出勤</th>
+                    <th>用餐</th>
+                    @*<th>工资</th>*@
+                    <th>工价</th>
+                    <th>工资</th>
+                    <th>原始</th>
+                    @*<th>勤哲</th>*@
+                </tr>
+                @foreach (var detail in Model.attendanceData.Data)
+                {
+                    var memberOptions = Model.payrollOption.Details.FirstOrDefault(p => p.Id == detail.Id);
+                    var daysInMonth = Model.payrollOption.daysInMonth;
+                    var DaysOfRest = memberOptions.DaysOfRest;
+                    var DaysOfWork = memberOptions.DaysOfWork;
+                    var IsFullAttendance = memberOptions.IsFullAttendance;
+                    var HoursOfDaytime = memberOptions.HoursOfDaytime;
+                    var HoursOfOvertime = memberOptions.HoursOfOvertime;
+                    var HoursOfAll = memberOptions.HoursOfAll;
+                    var Meals = memberOptions.Meals;
+                    var PriceOfDaytime = memberOptions.PriceOfDaytime;
+                    var PriceOfOvertime = memberOptions.PriceOfOvertime;
+                    var NewPayroll = memberOptions.NewPayroll;
+
+                    var OldPayroll = (HoursOfAll - daysInMonth * 9 > 0 ? HoursOfAll - daysInMonth * 9 : 0) * 13
+                    + (HoursOfAll > daysInMonth * 9 ? 2900 : 2900 / daysInMonth / 9 * HoursOfAll)
+                    + (IsFullAttendance ? 100 / daysInMonth * (DaysOfWork + DaysOfRest) : 0)
+                    - Meals * 2;
+                    OldPayroll = memberOptions.OldPayroll;
+
+                    var EsPayroll = (Model.esPayrollData?.Data?.FirstOrDefault(p => p.Id == detail.Id)?.Details?.Where(p => p.工资项名称 == "抹零")?.Sum(p => p.计算金额) + Meals * 2) ?? 0;
+                    var IsHigher = NewPayroll - EsPayroll > 0;
+                    <tr>
+                        <td><a asp-page="/Attendance/EastRiver/Details" asp-route-year="@Model.attendanceData.Year" asp-route-month="@Model.attendanceData.Month" asp-route-id="@detail.Id">ER</a></td>
+                        <td>
+                            <a asp-page="/Attendance/Details" asp-route-year="@Model.attendanceData.Year" asp-route-month="@Model.attendanceData.Month" asp-route-id="@detail.Id">
+                                @detail.Name
+                            </a>
+                        </td>
+                        <td class="@(IsFullAttendance?"text-red":"text-green")">@(IsFullAttendance ? Html.Raw("") : Html.Raw(""))@HoursOfAll.ToString("0.0")@(IsFullAttendance ? Html.Raw("") : Html.Raw(""))</td>
+                        <td>@Meals</td>
+                        <td>@PriceOfDaytime / @PriceOfOvertime</td>
+                        @*<td>@newPayroll.ToString("0.0")</td>*@
+                        <td class="text-blue">@NewPayroll.ToString("0.0")</td>
+                        @*<td>@OldPayroll.ToString("0.0") <span class="pull-right @(NewPayroll-OldPayroll>0?"text-blue":"text-red")">@(Math.Abs(NewPayroll - OldPayroll).ToString("0.0"))</span></td>*@
+                        <td>@EsPayroll.ToString("0.0")  <span class="pull-right @(IsHigher?"text-red":"text-green")">@(Math.Abs(NewPayroll - EsPayroll).ToString("0.0")) @(IsHigher ? Html.Raw("<i class='fa fa-angle-up'></i>") : Html.Raw("<i class='fa fa-angle-down'></i>"))</span></td>
+                    </tr>
+
+                }
+            </table>
+        </div>
+    </div>
+</div>

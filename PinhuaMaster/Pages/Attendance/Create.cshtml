@@ -1,60 +1,105 @@
-﻿@page
+﻿@page "{Y?}/{M?}"
 @using PinhuaMaster.Extensions
 @model PinhuaMaster.Pages.Attendance.CreateModel
 @inject PinhuaMaster.Services.IAttendanceService attendanceService
 @{
-    ViewData["Title"] = "Create";
-    var dto = attendanceService.GetAttendanceData(2018, 3);
-
+    ViewData["Title"] = "生产考勤报表";
+    var dto = attendanceService.GetAttendanceData(Model.Y, Model.M);
+    var visible = dto != null;
 }
 
-<div class="box box-solid">
-    <div class="box-header">
-        @dto.TotalHours
+<div class="row">
+    <div class="col-md-8">
+        <div class="box box-solid">
+            <div class="box-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="input-group">
+                            <input type="text" class="form-control" id="ym" placeholder="YYYYMM ..." />
+                            <span class="input-group-btn">
+                                <button class="btn btn-default" onclick="computeReport()"><i class="fa fa-calculator"></i> 计算</button>
+                                @if (visible)
+                                {
+                                    <button class="btn btn-default" onclick="save()"><i class="fa fa-save"></i> 保存</button>
+                                }
+                            </span>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
     </div>
-    <div class="table-responsive">
-        <table class="table table-bordered table-striped table-hover">
-            <thead>
-                <tr>
-                    <th>日期</th>
-                    <th>状态</th>
-                    <th class="hidden-xs">班段</th>
-                    <th>上班1</th>
-                    <th>下班1</th>
-                    <th class="hidden-xs">出勤</th>
-                    <th class="hidden-xs">班段</th>
-                    <th>上班2</th>
-                    <th>下班2</th>
-                    <th class="hidden-xs">出勤</th>
-                    <th>合计</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (var a in dto.PersonList)
-                {
-                    <tr class="warning" style="font-weight:bold">
-                        <td colspan="20">@(new DateTime(dto.Y.Value, dto.M.Value, 1).ToString("yyyy-MM")) - @a.Name - 合计：@a.TotalHours</td>
-                    </tr>
-                    @foreach (var b in a.Results)
-                    {
-                        <tr>
-                            <td>@b.Date.ToString("yyyy-MM-dd")</td>
-                            <td class="@(b.State != "正常" ? "text-danger" : "text-primary")">@b.State</td>
-                            @foreach (var c in b.Details)
-                            {
 
-                                <td class="hidden-xs">@c.Range</td>
-                                <td>@c.Time1?.ToShortTimeString()</td>
-                                <td>@c.Time2?.ToShortTimeString()</td>
-                                <td class="hidden-xs">@c.Hours</td>
-
-                            }
-                            <td>@(b.DayHours == 0 ? null : b.DayHours)</td>
-                        </tr>
-                    }
-                }
-
-            </tbody>
-        </table>
-    </div>
 </div>
+@if (visible)
+{
+    <div class="box box-solid">
+        <div class="box-header">
+            <div class="box-title">
+                @dto.TotalHours
+            </div>
+        </div>
+        <div class="table-responsive">
+            <table class="table table-bordered table-striped table-hover">
+                <thead>
+                    <tr>
+                        <th>日期</th>
+                        <th>状态</th>
+                        <th class="hidden-xs">班段</th>
+                        <th>上班1</th>
+                        <th>下班1</th>
+                        <th class="hidden-xs">出勤</th>
+                        <th class="hidden-xs">班段</th>
+                        <th>上班2</th>
+                        <th>下班2</th>
+                        <th class="hidden-xs">出勤</th>
+                        <th>合计</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var a in dto.PersonList)
+                    {
+                        <tr class="warning" style="font-weight:bold">
+                            <td colspan="20">@(new DateTime(dto.Y.Value, dto.M.Value, 1).ToString("yyyy-MM")) - @a.Name - 合计：@a.TotalHours - 全勤：@(a.IsFullAttendance ? "是" : "否")</td>
+                        </tr>
+                        @foreach (var b in a.Results)
+                        {
+                            <tr>
+                                <td>@b.Date.ToString("yyyy-MM-dd")</td>
+                                <td class="@(b.State != "正常" ? "text-danger" : "text-primary")">@b.State</td>
+                                @foreach (var c in b.Details)
+                                {
+
+                                    <td class="hidden-xs">@c.Range</td>
+                                    <td>@c.Time1?.ToShortTimeString()</td>
+                                    <td>@c.Time2?.ToShortTimeString()</td>
+                                    <td class="hidden-xs">@c.Hours</td>
+
+                                }
+                                <td>@(b.DayHours == 0 ? null : b.DayHours)</td>
+                            </tr>
+                        }
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+}
+
+<form method="get" id="toLoadForm">
+    <input type="hidden" id="yyyy" name="Y" />
+    <input type="hidden" id="mm" name="M" />
+</form>
+
+@section Scripts{
+    <script>
+        function computeReport() {
+            var text = $('#ym').val()
+            $('#yyyy').val(text.substr(0, 4))
+            $('#mm').val(text.substr(4, 2))
+
+            $('#toLoadForm').submit()
+        }
+    </script>
+}

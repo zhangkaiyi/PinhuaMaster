@@ -125,9 +125,9 @@ namespace PinhuaMaster.Pages.Payroll
             return x;
         }
 
-        private IList<AttendanceReport> toCompute(IEnumerable<AttendanceData> data)
+        private IList<AttendanceReportDTO> toCompute(IEnumerable<AttendanceData> data)
         {
-            var list = new List<AttendanceReport>();
+            var list = new List<AttendanceReportDTO>();
             foreach (var record in data)
             {
                 var x = from p in record.Details
@@ -141,7 +141,7 @@ namespace PinhuaMaster.Pages.Payroll
                             overtimeHours,
                             allHours
                         };
-                var a = new AttendanceReport();
+                var a = new AttendanceReportDTO();
                 a.Id = record.Id;
                 a.Name = record.Name;
                 a.DaysOfLeave = x.Count(p => p.Data.状态 == "异常") + x.Count(p => p.Data.状态 == "请假");
@@ -157,7 +157,7 @@ namespace PinhuaMaster.Pages.Payroll
             return list;
         }
 
-        public IList<PayrollDetailsDTO> toPayroll(IList<AttendanceReport> data)
+        public IList<PayrollDetailsDTO> toPayroll(IList<AttendanceReportDTO> data)
         {
             var list = new List<PayrollDetailsDTO>();
             foreach (var record in data)

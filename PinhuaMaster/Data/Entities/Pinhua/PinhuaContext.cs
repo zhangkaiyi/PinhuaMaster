@@ -6,6 +6,8 @@ namespace PinhuaMaster.Data.Entities.Pinhua
 {
     public partial class PinhuaContext : DbContext
     {
+        public virtual DbSet<AttendanceReport> AttendanceReport { get; set; }
+        public virtual DbSet<AttendanceReportDetails> AttendanceReportDetails { get; set; }
         public virtual DbSet<EsAgentSet> EsAgentSet { get; set; }
         public virtual DbSet<EsAgentUser> EsAgentUser { get; set; }
         public virtual DbSet<EsCaseFormat> EsCaseFormat { get; set; }
@@ -242,6 +244,78 @@ namespace PinhuaMaster.Data.Entities.Pinhua
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<AttendanceReport>(entity =>
+            {
+                entity.HasKey(e => new { e.Y, e.M });
+
+                entity.HasIndex(e => new { e.ExcelServerRcid, e.ExcelServerWiid })
+                    .HasName("idx1");
+
+                entity.Property(e => e.ExcelServerChg).HasColumnName("ExcelServerCHG");
+
+                entity.Property(e => e.ExcelServerCn).HasColumnName("ExcelServerCN");
+
+                entity.Property(e => e.ExcelServerRc1)
+                    .HasColumnName("ExcelServerRC1")
+                    .HasMaxLength(20);
+
+                entity.Property(e => e.ExcelServerRcid)
+                    .HasColumnName("ExcelServerRCID")
+                    .HasMaxLength(20);
+
+                entity.Property(e => e.ExcelServerRn).HasColumnName("ExcelServerRN");
+
+                entity.Property(e => e.ExcelServerRtid)
+                    .HasColumnName("ExcelServerRTID")
+                    .HasMaxLength(20);
+
+                entity.Property(e => e.ExcelServerWiid)
+                    .HasColumnName("ExcelServerWIID")
+                    .HasMaxLength(20);
+            });
+
+            modelBuilder.Entity<AttendanceReportDetails>(entity =>
+            {
+                entity.HasKey(e => new { e.Y, e.M, e.编号 });
+
+                entity.HasIndex(e => new { e.ExcelServerRcid, e.ExcelServerWiid })
+                    .HasName("idx1");
+
+                entity.Property(e => e.编号).HasMaxLength(20);
+
+                entity.Property(e => e.ExcelServerChg).HasColumnName("ExcelServerCHG");
+
+                entity.Property(e => e.ExcelServerCn).HasColumnName("ExcelServerCN");
+
+                entity.Property(e => e.ExcelServerRc1)
+                    .HasColumnName("ExcelServerRC1")
+                    .HasMaxLength(20);
+
+                entity.Property(e => e.ExcelServerRcid)
+                    .HasColumnName("ExcelServerRCID")
+                    .HasMaxLength(20);
+
+                entity.Property(e => e.ExcelServerRn).HasColumnName("ExcelServerRN");
+
+                entity.Property(e => e.ExcelServerRtid)
+                    .HasColumnName("ExcelServerRTID")
+                    .HasMaxLength(20);
+
+                entity.Property(e => e.ExcelServerWiid)
+                    .HasColumnName("ExcelServerWIID")
+                    .HasMaxLength(20);
+
+                entity.Property(e => e.加班).HasColumnType("decimal(20, 3)");
+
+                entity.Property(e => e.姓名).HasMaxLength(20);
+
+                entity.Property(e => e.总工时).HasColumnType("decimal(20, 3)");
+
+                entity.Property(e => e.是否全勤).HasMaxLength(20);
+
+                entity.Property(e => e.正班).HasColumnType("decimal(20, 3)");
+            });
+
             modelBuilder.Entity<EsAgentSet>(entity =>
             {
                 entity.HasKey(e => e.UserId);
