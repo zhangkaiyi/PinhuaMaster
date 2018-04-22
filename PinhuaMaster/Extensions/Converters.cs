@@ -75,4 +75,31 @@ namespace PinhuaMaster.Extensions.Converters
             }
         }
     }
+
+    public class MyDecimalQtyConverter : Newtonsoft.Json.Converters.CustomCreationConverter<decimal>
+    {
+        public override bool CanWrite
+        {
+            get
+            {
+                return true;
+            }
+        }
+
+        public override decimal Create(Type objectType)
+        {
+            return 0.0M;
+        }
+
+        public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
+        {
+            if (value == null)
+                writer.WriteNull();
+            else
+            {
+                var formatted = ((decimal)value).ToString("0.#");
+                writer.WriteValue(formatted);
+            }
+        }
+    }
 }

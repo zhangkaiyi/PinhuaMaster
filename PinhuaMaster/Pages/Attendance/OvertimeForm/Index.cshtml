@@ -1,0 +1,60 @@
+﻿@page
+@model PinhuaMaster.Pages.Attendance.OvertimeForm.IndexModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    <a asp-page="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.OvertimeFormMain[0].Y)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.OvertimeFormMain[0].M)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.OvertimeFormMain[0].D)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.OvertimeFormMain[0].CreatedDate)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.OvertimeFormMain[0].CreatedBy)
+                </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model.OvertimeFormMain) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Y)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.M)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.D)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CreatedDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CreatedBy)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+                @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+                @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

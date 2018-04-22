@@ -1,4 +1,4 @@
-﻿@page "{year}/{month}/{id}"
+﻿@page "{year}/{month}"
 @model PinhuaMaster.Pages.Attendance.DetailsModel
 @{
     ViewData["Title"] = "Details";
@@ -6,13 +6,9 @@
 }
 
 <div class="box box-solid">
-    <div class="box-header">
-        <div class="box-title">
-            @Model.AttendanceData.Name - @(Model.AttendanceData.Year)年@(Model.AttendanceData.Month)月
-        </div>
-    </div>
     <table class="table table-striped">
         <tr>
+            <th>姓名</th>
             <th>日期</th>
             <th>状态</th>
             <th class="hidden-xs">上班1</th>
@@ -28,7 +24,8 @@
         @foreach (var detail in Model.AttendanceData.Details)
         {
             <tr>
-                <td>@detail.日期.Day</td>
+                <td>@detail.姓名</td>
+                <td>@detail.日期.ToString("yyyy-MM-dd")</td>
                 <td>@detail.状态</td>
                 <td class="hidden-xs">@detail.上班1</td>
                 <td class="hidden-xs">@detail.下班1</td>

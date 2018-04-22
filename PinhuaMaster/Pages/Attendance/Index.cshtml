@@ -29,7 +29,7 @@
                         @foreach (var item in Model.Reports)
                         {
                             <tr>
-                                <td><a asp-page="Details" asp-route-y="@item.Report.Y" asp-route-m="@item.Report.M"><i class="fa fa-search"></i></a></td>
+                                <td><a asp-page="Details" asp-route-year="@item.Report.Y" asp-route-month="@item.Report.M"><i class="fa fa-search"></i></a></td>
                                 <td>@(item.Report.Y) - @(item.Report.M.ToString("D2"))</td>
                                 <td>@(item.Details.Count())</td>
                                 <td>@(item.Details.Sum(p => p.总工时)?.ToString("0.0"))</td>
@@ -43,75 +43,3 @@
     </div>
 </div>
 
-<div id="test">
-    <select class="form-control" v-model="S1" v-on:change="aa">
-        <option v-for="(item, index) in ABC" :value="item.value">{{item.label}}</option>
-    </select>
-    <select class="form-control" v-model="S2">
-        <option v-for="(item, index) in ABC2" :value="item.value">{{item.label}}</option>
-    </select>
-</div>
-
-@section Scripts{
-    <script>
-        vm = new Vue({
-            el: '#test',
-            methods: {
-                aa: function () {
-                    var tempCity = [];
-                    this.ABC2 = [];
-                    this.S2 = '';  
-                    for (var item of this.ABC) {
-                        if (item.value == this.S1) {
-                            for (var child of item.children) {
-                                tempCity.push(child)
-
-                            }
-                        }
-
-                    }
-                    this.ABC2 = tempCity;
-                }
-            },
-            data: {
-                ABC: [{
-                    value: 'beijing',
-                    label: '北京',
-                    children: [{
-                        value: 'chaoyang',
-                        label: '朝阳'
-                    }, {
-                        value: 'haidian',
-                        label: '海淀'
-                    }, {
-                        value: 'changping',
-                        label: '昌平'
-                    }, {
-                        value: 'shunyi',
-                        label: '顺义'
-                    }]
-                }, {
-                    value: 'shanghai',
-                    label: '上海',
-                    children: [{
-                        value: 'baoshan',
-                        label: '宝山'
-                    }, {
-                        value: 'jiading',
-                        label: '嘉定'
-                    }, {
-                        value: 'songjiang',
-                        label: '松江'
-                    }, {
-                        value: 'pudong',
-                        label: '浦东'
-                    }]
-                    }],
-                ABC2:[],
-                S1: "",
-                S2: ""
-
-            }
-        })
-    </script>
-}

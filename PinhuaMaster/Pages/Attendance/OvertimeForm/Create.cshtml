@@ -1,0 +1,67 @@
+﻿@page
+@model PinhuaMaster.Pages.Attendance.OvertimeForm.CreateModel
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h2>Create</h2>
+
+<h4>OvertimeFormMain</h4>
+<hr />
+<div class="row" id="vueScope">
+    <div class="col-md-4">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="OvertimeFormMain.Y" class="control-label"></label>
+                <input asp-for="OvertimeFormMain.Y" class="form-control" />
+                <span asp-validation-for="OvertimeFormMain.Y" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="OvertimeFormMain.M" class="control-label"></label>
+                <input asp-for="OvertimeFormMain.M" class="form-control" />
+                <span asp-validation-for="OvertimeFormMain.M" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="OvertimeFormMain.D" class="control-label"></label>
+                <input asp-for="OvertimeFormMain.D" class="form-control" />
+                <span asp-validation-for="OvertimeFormMain.D" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="OvertimeFormMain.CreatedDate" class="control-label"></label>
+                <input asp-for="OvertimeFormMain.CreatedDate" class="form-control" />
+                <span asp-validation-for="OvertimeFormMain.CreatedDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="OvertimeFormMain.CreatedBy" class="control-label"></label>
+                <input asp-for="OvertimeFormMain.CreatedBy" class="form-control" />
+                <span asp-validation-for="OvertimeFormMain.CreatedBy" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-default" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-page="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    <script>
+        overtimeForm = new Vue({
+            el: '#vueScope',
+            data: {
+
+            },
+            methods: {
+
+
+            }
+        })
+    </script>
+
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

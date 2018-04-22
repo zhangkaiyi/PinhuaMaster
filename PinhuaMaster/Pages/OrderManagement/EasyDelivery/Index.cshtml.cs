@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.EntityFrameworkCore;
 using PinhuaMaster.Data.Entities.Pinhua;
 using PinhuaMaster.Pages.OrderManagement.EasyDelivery.ViewModel;
 
@@ -54,6 +55,38 @@ namespace PinhuaMaster.Pages.OrderManagement.EasyDelivery
                              Amount = details.Sum(x => x.Amount),
                          };
             return new JsonResult(orders, settings);
+        }
+
+        public IActionResult OnGetAjaxEasyDeliveryDetails(string Id)
+        {
+            var settings = new Newtonsoft.Json.JsonSerializerSettings();
+            //EF Core中默认为驼峰样式序列化处理key
+            //settings.ContractResolver = new CamelCasePropertyNamesContractResolver();
+            //使用默认方式，不更改元数据的key的大小写
+            settings.ContractResolver = new Newtonsoft.Json.Serialization.DefaultContractResolver();
+
+            var details = from d in _pinhuaContext.Gi2Details.AsNoTracking()
+                          where d.DeliveryId == Id
+                          select new Gi2DetaislDTO
+                          {
+                              ExcelServerRcid = d.ExcelServerRcid,
+                              ExcelServerRtid = d.ExcelServerRtid,
+                              DeliveryId = d.DeliveryId,
+                              Id = d.Id,
+                              Description = d.Description,
+                              Specification = d.Specification,
+                              Length = d.Length,
+                              Width = d.Width,
+                              Height = d.Height,
+                              Qty = d.Qty,
+                              UnitQty = d.UnitQty,
+                              Unit = d.Unit,
+                              Price = d.Price,
+                              Amount = d.Amount,
+                              Remarks = d.Remarks,
+                          };
+
+            return new JsonResult(details, settings);
         }
     }
 }

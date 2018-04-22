@@ -127,6 +127,8 @@ namespace PinhuaMaster.Data.Entities.Pinhua
         public virtual DbSet<NewDeliveryMain> NewDeliveryMain { get; set; }
         public virtual DbSet<NewOrderDetails> NewOrderDetails { get; set; }
         public virtual DbSet<NewOrderMain> NewOrderMain { get; set; }
+        public virtual DbSet<OvertimeFormDetails> OvertimeFormDetails { get; set; }
+        public virtual DbSet<OvertimeFormMain> OvertimeFormMain { get; set; }
         public virtual DbSet<PayrollDetails> PayrollDetails { get; set; }
         public virtual DbSet<PayrollMain> PayrollMain { get; set; }
         public virtual DbSet<Test明细> Test明细 { get; set; }
@@ -4812,6 +4814,80 @@ namespace PinhuaMaster.Data.Entities.Pinhua
 
                 entity.Property(e => e.OrderType)
                     .HasColumnName("ORDER_TYPE")
+                    .HasMaxLength(20);
+            });
+
+            modelBuilder.Entity<OvertimeFormDetails>(entity =>
+            {
+                entity.HasKey(e => new { e.Id, e.Y, e.M, e.D });
+
+                entity.ToTable("OvertimeForm_Details");
+
+                entity.HasIndex(e => new { e.ExcelServerRcid, e.ExcelServerWiid })
+                    .HasName("idx1");
+
+                entity.Property(e => e.Id).HasColumnName("ID");
+
+                entity.Property(e => e.ExcelServerChg).HasColumnName("ExcelServerCHG");
+
+                entity.Property(e => e.ExcelServerCn).HasColumnName("ExcelServerCN");
+
+                entity.Property(e => e.ExcelServerRc1)
+                    .HasColumnName("ExcelServerRC1")
+                    .HasMaxLength(20);
+
+                entity.Property(e => e.ExcelServerRcid)
+                    .HasColumnName("ExcelServerRCID")
+                    .HasMaxLength(20);
+
+                entity.Property(e => e.ExcelServerRn).HasColumnName("ExcelServerRN");
+
+                entity.Property(e => e.ExcelServerRtid)
+                    .HasColumnName("ExcelServerRTID")
+                    .HasMaxLength(20);
+
+                entity.Property(e => e.ExcelServerWiid)
+                    .HasColumnName("ExcelServerWIID")
+                    .HasMaxLength(20);
+
+                entity.Property(e => e.Name)
+                    .HasColumnName("NAME")
+                    .HasMaxLength(20);
+            });
+
+            modelBuilder.Entity<OvertimeFormMain>(entity =>
+            {
+                entity.HasKey(e => new { e.Y, e.M, e.D });
+
+                entity.ToTable("OvertimeForm_Main");
+
+                entity.HasIndex(e => new { e.ExcelServerRcid, e.ExcelServerWiid })
+                    .HasName("idx1");
+
+                entity.Property(e => e.CreatedBy).HasColumnType("datetime");
+
+                entity.Property(e => e.CreatedDate).HasMaxLength(20);
+
+                entity.Property(e => e.ExcelServerChg).HasColumnName("ExcelServerCHG");
+
+                entity.Property(e => e.ExcelServerCn).HasColumnName("ExcelServerCN");
+
+                entity.Property(e => e.ExcelServerRc1)
+                    .HasColumnName("ExcelServerRC1")
+                    .HasMaxLength(20);
+
+                entity.Property(e => e.ExcelServerRcid)
+                    .HasColumnName("ExcelServerRCID")
+                    .HasMaxLength(20);
+
+                entity.Property(e => e.ExcelServerRn).HasColumnName("ExcelServerRN");
+
+                entity.Property(e => e.ExcelServerRtid)
+                    .HasColumnName("ExcelServerRTID")
+                    .HasMaxLength(20);
+
+                entity.Property(e => e.ExcelServerWiid)
+                    .HasColumnName("ExcelServerWIID")
                     .HasMaxLength(20);
             });
 

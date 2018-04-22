@@ -24,26 +24,37 @@ namespace PinhuaMaster.Pages.Attendance
         public int? Y { get; set; }
         public int? M { get; set; }
 
-        public IList<ABC> ABC { get; set; }
+        public IList<YMList> ymList { get; set; }
 
         public void OnGet()
         {
             var a = _eastRiverContext.TimeRecords.AsNoTracking().Select(p => p.SignTime.Year).Distinct().ToList();
-            ABC = (from y in a
-                   join m in _eastRiverContext.TimeRecords.AsNoTracking() on y equals m.SignTime.Year into ms
-                   select new ABC
-                   {
-                       Year = y,
-                       MonthList = ms.Select(p => p.SignTime.Month).Distinct().OrderByDescending(p => p)
-                   }).OrderByDescending(p => p.Year).ToList();
+            ymList = (from y in a
+                      join m in _eastRiverContext.TimeRecords.AsNoTracking() on y equals m.SignTime.Year into ms
+                      select new YMList
+                      {
+                          Year = y,
+                          MonthList = ms.Select(p => p.SignTime.Month).Distinct().OrderByDescending(p => p)
+                          .Select(p => new MType
+                          {
+                              Month = p,
+                              State = _pinhuaContext.AttendanceReport.AsNoTracking().Where(r => r.Y == y && r.M == p).Count() > 0 ? "已存在" : ""
+                          })
+                      }).OrderByDescending(p => p.Year).ToList();
 
 
         }
     }
 
-    public class ABC
+    public class YMList
     {
         public int Year { get; set; }
-        public IEnumerable<int> MonthList { get; set; }
+        public IEnumerable<MType> MonthList { get; set; }
+    }
+
+    public class MType
+    {
+        public int Month { get; set; }
+        public string State { get; set; }
     }
 }

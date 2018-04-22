@@ -6,7 +6,7 @@
       "url": "/Index"
     },
     {
-      "name": "简易送货单",
+      "name": "网页送货单",
       "icon": "fa fa-sticky-note-o",
       "url": "/OrderManagement/EasyDelivery/Index"
     },
@@ -102,6 +102,16 @@
       "name": "考勤管理",
       "icon": "fa fa-calendar",
       "url": "/Attendance/Index"
+    },
+    {
+      "name": "EastRiver",
+      "icon": "fa fa-circle-o",
+      "url": "/Attendance/EastRiver/Index"
+    },
+    {
+      "name": "加班申请表",
+      "icon": "fa fa-circle-o",
+      "url": "/Attendance/OvertimeForm/Index"
     },
     {
       "name": "工资管理",

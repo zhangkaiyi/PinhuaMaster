@@ -63,10 +63,14 @@ namespace PinhuaMaster.Pages.OrderManagement.EasyDelivery.ViewModel
         public decimal? Length { get; set; }
         public decimal? Width { get; set; }
         public decimal? Height { get; set; }
+        [Newtonsoft.Json.JsonConverter(typeof(MyDecimalQtyConverter))]
         public decimal? Qty { get; set; }
+        [Newtonsoft.Json.JsonConverter(typeof(MyDecimalSquareConverter))]
         public decimal? UnitQty { get; set; }
         public string Unit { get; set; }
+        [Newtonsoft.Json.JsonConverter(typeof(MyDecimalAmountConverter))]
         public decimal? Price { get; set; }
+        [Newtonsoft.Json.JsonConverter(typeof(MyDecimalAmountConverter))]
         public decimal? Amount { get; set; }
         public int Id { get; set; }
         public string Remarks { get; set; }
