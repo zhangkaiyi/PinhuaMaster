@@ -6,37 +6,45 @@
 }
 
 <div class="box box-solid">
-    <table class="table table-striped">
-        <tr>
-            <th>姓名</th>
-            <th>日期</th>
-            <th>状态</th>
-            <th class="hidden-xs">上班1</th>
-            <th class="hidden-xs">下班1</th>
-            <th class="hidden-xs">上班2</th>
-            <th class="hidden-xs">下班2</th>
-            <th class="hidden visible-xs">时间</th>
-            <th class="text-right">正班</th>
-            <th class="hidden-xs">上班3</th>
-            <th class="hidden-xs">下班3</th>
-            <th class="text-right">加班</th>
-        </tr>
-        @foreach (var detail in Model.AttendanceData.Details)
-        {
-            <tr>
-                <td>@detail.姓名</td>
-                <td>@detail.日期.ToString("yyyy-MM-dd")</td>
-                <td>@detail.状态</td>
-                <td class="hidden-xs">@detail.上班1</td>
-                <td class="hidden-xs">@detail.下班1</td>
-                <td class="hidden-xs">@detail.上班2</td>
-                <td class="hidden-xs">@detail.下班2</td>
-                <td class="hidden visible-xs">@detail.上班1 - @detail.下班2, @detail.上班3 - @detail.下班3</td>
-                <td class="text-right">@detail.正常出勤?.ToString("0.0")</td>
-                <td class="hidden-xs">@detail.上班3</td>
-                <td class="hidden-xs">@detail.下班3</td>
-                <td class="text-right">@detail.加班?.ToString("0.0")</td>
-            </tr>
+    <div class="box-header" style="font-size:22px">
+        @{
+            var result = Model.AttendanceData.Details.FirstOrDefault();
+            if (result != null)
+            {
+                @:@(new DateTime(result.Y, result.M, 1).ToString("yyyy年M月")) - @Model.AttendanceData.Details.Sum(d => d.总工时)?.ToString("0.0") 小时
+            }
         }
-    </table>
+        <a asp-page="Edit" asp-route-Y="@result.Y" asp-route-M="@result.M" class="btn btn-default pull-right"><i class="fa fa-edit"></i> 修改</a>
+    </div>
+    <div class="box-body">
+        <table class="table table-striped text-nowrap" data-toggle="table">
+            <tr>
+                <th>姓名</th>
+                <th>全勤</th>
+                <th>正班</th>
+                <th>加班</th>
+                <th>总工时</th>
+                <th>用餐</th>
+                <th>迟到</th>
+                <th>早退</th>
+                <th>缺勤</th>
+                <th>请假</th>
+            </tr>
+            @foreach (var detail in Model.AttendanceData.Details)
+            {
+                <tr>
+                    <td>@detail.姓名</td>
+                    <td>@detail.是否全勤</td>
+                    <td>@detail.正班.Value.ToString("0.0")</td>
+                    <td>@detail.加班.Value.ToString("0.0")</td>
+                    <td>@detail.总工时.Value.ToString("0.0")</td>
+                    <td>@detail.用餐</td>
+                    <td>@detail.迟到</td>
+                    <td>@detail.早退</td>
+                    <td>@detail.缺勤</td>
+                    <td>@detail.请假</td>
+                </tr>
+            }
+        </table>
+    </div>
 </div>

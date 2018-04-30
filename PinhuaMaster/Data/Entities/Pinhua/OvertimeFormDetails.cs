@@ -5,7 +5,7 @@ namespace PinhuaMaster.Data.Entities.Pinhua
 {
     public partial class OvertimeFormDetails
     {
-        public int Id { get; set; }
+        public string Id { get; set; }
         public string Name { get; set; }
         public int Y { get; set; }
         public int M { get; set; }

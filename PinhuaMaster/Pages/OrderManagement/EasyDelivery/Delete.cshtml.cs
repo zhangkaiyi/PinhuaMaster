@@ -27,14 +27,11 @@ namespace PinhuaMaster.Pages.OrderManagement.EasyDelivery
         {
             var rcId = _pinhuaContext.Gi2Main.FirstOrDefault(x => x.DeliveryId == Id).ExcelServerRcid;
             var a = _pinhuaContext.EsRepCase.Where(x => x.RcId == rcId);
-            if (a != null)
-                _pinhuaContext.EsRepCase.RemoveRange(a);
+            _pinhuaContext.EsRepCase.RemoveRange(a);
             var b = _pinhuaContext.Gi2Main.Where(x => x.ExcelServerRcid == rcId);
-            if (b != null)
-                _pinhuaContext.Gi2Main.RemoveRange(b);
+            _pinhuaContext.Gi2Main.RemoveRange(b);
             var c = _pinhuaContext.Gi2Details.Where(x => x.ExcelServerRcid == rcId);
-            if (c != null)
-                _pinhuaContext.Gi2Details.RemoveRange(c);
+            _pinhuaContext.Gi2Details.RemoveRange(c);
             _pinhuaContext.SaveChanges();
             return RedirectToPage("Index");
         }

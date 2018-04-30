@@ -17,7 +17,8 @@
     "bootstrap-datepicker": "v1.7.1",
     "bootstrap-table": "1.12.1",
     "datatables": "DataTables#1.10.16",
-    "datatables-responsive": "2.2.1"
+    "datatables-responsive": "2.2.1",
+    "axios": "v0.18.0"
   },
   "resolutions": {
     "jquery": ">= 1.7.2",

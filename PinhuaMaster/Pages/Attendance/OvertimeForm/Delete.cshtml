@@ -1,4 +1,4 @@
-﻿@page
+﻿@page "{Y}/{M}/{D}"
 @model PinhuaMaster.Pages.Attendance.OvertimeForm.DeleteModel
 
 @{
@@ -19,40 +19,28 @@
             @Html.DisplayFor(model => model.OvertimeFormMain.ExcelServerRcid)
         </dd>
         <dt>
-            @Html.DisplayNameFor(model => model.OvertimeFormMain.ExcelServerRn)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.OvertimeFormMain.ExcelServerRn)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.OvertimeFormMain.ExcelServerCn)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.OvertimeFormMain.ExcelServerCn)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.OvertimeFormMain.ExcelServerRc1)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.OvertimeFormMain.ExcelServerRc1)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.OvertimeFormMain.ExcelServerWiid)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.OvertimeFormMain.ExcelServerWiid)
-        </dd>
-        <dt>
             @Html.DisplayNameFor(model => model.OvertimeFormMain.ExcelServerRtid)
         </dt>
         <dd>
             @Html.DisplayFor(model => model.OvertimeFormMain.ExcelServerRtid)
         </dd>
         <dt>
-            @Html.DisplayNameFor(model => model.OvertimeFormMain.ExcelServerChg)
+            @Html.DisplayNameFor(model => model.OvertimeFormMain.Y)
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.OvertimeFormMain.ExcelServerChg)
+            @Html.DisplayFor(model => model.OvertimeFormMain.Y)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.OvertimeFormMain.M)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.OvertimeFormMain.M)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.OvertimeFormMain.D)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.OvertimeFormMain.D)
         </dd>
         <dt>
             @Html.DisplayNameFor(model => model.OvertimeFormMain.CreatedDate)
@@ -67,7 +55,6 @@
             @Html.DisplayFor(model => model.OvertimeFormMain.CreatedBy)
         </dd>
     </dl>
-    
     <form method="post">
         <input type="hidden" asp-for="OvertimeFormMain.Y" />
         <input type="hidden" asp-for="OvertimeFormMain.M" />

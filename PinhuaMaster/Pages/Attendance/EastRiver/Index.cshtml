@@ -12,23 +12,23 @@
                      CardNo = c.卡号
                  }).ToList();
 
-    var Data = (from p in eastRiverContext.TimeRecords.AsNoTracking()
-                join u in users on p.CardId equals u.CardNo
-                group u by new { p.SignTime.Year, p.SignTime.Month } into g
-                select new
-                {
-                    g.Key.Year,
-                    g.Key.Month,
-                    Users = g.Select(u => u).Distinct().OrderBy(u => u.Id),
-                }).Distinct().ToList();
+    var YMUsers = (from p in eastRiverContext.TimeRecords.AsNoTracking()
+                   join u in users on p.CardId equals u.CardNo
+                   group u by new { p.SignTime.Year, p.SignTime.Month } into g
+                   select new
+                   {
+                       g.Key.Year,
+                       g.Key.Month,
+                       Users = g.Select(u => u).Distinct().OrderBy(u => u.Id),
+                   }).Distinct().ToList();
 
 }
 <div class="row">
     <div class="col-md-12">
         <div class="box box-solid">
             <div class="box-body">
-                <table class="table">
-                    @foreach (var ym in Data.OrderByDescending(p => p.Year).ThenByDescending(p => p.Month))
+                <table class="table table-striped" data-toggle="table">
+                    @foreach (var ym in YMUsers.OrderByDescending(p => p.Year).ThenByDescending(p => p.Month))
                     {
                         <tr>
                             <td><a asp-page="Details" asp-route-year="@ym.Year" asp-route-month="@ym.Month">@(new DateTime(ym.Year, ym.Month, 1).ToString("yyyy-MM"))</a></td>

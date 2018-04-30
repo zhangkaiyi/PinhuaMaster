@@ -21,14 +21,14 @@ namespace PinhuaMaster.Pages.Attendance.OvertimeForm
         [BindProperty]
         public OvertimeFormMain OvertimeFormMain { get; set; }
 
-        public async Task<IActionResult> OnGetAsync(int? id)
+        public async Task<IActionResult> OnGetAsync(int? Y, int? M, int? D)
         {
-            if (id == null)
+            if (Y == null || M == null || D == null)
             {
                 return NotFound();
             }
 
-            OvertimeFormMain = await _context.OvertimeFormMain.SingleOrDefaultAsync(m => m.Y == id);
+            OvertimeFormMain = await _context.OvertimeFormMain.SingleOrDefaultAsync(m => m.Y == Y && m.M == M && m.D == D);
 
             if (OvertimeFormMain == null)
             {
@@ -37,18 +37,23 @@ namespace PinhuaMaster.Pages.Attendance.OvertimeForm
             return Page();
         }
 
-        public async Task<IActionResult> OnPostAsync(int? id)
+        public async Task<IActionResult> OnPostAsync(int? Y, int? M, int? D)
         {
-            if (id == null)
+            if (Y == null || M == null || D == null)
             {
                 return NotFound();
             }
 
-            OvertimeFormMain = await _context.OvertimeFormMain.FindAsync(id);
+            OvertimeFormMain = await _context.OvertimeFormMain.FindAsync(Y, M, D);
 
             if (OvertimeFormMain != null)
             {
+                var OvertimeFormDetails = _context.OvertimeFormDetails.Where(d => d.ExcelServerRcid == OvertimeFormMain.ExcelServerRcid);
+                var repCase = _context.EsRepCase.Where(r => r.RcId == OvertimeFormMain.ExcelServerRcid);
                 _context.OvertimeFormMain.Remove(OvertimeFormMain);
+                _context.OvertimeFormDetails.RemoveRange(OvertimeFormDetails);
+                _context.EsRepCase.RemoveRange(repCase);
+
                 await _context.SaveChangesAsync();
             }
 

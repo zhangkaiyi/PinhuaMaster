@@ -4826,7 +4826,9 @@ namespace PinhuaMaster.Data.Entities.Pinhua
                 entity.HasIndex(e => new { e.ExcelServerRcid, e.ExcelServerWiid })
                     .HasName("idx1");
 
-                entity.Property(e => e.Id).HasColumnName("ID");
+                entity.Property(e => e.Id)
+                    .HasColumnName("ID")
+                    .HasMaxLength(20);
 
                 entity.Property(e => e.ExcelServerChg).HasColumnName("ExcelServerCHG");
 
@@ -4864,9 +4866,9 @@ namespace PinhuaMaster.Data.Entities.Pinhua
                 entity.HasIndex(e => new { e.ExcelServerRcid, e.ExcelServerWiid })
                     .HasName("idx1");
 
-                entity.Property(e => e.CreatedBy).HasColumnType("datetime");
+                entity.Property(e => e.CreatedBy).HasMaxLength(100);
 
-                entity.Property(e => e.CreatedDate).HasMaxLength(20);
+                entity.Property(e => e.CreatedDate).HasColumnType("datetime");
 
                 entity.Property(e => e.ExcelServerChg).HasColumnName("ExcelServerCHG");
 

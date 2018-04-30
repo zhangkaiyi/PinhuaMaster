@@ -5,56 +5,45 @@
     ViewData["Title"] = "Index";
 }
 
-<h2>Index</h2>
-
 <p>
-    <a asp-page="Create">Create New</a>
+    <a asp-page="Create" class="btn btn-default"><i class="fa fa-plus"></i> 新建</a>
 </p>
-<table class="table">
-    <thead>
-        <tr>
+<div class="box box-solid">
+    <table class="table">
+        <thead>
+            <tr>
                 <th>
-                    @Html.DisplayNameFor(model => model.OvertimeFormMain[0].Y)
+                    日期
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.OvertimeFormMain[0].M)
+                    制单日期
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.OvertimeFormMain[0].D)
+                    制单人
                 </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.OvertimeFormMain[0].CreatedDate)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.OvertimeFormMain[0].CreatedBy)
-                </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model.OvertimeFormMain) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Y)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.M)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.D)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.CreatedDate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.CreatedBy)
-            </td>
-            <td>
-                @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.OvertimeFormMain)
+            {
+                <tr>
+                    <td>
+                        @(new DateTime(item.Y, item.M, item.D).ToString("yyyy-MM-dd"))
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.CreatedDate)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.CreatedBy)
+                    </td>
+                    <td>
+                        <a asp-page="Edit" asp-route-Y="@item.Y" asp-route-M="@item.M" asp-route-D="@item.D">Edit</a> |
+                        <a asp-page="Details" asp-route-Y="@item.Y" asp-route-M="@item.M" asp-route-D="@item.D">Details</a> |
+                        <a asp-page="Delete" asp-route-Y="@item.Y" asp-route-M="@item.M" asp-route-D="@item.D">Delete</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

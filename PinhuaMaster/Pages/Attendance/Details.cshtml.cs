@@ -20,19 +20,19 @@ namespace PinhuaMaster.Pages.Attendance
         {
             public int Year { get; set; }
             public int Month { get; set; }
-            public IEnumerable<考勤明细> Details { get; set; }
+            public IEnumerable<AttendanceReportDetails> Details { get; set; }
         }
 
         public LinqModel AttendanceData { get; set; }
 
         public void OnGet(int Year, int Month, string Id)
         {
-            AttendanceData = (from p in _pinhuaContext.考勤期间.AsNoTracking().Where(k => k.年 == Year && k.月 == Month)
-                              join d in _pinhuaContext.考勤明细.AsNoTracking() on p.ExcelServerRcid equals d.ExcelServerRcid into details
+            AttendanceData = (from p in _pinhuaContext.AttendanceReport.AsNoTracking().Where(k => k.Y == Year && k.M == Month)
+                              join d in _pinhuaContext.AttendanceReportDetails.AsNoTracking() on p.ExcelServerRcid equals d.ExcelServerRcid into details
                               select new LinqModel
                               {
-                                  Year = p.年,
-                                  Month = p.月,
+                                  Year = p.Y,
+                                  Month = p.M,
                                   Details = details
                               }).FirstOrDefault();
         }

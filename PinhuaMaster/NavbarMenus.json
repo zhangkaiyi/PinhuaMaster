@@ -6,9 +6,19 @@
       "url": "/Index"
     },
     {
-      "name": "网页送货单",
+      "name": "送货单",
       "icon": "fa fa-sticky-note-o",
       "url": "/OrderManagement/EasyDelivery/Index"
+    },
+    {
+      "name": "收货单",
+      "icon": "fa fa-hand-lizard-o",
+      "url": "/OrderManagement/Purchase/Index"
+    },
+    {
+      "name": "运输单",
+      "icon": "fa fa-truck",
+      "url": ""
     },
     {
       "name": "订单系统",
@@ -55,11 +65,6 @@
       ]
     },
     {
-      "name": "采购系统",
-      "icon": "fa fa-stack-overflow",
-      "url": "/OrderManagement/Purchase/Index"
-    },
-    {
       "name": "财务管理",
       "icon": "fa fa-exchange",
       "url": "",
@@ -101,17 +106,31 @@
     {
       "name": "考勤管理",
       "icon": "fa fa-calendar",
-      "url": "/Attendance/Index"
-    },
-    {
-      "name": "EastRiver",
-      "icon": "fa fa-circle-o",
-      "url": "/Attendance/EastRiver/Index"
-    },
-    {
-      "name": "加班申请表",
-      "icon": "fa fa-circle-o",
-      "url": "/Attendance/OvertimeForm/Index"
+      "url": "",
+      "children": [
+        {
+          "name": "考勤报表",
+          "icon": "fa fa-wpforms",
+          "url": "/Attendance/Index"
+        },
+        {
+          "name": "加班单",
+          "icon": "fa fa-circle-o",
+          "url": "/Attendance/OvertimeForm/Index"
+        },
+        {
+          "name": "数据库",
+          "icon": "fa fa-database",
+          "url": "",
+          "children": [
+            {
+              "name": "EastRiver",
+              "icon": "fa fa-circle-o",
+              "url": "/Attendance/EastRiver/Index"
+            }
+          ]
+        }
+      ]
     },
     {
       "name": "工资管理",

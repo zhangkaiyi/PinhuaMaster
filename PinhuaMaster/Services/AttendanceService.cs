@@ -302,15 +302,23 @@ namespace PinhuaMaster.Services
         public TimeSpan GetOverlapSpan(DateTime range1Begin, DateTime range1End, DateTime range2Begin, DateTime range2End)
         {
             var span = new TimeSpan();
-            if (range1Begin < range2Begin && range2End < range1End)
+            if (range1End <= range2Begin)
+            {
+                return span;
+            }
+            else if(range1Begin >= range2End)
+            {
+                return span;
+            }
+            else if (range1Begin <= range2Begin && range1End >= range2End)
             {
                 span = range2End.Subtract(range2Begin);
             }
-            else if (range1Begin < range2Begin && range1End < range2End)
+            else if (range1Begin <= range2Begin && range1End >= range2Begin && range1End <= range2End)
             {
                 span = range1End.Subtract(range2Begin);
             }
-            else if (range1Begin > range2Begin && range1Begin < range2End && range1End > range2End)
+            else if (range1Begin >= range2Begin && range1Begin <= range2End && range1End >= range2End)
             {
                 span = range2End.Subtract(range1Begin);
             }

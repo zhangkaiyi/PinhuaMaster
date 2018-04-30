@@ -26,7 +26,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach (var item in Model.Reports)
+                        @foreach (var item in Model.Reports.OrderByDescending(r => r.Report.Y).ThenByDescending(r => r.Report.M))
                         {
                             <tr>
                                 <td><a asp-page="Details" asp-route-year="@item.Report.Y" asp-route-month="@item.Report.M"><i class="fa fa-search"></i></a></td>

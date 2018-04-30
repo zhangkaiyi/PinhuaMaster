@@ -24,7 +24,7 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach (var timeRecord in Model.timeRecords)
+                @foreach (var timeRecord in Model.timeRecords.OrderBy(r => r.SignTime).ThenBy(r => r.Id))
                 {
                     <tr>
                         <td>@timeRecord.Id</td>
