@@ -67,10 +67,51 @@ namespace PinhuaMaster.Services
             return records1.Union(records2).ToList();
         }
 
+        public AttendanceServiceDTO GetExsitedAttendanceData(int? Y, int? M)
+        {
+            if (Y == null || M == null)
+                return null;
+            var reportDetails = (from d in _pinhuaContext.AttendanceReportDetails.AsNoTracking()
+                                 where d.Y == Y && d.M == M
+                                 select d).ToList();
+            var rule = GetRule();
+            var days = DateTime.DaysInMonth(Y.Value, M.Value);
+            var dto = new AttendanceServiceDTO
+            {
+                Y = Y,
+                M = M,
+                Rule = rule,
+                PersonList = new List<AttendanceServicePerson>()
+            };
+
+            foreach (var detail in reportDetails)
+            {
+                var person = new AttendanceServicePerson
+                {
+                    Id = detail.编号,
+                    Name = detail.姓名,
+                    IsFullAttendance = detail.是否全勤 == "是",
+                    DaytimeHours = detail.正班,
+                    OvertimeHours = detail.加班,
+                    TimesOfAbsent = detail.缺勤,
+                    TimesOfAskForLeave = detail.请假,
+                    TimesOfDinner = detail.用餐,
+                    TimesOfLate = detail.迟到,
+                    TimesOfLeaveEarly = detail.早退,
+                    TotalHours = detail.总工时,
+                };
+                dto.PersonList.Add(person);
+            }
+
+            return dto;
+        }
+
         public AttendanceServiceDTO GetAttendanceData(int? Y, int? M)
         {
             if (Y == null || M == null)
                 return null;
+
+            var files = _pinhuaContext.人员档案.AsNoTracking().ToList();
 
             var records = GetTimeRecrods(Y.Value, M.Value).OrderBy(p => p.Id).ThenBy(p => p.SignTime);
             if (records.Count() == 0)
@@ -162,7 +203,10 @@ namespace PinhuaMaster.Services
                         {
                             if (range.计算全勤 == "是")
                             {
-                                detail.State = "缺勤";
+                                if (result.Date < files.FirstOrDefault(f => f.人员编号 == person.Id)?.入职时间) // 在入职以前没有考勤记录，不算缺勤
+                                    detail.State = "正常";
+                                else
+                                    detail.State = "缺勤";
                             }
                             result.Details.Add(detail);
                         }
@@ -306,7 +350,7 @@ namespace PinhuaMaster.Services
             {
                 return span;
             }
-            else if(range1Begin >= range2End)
+            else if (range1Begin >= range2End)
             {
                 return span;
             }

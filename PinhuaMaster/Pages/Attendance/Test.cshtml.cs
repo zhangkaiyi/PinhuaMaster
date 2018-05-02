@@ -29,6 +29,7 @@ namespace PinhuaMaster.Pages.Attendance
         public void OnGet()
         {
             var a = _eastRiverContext.TimeRecords.AsNoTracking().Select(p => p.SignTime.Year).Distinct().ToList();
+            var reports = _pinhuaContext.AttendanceReport.AsNoTracking().ToList();
             ymList = (from y in a
                       join m in _eastRiverContext.TimeRecords.AsNoTracking() on y equals m.SignTime.Year into ms
                       select new YMList
@@ -38,7 +39,7 @@ namespace PinhuaMaster.Pages.Attendance
                           .Select(p => new MType
                           {
                               Month = p,
-                              State = _pinhuaContext.AttendanceReport.AsNoTracking().Where(r => r.Y == y && r.M == p).Count() > 0 ? "已存在" : ""
+                              State = reports.Where(r => r.Y == y && r.M == p).Count() > 0 ? "已存在" : ""
                           })
                       }).OrderByDescending(p => p.Year).ToList();
 

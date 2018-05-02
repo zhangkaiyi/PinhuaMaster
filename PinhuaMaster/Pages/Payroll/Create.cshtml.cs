@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using PinhuaMaster.Data.Entities.Pinhua;
 using PinhuaMaster.Extensions;
+using PinhuaMaster.Pages.Attendance;
 using PinhuaMaster.Pages.Payroll.ViewModel;
 using PinhuaMaster.Pages.Personnel.Files.ViewModel;
 
@@ -24,9 +25,23 @@ namespace PinhuaMaster.Pages.Payroll
             _mapper = mapper;
         }
 
+        public IList<YMList> ymList { get; set; }
+
         public void OnGet()
         {
+            var payrolls = _pinhuaContext.PayrollMain.AsNoTracking().ToList();
+            ymList = (from p in _pinhuaContext.AttendanceReport.AsNoTracking()
+                      group p by p.Y into g
+                      select new YMList
+                      {
+                          Year = g.Key,
+                          MonthList = g.Select(x => new MType
+                          {
+                              Month = x.M,
+                              State = payrolls.Where(payroll => payroll.Y == g.Key && payroll.M == x.M).Count() > 0 ? "已存在" : ""
+                          }).OrderByDescending(ym => ym.Month)
 
+                      }).OrderByDescending(p => p.Year).ToList();
         }
 
         public IActionResult OnGetAjaxComputePayroll(int? year, int? month)
@@ -41,8 +56,9 @@ namespace PinhuaMaster.Pages.Payroll
             var b = toGroupBy(a);
             var c = toCompute(b);
             var d = toPayroll(c);
+            var x = toPayrollNew(year, month);
 
-            return new JsonResult(d, settings);
+            return new JsonResult(x, settings);
         }
 
         public IActionResult OnPost(int yyyy, int mm, string jsonStr)
@@ -94,9 +110,9 @@ namespace PinhuaMaster.Pages.Payroll
             {
                 _pinhuaContext.SaveChanges();
             }
-            catch(DbUpdateException e)
+            catch (DbUpdateException e)
             {
-                ModelState.AddModelError("", e.InnerException.Message); 
+                ModelState.AddModelError("", e.InnerException.Message);
                 return Page();
             }
 
@@ -183,6 +199,38 @@ namespace PinhuaMaster.Pages.Payroll
                     FullAttendanceAmount = record.IsFullAttendance ? record.DaytimeHours * result.FullAttendancePrice : 0,
                     DinnerAmount = record.TimesOfDinner * -2,
                     PriceOverview = $"{(record.IsFullAttendance ? result.DaytimePrice + result.FullAttendancePrice : result.DaytimePrice)?.ToString("0.0")} / {result.OvertimePrice?.ToString("0.0")}",
+                };
+                x.AllHoursAmountWithFullAttendance = x.DaytimeAmount + x.OvertimeAmount + x.FullAttendanceAmount;
+                x.FinalAmount = x.DaytimeAmount + x.OvertimeAmount + x.FullAttendanceAmount + x.DinnerAmount;
+                list.Add(x);
+            }
+            return list;
+        }
+
+        public IList<PayrollDetailsDTO> toPayrollNew(int? Y, int? M)
+        {
+            var list = new List<PayrollDetailsDTO>();
+            foreach (var record in _pinhuaContext.AttendanceReportDetails.Where(a => a.Y == Y && a.M == M))
+            {
+                var file = _mapper.Map<人员档案, PersonnelFilesDTO>(_pinhuaContext.人员档案.AsNoTracking().FirstOrDefault(p => p.人员编号 == record.编号));
+                var schemaDetails = _pinhuaContext.WageSchemaDetailsByTime.AsNoTracking().Where(p => p.SchemaId == file.SchemaId);
+                var result = schemaDetails.FirstOrDefault(p => p.Id == file.PostId && p.Sex == file.Sex);
+                var x = new PayrollDetailsDTO
+                {
+                    Id = record.编号,
+                    Name = record.姓名,
+                    Sex = file.Sex,
+                    AllHours = record.总工时,
+                    DaytimeHours = record.正班,
+                    OvertimeHours = record.加班,
+                    TimesOfDinner = record.用餐,
+                    IsFullAttendance = record.是否全勤 == "是",
+                    Post = _pinhuaContext.岗位主表.AsNoTracking().FirstOrDefault(p => p.Id == file.PostId).OperatingPost,
+                    DaytimeAmount = record.正班 * result.DaytimePrice,
+                    OvertimeAmount = record.加班 * result.OvertimePrice,
+                    FullAttendanceAmount = record.是否全勤 == "是" ? record.正班 * result.FullAttendancePrice : 0,
+                    DinnerAmount = record.用餐 * -2,
+                    PriceOverview = $"{(record.是否全勤 == "是" ? result.DaytimePrice + result.FullAttendancePrice : result.DaytimePrice)?.ToString("0.0")} / {result.OvertimePrice?.ToString("0.0")}",
                 };
                 x.AllHoursAmountWithFullAttendance = x.DaytimeAmount + x.OvertimeAmount + x.FullAttendanceAmount;
                 x.FinalAmount = x.DaytimeAmount + x.OvertimeAmount + x.FullAttendanceAmount + x.DinnerAmount;

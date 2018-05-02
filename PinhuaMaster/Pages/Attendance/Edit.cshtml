@@ -12,12 +12,9 @@
             <div class="box-body">
                 <div class="form-horizontal" id="test">
                     <div class="form-group">
-                        <label class="control-label col-xs-3">年 @PageContext.RouteData.Values["Y"]</label>
-                        <div class="col-xs-9">
+                        <div class="col-xs-12">
                             <div class="input-group">
-                                <select class="form-control" v-model="Y" v-on:change="getMList" id="refreshY">
-                                    <option v-for="(item,index) in YMList">{{item.Year}}</option>
-                                </select>
+                                <input class="form-control" id="refreshY" value="@PageContext.RouteData.Values["Y"]" readonly />
                                 <span class="input-group-addon">
                                     年
                                 </span>
@@ -25,12 +22,9 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="control-label col-xs-3">月</label>
-                        <div class="col-xs-9">
+                        <div class="col-xs-12">
                             <div class="input-group">
-                                <select class="form-control" v-model="M" id="refreshM">
-                                    <option v-for="(item,index) in MList" :value="item.Month" v-bind:disabled="isDisabled(item)">{{display(item)}}</option>
-                                </select>
+                                <input class="form-control" id="refreshM" value="@PageContext.RouteData.Values["M"]" readonly />
                                 <span class="input-group-addon">
                                     月
                                 </span>
@@ -38,20 +32,20 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <div class="col-xs-9 col-xs-offset-3">
-                            <button class="form-control btn btn-default btn-flat" onclick="toRefresh()">查询</button>
+                        <div class="col-xs-12">
+                            <button class="form-control btn btn-default btn-flat" onclick="getAttendance()"><i class="fa fa-refresh"></i> 刷新</button>
                             <input type="hidden" id="hiddenYMList" value="" />
                         </div>
                     </div>
                     <div class="form-group">
-                        <div class="col-xs-9 col-xs-offset-3">
-                            <form method="post" asp-page="Create">
-                                <button class="form-control btn btn-default btn-flat" type="submit">保存</button>
+                        <div class="col-xs-12">
+                            <form method="post" asp-page="Edit">
+                                <button class="form-control btn btn-default btn-flat" type="submit"><i class="fa fa-pencil"></i> 保存</button>
                                 <input type="hidden" id="refreshJSON" name="jsonStr" />
                             </form>
                         </div>
                     </div>
-                    <input type="hidden" value="@Url.Page("Create", "Ajax")" id="refreshUrl" />
+                    <input type="hidden" value="@Url.Page("Create", "Ajax", new { Y=PageContext.RouteData.Values["Y"], M=PageContext.RouteData.Values["M"]})" id="refreshUrl" />
                 </div>
             </div>
         </div>
@@ -59,16 +53,19 @@
     <div class="col-md-9">
         <div class="box box-solid">
             <div class="box-body">
-                <table data-toggle="table" class="table table-bordered table-striped table-hover" data-response-handler="responseHandler" id="computedTable">
+                <table data-toggle="table"
+                       class="table table-bordered table-striped table-hover"
+                       data-response-handler="responseHandler"
+                       data-url="@Url.Page("Edit","AjaxExsitedAttendanceData", new { Y=PageContext.RouteData.Values["Y"], M=PageContext.RouteData.Values["M"]})"
+                       id="computedTable">
                     <thead>
                         <tr>
-                            <th data-width="1" data-formatter="fmtEastriver"></th>
-                            <th data-sortable="true" class="hidden-xs" data-field="@(nameof(AttendanceServicePerson.Id))">编号</th>
+                            <th data-sortable="true" class="hidden-xs" data-field="@(nameof(AttendanceServicePerson.Id))" data-visible="false">编号</th>
                             <th data-sortable="true" data-field="@(nameof(AttendanceServicePerson.Name))">姓名</th>
                             <th data-sortable="true" data-formatter="fmtIsFullAttendance" data-field="@(nameof(AttendanceServicePerson.IsFullAttendance))">全勤</th>
                             <th data-field="@(nameof(AttendanceServicePerson.DaytimeHours))">正班</th>
                             <th data-field="@(nameof(AttendanceServicePerson.OvertimeHours))">加班</th>
-                            <th data-field="@(nameof(AttendanceServicePerson.TotalHours))">出勤合计</th>
+                            <th data-field="@(nameof(AttendanceServicePerson.TotalHours))">总工时</th>
                             <th class="hidden-xs" data-field="@(nameof(AttendanceServicePerson.TimesOfDinner))">用餐</th>
                         </tr>
                     </thead>
@@ -79,5 +76,30 @@
     </div>
 </div>
 
+@section Scripts{
+    <script>
+        getAttendance = function () {
+            //var refreshY = $('#refreshY').val()
+            //var refreshM = $('#refreshM').val()
+            //var refreshUrl = '/Attendance/Create?Handler=Ajax&Y=' + refreshY + '&M=' + refreshM
+            var refreshUrl = $('#refreshUrl').val()
+            var $table = $('#computedTable')
+            $table.bootstrapTable('refresh', { url: refreshUrl });
+        }
 
+        function fmtIsFullAttendance(value, row) {
+            if (value)
+                return '<span class="text-danger">是</span>'
+            else
+                return '<span class="text-success">否</span>'
+        }
 
+        function responseHandler(res) {
+            Y = res.Y
+            M = res.M
+            $('#refreshJSON').val(JSON.stringify(res))
+            return res.PersonList
+        }
+
+    </script>
+}

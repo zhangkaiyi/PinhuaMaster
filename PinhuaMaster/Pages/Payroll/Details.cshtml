@@ -17,6 +17,7 @@
                        data-url="@Url.Page("Details","AjaxGetDetails",new { Model.Y, Model.M})"
                        data-classes="table table-striped"
                        data-row-style="rowStyle"
+                       data-show-footer="true"
                        style="white-space:nowrap;">
                     <thead>
                         <tr>
@@ -25,11 +26,11 @@
                             <th data-field="@(nameof(ViewModel.PayrollDetailsDTO.Post))">岗位</th>
                             <th data-field="@(nameof(ViewModel.PayrollDetailsDTO.IsFullAttendance))" data-visible="false">是否全勤</th>
                             <th data-field="@(nameof(ViewModel.PayrollDetailsDTO.PriceOverview))">工价</th>
-                            <th data-field="@(nameof(ViewModel.PayrollDetailsDTO.AllHours))" data-formatter="fmtHours">工时</th>
+                            <th data-field="@(nameof(ViewModel.PayrollDetailsDTO.AllHours))" data-formatter="fmtDetailHours">工时</th>
                             <th data-field="@(nameof(ViewModel.PayrollDetailsDTO.AllHoursAmountWithFullAttendance))" data-formatter="fmtAmount">工资</th>
                             <th data-field="@(nameof(ViewModel.PayrollDetailsDTO.TimesOfDinner))">用餐</th>
                             <th data-field="@(nameof(ViewModel.PayrollDetailsDTO.DinnerAmount))">餐费</th>
-                            <th data-field="@(nameof(ViewModel.PayrollDetailsDTO.FinalAmount))" data-formatter="fmtAmount" class="hidden-xs">实发</th>
+                            <th data-field="@(nameof(ViewModel.PayrollDetailsDTO.FinalAmount))" data-formatter="fmtAmount" data-footer-formatter="fmtFooter" class="hidden-xs">实发</th>
                         </tr>
                     </thead>
                 </table>
@@ -56,7 +57,6 @@
     <script>
         function rowStyle(row, index) {
             var classes = ['active', 'success', 'info', 'warning', 'danger'];
-            console.log(row.IsFullAttendance)
             if (row.IsFullAttendance) {
                 return {
                     classes: 'text-danger'
@@ -76,8 +76,20 @@
             return value.toFixed(1)
         }
 
+        function fmtDetailHours(value, row) {
+            return row.AllHours.toFixed(1) + ' ( ' + row.DaytimeHours.toFixed(1) + ' / ' + row.OvertimeHours.toFixed(1) + ' )'
+        }
+
         function fmtAmount(value, row) {
             return value.toFixed(2)
+        }
+
+        function fmtFooter(data) {
+            var sum = 0
+            for (var i in data) {
+                sum += parseFloat(data[i].FinalAmount)
+            }
+            return sum.toFixed(2)
         }
     </script>
 }

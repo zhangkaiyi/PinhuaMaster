@@ -18,23 +18,21 @@
                        style="white-space:nowrap">
                     <thead>
                         <tr>
-                            <th data-width="10"></th>
                             <th>年月</th>
-                            <th>总人数</th>
-                            <th>总工时</th>
-                            <th>总用餐</th>
+                            <th>工时</th>
+                            <th>人数</th>
+                            <th>用餐</th>
                         </tr>
                     </thead>
                     <tbody>
                         @foreach (var item in Model.Reports.OrderByDescending(r => r.Report.Y).ThenByDescending(r => r.Report.M))
                         {
-                            <tr>
-                                <td><a asp-page="Details" asp-route-year="@item.Report.Y" asp-route-month="@item.Report.M"><i class="fa fa-search"></i></a></td>
-                                <td>@(item.Report.Y) - @(item.Report.M.ToString("D2"))</td>
-                                <td>@(item.Details.Count())</td>
-                                <td>@(item.Details.Sum(p => p.总工时)?.ToString("0.0"))</td>
-                                <td>@(item.Details.Sum(p => p.用餐))</td>
-                            </tr>
+                        <tr>
+                            <td><a asp-page="Edit" asp-route-Y="@item.Report.Y" asp-route-M="@item.Report.M">@(item.Report.Y) - @(item.Report.M.ToString("D2"))</a></td>
+                            <td>@(item.Details.Sum(p => p.总工时)?.ToString("0.0"))</td>
+                            <td>@(item.Details.Count())</td>
+                            <td>@(item.Details.Sum(p => p.用餐))</td>
+                        </tr>
                         }
                     </tbody>
                 </table>

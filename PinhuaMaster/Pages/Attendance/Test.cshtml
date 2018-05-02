@@ -63,12 +63,12 @@
                     <thead>
                         <tr>
                             <th data-width="1" data-formatter="fmtEastriver"></th>
-                            <th data-sortable="true" class="hidden-xs" data-field="@(nameof(AttendanceServicePerson.Id))">编号</th>
+                            <th data-sortable="true" class="hidden-xs" data-field="@(nameof(AttendanceServicePerson.Id))" data-visible="false">编号</th>
                             <th data-sortable="true" data-field="@(nameof(AttendanceServicePerson.Name))">姓名</th>
                             <th data-sortable="true" data-formatter="fmtIsFullAttendance" data-field="@(nameof(AttendanceServicePerson.IsFullAttendance))">全勤</th>
                             <th data-field="@(nameof(AttendanceServicePerson.DaytimeHours))">正班</th>
                             <th data-field="@(nameof(AttendanceServicePerson.OvertimeHours))">加班</th>
-                            <th data-field="@(nameof(AttendanceServicePerson.TotalHours))">出勤合计</th>
+                            <th data-field="@(nameof(AttendanceServicePerson.TotalHours))">总工时</th>
                             <th class="hidden-xs" data-field="@(nameof(AttendanceServicePerson.TimesOfDinner))">用餐</th>
                         </tr>
                     </thead>

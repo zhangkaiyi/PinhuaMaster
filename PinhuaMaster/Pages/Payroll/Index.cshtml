@@ -18,18 +18,16 @@
                        style="white-space:nowrap">
                     <thead>
                         <tr>
-                            <th>年</th>
-                            <th>月</th>
-                            <th data-width="20"></th>
+                            <th>日期</th>
+                            <th>工资金额</th>
                         </tr>
                     </thead>
                     <tbody>
                         @foreach (var payroll in Model.PayrollList.OrderByDescending(p => p.Y).ThenByDescending(p => p.M))
                         {
                             <tr>
-                                <td>@payroll.Y</td>
-                                <td>@payroll.M</td>
-                                <td><a asp-page="Details" asp-route-y="@payroll.Y" asp-route-m="@payroll.M">查看</a></td>
+                                <td><a asp-page="Details" asp-route-y="@payroll.Y" asp-route-m="@payroll.M">@(new DateTime(payroll.Y, payroll.M, 1).ToString("yyyy - MM"))</a></td>
+                                <td>@pinhuaContext.PayrollDetails.AsNoTracking().Where(d => d.Y == payroll.Y && d.M == payroll.M).Sum(d => d.FinalAmount)?.ToString("0.00")</td>
                             </tr>
                         }
                     </tbody>
