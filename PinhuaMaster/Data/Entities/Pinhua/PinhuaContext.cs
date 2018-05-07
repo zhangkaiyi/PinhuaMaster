@@ -8,6 +8,7 @@ namespace PinhuaMaster.Data.Entities.Pinhua
     {
         public virtual DbSet<AttendanceReport> AttendanceReport { get; set; }
         public virtual DbSet<AttendanceReportDetails> AttendanceReportDetails { get; set; }
+        public virtual DbSet<AttendanceReportResults> AttendanceReportResults { get; set; }
         public virtual DbSet<EsAgentSet> EsAgentSet { get; set; }
         public virtual DbSet<EsAgentUser> EsAgentUser { get; set; }
         public virtual DbSet<EsCaseFormat> EsCaseFormat { get; set; }
@@ -146,6 +147,7 @@ namespace PinhuaMaster.Data.Entities.Pinhua
         public virtual DbSet<对账结算主表> 对账结算主表 { get; set; }
         public virtual DbSet<发货> 发货 { get; set; }
         public virtual DbSet<发货Detail> 发货Detail { get; set; }
+        public virtual DbSet<放假登记> 放假登记 { get; set; }
         public virtual DbSet<付款单> 付款单 { get; set; }
         public virtual DbSet<岗位主表> 岗位主表 { get; set; }
         public virtual DbSet<工资档案主表> 工资档案主表 { get; set; }
@@ -181,7 +183,6 @@ namespace PinhuaMaster.Data.Entities.Pinhua
         // Unable to generate entity type for table 'dbo.外协加工_D'. Please see the warning messages.
         // Unable to generate entity type for table 'dbo.厂房登记'. Please see the warning messages.
         // Unable to generate entity type for table 'dbo.打卡记录_D'. Please see the warning messages.
-        // Unable to generate entity type for table 'dbo.放假登记'. Please see the warning messages.
         // Unable to generate entity type for table 'dbo.调休登记'. Please see the warning messages.
         // Unable to generate entity type for table 'dbo.调休登记_D'. Please see the warning messages.
         // Unable to generate entity type for table 'dbo.费用计算'. Please see the warning messages.
@@ -277,6 +278,52 @@ namespace PinhuaMaster.Data.Entities.Pinhua
             });
 
             modelBuilder.Entity<AttendanceReportDetails>(entity =>
+            {
+                entity.HasKey(e => e.主键);
+
+                entity.HasIndex(e => new { e.ExcelServerRcid, e.ExcelServerWiid })
+                    .HasName("idx1");
+
+                entity.Property(e => e.ExcelServerChg).HasColumnName("ExcelServerCHG");
+
+                entity.Property(e => e.ExcelServerCn).HasColumnName("ExcelServerCN");
+
+                entity.Property(e => e.ExcelServerRc1)
+                    .HasColumnName("ExcelServerRC1")
+                    .HasMaxLength(20);
+
+                entity.Property(e => e.ExcelServerRcid)
+                    .HasColumnName("ExcelServerRCID")
+                    .HasMaxLength(20);
+
+                entity.Property(e => e.ExcelServerRn).HasColumnName("ExcelServerRN");
+
+                entity.Property(e => e.ExcelServerRtid)
+                    .HasColumnName("ExcelServerRTID")
+                    .HasMaxLength(20);
+
+                entity.Property(e => e.ExcelServerWiid)
+                    .HasColumnName("ExcelServerWIID")
+                    .HasMaxLength(20);
+
+                entity.Property(e => e.上班).HasColumnType("datetime");
+
+                entity.Property(e => e.下班).HasColumnType("datetime");
+
+                entity.Property(e => e.姓名).HasMaxLength(20);
+
+                entity.Property(e => e.工时).HasColumnType("decimal(20, 3)");
+
+                entity.Property(e => e.日期).HasColumnType("datetime");
+
+                entity.Property(e => e.班段描述).HasMaxLength(50);
+
+                entity.Property(e => e.编号).HasMaxLength(20);
+
+                entity.Property(e => e.考勤结果).HasMaxLength(20);
+            });
+
+            modelBuilder.Entity<AttendanceReportResults>(entity =>
             {
                 entity.HasKey(e => new { e.Y, e.M, e.编号 });
 
@@ -5609,6 +5656,46 @@ namespace PinhuaMaster.Data.Entities.Pinhua
                 entity.Property(e => e.计价单位).HasMaxLength(20);
 
                 entity.Property(e => e.金额).HasColumnType("decimal(20, 2)");
+            });
+
+            modelBuilder.Entity<放假登记>(entity =>
+            {
+                entity.HasKey(e => new { e.编号, e.期初 });
+
+                entity.HasIndex(e => new { e.ExcelServerRcid, e.ExcelServerWiid })
+                    .HasName("idx1");
+
+                entity.Property(e => e.编号).HasMaxLength(20);
+
+                entity.Property(e => e.期初).HasColumnType("datetime");
+
+                entity.Property(e => e.ExcelServerChg).HasColumnName("ExcelServerCHG");
+
+                entity.Property(e => e.ExcelServerCn).HasColumnName("ExcelServerCN");
+
+                entity.Property(e => e.ExcelServerRc1)
+                    .HasColumnName("ExcelServerRC1")
+                    .HasMaxLength(20);
+
+                entity.Property(e => e.ExcelServerRcid)
+                    .HasColumnName("ExcelServerRCID")
+                    .HasMaxLength(20);
+
+                entity.Property(e => e.ExcelServerRn).HasColumnName("ExcelServerRN");
+
+                entity.Property(e => e.ExcelServerRtid)
+                    .HasColumnName("ExcelServerRTID")
+                    .HasMaxLength(20);
+
+                entity.Property(e => e.ExcelServerWiid)
+                    .HasColumnName("ExcelServerWIID")
+                    .HasMaxLength(20);
+
+                entity.Property(e => e.备注).HasMaxLength(50);
+
+                entity.Property(e => e.性质).HasMaxLength(20);
+
+                entity.Property(e => e.期末).HasColumnType("datetime");
             });
 
             modelBuilder.Entity<付款单>(entity =>

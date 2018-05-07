@@ -57,11 +57,11 @@ namespace PinhuaMaster.Pages.Attendance
             if (report == null)
                 return Page();
 
-            var reportDetails = new List<AttendanceReportDetails>();
+            var reportDetails = new List<AttendanceReportResults>();
 
             foreach (var person in data.PersonList)
             {
-                var detail = new AttendanceReportDetails
+                var detail = new AttendanceReportResults
                 {
                     ExcelServerRcid = report.ExcelServerRcid,
                     ExcelServerRtid = report.ExcelServerRtid,
@@ -83,23 +83,54 @@ namespace PinhuaMaster.Pages.Attendance
             }
             reportDetails.ForEach(i =>
             {
-                var result = _pinhuaContext.AttendanceReportDetails.FirstOrDefault(p => p.Y == i.Y && p.M == i.M && p.编号 == i.编号);
+                var result = _pinhuaContext.AttendanceReportResults.FirstOrDefault(p => p.Y == i.Y && p.M == i.M && p.编号 == i.编号);
                 if (result == null)
                     // 如果该条信息不存在，则添加
-                    _pinhuaContext.AttendanceReportDetails.Add(i);
+                    _pinhuaContext.AttendanceReportResults.Add(i);
                 else
                 {
                     // 如果该条信息存在，则修改
                     Copy.ShadowCopy(i, result);
                 }
             });
-            await _pinhuaContext.AttendanceReportDetails.Where(p => p.Y == data.Y && p.M == data.M).ForEachAsync(i =>
+            await _pinhuaContext.AttendanceReportResults.Where(p => p.Y == data.Y && p.M == data.M).ForEachAsync(i =>
               {
                   var result = reportDetails.FirstOrDefault(p => p.编号 == i.编号);
                   if (result == null)
                       // 如果该条信息多余，则删除
-                      _pinhuaContext.AttendanceReportDetails.Remove(i);
+                      _pinhuaContext.AttendanceReportResults.Remove(i);
               });
+
+            // 保存明细
+            var abc = new List<AttendanceReportDetails>();
+            foreach (var person in data.PersonList)
+            {
+                foreach (var detail in person.Results)
+                {
+                    foreach (var range in detail.Details)
+                    {
+                        var o = new AttendanceReportDetails
+                        {
+                            编号 = person.Id,
+                            姓名 = person.Name,
+                            日期 = detail.Date,
+                            班段 = range.RangeId,
+                            班段描述 = range.Range,
+                            上班 = range.Time1Fix,
+                            下班 = range.Time2Fix,
+                            工时 = range.Hours,
+                            考勤结果 = range.State,
+                            ExcelServerRcid = report.ExcelServerRcid,
+                            ExcelServerRtid = report.ExcelServerRtid,
+                        };
+                        abc.Add(o);                    }
+
+                }
+            }
+            var details = _pinhuaContext.AttendanceReportDetails.Where(d => d.ExcelServerRcid == report.ExcelServerRcid);
+            _pinhuaContext.AttendanceReportDetails.RemoveRange(details);
+            _pinhuaContext.AttendanceReportDetails.AddRange(abc);
+
             _pinhuaContext.SaveChanges();
 
             return RedirectToPage("Index");

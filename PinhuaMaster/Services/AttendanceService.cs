@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using PinhuaMaster.Extensions;
+using PinhuaMaster.Extensions.Converters;
 
 namespace PinhuaMaster.Services
 {
@@ -71,7 +72,7 @@ namespace PinhuaMaster.Services
         {
             if (Y == null || M == null)
                 return null;
-            var reportDetails = (from d in _pinhuaContext.AttendanceReportDetails.AsNoTracking()
+            var reportDetails = (from d in _pinhuaContext.AttendanceReportResults.AsNoTracking()
                                  where d.Y == Y && d.M == M
                                  select d).ToList();
             var rule = GetRule();
@@ -112,6 +113,8 @@ namespace PinhuaMaster.Services
                 return null;
 
             var files = _pinhuaContext.人员档案.AsNoTracking().ToList();
+            var overtimeForms = _pinhuaContext.OvertimeFormMain.Where(f => f.Y == Y && f.M == M).ToList();
+
 
             var records = GetTimeRecrods(Y.Value, M.Value).OrderBy(p => p.Id).ThenBy(p => p.SignTime);
             if (records.Count() == 0)
@@ -126,6 +129,7 @@ namespace PinhuaMaster.Services
                                      SignTimes = g.Select(p => p.SignTime).ToList()
                                  };
             var rule = GetRule();
+            var holidays = _pinhuaContext.放假登记.AsNoTracking().ToList();
             var days = DateTime.DaysInMonth(Y.Value, M.Value);
             var dto = new AttendanceServiceDTO
             {
@@ -174,6 +178,7 @@ namespace PinhuaMaster.Services
                         }
                         var detail = new AttendanceServiceDayDetail
                         {
+                            RangeId = range.RangeId,
                             Range = range.ToRangeString(),
                             Time1 = checkin,
                             Time1Fix = (checkin < workfrom && checkin.HasValue) ? workfrom : checkin,
@@ -183,7 +188,37 @@ namespace PinhuaMaster.Services
 
                         if (checkin.HasValue && checkout.HasValue)
                         {
-                            detail.State = "正常";
+                            if (range.RangeId == 2)
+                            {
+                                // 判断在不在加班名单中，如果没有加班名单，就允许所有人加班，如果有加班名单，在名单的允许加班，不在名单的不允许加班
+                                var overtimeForm = overtimeForms.FirstOrDefault(f => f.D == D);
+                                if (overtimeForm == null)
+                                {
+                                    // 不存在加班名单
+                                    detail.State = "正常";
+                                }
+                                else
+                                {
+                                    // 存在加班名单
+                                    var overtimeDetails = _pinhuaContext.OvertimeFormDetails.AsNoTracking().Where(d => d.ExcelServerRcid == overtimeForm.ExcelServerRcid);
+                                    if (overtimeDetails.Any(d => d.Id == person.Id))
+                                    {
+                                        // 如果员工在加班名单中
+                                        detail.State = "正常";
+                                    }
+                                    else
+                                    {
+                                        // 如果不在加班单中，即使有考勤数据也判定为无效
+                                        detail.State = "未加班";
+                                        detail.Time1Fix = null;
+                                        detail.Time2Fix = null;
+                                        result.Details.Add(detail);
+                                        break;
+                                    }
+                                }
+                            }
+                            else
+                                detail.State = "正常";
 
                             var workSpan = detail.Time2Fix.Value.DropSeconds().Subtract(detail.Time1Fix.Value.DropSeconds());
                             //var minutes = workSpan.TotalMinutes > 0 ? Math.Floor(workSpan.TotalMinutes) : 0;
@@ -210,9 +245,17 @@ namespace PinhuaMaster.Services
                             }
                             result.Details.Add(detail);
                         }
+                        if (holidays.Where(d => result.Date.IsBetween(d.期初, d.期末 ?? d.期初)).Count() > 0)
+                        {
+                            detail.State = "放假";
+                        }
                     }
                     result.DayHours = result.Details.Sum(p => p.Hours);
                     result.State = GetState(result.Details);
+                    if (holidays.Where(d => result.Date.IsBetween(d.期初, d.期末 ?? d.期初)).Count() > 0)
+                    {
+                        result.State = "放假";
+                    }
                     person.Results.Add(result);
                 }
                 person.TotalHours = person.Results.Sum(p => p.DayHours);
@@ -411,6 +454,7 @@ namespace PinhuaMaster.Services
 
     public class AttendanceServiceDayResult
     {
+        [Newtonsoft.Json.JsonConverter(typeof(MyDateConverter))]
         public DateTime Date { get; set; }
         public decimal? DayHours { get; set; }
         public IList<AttendanceServiceDayDetail> Details { get; set; }
@@ -419,10 +463,15 @@ namespace PinhuaMaster.Services
 
     public class AttendanceServiceDayDetail
     {
+        public int? RangeId { get; set; }
         public string Range { get; set; }
+        [Newtonsoft.Json.JsonConverter(typeof(MyTimeConverter))]
         public DateTime? Time1 { get; set; }
+        [Newtonsoft.Json.JsonConverter(typeof(MyTimeConverter))]
         public DateTime? Time1Fix { get; set; }
+        [Newtonsoft.Json.JsonConverter(typeof(MyTimeConverter))]
         public DateTime? Time2 { get; set; }
+        [Newtonsoft.Json.JsonConverter(typeof(MyTimeConverter))]
         public DateTime? Time2Fix { get; set; }
         public decimal? Hours { get; set; }
         public string State { get; set; }

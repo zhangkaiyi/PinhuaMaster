@@ -22,6 +22,14 @@ namespace PinhuaMaster.Extensions.Converters
         }
     }
 
+    public class MyTimeConverter : Newtonsoft.Json.Converters.IsoDateTimeConverter
+    {
+        public MyTimeConverter() : base()
+        {
+            base.DateTimeFormat = "HH:mm";
+        }
+    }
+
     public class MyDecimalAmountConverter : Newtonsoft.Json.Converters.CustomCreationConverter<decimal>
     {
         public override bool CanWrite

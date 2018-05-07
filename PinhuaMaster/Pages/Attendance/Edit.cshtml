@@ -45,6 +45,12 @@
                             </form>
                         </div>
                     </div>
+                    <div class="form-group">
+                        <div class="col-xs-12">
+                            <button class="form-control btn btn-default" onclick="toDelete('@pinhuaContext.AttendanceReport.AsNoTracking().FirstOrDefault(r=>r.Y==int.Parse(PageContext.RouteData.Values["Y"].ToString())&&r.M==int.Parse(PageContext.RouteData.Values["M"].ToString())).ExcelServerRcid')"><i class="fa fa-remove"></i> 删除</button>
+                            <input type="hidden" id="hiddenYMList" value="" />
+                        </div>
+                    </div>
                     <input type="hidden" value="@Url.Page("Create", "Ajax", new { Y=PageContext.RouteData.Values["Y"], M=PageContext.RouteData.Values["M"]})" id="refreshUrl" />
                 </div>
             </div>
@@ -76,6 +82,51 @@
     </div>
 </div>
 
+<form method="post" asp-page="Delete" id="toDeleteForm">
+    <input type="hidden" id="toDeleteRcid" name="rcId" />
+</form>
+
+<!-- Modal -->
+<div class="modal" id="detailsModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="detailsTitle">Modal title</h4>
+            </div>
+            <div class="modal-body">
+                <table data-classes="table table-hover text-nowrap"
+                       data-toggle="table"
+                       data-striped="true"
+                       id="detailsTable">
+                    <thead>
+                        <tr>
+                            <th data-field="Date">日期</th>
+                            <th data-field="Range0" data-visible="false">班段</th>
+                            <th data-field="State0">状态</th>
+                            <th data-field="From0">上班</th>
+                            <th data-field="End0">下班</th>
+                            <th data-field="Hours0">工时</th>
+                            <th data-field="Range1" data-visible="false">班段</th>
+                            <th data-field="State1">状态</th>
+                            <th data-field="From1">上班</th>
+                            <th data-field="End1">下班</th>
+                            <th data-field="Hours1">工时</th>
+                            <th data-field="DayHours">合计</th>
+                        </tr>
+                    </thead>
+
+                </table>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+
+        </div>
+    </div>
+</div>
+
 @section Scripts{
     <script>
         getAttendance = function () {
@@ -87,6 +138,13 @@
             $table.bootstrapTable('refresh', { url: refreshUrl });
         }
 
+        toDelete = function (rcid) {
+            if (confirm('确定删除这条记录吗？')) {
+                $('#toDeleteRcid').val(rcid);
+                $('#toDeleteForm').submit();
+            }
+        }
+
         function fmtIsFullAttendance(value, row) {
             if (value)
                 return '<span class="text-danger">是</span>'
@@ -94,12 +152,46 @@
                 return '<span class="text-success">否</span>'
         }
 
+        attendance = null;
+
         function responseHandler(res) {
             Y = res.Y
             M = res.M
             $('#refreshJSON').val(JSON.stringify(res))
+            attendance = res
             return res.PersonList
         }
+
+        var $computedTable = $('#computedTable')
+        var $detailsModal = $('#detailsModal')
+        var $detailsTable = $('#detailsTable')
+        var $detailsTitle = $('#detailsTitle')
+        $computedTable.on('click-cell.bs.table', function (event, field, value, row, $element) {
+            var personList = attendance.PersonList
+            for (var i in personList) {
+                if (personList[i].Id == row.Id && personList[i].Results != null) {
+                    var newResultList = []
+                    for (var result of personList[i].Results) {
+                        var newResult = {}
+                        newResult["Date"] = result.Date
+                        newResult["DayHours"] = result.DayHours
+                        for (var z in result.Details) {
+                            newResult["Range" + z] = result.Details[z].Range
+                            newResult["State" + z] = result.Details[z].State
+                            newResult["From" + z] = result.Details[z].Time1Fix
+                            newResult["End" + z] = result.Details[z].Time2Fix
+                            newResult["Hours" + z] = result.Details[z].Hours
+                        }
+                        newResultList.push(newResult)
+                    }
+
+                    $detailsTable.bootstrapTable('load', { data: newResultList })
+                    $detailsTitle.text(personList[i].Name + ' - ' + attendance.Y + '年' + attendance.M + '月')
+                    $detailsModal.modal()
+                }
+
+            }
+        })
 
     </script>
 }

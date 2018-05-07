@@ -23,7 +23,7 @@ namespace PinhuaMaster.Pages.Attendance
         public void OnGet()
         {
             Reports = from r in _pinhuaContext.AttendanceReport.AsNoTracking()
-                      join d in _pinhuaContext.AttendanceReportDetails.AsNoTracking() on r.ExcelServerRcid equals d.ExcelServerRcid into details
+                      join d in _pinhuaContext.AttendanceReportResults.AsNoTracking() on r.ExcelServerRcid equals d.ExcelServerRcid into details
                       select new DTO
                       {
                           Report = r,
@@ -35,6 +35,6 @@ namespace PinhuaMaster.Pages.Attendance
     public class DTO
     {
         public AttendanceReport Report { get; set; }
-        public IEnumerable<AttendanceReportDetails> Details { get; set; }
+        public IEnumerable<AttendanceReportResults> Details { get; set; }
     }
 }

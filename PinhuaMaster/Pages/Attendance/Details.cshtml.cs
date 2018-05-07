@@ -20,7 +20,7 @@ namespace PinhuaMaster.Pages.Attendance
         {
             public int Year { get; set; }
             public int Month { get; set; }
-            public IEnumerable<AttendanceReportDetails> Details { get; set; }
+            public IEnumerable<AttendanceReportResults> Details { get; set; }
         }
 
         public LinqModel AttendanceData { get; set; }
@@ -28,7 +28,7 @@ namespace PinhuaMaster.Pages.Attendance
         public void OnGet(int Year, int Month, string Id)
         {
             AttendanceData = (from p in _pinhuaContext.AttendanceReport.AsNoTracking().Where(k => k.Y == Year && k.M == Month)
-                              join d in _pinhuaContext.AttendanceReportDetails.AsNoTracking() on p.ExcelServerRcid equals d.ExcelServerRcid into details
+                              join d in _pinhuaContext.AttendanceReportResults.AsNoTracking() on p.ExcelServerRcid equals d.ExcelServerRcid into details
                               select new LinqModel
                               {
                                   Year = p.Y,

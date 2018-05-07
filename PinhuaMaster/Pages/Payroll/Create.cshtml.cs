@@ -210,7 +210,7 @@ namespace PinhuaMaster.Pages.Payroll
         public IList<PayrollDetailsDTO> toPayrollNew(int? Y, int? M)
         {
             var list = new List<PayrollDetailsDTO>();
-            foreach (var record in _pinhuaContext.AttendanceReportDetails.Where(a => a.Y == Y && a.M == M))
+            foreach (var record in _pinhuaContext.AttendanceReportResults.Where(a => a.Y == Y && a.M == M))
             {
                 var file = _mapper.Map<人员档案, PersonnelFilesDTO>(_pinhuaContext.人员档案.AsNoTracking().FirstOrDefault(p => p.人员编号 == record.编号));
                 var schemaDetails = _pinhuaContext.WageSchemaDetailsByTime.AsNoTracking().Where(p => p.SchemaId == file.SchemaId);

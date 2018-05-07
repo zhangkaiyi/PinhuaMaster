@@ -80,11 +80,11 @@ namespace PinhuaMaster.Pages.Attendance
                 M = data.M.Value
             };
 
-            var reportDetails = new List<AttendanceReportDetails>();
+            var reportDetails = new List<AttendanceReportResults>();
 
             foreach (var person in data.PersonList)
             {
-                var detail = new AttendanceReportDetails
+                var detail = new AttendanceReportResults
                 {
                     ExcelServerRcid = Rcid,
                     ExcelServerRtid = rtId,
@@ -104,10 +104,37 @@ namespace PinhuaMaster.Pages.Attendance
                 };
                 reportDetails.Add(detail);
             }
+            // 保存明细
+            var abc = new List<AttendanceReportDetails>();
+            foreach (var person in data.PersonList)
+            {
+                foreach (var detail in person.Results)
+                {
+                    foreach (var range in detail.Details)
+                    {
+                        var o = new AttendanceReportDetails
+                        {
+                            编号 = person.Id,
+                            姓名 = person.Name,
+                            日期 = detail.Date,
+                            班段 = range.RangeId,
+                            班段描述 = range.Range,
+                            上班 = range.Time1Fix,
+                            下班 = range.Time2Fix,
+                            工时 = range.Hours,
+                            考勤结果 = range.State,
+                            ExcelServerRcid = Rcid,
+                            ExcelServerRtid = rtId,
+                        };
+                        abc.Add(o);
+                    }
+                }
+            }
 
             _pinhuaContext.EsRepCase.Add(repCase);
             _pinhuaContext.AttendanceReport.Add(reportMain);
-            _pinhuaContext.AttendanceReportDetails.AddRange(reportDetails);
+            _pinhuaContext.AttendanceReportResults.AddRange(reportDetails);
+            _pinhuaContext.AttendanceReportDetails.AddRange(abc);
             _pinhuaContext.SaveChanges();
 
             return RedirectToPage("Index");

@@ -31,9 +31,9 @@ namespace PinhuaMaster.Pages.Attendance
             var b = _pinhuaContext.AttendanceReport.Where(x => x.ExcelServerRcid == rcId);
             if (b != null)
                 _pinhuaContext.AttendanceReport.RemoveRange(b);
-            var c = _pinhuaContext.AttendanceReportDetails.Where(x => x.ExcelServerRcid == rcId);
+            var c = _pinhuaContext.AttendanceReportResults.Where(x => x.ExcelServerRcid == rcId);
             if (c != null)
-                _pinhuaContext.AttendanceReportDetails.RemoveRange(c);
+                _pinhuaContext.AttendanceReportResults.RemoveRange(c);
 
             _pinhuaContext.SaveChanges();
 
