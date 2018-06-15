@@ -4,13 +4,11 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using PinhuaMaster.Data.Entities.Pinhua;
-using PinhuaMaster.Data.Entities.EastRiver;
-using PinhuaMaster.Extensions;
 using Microsoft.EntityFrameworkCore;
-using PinhuaMaster.Data.Entities;
+using PinhuaMaster.Data.Entities.EastRiver;
+using PinhuaMaster.Data.Entities.Pinhua;
+using PinhuaMaster.Extensions;
 using PinhuaMaster.Services;
-using AutoMapper;
 
 namespace PinhuaMaster.Pages.Attendance
 {
@@ -19,23 +17,37 @@ namespace PinhuaMaster.Pages.Attendance
         private readonly PinhuaContext _pinhuaContext;
         private readonly EastRiverContext _eastRiverContext;
         private readonly IAttendanceService _attendanceService;
-        private readonly IMapper _mapper;
 
-        public CreateModel(PinhuaContext pinhuaContext, EastRiverContext eastRiverContext, IAttendanceService attendanceService, IMapper mapper)
+        public CreateModel(PinhuaContext pinhuaContext, EastRiverContext eastRiverContext, IAttendanceService attendanceService)
         {
             _pinhuaContext = pinhuaContext;
             _eastRiverContext = eastRiverContext;
             _attendanceService = attendanceService;
-            _mapper = mapper;
         }
 
         public int? Y { get; set; }
         public int? M { get; set; }
 
-        public void OnGet(int? Y, int? M)
+        public IList<YMList> ymList { get; set; }
+
+        public void OnGet()
         {
-            this.Y = Y;
-            this.M = M;
+            var a = _eastRiverContext.TimeRecords.AsNoTracking().Select(p => p.SignTime.Year).Distinct().ToList();
+            var reports = _pinhuaContext.AttendanceReport.AsNoTracking().ToList();
+            ymList = (from y in a
+                      join m in _eastRiverContext.TimeRecords.AsNoTracking() on y equals m.SignTime.Year into ms
+                      select new YMList
+                      {
+                          Year = y,
+                          MonthList = ms.Select(p => p.SignTime.Month).Distinct().OrderByDescending(p => p)
+                          .Select(p => new MType
+                          {
+                              Month = p,
+                              State = reports.Where(r => r.Y == y && r.M == p).Count() > 0 ? "已存在" : ""
+                          })
+                      }).OrderByDescending(p => p.Year).ToList();
+
+
         }
 
         public IActionResult OnGetAjax(int? Y, int? M)
@@ -139,5 +151,17 @@ namespace PinhuaMaster.Pages.Attendance
 
             return RedirectToPage("Index");
         }
+    }
+
+    public class YMList
+    {
+        public int Year { get; set; }
+        public IEnumerable<MType> MonthList { get; set; }
+    }
+
+    public class MType
+    {
+        public int Month { get; set; }
+        public string State { get; set; }
     }
 }

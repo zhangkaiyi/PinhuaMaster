@@ -42,7 +42,7 @@
             autoWidth: false,
             scrollX: true,
             pageLength: -1,
-            //searching: true,    //禁用原生搜索
+            searching: true,    //禁用原生搜索
             //scrollY:'600',
             //dom: "fr<'#detailPanel.panel panel-primary'<'panel-heading'<'row'<'col-xs-5'<'panel-title'>><'col-xs-7'>>>t<'panel-footer'>><'row'<'col-xs-5'i><'col-xs-7'p>>",
             columns: [
@@ -52,10 +52,10 @@
                 { data: "@(nameof(ViewModel.Model应收应付明细.ItemId))", title: "产品编号", class:"hidden-xs" },
                 { data: "@(nameof(ViewModel.Model应收应付明细.ItemDescription))", title: "产品描述" },
                 { data: "@(nameof(ViewModel.Model应收应付明细.Specification))", title: "规格" },
-                { data: "@(nameof(ViewModel.Model应收应付明细.Qty))", title: "片数", class: "hidden-xs text-right" },
+                { data: "@(nameof(ViewModel.Model应收应付明细.Qty))", title: "片数", class: "text-right" },
                 { data: "@(nameof(ViewModel.Model应收应付明细.UnitQty))", title: "数量", class: "hidden-xs text-right" },
                 { data: "@(nameof(ViewModel.Model应收应付明细.Unit))", title: "单位", class: "hidden-xs" },
-                { data: "@(nameof(ViewModel.Model应收应付明细.Price))", title: "单价", class:"hidden-xs text-right" },
+                { data: "@(nameof(ViewModel.Model应收应付明细.Price))", title: "单价", class:"text-right" },
                 { data: "@(nameof(ViewModel.Model应收应付明细.Amount))", title: "金额", class:"text-right" },
             ],
             drawCallback: function (settings) {

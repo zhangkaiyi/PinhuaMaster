@@ -17,7 +17,7 @@
     <!-- Tell the browser to be responsive to screen width -->
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <!-- CLodop -->
-    <script src='http://122.225.47.230:6001/CLodopfuncs.js'></script>
+    <script src='http://work.pinhuadashi.com:6001/CLodopfuncs.js'></script>
 
     <style>
         body, button, input, select, textarea, h1, h2, h3, h4, h5, h6 {
@@ -154,6 +154,7 @@
             var body = '<body><div class="container-fluid">' + $('#forPrint').clone().html() + '</div></body>'
             var html = head + body
             //LODOP.PRINT_INITA(10, 20, 810, 610, "测试C-Lodop远程打印四步骤");
+            LODOP.SET_LICENSES("", "5A7B86A1115E612CDF0F9507DC18589D", "C94CEE276DB2187AE6B65D56B3FC2848", "");
             LODOP.PRINT_INIT("打印控件功能演示_Lodop功能_完整全页");
             LODOP.ADD_PRINT_HTM(0, 10, "100%", "100%", "<!DOCTYPE html>" + html);
             LODOP.PRINTA();

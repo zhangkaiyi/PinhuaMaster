@@ -12,8 +12,8 @@ namespace PinhuaMaster.Data.Entities.Pinhua
         public decimal? OvertimeHours { get; set; }
         public string IsFullAttendance { get; set; }
         public decimal? FinalAmount { get; set; }
-        public int Y { get; set; }
-        public int M { get; set; }
+        public int? Y { get; set; }
+        public int? M { get; set; }
         public string ExcelServerRcid { get; set; }
         public int? ExcelServerRn { get; set; }
         public int? ExcelServerCn { get; set; }
@@ -30,5 +30,6 @@ namespace PinhuaMaster.Data.Entities.Pinhua
         public string PriceOverview { get; set; }
         public string Post { get; set; }
         public decimal? FullAttendanceAmount { get; set; }
+        public int PrimayKey { get; set; }
     }
 }

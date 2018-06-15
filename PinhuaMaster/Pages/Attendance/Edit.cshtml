@@ -4,6 +4,8 @@
 @inject IAttendanceService attendanceService
 @{
     ViewData["Title"] = "Edit";
+    var Y = PageContext.RouteData.Values["Y"];
+    var M = PageContext.RouteData.Values["M"];
 }
 
 <div class="row">
@@ -14,7 +16,7 @@
                     <div class="form-group">
                         <div class="col-xs-12">
                             <div class="input-group">
-                                <input class="form-control" id="refreshY" value="@PageContext.RouteData.Values["Y"]" readonly />
+                                <input class="form-control" id="refreshY" value="@Y" readonly />
                                 <span class="input-group-addon">
                                     年
                                 </span>
@@ -24,7 +26,7 @@
                     <div class="form-group">
                         <div class="col-xs-12">
                             <div class="input-group">
-                                <input class="form-control" id="refreshM" value="@PageContext.RouteData.Values["M"]" readonly />
+                                <input class="form-control" id="refreshM" value="@M" readonly />
                                 <span class="input-group-addon">
                                     月
                                 </span>
@@ -51,7 +53,7 @@
                             <input type="hidden" id="hiddenYMList" value="" />
                         </div>
                     </div>
-                    <input type="hidden" value="@Url.Page("Create", "Ajax", new { Y=PageContext.RouteData.Values["Y"], M=PageContext.RouteData.Values["M"]})" id="refreshUrl" />
+                    <input type="hidden" value="@Url.Page("Create", "Ajax", new { Y=Y, M=M})" id="refreshUrl" />
                 </div>
             </div>
         </div>
@@ -66,6 +68,7 @@
                        id="computedTable">
                     <thead>
                         <tr>
+                            <th data-width="1" data-formatter="fmtEastriver"></th>
                             <th data-sortable="true" class="hidden-xs" data-field="@(nameof(AttendanceServicePerson.Id))" data-visible="false">编号</th>
                             <th data-sortable="true" data-field="@(nameof(AttendanceServicePerson.Name))">姓名</th>
                             <th data-sortable="true" data-formatter="fmtIsFullAttendance" data-field="@(nameof(AttendanceServicePerson.IsFullAttendance))">全勤</th>
@@ -95,7 +98,7 @@
                 <h4 class="modal-title" id="detailsTitle">Modal title</h4>
             </div>
             <div class="modal-body">
-                <table data-classes="table table-hover text-nowrap"
+                <table data-classes="table table-hover table-condensed text-nowrap"
                        data-toggle="table"
                        data-striped="true"
                        id="detailsTable">
@@ -119,9 +122,9 @@
                 </table>
 
             </div>
-            <div class="modal-footer">
+            @*<div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-            </div>
+            </div>*@
 
         </div>
     </div>
@@ -129,6 +132,17 @@
 
 @section Scripts{
     <script>
+        function fmtEastriver(value, row, index, field) {
+            return '<a href="/Attendance/EastRiver/Details/' + Y + '/' + M + '/' + row.Id + '"><i class="fa fa-search"></i></a>'
+        }
+
+        function fmtIsFullAttendance(value, row) {
+            if (value)
+                return '<span class="text-danger">是</span>'
+            else
+                return '<span class="text-success">否</span>'
+        }
+
         getAttendance = function () {
             //var refreshY = $('#refreshY').val()
             //var refreshM = $('#refreshM').val()
@@ -143,13 +157,6 @@
                 $('#toDeleteRcid').val(rcid);
                 $('#toDeleteForm').submit();
             }
-        }
-
-        function fmtIsFullAttendance(value, row) {
-            if (value)
-                return '<span class="text-danger">是</span>'
-            else
-                return '<span class="text-success">否</span>'
         }
 
         attendance = null;
@@ -167,6 +174,9 @@
         var $detailsTable = $('#detailsTable')
         var $detailsTitle = $('#detailsTitle')
         $computedTable.on('click-cell.bs.table', function (event, field, value, row, $element) {
+            if (field == 0)
+                return
+
             var personList = attendance.PersonList
             for (var i in personList) {
                 if (personList[i].Id == row.Id && personList[i].Results != null) {

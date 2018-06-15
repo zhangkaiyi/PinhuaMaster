@@ -57,7 +57,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
     </environment>
     <!-- FastClick -->
     <script src="~/lib/fastclick/lib/fastclick.js"></script>
-    <script src='http://122.225.47.230:6001/CLodopfuncs.js'></script>
+    <script src='http://work.pinhuadashi.com:6001/CLodopfuncs.js'></script>
 
     <style>
         body, button, input, select, textarea, h1, h2, h3, h4, h5, h6 {
@@ -117,7 +117,7 @@ desired effect
                 <!-- Navbar Right Menu -->
                 <div class="navbar-custom-menu">
                     <ul class="nav navbar-nav">
-                        @Html.Partial("_LoginPartial")
+                        <partial name="_LoginPartial" />
                     </ul>
                 </div>
             </nav>
@@ -139,7 +139,7 @@ desired effect
                 <ul class="sidebar-menu" data-widget="tree" data-animation-speed="300">
                     <li class="header">菜单导航</li>
                     <!-- Optionally, you can add icons to the links -->
-                    @await Html.PartialAsync("_Navbar_For_AdminLTE", navMenuService.GetNavbarMenus())
+                    <partial name="_Navbar_For_AdminLTE" model="navMenuService.GetNavbarMenus()" />
                 </ul>
                 <!-- /.sidebar-menu -->
             </section>
@@ -153,7 +153,7 @@ desired effect
                     @(pathName?.LastOrDefault() ?? ViewBag.Title)
                     @*<small>@httpContextAccessor.HttpContext.Request.Cookies["menuids_open"]</small>*@
                 </h1>
-                <ol class="breadcrumb">
+                <ol class="breadcrumb" style="display:none">
                     @foreach (var node in pathName)
                     {
                         if (pathName.IndexOf(node) == 0)

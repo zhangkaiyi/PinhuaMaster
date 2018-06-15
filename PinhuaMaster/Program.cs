@@ -16,7 +16,7 @@ namespace PinhuaMaster
     {
         public static void Main(string[] args)
         {
-            var host = BuildWebHost(args);
+            var host = CreateWebHostBuilder(args).Build();
 
             using (var scope = host.Services.CreateScope())
             {
@@ -36,6 +36,11 @@ namespace PinhuaMaster
 
             host.Run();
         }
+
+        public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
+            WebHost.CreateDefaultBuilder(args)
+                .UseStartup<Startup>()
+                .UseDefaultServiceProvider(options => options.ValidateScopes = false);
 
         public static IWebHost BuildWebHost(string[] args) =>
             WebHost.CreateDefaultBuilder(args)

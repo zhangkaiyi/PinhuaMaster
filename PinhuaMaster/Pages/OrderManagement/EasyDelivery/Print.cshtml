@@ -17,7 +17,7 @@
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/lib/font-awesome/css/font-awesome.min.css" />
     <!-- CLodop -->
-    <script src='http://122.225.47.230:6001/CLodopfuncs.js'></script>
+    <script src='http://192.168.1.20:8000/CLodopfuncs.js'></script>
 
     <style>
         body, button, input, select, textarea, h1, h2, h3, h4, h5, h6 {
@@ -115,7 +115,7 @@
                         <tfoot>
                             <tr>
                                 <td colspan="5" class="text-right">合计：</td>
-                                <td class="text-right">@details.Sum(a => a.Amount)</td>
+                                <td class="text-right">@details.Sum(a => a.Amount)?.ToString("0.00")</td>
                             </tr>
                         </tfoot>
                     </table>
@@ -148,6 +148,7 @@
             var body = '<body><div class="container-fluid">' + $('#forPrint').clone().html() + '</div></body>'
             var html = head + body
             //LODOP.PRINT_INITA(10, 20, 810, 610, "测试C-Lodop远程打印四步骤");
+            LODOP.SET_LICENSES("", "5A7B86A1115E612CDF0F9507DC18589D", "C94CEE276DB2187AE6B65D56B3FC2848", "");
             LODOP.PRINT_INIT("打印控件功能演示_Lodop功能_完整全页");
             LODOP.ADD_PRINT_HTM(0, 10, "100%", "100%", "<!DOCTYPE html>" + html);
             LODOP.PREVIEW();
@@ -157,6 +158,7 @@
             var body = '<body><div class="container-fluid">' + $('#forPrint').clone().html() + '</div></body>'
             var html = head + body
             //LODOP.PRINT_INITA(10, 20, 810, 610, "测试C-Lodop远程打印四步骤");
+            LODOP.SET_LICENSES("", "5A7B86A1115E612CDF0F9507DC18589D", "C94CEE276DB2187AE6B65D56B3FC2848", "");
             LODOP.PRINT_INIT("打印控件功能演示_Lodop功能_完整全页");
             LODOP.ADD_PRINT_HTM(0, 10, "100%", "100%", "<!DOCTYPE html>" + html);
             LODOP.PRINTA();

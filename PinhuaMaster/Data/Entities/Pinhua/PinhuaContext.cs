@@ -4942,12 +4942,10 @@ namespace PinhuaMaster.Data.Entities.Pinhua
 
             modelBuilder.Entity<PayrollDetails>(entity =>
             {
-                entity.HasKey(e => new { e.Y, e.M, e.Id });
+                entity.HasKey(e => e.PrimayKey);
 
                 entity.HasIndex(e => new { e.ExcelServerRcid, e.ExcelServerWiid })
                     .HasName("idx1");
-
-                entity.Property(e => e.Id).HasMaxLength(20);
 
                 entity.Property(e => e.AllHours).HasColumnType("decimal(20, 3)");
 
@@ -4982,6 +4980,8 @@ namespace PinhuaMaster.Data.Entities.Pinhua
                 entity.Property(e => e.FinalAmount).HasColumnType("decimal(20, 3)");
 
                 entity.Property(e => e.FullAttendanceAmount).HasColumnType("decimal(20, 3)");
+
+                entity.Property(e => e.Id).HasMaxLength(20);
 
                 entity.Property(e => e.IsFullAttendance).HasMaxLength(20);
 

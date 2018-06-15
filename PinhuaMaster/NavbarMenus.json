@@ -11,6 +11,11 @@
       "url": "/OrderManagement/EasyDelivery/Index"
     },
     {
+      "name": "旧版销售与采购",
+      "icon": "fa fa-sticky-note-o",
+      "url": "/OrderManagement/Old/Index"
+    },
+    {
       "name": "收货单",
       "icon": "fa fa-hand-lizard-o",
       "url": "/OrderManagement/Purchase/Index"

@@ -18,6 +18,7 @@ using PinhuaMaster.Data.Entities.EastRiver;
 using AutoMapper;
 using PinhuaMaster.Extensions;
 using Zky.Utility;
+using Microsoft.AspNetCore.Mvc;
 
 namespace PinhuaMaster
 {
@@ -33,14 +34,22 @@ namespace PinhuaMaster
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            // AspNetCore 2.1
+            services.Configure<CookiePolicyOptions>(options =>
+            {
+                // This lambda determines whether user consent for non-essential cookies is needed for a given request.
+                options.CheckConsentNeeded = context => true;
+                options.MinimumSameSitePolicy = SameSiteMode.None;
+            });
+
             // Add DbContext
             services.AddDbContext<PinhuaContext>(
-                options => options.UseSqlServer(@"Data Source=122.225.47.230,6012;Initial Catalog=Pinhua;Persist Security Info=True;User ID=sa;Password=Benny0922",
+                options => options.UseSqlServer(@"Data Source=192.168.1.20;Initial Catalog=Pinhua;Persist Security Info=True;User ID=sa;Password=Benny0922",
                 o => o.UseRowNumberForPaging())
                 );
 
             services.AddDbContext<EastRiverContext>(
-                options => options.UseSqlServer(@"Data Source=122.225.47.230,6012;Initial Catalog=EastRiver;Persist Security Info=True;User ID=sa;Password=Benny0922",
+                options => options.UseSqlServer(@"Data Source=192.168.1.20;Initial Catalog=EastRiver;Persist Security Info=True;User ID=sa;Password=Benny0922",
                 o => o.UseRowNumberForPaging())
                 );
 
@@ -63,7 +72,8 @@ namespace PinhuaMaster
                     //options.Conventions.AuthorizeFolder("/Account/Manage");
                     //options.Conventions.AuthorizePage("/Account/Logout");
                     options.Conventions.AuthorizeFolder("/", "Permissons").AllowAnonymousToFolder("/Account");
-                });
+                })
+                .SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
             services.AddAuthentication().AddCookie(options =>
             {
@@ -104,13 +114,19 @@ namespace PinhuaMaster
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
-                app.UseBrowserLink();
+                //app.UseBrowserLink();
                 app.UseDatabaseErrorPage();
             }
             else
             {
                 app.UseExceptionHandler("/Error");
+                // AspNetCore 2.1
+                app.UseHsts();
             }
+
+            // AspNetCore 2.1
+            app.UseCookiePolicy();
+            app.UseHttpsRedirection();
 
             app.UseStaticFiles();
 

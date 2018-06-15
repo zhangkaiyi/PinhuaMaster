@@ -207,7 +207,7 @@ namespace PinhuaMaster.Pages.Payroll
             return list;
         }
 
-        public IList<PayrollDetailsDTO> toPayrollNew(int? Y, int? M)
+        public IEnumerable<PayrollDetailsDTO> toPayrollNew(int? Y, int? M)
         {
             var list = new List<PayrollDetailsDTO>();
             foreach (var record in _pinhuaContext.AttendanceReportResults.Where(a => a.Y == Y && a.M == M))
@@ -236,7 +236,7 @@ namespace PinhuaMaster.Pages.Payroll
                 x.FinalAmount = x.DaytimeAmount + x.OvertimeAmount + x.FullAttendanceAmount + x.DinnerAmount;
                 list.Add(x);
             }
-            return list;
+            return list.OrderBy(p => p.Id);
         }
     }
 }

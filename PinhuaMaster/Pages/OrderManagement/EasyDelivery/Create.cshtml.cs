@@ -91,9 +91,9 @@ namespace PinhuaMaster.Pages.OrderManagement.EasyDelivery
 
         private List<SelectListItem> BuildTypes()
         {
-            var types = from p in _pinhuaContext.业务类型.AsNoTracking()
+            var types = (from p in _pinhuaContext.业务类型.AsNoTracking()
                         where p.状态 == "Yes" && p.MvP == "GI"
-                        select p;
+                        select p).ToList();
             var groups = from p in types
                          group p by p.MvP into g
                          select g.Key;

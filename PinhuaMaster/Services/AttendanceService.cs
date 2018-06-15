@@ -72,9 +72,16 @@ namespace PinhuaMaster.Services
         {
             if (Y == null || M == null)
                 return null;
-            var reportDetails = (from d in _pinhuaContext.AttendanceReportResults.AsNoTracking()
-                                 where d.Y == Y && d.M == M
+            var report = _pinhuaContext.AttendanceReport.AsNoTracking().FirstOrDefault(r => r.Y == Y && r.M == M);
+            if (report == null)
+                return null;
+            var reportResults = (from d in _pinhuaContext.AttendanceReportResults.AsNoTracking()
+                                 where d.ExcelServerRcid == report.ExcelServerRcid
                                  select d).ToList();
+            var reportDetails = (from d in _pinhuaContext.AttendanceReportDetails.AsNoTracking()
+                                 where d.ExcelServerRcid == report.ExcelServerRcid
+                                 select d).ToList();
+
             var rule = GetRule();
             var days = DateTime.DaysInMonth(Y.Value, M.Value);
             var dto = new AttendanceServiceDTO
@@ -85,21 +92,51 @@ namespace PinhuaMaster.Services
                 PersonList = new List<AttendanceServicePerson>()
             };
 
-            foreach (var detail in reportDetails)
+            foreach (var result in reportResults)
             {
+                var dayResults = new List<AttendanceServiceDayResult>();
+                var group = from p in reportDetails.Where(d => d.编号 == result.编号)
+                            group p by p.日期 into g
+                            select new
+                            {
+                                日期 = g.Key,
+                                Details = g.Select(a => a)
+                            };
+                foreach(var detail in group)
+                {
+                    var a = new List<AttendanceServiceDayDetail>();
+                    foreach(var x in detail.Details)
+                    {
+                        a.Add(new AttendanceServiceDayDetail
+                        {
+                            RangeId=x.班段,
+                            Range=x.班段描述,
+                            State=x.考勤结果,
+                            Time1Fix=x.上班,
+                            Time2Fix=x.下班,
+                            Hours=x.工时
+                        });
+                    }
+                    dayResults.Add(new AttendanceServiceDayResult
+                    {
+                        Date=detail.日期.Value,
+                        Details=a.OrderBy(d=>d.RangeId).ToList(),
+                    });
+                }
                 var person = new AttendanceServicePerson
                 {
-                    Id = detail.编号,
-                    Name = detail.姓名,
-                    IsFullAttendance = detail.是否全勤 == "是",
-                    DaytimeHours = detail.正班,
-                    OvertimeHours = detail.加班,
-                    TimesOfAbsent = detail.缺勤,
-                    TimesOfAskForLeave = detail.请假,
-                    TimesOfDinner = detail.用餐,
-                    TimesOfLate = detail.迟到,
-                    TimesOfLeaveEarly = detail.早退,
-                    TotalHours = detail.总工时,
+                    Id = result.编号,
+                    Name = result.姓名,
+                    IsFullAttendance = result.是否全勤 == "是",
+                    DaytimeHours = result.正班,
+                    OvertimeHours = result.加班,
+                    TimesOfAbsent = result.缺勤,
+                    TimesOfAskForLeave = result.请假,
+                    TimesOfDinner = result.用餐,
+                    TimesOfLate = result.迟到,
+                    TimesOfLeaveEarly = result.早退,
+                    TotalHours = result.总工时,
+                    Results=dayResults.OrderBy(r=>r.Date).ToList()
                 };
                 dto.PersonList.Add(person);
             }
