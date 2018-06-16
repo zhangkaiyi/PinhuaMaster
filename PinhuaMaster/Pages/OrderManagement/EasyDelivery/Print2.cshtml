@@ -1,0 +1,32 @@
+﻿@page "{Id?}"
+@model PinhuaMaster.Pages.OrderManagement.EasyDelivery.PrintModel
+@{
+    ViewData["Title"] = "打印";
+}
+
+<!-- Main content -->
+<div class="box box-solid"><div class="box-body"><iframe src="@Url.Page("PrintDetail", new {Id=Model.Id })" style="width:100%;height:500px;border:1px solid"></iframe></div></div>
+<!-- /.content -->
+<button class="btn btn-default" onclick="previewiframe()"><i class="fa fa-search"></i> 预览iframe</button>
+<button class="btn btn-default" onclick="printiframe()"><i class="fa fa-search"></i> 打印iframe</button>
+
+@section Scripts{
+    <!-- CLodop -->
+    <script src='http://oa.pinhuadashi.com:8000/CLodopfuncs.js'></script>
+    <script language="javascript" type="text/javascript">
+        function previewiframe() {
+            LODOP.PRINT_INIT("打印控件功能演示_Lodop功能_打印Iframe");
+            strHtml = document.getElementsByTagName("iframe")[0].contentWindow.document.documentElement.innerHTML;
+            LODOP.ADD_PRINT_HTM(0, 0, "100%", "100%", strHtml);
+            console.log(strHtml)
+            LODOP.PREVIEW();
+        }
+        function printiframe() {
+            LODOP.PRINT_INIT("打印控件功能演示_Lodop功能_打印Iframe");
+            strHtml = document.getElementsByTagName("iframe")[0].contentWindow.document.documentElement.innerHTML;
+            LODOP.ADD_PRINT_HTM(0, 0, "100%", "100%", strHtml);
+            console.log(strHtml)
+            LODOP.PRINTA();
+        }
+    </script>
+}

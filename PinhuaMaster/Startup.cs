@@ -44,12 +44,12 @@ namespace PinhuaMaster
 
             // Add DbContext
             services.AddDbContext<PinhuaContext>(
-                options => options.UseSqlServer(@"Data Source=192.168.1.20;Initial Catalog=Pinhua;Persist Security Info=True;User ID=sa;Password=Benny0922",
+                options => options.UseSqlServer(Configuration.GetConnectionString("PinhuaConnection"),
                 o => o.UseRowNumberForPaging())
                 );
 
             services.AddDbContext<EastRiverContext>(
-                options => options.UseSqlServer(@"Data Source=192.168.1.20;Initial Catalog=EastRiver;Persist Security Info=True;User ID=sa;Password=Benny0922",
+                options => options.UseSqlServer(Configuration.GetConnectionString("EastRiverConnection"),
                 o => o.UseRowNumberForPaging())
                 );
 
