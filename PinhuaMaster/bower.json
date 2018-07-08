@@ -19,13 +19,15 @@
     "datatables": "DataTables#1.10.16",
     "datatables-responsive": "2.2.1",
     "axios": "v0.18.0",
-    "datatables-buttons": "1.5.2"
+    "datatables-buttons": "1.5.2",
+    "layer": "v3.1.1"
   },
   "resolutions": {
     "jquery": ">= 1.7.2",
     "jquery-validation": "1.17.0",
     "bootstrap": "v4.0.0",
     "vue": "v2.5.16",
-    "datatables": "1.10.16"
+    "datatables": "1.10.16",
+    "layer": "v3.1.1"
   }
 }

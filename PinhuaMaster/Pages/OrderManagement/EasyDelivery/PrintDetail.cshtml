@@ -1,5 +1,5 @@
 ﻿@page "{Id?}"
-@model PinhuaMaster.Pages.OrderManagement.EasyDelivery.PrintModel
+@model PinhuaMaster.Pages.OrderManagement.EasyDelivery.PrintDetailModel
 @{
     ViewData["Title"] = "打印";
     Layout = null;
@@ -16,7 +16,7 @@
     <style>
         body, button, input, select, textarea, h1, h2, h3, h4, h5, h6, table {
             font-family: "Microsoft YaHei", "微软雅黑", "黑体", SimSun, "宋体", sans-serif;
-            font-size: 11px;
+            font-size: 12px;
         }
 
         table {
@@ -34,10 +34,14 @@
         .table > tbody > tr:last-child > td {
             border-bottom: 1px solid #000 !important
         }
-        th, td{
-            
-            text-align:left;
-            height:30px;
+
+        th, td {
+            text-align: left;
+            height: 30px;
+        }
+
+        .text-right {
+            text-align: right;
         }
     </style>
 </head>

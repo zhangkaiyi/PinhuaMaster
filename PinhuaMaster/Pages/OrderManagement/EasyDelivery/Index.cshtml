@@ -9,8 +9,13 @@
         <div class="box box-solid">
             <div class="box-body">
                 <div id="tableContainer">
-                    <div class="btn-group" role="group" aria-label="..." id="toolbar">
-                        <a asp-page="Create" class="btn btn-default btn-flat"><i class="fa fa-plus"></i> 填报</a>
+                    <div id="toolbar">
+                        <div class="btn-group" role="group" aria-label="...">
+                            <a asp-page="Create" class="btn btn-default btn-flat"><i class="fa fa-plus"></i> 填报</a>
+                        </div>
+                        <div class="btn-group" role="group" aria-label="...">
+                            <button class="btn btn-default btn-flat" onclick="layerAdvanceSearch()"><i class="fa fa-search"></i> 高级搜索</button>
+                        </div>
                     </div>
                     <table data-classes="table table-hover text-nowrap"
                            data-toggle="table"
@@ -88,8 +93,200 @@
     </div>
 </div>
 
+@section LayerContent{
+    <div id="advanceSearch" style="display:none;padding:10px;">
+        <div class="box box-solid">
+            <div class="box-body">
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label class="control-label" asp-for="SearchViewModel.DeliveryId"><i class="fa fa-angle-double-right"></i> @Html.DisplayNameFor(m => m.SearchViewModel.DeliveryId)</label>
+                            <div class="input-group">
+                                <input v-model="searchModel.DeliveryId" class="form-control" />
+                                <span class="input-group-addon no-padding">
+                                    <i class="fa fa-info" style="width:38px;"></i>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label" asp-for="SearchViewModel.CustomerName"><i class="fa fa-angle-double-right"></i> @Html.DisplayNameFor(m => m.SearchViewModel.CustomerName)</label>
+                            <div class="input-group">
+                                <input v-model="searchModel.CustomerName" class="form-control" />
+                                <span class="input-group-addon no-padding">
+                                    <i class="fa fa-info" style="width:38px;"></i>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label" asp-for="SearchViewModel.DeliveryTypeDescription"><i class="fa fa-angle-double-right"></i> @Html.DisplayNameFor(m => m.SearchViewModel.DeliveryTypeDescription)</label>
+                            <div class="input-group">
+                                <input v-model="searchModel.DeliveryTypeDescription" class="form-control" />
+                                <span class="input-group-addon no-padding">
+                                    <i class="fa fa-info" style="width:38px;"></i>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label" asp-for="SearchViewModel.DeliveryDate"><i class="fa fa-angle-double-right"></i> @Html.DisplayNameFor(m => m.SearchViewModel.DeliveryDate)</label>
+                            <div class="input-group">
+                                <input type="text" class="form-control" data-provide="datepicker" data-date-format="yyyy-mm-dd" id="DeliveryDate" />
+                                <span class="input-group-addon no-padding">
+                                    <i class="fa fa-info" style="width:38px;"></i>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label class="control-label" asp-for="SearchViewModel.Contact"><i class="fa fa-angle-double-right"></i> @Html.DisplayNameFor(m => m.SearchViewModel.Contact)</label>
+                            <div class="input-group">
+                                <input v-model="searchModel.Contact" class="form-control" />
+                                <span class="input-group-addon no-padding">
+                                    <i class="fa fa-info" style="width:38px;"></i>
+                                </span>
+                            </div>
+                        </div>
+                        @*<div class="form-group">
+                                <label class="control-label" asp-for="SearchViewModel.ContactNumber"><i class="fa fa-angle-double-right"></i> @Html.DisplayNameFor(m => m.SearchViewModel.ContactNumber)</label>
+                                <div class="input-group">
+                                    <input asp-for="SearchViewModel.ContactNumber" class="form-control" />
+                                    <span class="input-group-addon no-padding">
+                                        <i class="fa fa-info" style="width:38px;"></i>
+                                    </span>
+                                </div>
+                            </div>*@
+                        <div class="form-group">
+                            <label class="control-label" asp-for="SearchViewModel.DeliveryAddress"><i class="fa fa-angle-double-right"></i> @Html.DisplayNameFor(m => m.SearchViewModel.DeliveryAddress)</label>
+                            <div class="input-group">
+                                <input v-model="searchModel.DeliveryAddress" class="form-control" />
+                                <span class="input-group-addon no-padding">
+                                    <i class="fa fa-info" style="width:38px;"></i>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label" asp-for="SearchViewModel.Remarks"><i class="fa fa-angle-double-right"></i> @Html.DisplayNameFor(m => m.SearchViewModel.Remarks)</label>
+                            <div class="input-group">
+                                <input v-model="searchModel.Remarks" class="form-control" />
+                                <span class="input-group-addon no-padding">
+                                    <i class="fa fa-info" style="width:38px;"></i>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label class="control-label" asp-for="SearchViewModel.CreatedBy"><i class="fa fa-angle-double-right"></i> @Html.DisplayNameFor(m => m.SearchViewModel.CreatedBy)</label>
+                            <div class="input-group">
+                                <input v-model="searchModel.CreatedBy" class="form-control" />
+                                <span class="input-group-addon no-padding">
+                                    <i class="fa fa-info" style="width:38px;"></i>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label" asp-for="SearchViewModel.CreatedDate"><i class="fa fa-angle-double-right"></i> @Html.DisplayNameFor(m => m.SearchViewModel.CreatedDate)</label>
+                            <div class="input-group">
+                                <input type="text" v-model="searchModel.CreatedDate" class="form-control" data-provide="datepicker" data-date-format="yyyy-mm-dd" id="CreatedDate" />
+                                <span class="input-group-addon no-padding">
+                                    <i class="fa fa-info" style="width:38px;"></i>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="box box-solid">
+            <div class="box-body">
+                <div class="row">
+                    <div class="col-md-4">
+                        @*<div class="form-group">
+                                <label class="control-label" asp-for="SearchViewModel.ItemId"><i class="fa fa-angle-double-right"></i> @Html.DisplayNameFor(m => m.SearchViewModel.ItemId)</label>
+                                <div class="input-group">
+                                    <input asp-for="SearchViewModel.ItemId" class="form-control" />
+                                    <span class="input-group-addon no-padding">
+                                        <i class="fa fa-info" style="width:38px;"></i>
+                                    </span>
+                                </div>
+                            </div>*@
+                        <div class="form-group">
+                            <label class="control-label" asp-for="SearchViewModel.ItemDescription"><i class="fa fa-angle-double-right"></i> @Html.DisplayNameFor(m => m.SearchViewModel.ItemDescription)</label>
+                            <div class="input-group">
+                                <input v-model="searchModel.ItemDescription" class="form-control" />
+                                <span class="input-group-addon no-padding">
+                                    <i class="fa fa-info" style="width:38px;"></i>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label" asp-for="SearchViewModel.ItemSpecification"><i class="fa fa-angle-double-right"></i> @Html.DisplayNameFor(m => m.SearchViewModel.ItemSpecification)</label>
+                            <div class="input-group">
+                                <input v-model="searchModel.ItemSpecification" class="form-control" />
+                                <span class="input-group-addon no-padding">
+                                    <i class="fa fa-info" style="width:38px;"></i>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label" asp-for="SearchViewModel.ItemRemarks"><i class="fa fa-angle-double-right"></i> @Html.DisplayNameFor(m => m.SearchViewModel.ItemRemarks)</label>
+                            <div class="input-group">
+                                <input v-model="searchModel.ItemRemarks" class="form-control" />
+                                <span class="input-group-addon no-padding">
+                                    <i class="fa fa-info" style="width:38px;"></i>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label class="control-label" asp-for="SearchViewModel.ItemQty"><i class="fa fa-angle-double-right"></i> @Html.DisplayNameFor(m => m.SearchViewModel.ItemQty)</label>
+                            <div class="input-group">
+                                <input v-model="searchModel.ItemQty" class="form-control" />
+                                <span class="input-group-addon no-padding">
+                                    <i class="fa fa-info" style="width:38px;"></i>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label" asp-for="SearchViewModel.ItemUnitQty"><i class="fa fa-angle-double-right"></i> @Html.DisplayNameFor(m => m.SearchViewModel.ItemUnitQty)</label>
+                            <div class="input-group">
+                                <input v-model="searchModel.ItemUnitQty" class="form-control" />
+                                <span class="input-group-addon no-padding">
+                                    <i class="fa fa-info" style="width:38px;"></i>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label" asp-for="SearchViewModel.ItemPrice"><i class="fa fa-angle-double-right"></i> @Html.DisplayNameFor(m => m.SearchViewModel.ItemPrice)</label>
+                            <div class="input-group">
+                                <input v-model="searchModel.ItemPrice" class="form-control" />
+                                <span class="input-group-addon no-padding">
+                                    <i class="fa fa-info" style="width:38px;"></i>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label" asp-for="SearchViewModel.ItemAmount"><i class="fa fa-angle-double-right"></i> @Html.DisplayNameFor(m => m.SearchViewModel.ItemAmount)</label>
+                            <div class="input-group">
+                                <input v-model="searchModel.ItemAmount" class="form-control" />
+                                <span class="input-group-addon no-padding">
+                                    <i class="fa fa-info" style="width:38px;"></i>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <button class="btn btn-primary" v-on:click="toSearch"><i class="fa fa-search"></i> 查找</button>
+        <input id="searchModel" type="hidden" value='@(Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(new ViewModel.Gi2Search())))' />
+        <input id="searchUrl" type="hidden" value='@Url.Page("Index","AdvanceSearch")' />
+    </div>
+}
+
 @section Scripts{
-<script>
+    <script>
         function browseRecord (value, row) {
             return '<a href="@(Url.Page("Print2"))/' + row.DeliveryId + '">打印</a> <a href="@(Url.Page("Edit"))/' + row.DeliveryId + '">修改</a>'
             //return '<a href="@(Url.Page("Details"))/' + row.DeliveryId + '"><i class="fa fa-search"></i> </a>'
@@ -113,7 +310,53 @@
                 $('#detailsModal').modal()
             }
         })
-</script>
+    </script>
+
+    <script>
+        function layerAdvanceSearch() {
+            layer.open({
+                type: 1,
+                area: $(window).width() < 992 ? ['98%', '90%'] : ['800px', 'auto'],
+                content: $('#advanceSearch'),
+                shadeClose: true,
+                isOutAnim: false,
+                fixed: false,
+                //closeBtn: false,
+                //scrollbar: false,
+                //title: false,
+            });
+        }
+
+        var vm = new Vue({
+            el: '#advanceSearch',
+            data: {
+                searchModel: JSON.parse($('#searchModel').val()),
+            },
+            methods: {
+                toSearch: function () {
+                    console.log(JSON.stringify(this.searchModel))
+                    this.searchModel.DeliveryDate = $("#DeliveryDate").val()
+                    this.searchModel.CreatedDate = $("#CreatedDate").val()
+                    var opt = {
+                        url: $('#searchUrl').val(),
+                        silent: true,
+                        query: {
+                            json: JSON.stringify(this.searchModel)
+                        },
+                    }
+                    mainTable.bootstrapTable('refresh', opt);
+                    layer.closeAll('page')
+                },
+                abc: function () {
+                    alert(1)
+
+                }
+            },
+            mounted: function () {
+                
+            },
+        })
+    </script>
 }
 
 @section Styles{

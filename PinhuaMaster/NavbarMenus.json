@@ -11,14 +11,19 @@
       "url": "/OrderManagement/EasyDelivery/Index"
     },
     {
+      "name": "采购单",
+      "icon": "fa fa-circle-o",
+      "url": "/OrderManagement/EasyPurchasing/Index"
+    },
+    {
       "name": "旧版销售与采购",
       "icon": "fa fa-sticky-note-o",
       "url": "/OrderManagement/Old/Index"
     },
     {
-      "name": "收货单",
+      "name": "库存管理",
       "icon": "fa fa-hand-lizard-o",
-      "url": "/OrderManagement/Purchase/Index"
+      "url": "/StockManagement/Inventory"
     },
     {
       "name": "运输单",

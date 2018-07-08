@@ -6,7 +6,7 @@ namespace PinhuaMaster.Data.Entities.Pinhua
     public partial class WeixinWorkPlan
     {
         public int Id { get; set; }
-        public string Name { get; set; }
+        public string PlanName { get; set; }
         public DateTime? DateFrom { get; set; }
         public DateTime? DateTo { get; set; }
         public string ExcelServerRcid { get; set; }

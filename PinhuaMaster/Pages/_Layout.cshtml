@@ -55,6 +55,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
         <link rel="stylesheet" href="~/css/nestable.min.css" />
         <link rel="stylesheet" href="~/lib/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css" />
     </environment>
+
     <!-- FastClick -->
     <script src="~/lib/fastclick/lib/fastclick.js"></script>
 
@@ -116,7 +117,7 @@ desired effect
                 <!-- Navbar Right Menu -->
                 <div class="navbar-custom-menu">
                     <ul class="nav navbar-nav">
-                        <partial name="_LoginPartial" />
+                        @await Html.PartialAsync("_LoginPartial")
                     </ul>
                 </div>
             </nav>
@@ -138,7 +139,7 @@ desired effect
                 <ul class="sidebar-menu" data-widget="tree" data-animation-speed="300">
                     <li class="header">菜单导航</li>
                     <!-- Optionally, you can add icons to the links -->
-                    <partial name="_Navbar_For_AdminLTE" model="navMenuService.GetNavbarMenus()" />
+                    @await Html.PartialAsync("_Navbar_For_AdminLTE", navMenuService.GetNavbarMenus())
                 </ul>
                 <!-- /.sidebar-menu -->
             </section>
@@ -147,30 +148,33 @@ desired effect
         <!-- Content Wrapper. Contains page content -->
         <div class="content-wrapper">
             <!-- Content Header (Page header) -->
-            <section class="content-header">
-                <h1>
-                    @(pathName?.LastOrDefault() ?? ViewBag.Title)
-                    @*<small>@httpContextAccessor.HttpContext.Request.Cookies["menuids_open"]</small>*@
-                </h1>
-                <ol class="breadcrumb" style="display:none">
-                    @foreach (var node in pathName)
-                    {
-                        if (pathName.IndexOf(node) == 0)
+            @if (ViewBag.NoContentHeader == null || ViewBag.NoContentHeader != true)
+            {
+                <section class="content-header">
+                    <h1>
+                        @(pathName?.LastOrDefault() ?? ViewBag.Title)
+                        @*<small>@httpContextAccessor.HttpContext.Request.Cookies["menuids_open"]</small>*@
+                    </h1>
+                    <ol class="breadcrumb" style="display:none">
+                        @foreach (var node in pathName)
                         {
-                            <li><i class="fa fa-dashboard"></i> @node</li>
+                            if (pathName.IndexOf(node) == 0)
+                            {
+                                <li><i class="fa fa-dashboard"></i> @node</li>
 
+                            }
+                            else if (pathName.IndexOf(node) == pathName.Count - 1)
+                            {
+                                <li class="active"> @node</li>
+                            }
+                            else
+                            {
+                                <li> @node</li>
+                            }
                         }
-                        else if (pathName.IndexOf(node) == pathName.Count - 1)
-                        {
-                            <li class="active"> @node</li>
-                        }
-                        else
-                        {
-                            <li> @node</li>
-                        }
-                    }
-                </ol>
-            </section>
+                    </ol>
+                </section>
+            }
             <!-- Main content -->
             <section class="content container-fluid" id="mainContent" style="display:none">
                 <!--------------------------
@@ -196,6 +200,9 @@ desired effect
         <div class="control-sidebar-bg"></div>
     </div>
     <!-- ./wrapper -->
+
+    @RenderSection("LayerContent", false)
+
     <!-- REQUIRED JS SCRIPTS -->
     <environment include="Development">
         <!-- jQuery 3 -->
@@ -233,6 +240,10 @@ desired effect
         <script src="~/lib/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script>
         <script src="~/lib/bootstrap-datepicker/dist/locales/bootstrap-datepicker.zh-CN.min.js"></script>
     </environment>
+
+    <!-- Layer -->
+    <script src="~/lib/layer/dist/layer.js"></script>
+
     <script>
         $(function () {
             //FastClick.attach(document.body)

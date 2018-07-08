@@ -25,5 +25,7 @@ namespace PinhuaMaster.Data.Entities.Pinhua
         public int Id { get; set; }
         public string DeliveryId { get; set; }
         public string Remarks { get; set; }
+        public string BindOrder { get; set; }
+        public int? BindItem { get; set; }
     }
 }

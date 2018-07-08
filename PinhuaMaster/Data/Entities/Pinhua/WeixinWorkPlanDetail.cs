@@ -5,7 +5,7 @@ namespace PinhuaMaster.Data.Entities.Pinhua
 {
     public partial class WeixinWorkPlanDetail
     {
-        public string Name { get; set; }
+        public string RangeName { get; set; }
         public int? MoveUp { get; set; }
         public DateTime? Beginning { get; set; }
         public DateTime? Ending { get; set; }

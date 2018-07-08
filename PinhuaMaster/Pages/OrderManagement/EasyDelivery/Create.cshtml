@@ -111,7 +111,7 @@
                         </div>
                     </div>
                     <!-- /.col -->
-                    <div class="col-sm-4">
+                    <div class="col-sm-4 hidden-xs">
                         <div class="form-group">
                             <label class="control-label" asp-for="Order.Main.DeliveryId"><i class="fa fa-angle-double-right"></i> @Html.DisplayNameFor(x => x.Order.Main.DeliveryId)</label>
                             <div class="input-group">
@@ -213,187 +213,199 @@
     </form>
     <a class="btn btn-default btn-flat" href="javascript:$('#myForm').submit();"><i class="fa fa-check"></i>&nbsp;提交</a>
 
-    <!-- Modal -->
-    <div class="modal" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title" id="myModalLabel">编辑物料</h4>
-                </div>
-                <div class="modal-body">
-                    <div class="form-horizontal">
-                        <div class="form-group has-error">
-                            <label class="control-label col-xs-4 col-md-3"><i class="fa fa-angle-double-right"></i> 描述</label>
-                            <div class="col-xs-8 col-md-9">
-                                <div class="input-group">
-                                    <input class="form-control" v-model="itemCurrent.Description" />
-                                    <div class="input-group-addon no-padding">
-                                        <i class="fa fa-info" style="width:38px;"></i>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        @*<div class="form-group has-error">
-                                <label class="control-label col-xs-4 col-md-3"><i class="fa fa-angle-double-right"></i> 规格</label>
-                                <div class="col-xs-8 col-md-9">
-                                    <div class="input-group">
-                                        <input class="form-control" v-bind:value="selectedItemSpecification" />
-                                        <span class="input-group-btn">
-                                            <button type="button" class="btn btn-danger btn-flat" style="width:40px"><i class="fa fa-info"></i></button>
-                                        </span>
-                                    </div>
-                                </div>
-                            </div>*@
-                        <div class="form-group has-error">
-                            <label class="control-label col-xs-4 col-md-3"><i class="fa fa-angle-double-right"></i> 长</label>
-                            <div class="col-xs-8 col-md-9">
-                                <div class="input-group">
-                                    <input type="number" class="form-control" v-model="itemCurrent.Length" />
-                                    <div class="input-group-btn">
-                                        <button type="button" class="btn btn-danger btn-flat dropdown-toggle" style="width:40px" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="caret"></span></button>
-                                        <ul class="dropdown-menu dropdown-menu-right">
-                                            <li><a v-on:click="itemCurrent.Length=450">450</a></li>
-                                            <li><a v-on:click="itemCurrent.Length=500">500</a></li>
-                                            <li><a v-on:click="itemCurrent.Length=600">600</a></li>
-                                            <li><a v-on:click="itemCurrent.Length=300">300</a></li>
-                                        </ul>
-                                        @*<button type="button" class="btn btn-danger btn-flat" style="width:40px"><i class="fa fa-sort-numeric-asc"></i></button>*@
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form-group has-error">
-                            <label class="control-label col-xs-4 col-md-3"><i class="fa fa-angle-double-right"></i> 宽</label>
-                            <div class="col-xs-8 col-md-9">
-                                <div class="input-group">
-                                    <input type="number" class="form-control" v-model="itemCurrent.Width" />
-                                    <div class="input-group-btn">
-                                        <button type="button" class="btn btn-danger btn-flat dropdown-toggle" style="width:40px" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="caret"></span></button>
-                                        <ul class="dropdown-menu dropdown-menu-right">
-                                            <li><a v-on:click="itemCurrent.Width=450">450</a></li>
-                                            <li><a v-on:click="itemCurrent.Width=500">500</a></li>
-                                            <li><a v-on:click="itemCurrent.Width=600">600</a></li>
-                                            <li><a v-on:click="itemCurrent.Width=300">300</a></li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form-group has-error">
-                            <label class="control-label col-xs-4 col-md-3"><i class="fa fa-angle-double-right"></i> 高</label>
-                            <div class="col-xs-8 col-md-9">
-                                <div class="input-group">
-                                    <input type="number" class="form-control" v-model="itemCurrent.Height" />
-                                    <div class="input-group-btn">
-                                        <button type="button" class="btn btn-danger btn-flat dropdown-toggle" style="width:40px" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="caret"></span></button>
-                                        <ul class="dropdown-menu dropdown-menu-right">
-                                            <li><a v-on:click="itemCurrent.Height=15">15</a></li>
-                                            <li><a v-on:click="itemCurrent.Height=18">18</a></li>
-                                            <li><a v-on:click="itemCurrent.Height=12">12</a></li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form-group has-error">
-                            <label class="control-label col-xs-4 col-md-3"><i class="fa fa-angle-double-right"></i> 数量</label>
-                            <div class="col-xs-8 col-md-9">
-                                <div class="input-group">
-                                    <input type="number" class="form-control" v-model="itemCurrent.Qty" />
-                                    <div class="input-group-addon no-padding">
-                                        <i class="fa fa-calculator" style="width:38px"></i>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form-group has-error">
-                            <label class="control-label col-xs-4 col-md-3"><i class="fa fa-angle-double-right"></i> 单位数量</label>
-                            <div class="col-xs-8 col-md-9">
-                                <div class="input-group">
-                                    <input type="number" class="form-control" v-bind:value="selectedItemUnitQty" />
-                                    <div class="input-group-btn">
-                                        <button type="button" class="btn btn-danger btn-flat dropdown-toggle" style="width:80px" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                            {{ itemCurrent.Unit }}
-                                            <span class="caret"></span>
-                                            <span class="sr-only">Toggle Dropdown</span>
-                                        </button>
-                                        <ul class="dropdown-menu dropdown-menu-right">
-                                            <li><a v-on:click="itemCurrent.Unit='PCS'">PCS</a></li>
-                                            <li><a v-on:click="itemCurrent.Unit='平方米'">平方米</a></li>
-                                            <li><a v-on:click="itemCurrent.Unit='立方米'">立方米</a></li>
-                                            <li><a v-on:click="itemCurrent.Unit='延长米'">延长米</a></li>
-                                            <li><a v-on:click="itemCurrent.Unit='套'">套</a></li>
-                                        </ul>
-                                    </div>
-                                    @*<div class="input-group-addon no-padding">
-                                            <i class="fa fa-calculator" style="width:38px"></i>
-                                        </div>*@
-                                </div>
-                            </div>
-                        </div>
-                        @*<div class="form-group has-error">
-                                <label class="control-label col-xs-4 col-md-3"><i class="fa fa-angle-double-right"></i> 单位</label>
-                                <div class="col-xs-8 col-md-9">
-                                    <div class="input-group">
-                                        <select class="form-control" v-model="itemCurrent.Unit">
-                                            <option>PCS</option>
-                                            <option>平方米</option>
-                                            <option>延长米</option>
-                                            <option>立方米</option>
-                                            <option>套</option>
-                                        </select>
-                                        <span class="input-group-addon no-padding">
-                                            <i class="fa fa-calculator" style="width:38px"></i>
-                                        </span>
-                                    </div>
-                                </div>
-                            </div>*@
-                        <div class="form-group has-error">
-                            <label class="control-label col-xs-4 col-md-3"><i class="fa fa-angle-double-right"></i> 单价</label>
-                            <div class="col-xs-8 col-md-9">
-                                <div class="input-group">
-                                    <input type="number" class="form-control" v-model="itemCurrent.Price" />
-                                    <span class="input-group-addon no-padding">
-                                        <i class="fa fa-usd" style="width:38px"></i>
-                                    </span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form-group has-error">
-                            <label class="control-label col-xs-4 col-md-3"><i class="fa fa-angle-double-right"></i> 金额</label>
-                            <div class="col-xs-8 col-md-9">
-                                <div class="input-group">
-                                    <input type="number" class="form-control" v-bind:value="selectedItemAmount" />
-                                    <span class="input-group-addon no-padding">
-                                        <i class="fa fa-usd" style="width:38px"></i>
-                                    </span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form-group has-error">
-                            <label class="control-label col-xs-4 col-md-3"><i class="fa fa-angle-double-right"></i> 备注</label>
-                            <div class="col-xs-8 col-md-9">
-                                <div class="input-group">
-                                    <input class="form-control" v-model="itemCurrent.Remarks" />
-                                    <div class="input-group-addon no-padding">
-                                        <i class="fa fa-ellipsis-h" style="width:38px"></i>
-                                    </div>
-                                </div>
+    <div id="ItemDetail" style="display:none">
+        <div class="modal-body">
+            <div class="form-horizontal margin-r-5">
+                <div class="form-group has-error">
+                    <label class="control-label col-xs-4 col-md-3"><i class="fa fa-angle-double-right"></i> 描述</label>
+                    <div class="col-xs-8 col-md-9">
+                        <div class="input-group">
+                            <input class="form-control" v-model="itemCurrent.Description" />
+                            <div class="input-group-addon no-padding">
+                                <i class="fa fa-info" style="width:38px;"></i>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default btn-flat" data-dismiss="modal">取消</button>
-                    <button type="button" class="btn btn-default btn-flat" data-dismiss="modal" v-if="isNew" v-on:click="saveNewRecord">新增</button>
-                    <button type="button" class="btn btn-default btn-flat" data-dismiss="modal" v-if="!isNew" v-on:click="saveEditRecord">修改</button>
+                @*<div class="form-group has-error">
+                        <label class="control-label col-xs-4 col-md-3"><i class="fa fa-angle-double-right"></i> 规格</label>
+                        <div class="col-xs-8 col-md-9">
+                            <div class="input-group">
+                                <input class="form-control" v-bind:value="selectedItemSpecification" />
+                                <span class="input-group-btn">
+                                    <button type="button" class="btn btn-danger btn-flat" style="width:40px"><i class="fa fa-info"></i></button>
+                                </span>
+                            </div>
+                        </div>
+                    </div>*@
+                <div class="form-group has-error">
+                    <label class="control-label col-xs-4 col-md-3"><i class="fa fa-angle-double-right"></i> 长</label>
+                    <div class="col-xs-8 col-md-9">
+                        <div class="input-group">
+                            <input type="number" class="form-control" v-model="itemCurrent.Length" />
+                            <div class="input-group-btn">
+                                <button type="button" class="btn btn-danger btn-flat dropdown-toggle" style="width:40px" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="caret"></span></button>
+                                <ul class="dropdown-menu dropdown-menu-right">
+                                    <li><a v-on:click="itemCurrent.Length=450">450</a></li>
+                                    <li><a v-on:click="itemCurrent.Length=500">500</a></li>
+                                    <li><a v-on:click="itemCurrent.Length=600">600</a></li>
+                                    <li><a v-on:click="itemCurrent.Length=300">300</a></li>
+                                </ul>
+                                @*<button type="button" class="btn btn-danger btn-flat" style="width:40px"><i class="fa fa-sort-numeric-asc"></i></button>*@
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group has-error">
+                    <label class="control-label col-xs-4 col-md-3"><i class="fa fa-angle-double-right"></i> 宽</label>
+                    <div class="col-xs-8 col-md-9">
+                        <div class="input-group">
+                            <input type="number" class="form-control" v-model="itemCurrent.Width" />
+                            <div class="input-group-btn">
+                                <button type="button" class="btn btn-danger btn-flat dropdown-toggle" style="width:40px" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="caret"></span></button>
+                                <ul class="dropdown-menu dropdown-menu-right">
+                                    <li><a v-on:click="itemCurrent.Width=450">450</a></li>
+                                    <li><a v-on:click="itemCurrent.Width=500">500</a></li>
+                                    <li><a v-on:click="itemCurrent.Width=600">600</a></li>
+                                    <li><a v-on:click="itemCurrent.Width=300">300</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group has-error">
+                    <label class="control-label col-xs-4 col-md-3"><i class="fa fa-angle-double-right"></i> 高</label>
+                    <div class="col-xs-8 col-md-9">
+                        <div class="input-group">
+                            <input type="number" class="form-control" v-model="itemCurrent.Height" />
+                            <div class="input-group-btn">
+                                <button type="button" class="btn btn-danger btn-flat dropdown-toggle" style="width:40px" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="caret"></span></button>
+                                <ul class="dropdown-menu dropdown-menu-right">
+                                    <li><a v-on:click="itemCurrent.Height=15">15</a></li>
+                                    <li><a v-on:click="itemCurrent.Height=18">18</a></li>
+                                    <li><a v-on:click="itemCurrent.Height=12">12</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group has-error">
+                    <label class="control-label col-xs-4 col-md-3"><i class="fa fa-angle-double-right"></i> 数量</label>
+                    <div class="col-xs-8 col-md-9">
+                        <div class="input-group">
+                            <input type="number" class="form-control" v-model="itemCurrent.Qty" />
+                            <div class="input-group-addon no-padding">
+                                <i class="fa fa-calculator" style="width:38px"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group has-error">
+                    <label class="control-label col-xs-4 col-md-3"><i class="fa fa-angle-double-right"></i> 单位数量</label>
+                    <div class="col-xs-8 col-md-9">
+                        <div class="input-group">
+                            <input type="number" class="form-control" v-bind:value="selectedItemUnitQty" />
+                            <div class="input-group-btn">
+                                <button type="button" class="btn btn-danger btn-flat dropdown-toggle" style="width:80px" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    {{ itemCurrent.Unit }}
+                                    <span class="caret"></span>
+                                    <span class="sr-only">Toggle Dropdown</span>
+                                </button>
+                                <ul class="dropdown-menu dropdown-menu-right">
+                                    <li><a v-on:click="itemCurrent.Unit='PCS'">PCS</a></li>
+                                    <li><a v-on:click="itemCurrent.Unit='平方米'">平方米</a></li>
+                                    <li><a v-on:click="itemCurrent.Unit='立方米'">立方米</a></li>
+                                    <li><a v-on:click="itemCurrent.Unit='延长米'">延长米</a></li>
+                                    <li><a v-on:click="itemCurrent.Unit='套'">套</a></li>
+                                </ul>
+                            </div>
+                            @*<div class="input-group-addon no-padding">
+                                    <i class="fa fa-calculator" style="width:38px"></i>
+                                </div>*@
+                        </div>
+                    </div>
+                </div>
+                @*<div class="form-group has-error">
+                        <label class="control-label col-xs-4 col-md-3"><i class="fa fa-angle-double-right"></i> 单位</label>
+                        <div class="col-xs-8 col-md-9">
+                            <div class="input-group">
+                                <select class="form-control" v-model="itemCurrent.Unit">
+                                    <option>PCS</option>
+                                    <option>平方米</option>
+                                    <option>延长米</option>
+                                    <option>立方米</option>
+                                    <option>套</option>
+                                </select>
+                                <span class="input-group-addon no-padding">
+                                    <i class="fa fa-calculator" style="width:38px"></i>
+                                </span>
+                            </div>
+                        </div>
+                    </div>*@
+                <div class="form-group has-error">
+                    <label class="control-label col-xs-4 col-md-3"><i class="fa fa-angle-double-right"></i> 单价</label>
+                    <div class="col-xs-8 col-md-9">
+                        <div class="input-group">
+                            <input type="number" class="form-control" v-model="itemCurrent.Price" />
+                            <span class="input-group-addon no-padding">
+                                <i class="fa fa-usd" style="width:38px"></i>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group has-error">
+                    <label class="control-label col-xs-4 col-md-3"><i class="fa fa-angle-double-right"></i> 金额</label>
+                    <div class="col-xs-8 col-md-9">
+                        <div class="input-group">
+                            <input type="number" class="form-control" v-bind:value="selectedItemAmount" />
+                            <span class="input-group-addon no-padding">
+                                <i class="fa fa-usd" style="width:38px"></i>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group has-error">
+                    <label class="control-label col-xs-4 col-md-3"><i class="fa fa-angle-double-right"></i> 备注</label>
+                    <div class="col-xs-8 col-md-9">
+                        <div class="input-group">
+                            <input class="form-control" v-model="itemCurrent.Remarks" />
+                            <div class="input-group-addon no-padding">
+                                <i class="fa fa-ellipsis-h" style="width:38px"></i>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-default btn-flat" onclick="layer.closeAll('page')">取消</button>
+            <button type="button" class="btn btn-default btn-flat" v-if="isNew" v-on:click="saveNewRecord">新增</button>
+            <button type="button" class="btn btn-default btn-flat" v-if="!isNew" v-on:click="saveEditRecord">修改</button>
+        </div>
     </div>
+
 </div>
+
+
+<!-- Modal -->
+
+
 @section Scripts{
+    <script>
+        function layerItemDetail() {
+            layer.open({
+                type: 1,
+                area: $(window).width() < 992 ? ['98%', 'auto'] : ['800px', 'auto'],
+                content: $('#ItemDetail'),
+                shadeClose: true,
+                isOutAnim: false,
+                fixed: false,
+                //closeBtn: false,
+                //scrollbar: false,
+                //title: false,
+            });
+        }
+    </script>
     <script>
         var emptyRecord = @Html.Raw(emptyRecord);
         var emptyRecordList = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(emptyRecordList));
@@ -433,17 +445,21 @@
                 newRecord: function () {
                     this.isNew = true;
                     this.itemCurrent = JSON.parse(JSON.stringify(emptyRecord))
+                    layerItemDetail()
                 },
                 saveNewRecord: function () {
                     this.items.push(this.itemCurrent);
+                    layer.closeAll('page')
                 },
                 editRecord: function (index) {
                     this.isNew = false;
                     this.itemIndex = index;
                     this.itemCurrent = JSON.parse(JSON.stringify(this.items[index]))
+                    layerItemDetail()
                 },
                 saveEditRecord: function () {
                     this.$set(this.items, this.itemIndex, this.itemCurrent)
+                    layer.closeAll('page')
 
                 },
                 removeTodo: function (index) {

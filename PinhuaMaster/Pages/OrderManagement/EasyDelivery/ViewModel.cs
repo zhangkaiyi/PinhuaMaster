@@ -84,6 +84,60 @@ namespace PinhuaMaster.Pages.OrderManagement.EasyDelivery.ViewModel
         //public int? ExcelServerChg { get; set; }
     }
 
+    public class Gi2Search
+    {
+        [Display(Name = "单号")]
+        public string DeliveryId { get; set; }
+        [Display(Name = "客户编号")]
+        public string CustomerId { get; set; }
+        [Display(Name = "客户名称")]
+        public string CustomerName { get; set; }
+        [Display(Name = "单据类型")]
+        public string DeliveryType { get; set; }
+        [Display(Name = "单据类型描述")]
+        public string DeliveryTypeDescription { get; set; }
+        [Display(Name = "送货日期")]
+        public DateTime? DeliveryDate { get; set; }
+        [Display(Name = "送货地址")]
+        public string DeliveryAddress { get; set; }
+        [Display(Name = "单据金额")]
+        public decimal? TotalAmount { get; set; }
+        [Display(Name = "备注")]
+        public string Remarks { get; set; }
+        [Display(Name = "联系人")]
+        public string Contact { get; set; }
+        [Display(Name = "联系电话")]
+        public string ContactNumber { get; set; }
+        [Display(Name = "制单人")]
+        public string CreatedBy { get; set; }
+        [Display(Name = "制单日期")]
+        public DateTime? CreatedDate { get; set; }
+        [Display(Name = "物料编号")]
+        public int? ItemId { get; set; }
+        [Display(Name = "物料描述")]
+        public string ItemDescription { get; set; }
+        [Display(Name = "物料规格")]
+        public string ItemSpecification { get; set; }
+        [Display(Name = "物料长度")]
+        public decimal? ItemLength { get; set; }
+        [Display(Name = "物料宽度")]
+        public decimal? ItemWidth { get; set; }
+        [Display(Name = "物料高度")]
+        public decimal? ItemHeight { get; set; }
+        [Display(Name = "物料片数")]
+        public decimal? ItemQty { get; set; }
+        [Display(Name = "物料单位数量")]
+        public decimal? ItemUnitQty { get; set; }
+        [Display(Name = "物料单位")]
+        public string ItemUnit { get; set; }
+        [Display(Name = "物料单价")]
+        public decimal? ItemPrice { get; set; }
+        [Display(Name = "物料金额")]
+        public decimal? ItemAmount { get; set; }
+        [Display(Name = "物料备注")]
+        public string ItemRemarks { get; set; }
+    }
+
     public class Gi2Profile : Profile
     {
         public Gi2Profile()

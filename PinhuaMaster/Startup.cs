@@ -38,8 +38,8 @@ namespace PinhuaMaster
             services.Configure<CookiePolicyOptions>(options =>
             {
                 // This lambda determines whether user consent for non-essential cookies is needed for a given request.
-                options.CheckConsentNeeded = context => true;
-                options.MinimumSameSitePolicy = SameSiteMode.None;
+                //options.CheckConsentNeeded = context => true;
+                //options.MinimumSameSitePolicy = SameSiteMode.None;
             });
 
             // Add DbContext
@@ -73,7 +73,7 @@ namespace PinhuaMaster
                     //options.Conventions.AuthorizePage("/Account/Logout");
                     options.Conventions.AuthorizeFolder("/", "Permissons").AllowAnonymousToFolder("/Account");
                 })
-                .SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+                /*.SetCompatibilityVersion(CompatibilityVersion.Version_2_1)*/;
 
             services.AddAuthentication().AddCookie(options =>
             {
@@ -114,19 +114,19 @@ namespace PinhuaMaster
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
-                //app.UseBrowserLink();
+                app.UseBrowserLink();
                 app.UseDatabaseErrorPage();
             }
             else
             {
                 app.UseExceptionHandler("/Error");
                 // AspNetCore 2.1
-                app.UseHsts();
+                //app.UseHsts();
             }
 
             // AspNetCore 2.1
-            app.UseCookiePolicy();
-            app.UseHttpsRedirection();
+            //app.UseCookiePolicy();
+            //app.UseHttpsRedirection();
 
             app.UseStaticFiles();
 

@@ -186,8 +186,36 @@ namespace PinhuaMaster.Pages.Statement
                                    Amount = p2.金额
                                }
                            };
-
-            var detailsOfShou = oldDeliveryReturn.ToList().Union(purchase.ToList());
+            // 新版采购单
+            var easyPurchasing = from p in _pinhuaContext.Gr2Main.AsNoTracking()
+                               join d in _pinhuaContext.Gr2Details.AsNoTracking() on p.ExcelServerRcid equals d.ExcelServerRcid
+                               join b in _pinhuaContext.业务类型.AsNoTracking() on p.PurchasingType equals b.业务类型1
+                               where p.Supplier == Id
+                               select new Model出库入库
+                               {
+                                   Record = new Model出库入库条目
+                                   {
+                                       CustomerId = p.Supplier,
+                                       OrderId = p.PurchasingId,
+                                       Date = p.PurchasingDate,
+                                       Type = p.PurchasingType,
+                                       TypeDescription = b.类型描述,
+                                       Remarks = p.Remarks
+                                   },
+                                   RecordDetail = new Model出库入库明细
+                                   {
+                                       ItemId = d.ItemId.ToString(),
+                                       Description = d.Description,
+                                       Specification = d.Specification,
+                                       Qty = d.Qty,
+                                       Unit = d.Unit,
+                                       UnitQty = d.UnitQty,
+                                       Price = d.Price,
+                                       Amount = d.Amount * b.业务计算
+                                   }
+                               };
+            // 采购单数据合并
+            var detailsOfShou = oldDeliveryReturn.ToList().Union(purchase.ToList()).Union(easyPurchasing.ToList());
             return detailsOfShou;
         }
 
