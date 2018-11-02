@@ -24,7 +24,7 @@ namespace PinhuaMaster
                 return Task.CompletedTask;
             }
 
-            if(context.User.Identity.Name == "116307766@qq.com" || context.User.IsInRole("管理员"))
+            if(context.User.Identity.Name == "116307766@qq.com" || context.User.IsInRole("管理员") || context.User.IsInRole("业务员"))
             {
                 context.Succeed(requirement);
                 return Task.CompletedTask;

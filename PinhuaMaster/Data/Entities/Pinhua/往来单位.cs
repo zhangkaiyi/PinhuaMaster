@@ -21,5 +21,6 @@ namespace PinhuaMaster.Data.Entities.Pinhua
         public string 单位类型 { get; set; }
         public string 单位性质 { get; set; }
         public int? Rank { get; set; }
+        public string 外协关联仓库 { get; set; }
     }
 }

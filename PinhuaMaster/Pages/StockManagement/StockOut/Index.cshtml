@@ -1,5 +1,5 @@
 ﻿@page
-@model PinhuaMaster.Pages.OrderManagement.EasyDelivery.IndexModel
+@model PinhuaMaster.Pages.StockManagement.StockOut.IndexModel
 @{
     ViewData["Title"] = "简易送货单";
 }
@@ -98,7 +98,7 @@
         <div class="row">
             <div class="col-md-6">
                 <div class="form-group has-error">
-                    <label class="control-label" asp-for="SearchViewModel.DeliveryId"><i class="fa fa-angle-double-right"></i> @Html.DisplayNameFor(m => m.SearchViewModel.DeliveryId)</label>
+                    <label class="control-label" asp-for="AdvanceSearchViewModel.DeliveryId"><i class="fa fa-angle-double-right"></i> @Html.DisplayNameFor(m => m.AdvanceSearchViewModel.DeliveryId)</label>
                     <div class="input-group">
                         <input v-model="searchModel.DeliveryId" class="form-control" />
                         <span class="input-group-addon no-padding">
@@ -107,7 +107,7 @@
                     </div>
                 </div>
                 <div class="form-group has-error">
-                    <label class="control-label" asp-for="SearchViewModel.CustomerName"><i class="fa fa-angle-double-right"></i> @Html.DisplayNameFor(m => m.SearchViewModel.CustomerName)</label>
+                    <label class="control-label" asp-for="AdvanceSearchViewModel.CustomerName"><i class="fa fa-angle-double-right"></i> @Html.DisplayNameFor(m => m.AdvanceSearchViewModel.CustomerName)</label>
                     <div class="input-group">
                         <input v-model="searchModel.CustomerName" class="form-control" />
                         <span class="input-group-addon no-padding">
@@ -116,7 +116,7 @@
                     </div>
                 </div>
                 <div class="form-group has-error">
-                    <label class="control-label" asp-for="SearchViewModel.DeliveryTypeDescription"><i class="fa fa-angle-double-right"></i> @Html.DisplayNameFor(m => m.SearchViewModel.DeliveryTypeDescription)</label>
+                    <label class="control-label" asp-for="AdvanceSearchViewModel.DeliveryTypeDescription"><i class="fa fa-angle-double-right"></i> @Html.DisplayNameFor(m => m.AdvanceSearchViewModel.DeliveryTypeDescription)</label>
                     <div class="input-group">
                         <input v-model="searchModel.DeliveryTypeDescription" class="form-control" />
                         <span class="input-group-addon no-padding">
@@ -125,7 +125,7 @@
                     </div>
                 </div>
                 <div class="form-group has-error">
-                    <label class="control-label" asp-for="SearchViewModel.DeliveryDate"><i class="fa fa-angle-double-right"></i> @Html.DisplayNameFor(m => m.SearchViewModel.DeliveryDate)</label>
+                    <label class="control-label" asp-for="AdvanceSearchViewModel.DeliveryDate"><i class="fa fa-angle-double-right"></i> @Html.DisplayNameFor(m => m.AdvanceSearchViewModel.DeliveryDate)</label>
                     <div class="input-group">
                         <input type="text" class="form-control" data-provide="datepicker" data-date-format="yyyy-mm-dd" id="DeliveryDate" />
                         <span class="input-group-addon no-padding">
@@ -154,7 +154,7 @@
                         </div>
                     </div>*@
                 <div class="form-group has-warning">
-                    <label class="control-label" asp-for="SearchViewModel.DeliveryAddress"><i class="fa fa-angle-double-right"></i> @Html.DisplayNameFor(m => m.SearchViewModel.DeliveryAddress)</label>
+                    <label class="control-label" asp-for="AdvanceSearchViewModel.DeliveryAddress"><i class="fa fa-angle-double-right"></i> @Html.DisplayNameFor(m => m.AdvanceSearchViewModel.DeliveryAddress)</label>
                     <div class="input-group">
                         <input v-model="searchModel.DeliveryAddress" class="form-control" />
                         <span class="input-group-addon no-padding">
@@ -163,7 +163,7 @@
                     </div>
                 </div>
                 <div class="form-group has-warning">
-                    <label class="control-label" asp-for="SearchViewModel.Remarks"><i class="fa fa-angle-double-right"></i> @Html.DisplayNameFor(m => m.SearchViewModel.Remarks)</label>
+                    <label class="control-label" asp-for="AdvanceSearchViewModel.Remarks"><i class="fa fa-angle-double-right"></i> @Html.DisplayNameFor(m => m.AdvanceSearchViewModel.Remarks)</label>
                     <div class="input-group">
                         <input v-model="searchModel.Remarks" class="form-control" />
                         <span class="input-group-addon no-padding">
@@ -172,7 +172,7 @@
                     </div>
                 </div>
                 <div class="form-group has-warning">
-                    <label class="control-label" asp-for="SearchViewModel.CreatedBy"><i class="fa fa-angle-double-right"></i> @Html.DisplayNameFor(m => m.SearchViewModel.CreatedBy)</label>
+                    <label class="control-label" asp-for="AdvanceSearchViewModel.CreatedBy"><i class="fa fa-angle-double-right"></i> @Html.DisplayNameFor(m => m.AdvanceSearchViewModel.CreatedBy)</label>
                     <div class="input-group">
                         <input v-model="searchModel.CreatedBy" class="form-control" />
                         <span class="input-group-addon no-padding">
@@ -181,7 +181,7 @@
                     </div>
                 </div>
                 <div class="form-group has-warning">
-                    <label class="control-label" asp-for="SearchViewModel.CreatedDate"><i class="fa fa-angle-double-right"></i> @Html.DisplayNameFor(m => m.SearchViewModel.CreatedDate)</label>
+                    <label class="control-label" asp-for="AdvanceSearchViewModel.CreatedDate"><i class="fa fa-angle-double-right"></i> @Html.DisplayNameFor(m => m.AdvanceSearchViewModel.CreatedDate)</label>
                     <div class="input-group">
                         <input type="text" v-model="searchModel.CreatedDate" class="form-control" data-provide="datepicker" data-date-format="yyyy-mm-dd" id="CreatedDate" />
                         <span class="input-group-addon no-padding">
@@ -203,7 +203,7 @@
                         </div>
                     </div>*@
                 <div class="form-group">
-                    <label class="control-label" asp-for="SearchViewModel.ItemDescription"><i class="fa fa-angle-double-right"></i> @Html.DisplayNameFor(m => m.SearchViewModel.ItemDescription)</label>
+                    <label class="control-label" asp-for="AdvanceSearchViewModel.ItemDescription"><i class="fa fa-angle-double-right"></i> @Html.DisplayNameFor(m => m.AdvanceSearchViewModel.ItemDescription)</label>
                     <div class="input-group">
                         <input v-model="searchModel.ItemDescription" class="form-control" />
                         <span class="input-group-addon no-padding">
@@ -212,7 +212,7 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="control-label" asp-for="SearchViewModel.ItemSpecification"><i class="fa fa-angle-double-right"></i> @Html.DisplayNameFor(m => m.SearchViewModel.ItemSpecification)</label>
+                    <label class="control-label" asp-for="AdvanceSearchViewModel.ItemSpecification"><i class="fa fa-angle-double-right"></i> @Html.DisplayNameFor(m => m.AdvanceSearchViewModel.ItemSpecification)</label>
                     <div class="input-group">
                         <input v-model="searchModel.ItemSpecification" class="form-control" />
                         <span class="input-group-addon no-padding">
@@ -221,7 +221,7 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="control-label" asp-for="SearchViewModel.ItemQty"><i class="fa fa-angle-double-right"></i> @Html.DisplayNameFor(m => m.SearchViewModel.ItemQty)</label>
+                    <label class="control-label" asp-for="AdvanceSearchViewModel.ItemQty"><i class="fa fa-angle-double-right"></i> @Html.DisplayNameFor(m => m.AdvanceSearchViewModel.ItemQty)</label>
                     <div class="input-group">
                         <input v-model="searchModel.ItemQty" class="form-control" />
                         <span class="input-group-addon no-padding">
@@ -230,7 +230,7 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="control-label" asp-for="SearchViewModel.ItemUnitQty"><i class="fa fa-angle-double-right"></i> @Html.DisplayNameFor(m => m.SearchViewModel.ItemUnitQty)</label>
+                    <label class="control-label" asp-for="AdvanceSearchViewModel.ItemUnitQty"><i class="fa fa-angle-double-right"></i> @Html.DisplayNameFor(m => m.AdvanceSearchViewModel.ItemUnitQty)</label>
                     <div class="input-group">
                         <input v-model="searchModel.ItemUnitQty" class="form-control" />
                         <span class="input-group-addon no-padding">
@@ -250,7 +250,7 @@
             </div>
             <div class="col-md-6">
                 <div class="form-group">
-                    <label class="control-label" asp-for="SearchViewModel.ItemPrice"><i class="fa fa-angle-double-right"></i> @Html.DisplayNameFor(m => m.SearchViewModel.ItemPrice)</label>
+                    <label class="control-label" asp-for="AdvanceSearchViewModel.ItemPrice"><i class="fa fa-angle-double-right"></i> @Html.DisplayNameFor(m => m.AdvanceSearchViewModel.ItemPrice)</label>
                     <div class="input-group">
                         <input v-model="searchModel.ItemPrice" class="form-control" />
                         <span class="input-group-addon no-padding">
@@ -259,7 +259,7 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="control-label" asp-for="SearchViewModel.ItemAmount"><i class="fa fa-angle-double-right"></i> @Html.DisplayNameFor(m => m.SearchViewModel.ItemAmount)</label>
+                    <label class="control-label" asp-for="AdvanceSearchViewModel.ItemAmount"><i class="fa fa-angle-double-right"></i> @Html.DisplayNameFor(m => m.AdvanceSearchViewModel.ItemAmount)</label>
                     <div class="input-group">
                         <input v-model="searchModel.ItemAmount" class="form-control" />
                         <span class="input-group-addon no-padding">
@@ -270,7 +270,7 @@
             </div>
         </div>
         @*<button class="btn btn-primary" v-on:click="toSearch"><i class="fa fa-search"></i> 查找</button>*@
-        <input id="searchModel" type="hidden" value='@(Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(new ViewModel.Gi2Search())))' />
+        <input id="searchModel" type="hidden" value='@(Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(new ViewModel.StockOutSearch())))' />
         <input id="searchUrl" type="hidden" value='@Url.Page("Index","AdvanceSearch")' />
     </div>
 }
@@ -292,7 +292,7 @@
         var detailsTable = $('#detailsTable')
         var detailsTitle = $('#detailsTitle')
         mainTable.on('click-cell.bs.table', function (event, field, value, row, $element) {
-            var url = '@Url.Page("Index", "AjaxEasyDeliveryDetails")&id=' + row.DeliveryId
+            var url = '@Url.Page("Index", "AjaxStockOutDetails")&id=' + row.DeliveryId
             detailsTable.bootstrapTable('refresh', { url: url });
             detailsTitle.html(row.CustomerName + ' <small>单号：'+row.DeliveryId+'</small> <small>金额：' + row.Amount + '</small>')
             console.log(field)
@@ -381,6 +381,5 @@
         body .demo-class .layui-layer-btn {
             border-top: 1px solid #E9E7E7;
         }
-
     </style>
 }

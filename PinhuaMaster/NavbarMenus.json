@@ -3,7 +3,8 @@
     {
       "name": "主页",
       "icon": "fa fa-home",
-      "url": "/Index"
+      "url": "/Index",
+      "allow": ""
     },
     {
       "name": "送货单",
@@ -148,6 +149,26 @@
       "url": "/Payroll/Index"
     },
     {
+      "name": "零售系统",
+      "icon": "fa fa-circle-o",
+      "url": "",
+      "allow": [
+        "管理员",
+        "业务员"
+      ],
+      "children": [
+        {
+          "name": "出库单",
+          "icon": "fa fa-circle-o",
+          "url": "/Retail/Delivery/Index",
+          "allow": [
+            "管理员",
+            "业务员"
+          ]
+        }
+      ]
+    },
+    {
       "name": "后台管理",
       "icon": "fa fa-cog",
       "url": "",
@@ -169,6 +190,33 @@
         },
         {
           "name": "权限",
+          "icon": "fa fa-circle-o",
+          "url": "/Permission/Index"
+        }
+      ]
+    },
+    {
+      "name": "出入库管理",
+      "icon": "fa fa-circle-o",
+      "url": "",
+      "children": [
+        {
+          "name": "出库单",
+          "icon": "fa fa-circle-o",
+          "url": "/StockManagement/StockOut/Index"
+        },
+        {
+          "name": "入库单",
+          "icon": "fa fa-circle-o",
+          "url": "/User/Index"
+        },
+        {
+          "name": "转仓单",
+          "icon": "fa fa-circle-o",
+          "url": "/Role/Index"
+        },
+        {
+          "name": "外协加工单",
           "icon": "fa fa-circle-o",
           "url": "/Permission/Index"
         }

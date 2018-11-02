@@ -4,7 +4,7 @@
 <ol class="dd-list">
     @foreach (var menu in Model)
     {
-        <li class="dd-item dd3-item" data-url="@menu.url" data-icon="@menu.icon" data-name="@menu.name">
+        <li class="dd-item dd3-item" data-url="@menu.url" data-icon="@menu.icon" data-name="@menu.name" data-allow="@(string.Join(",",menu.allow??new List<string> ()))">
             <div class="dd-handle dd3-handle">Drag</div>
             <div class="dd3-content">
                 <i class="@menu.icon" id="showIcon"></i> <span id="showName">@menu.name</span>

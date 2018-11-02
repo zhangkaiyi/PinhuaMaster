@@ -39,6 +39,7 @@ namespace PinhuaMaster.Services
         public string name { get; set; }
         public string icon { get; set; }
         public string url { get; set; }
+        public IList<string> allow { get; set; }
 
         public IList<NavbarMenu> children { get; set; }
     }
