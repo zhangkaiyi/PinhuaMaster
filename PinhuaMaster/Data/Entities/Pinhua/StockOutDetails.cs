@@ -6,7 +6,7 @@ namespace PinhuaMaster.Data.Entities.Pinhua
     public partial class StockOutDetails
     {
         public int Id { get; set; }
-        public string DeliveryId { get; set; }
+        public string OrderId { get; set; }
         public string Description { get; set; }
         public string Specification { get; set; }
         public decimal? Length { get; set; }

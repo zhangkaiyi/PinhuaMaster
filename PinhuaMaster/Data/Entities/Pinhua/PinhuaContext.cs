@@ -126,6 +126,7 @@ namespace PinhuaMaster.Data.Entities.Pinhua
         public virtual DbSet<Gr2Details> Gr2Details { get; set; }
         public virtual DbSet<Gr2Main> Gr2Main { get; set; }
         public virtual DbSet<InventoryCount> InventoryCount { get; set; }
+        public virtual DbSet<InventoryCountDetails> InventoryCountDetails { get; set; }
         public virtual DbSet<NCollectionMain> NCollectionMain { get; set; }
         public virtual DbSet<NewDeliveryDetails> NewDeliveryDetails { get; set; }
         public virtual DbSet<NewDeliveryMain> NewDeliveryMain { get; set; }
@@ -242,7 +243,6 @@ namespace PinhuaMaster.Data.Entities.Pinhua
         // Unable to generate entity type for table 'dbo.图形一览_2'. Please see the warning messages.
         // Unable to generate entity type for table 'dbo.往来单位_账号'. Please see the warning messages.
         // Unable to generate entity type for table 'dbo.物料登记_木种描述'. Please see the warning messages.
-        // Unable to generate entity type for table 'dbo.InventoryCount_Details'. Please see the warning messages.
         // Unable to generate entity type for table 'dbo.考勤卡号变动_bak'. Please see the warning messages.
         // Unable to generate entity type for table 'dbo.考勤期间_主表'. Please see the warning messages.
         // Unable to generate entity type for table 'dbo.考勤期间_明细'. Please see the warning messages.
@@ -4694,6 +4694,56 @@ namespace PinhuaMaster.Data.Entities.Pinhua
                 entity.Property(e => e.仓库名称).HasMaxLength(100);
             });
 
+            modelBuilder.Entity<InventoryCountDetails>(entity =>
+            {
+                entity.HasKey(e => e.自增列);
+
+                entity.ToTable("InventoryCount_Details");
+
+                entity.HasIndex(e => new { e.ExcelServerRcid, e.ExcelServerWiid })
+                    .HasName("idx1");
+
+                entity.Property(e => e.ExcelServerChg).HasColumnName("ExcelServerCHG");
+
+                entity.Property(e => e.ExcelServerCn).HasColumnName("ExcelServerCN");
+
+                entity.Property(e => e.ExcelServerRc1)
+                    .HasColumnName("ExcelServerRC1")
+                    .HasMaxLength(20);
+
+                entity.Property(e => e.ExcelServerRcid)
+                    .HasColumnName("ExcelServerRCID")
+                    .HasMaxLength(20);
+
+                entity.Property(e => e.ExcelServerRn).HasColumnName("ExcelServerRN");
+
+                entity.Property(e => e.ExcelServerRtid)
+                    .HasColumnName("ExcelServerRTID")
+                    .HasMaxLength(20);
+
+                entity.Property(e => e.ExcelServerWiid)
+                    .HasColumnName("ExcelServerWIID")
+                    .HasMaxLength(20);
+
+                entity.Property(e => e.型号名称).HasMaxLength(20);
+
+                entity.Property(e => e.型号编号).HasMaxLength(20);
+
+                entity.Property(e => e.宽).HasColumnType("decimal(20, 3)");
+
+                entity.Property(e => e.成本).HasColumnType("decimal(20, 3)");
+
+                entity.Property(e => e.描述).HasMaxLength(50);
+
+                entity.Property(e => e.数量).HasColumnType("decimal(20, 3)");
+
+                entity.Property(e => e.规格).HasMaxLength(50);
+
+                entity.Property(e => e.长).HasColumnType("decimal(20, 3)");
+
+                entity.Property(e => e.高).HasColumnType("decimal(20, 3)");
+            });
+
             modelBuilder.Entity<NCollectionMain>(entity =>
             {
                 entity.HasKey(e => e.CollectionId);
@@ -5432,14 +5482,14 @@ namespace PinhuaMaster.Data.Entities.Pinhua
 
             modelBuilder.Entity<StockOutDetails>(entity =>
             {
-                entity.HasKey(e => new { e.Id, e.DeliveryId });
+                entity.HasKey(e => new { e.Id, e.OrderId });
 
                 entity.ToTable("StockOut_Details");
 
                 entity.HasIndex(e => new { e.ExcelServerRcid, e.ExcelServerWiid })
                     .HasName("idx1");
 
-                entity.Property(e => e.DeliveryId).HasMaxLength(20);
+                entity.Property(e => e.OrderId).HasMaxLength(20);
 
                 entity.Property(e => e.Amount).HasColumnType("decimal(20, 3)");
 
@@ -5492,14 +5542,14 @@ namespace PinhuaMaster.Data.Entities.Pinhua
 
             modelBuilder.Entity<StockOutMain>(entity =>
             {
-                entity.HasKey(e => e.DeliveryId);
+                entity.HasKey(e => e.OrderId);
 
                 entity.ToTable("StockOut_Main");
 
                 entity.HasIndex(e => new { e.ExcelServerRcid, e.ExcelServerWiid })
                     .HasName("idx1");
 
-                entity.Property(e => e.DeliveryId)
+                entity.Property(e => e.OrderId)
                     .HasMaxLength(20)
                     .ValueGeneratedNever();
 
@@ -5511,15 +5561,11 @@ namespace PinhuaMaster.Data.Entities.Pinhua
 
                 entity.Property(e => e.CreatedDate).HasColumnType("datetime");
 
+                entity.Property(e => e.CustomerAddress).HasMaxLength(100);
+
                 entity.Property(e => e.CustomerId).HasMaxLength(20);
 
                 entity.Property(e => e.CustomerName).HasMaxLength(100);
-
-                entity.Property(e => e.DeliveryAddress).HasMaxLength(100);
-
-                entity.Property(e => e.DeliveryDate).HasColumnType("datetime");
-
-                entity.Property(e => e.DeliveryType).HasMaxLength(20);
 
                 entity.Property(e => e.ExcelServerChg).HasColumnName("ExcelServerCHG");
 
@@ -5542,6 +5588,10 @@ namespace PinhuaMaster.Data.Entities.Pinhua
                 entity.Property(e => e.ExcelServerWiid)
                     .HasColumnName("ExcelServerWIID")
                     .HasMaxLength(20);
+
+                entity.Property(e => e.MovementType).HasMaxLength(20);
+
+                entity.Property(e => e.OrderDate).HasColumnType("datetime");
 
                 entity.Property(e => e.Remarks).HasMaxLength(100);
 

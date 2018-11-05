@@ -27,13 +27,26 @@ namespace PinhuaMaster.Pages.StockManagement.StockOut
 
         [BindProperty]
         public StockOutViewModel Order { get; set; }
-        public List<SelectListItem> DeliveryTypes { get; set; } = new List<SelectListItem>();
-        public List<SelectListItem> CustomerSelectList { get; set; } = new List<SelectListItem>();
+        public List<SelectListItem> MovementTypeList { get; set; } = new List<SelectListItem>();
+        public List<SelectListItem> CustomerList { get; set; } = new List<SelectListItem>();
+        public List<SelectListItem> WarehouseList { get; set; } = new List<SelectListItem>();
 
         public void OnGet()
         {
-            DeliveryTypes = BuildTypes();
-            CustomerSelectList = _pinhuaContext.GetCustomerSelectList();
+            MovementTypeList = BuildTypes();
+            CustomerList = _pinhuaContext.GetCustomerSelectList();
+            WarehouseList = _pinhuaContext.GetWarehouseSelectList();
+        }
+
+        public IActionResult OnGetAjaxInventory()
+        {
+            var settings = new Newtonsoft.Json.JsonSerializerSettings();
+            //EF Core中默认为驼峰样式序列化处理key
+            //settings.ContractResolver = new CamelCasePropertyNamesContractResolver();
+            //使用默认方式，不更改元数据的key的大小写
+            settings.ContractResolver = new Newtonsoft.Json.Serialization.DefaultContractResolver();
+
+            return new JsonResult(_pinhuaContext.GetInventory(), settings);
         }
 
         public IActionResult OnPost()
@@ -54,7 +67,7 @@ namespace PinhuaMaster.Pages.StockManagement.StockOut
                     //state = 1,
                 };
 
-                var main = _mapper.Map<StockOutDTO, StockOutMain>(Order.Main);
+                var main = _mapper.Map<StockOutMainDTO, StockOutMain>(Order.Main);
                 main.ExcelServerRcid = Rcid;
                 main.ExcelServerRtid = rtId;
                 main.CustomerName = _pinhuaContext.往来单位.AsNoTracking().FirstOrDefault(p => p.单位编号 == Order.Main.CustomerId).单位名称;
@@ -64,14 +77,15 @@ namespace PinhuaMaster.Pages.StockManagement.StockOut
                 {
                     i.ExcelServerRcid = Rcid;
                     i.ExcelServerRtid = rtId;
-                    i.DeliveryId = main.DeliveryId;
+                    i.OrderId = main.OrderId;
                 });
 
                 if (details.Count == 0)
                 {
                     ModelState.AddModelError("", "出库清单不可为空");
-                    DeliveryTypes = BuildTypes();
-                    CustomerSelectList = _pinhuaContext.GetCustomerSelectList();
+                    MovementTypeList = BuildTypes();
+                    CustomerList = _pinhuaContext.GetCustomerSelectList();
+                    WarehouseList = _pinhuaContext.GetWarehouseSelectList();
                     return Page();
                 }
                 _pinhuaContext.EsRepCase.Add(repCase);
@@ -83,8 +97,9 @@ namespace PinhuaMaster.Pages.StockManagement.StockOut
             }
             else
             {
-                DeliveryTypes = BuildTypes();
-                CustomerSelectList = _pinhuaContext.GetCustomerSelectList();
+                MovementTypeList = BuildTypes();
+                CustomerList = _pinhuaContext.GetCustomerSelectList();
+                WarehouseList = _pinhuaContext.GetWarehouseSelectList();
                 return Page();
             }
         }

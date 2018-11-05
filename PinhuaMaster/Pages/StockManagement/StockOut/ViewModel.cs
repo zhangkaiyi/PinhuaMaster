@@ -11,27 +11,27 @@ namespace PinhuaMaster.Pages.StockManagement.StockOut.ViewModel
 {
     public class StockOutViewModel
     {
-        public StockOutDTO Main { get; set; }
+        public StockOutMainDTO Main { get; set; }
         public List<StockOutDetailsDTO> Details { get; set; }
     }
 
-    public class StockOutDTO
+    public class StockOutMainDTO
     {
         [Required, Display(Name = "单号")]
-        public string DeliveryId { get; set; }
+        public string OrderId { get; set; }
         [Required, Display(Name = "客户单位")]
         public string CustomerId { get; set; }
         [Display(Name = "客户单位名称")]
         public string CustomerName { get; set; }
-        [Required, Display(Name = "业务类型")]
-        public string DeliveryType { get; set; }
-        [Display(Name = "业务描述")]
-        public string DeliveryTypeDescription { get; set; }
+        [Required, Display(Name = "移动类型")]
+        public string MovementType { get; set; }
+        [Display(Name = "移动类型描述")]
+        public string MovementTypeDescription { get; set; }
         [Required, Display(Name = "日期")]
         [Newtonsoft.Json.JsonConverter(typeof(MyDateConverter))]
-        public DateTime? DeliveryDate { get; set; }
+        public DateTime? OrderDate { get; set; }
         [Display(Name = "地址")]
-        public string DeliveryAddress { get; set; }
+        public string CustomerAddress { get; set; }
         [Display(Name = "金额")]
         public decimal? Amount { get; set; }
         [Display(Name = "备注")]
@@ -45,6 +45,14 @@ namespace PinhuaMaster.Pages.StockManagement.StockOut.ViewModel
         [Display(Name = "制单日期")]
         [Newtonsoft.Json.JsonConverter(typeof(MyDateTimeConverter))]
         public DateTime? CreatedDate { get; set; }
+        [Required, Display(Name = "出仓")]
+        public string WarehouseFrom { get; set; }
+        [Display(Name = "出仓名称")]
+        public string WarehouseFromName { get; set; }
+        [Display(Name = "进仓")]
+        public string WarehouseTo { get; set; }
+        [Display(Name = "进仓名称")]
+        public string WarehouseToName { get; set; }
         [Display(Name = "关联号")]
         public string ExcelServerRcid { get; set; }
         [Display(Name = "模板号")]
@@ -58,6 +66,8 @@ namespace PinhuaMaster.Pages.StockManagement.StockOut.ViewModel
 
     public class StockOutDetailsDTO
     {
+        public string ModelNumber { get; set; }
+        public string ModelName { get; set; }
         public string Description { get; set; }
         public string Specification { get; set; }
         public decimal? Length { get; set; }
@@ -74,7 +84,7 @@ namespace PinhuaMaster.Pages.StockManagement.StockOut.ViewModel
         public decimal? Amount { get; set; }
         public int Id { get; set; }
         public string Remarks { get; set; }
-        public string DeliveryId { get; set; }
+        public string OrderId { get; set; }
         public string ExcelServerRcid { get; set; }
         public string ExcelServerRtid { get; set; }
         //public int? ExcelServerRn { get; set; }
@@ -87,19 +97,19 @@ namespace PinhuaMaster.Pages.StockManagement.StockOut.ViewModel
     public class StockOutSearch
     {
         [Display(Name = "单号")]
-        public string DeliveryId { get; set; }
+        public string OrderId { get; set; }
         [Display(Name = "客户编号")]
         public string CustomerId { get; set; }
         [Display(Name = "客户名称")]
         public string CustomerName { get; set; }
-        [Display(Name = "单据类型")]
-        public string DeliveryType { get; set; }
-        [Display(Name = "单据类型描述")]
-        public string DeliveryTypeDescription { get; set; }
-        [Display(Name = "送货日期")]
-        public DateTime? DeliveryDate { get; set; }
-        [Display(Name = "送货地址")]
-        public string DeliveryAddress { get; set; }
+        [Display(Name = "移动类型")]
+        public string MovementType { get; set; }
+        [Display(Name = "移动类型描述")]
+        public string MovementTypeDescription { get; set; }
+        [Display(Name = "单据日期")]
+        public DateTime? OrderDate { get; set; }
+        [Display(Name = "收货地址")]
+        public string CustomerAddress { get; set; }
         [Display(Name = "单据金额")]
         public decimal? TotalAmount { get; set; }
         [Display(Name = "备注")]
@@ -138,20 +148,20 @@ namespace PinhuaMaster.Pages.StockManagement.StockOut.ViewModel
         public string ItemRemarks { get; set; }
     }
 
-    public class Gi2Profile : Profile
+    public class StockOutProfile : Profile
     {
-        public Gi2Profile()
+        public StockOutProfile()
         {
-            CreateMap<Gi2Main, StockOutDTO>();
+            CreateMap<StockOutMain, StockOutMainDTO>();
             //.ForMember(dst => dst.ExcelServerRcid, map => map.MapFrom(src => src.ExcelServerRcid))
             //.ForMember(dst => dst.DeliveryDate, map => map.MapFrom(src => src.DeliveryDate.Value.ToString("yyyy-MM-dd")));
-            CreateMap<StockOutDTO, Gi2Main>();
+            CreateMap<StockOutMainDTO, StockOutMain>();
             //.ForMember(dst => dst.ExcelServerRcid, map => map.MapFrom(src => src.ExcelServerRcid))
             //.ForMember(dst => dst.DeliveryDate, map => map.MapFrom(src => src.DeliveryDate));
 
-            CreateMap<Gi2Details, StockOutDetailsDTO>();
+            CreateMap<StockOutDetails, StockOutDetailsDTO>();
             //.ForMember(dst => dst.DeliveryId, map => map.MapFrom(src => src.Id.ToString()));
-            CreateMap<StockOutDetailsDTO, Gi2Details>();
+            CreateMap<StockOutDetailsDTO, StockOutDetails>();
             //.ForMember(dst => dst.Id, map => map.MapFrom(src => int.Parse(src.Index)));
         }
     }

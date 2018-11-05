@@ -75,10 +75,10 @@ namespace PinhuaMaster.Extensions
         /// <returns></returns>
         static public string GetRtId(this PinhuaContext context, string templateName)
         {
-                var rtId = from p in context.EsTmp
-                           where p.RtName == templateName
-                           select p.RtId;
-                return rtId.First() ?? string.Empty;
+            var rtId = from p in context.EsTmp
+                       where p.RtName == templateName
+                       select p.RtId;
+            return rtId.First() ?? string.Empty;
         }
 
         static public string CreatePersonnelFileId(this PinhuaContext context, string prefix, int indexLength)
@@ -94,6 +94,32 @@ namespace PinhuaMaster.Extensions
                              .FirstOrDefault();
             var idIndex = int.Parse(string.IsNullOrEmpty(exsistedMaxId) ? "0" : exsistedMaxId.Substring(prefixId.Length, indexLength)) + 1;
             return prefixId + idIndex.ToString($"D{indexLength}");
+        }
+
+        /// <summary>
+        /// 获取仓库的下拉框数据
+        /// </summary>
+        /// <param name="_pinhuaContext"></param>
+        /// <returns></returns>
+        static public List<SelectListItem> GetWarehouseSelectList(this PinhuaContext _pinhuaContext)
+        {
+            var list = from p in _pinhuaContext.Warehouse.ToList()
+                       orderby p.Id ascending
+                       select p;
+
+            var selectList = new List<SelectListItem>();
+            selectList.Add(new SelectListItem());
+            foreach (var warehouse in list)
+            {
+                selectList.Add(new SelectListItem
+                {
+                    Text = warehouse.Id + " - " + warehouse.Name,
+                    Value = warehouse.Id
+                });
+
+
+            }
+            return selectList;
         }
 
         /// <summary>
@@ -131,6 +157,186 @@ namespace PinhuaMaster.Extensions
                 }
             }
             return groupingCustomers;
+        }
+
+        static public IEnumerable<InventoryDto> GetInventory(this PinhuaContext _pinhuaContext)
+        {
+            // 库存盘点日期
+            var latestDate = from w in _pinhuaContext.Warehouse
+                             join i in from p in _pinhuaContext.InventoryCount
+                                       group p by p.仓库编号 into g
+                                       select new
+                                       {
+                                           仓库编号 = g.Key,
+                                           盘点日期 = new DateTime?(g.Max(p => p.盘点日期))
+                                       }
+                             on w.Id equals i.仓库编号 into itmp
+                             from i in itmp.DefaultIfEmpty()
+                             select new
+                             {
+                                 仓库编号 = w.Id,
+                                 盘点日期 = i.盘点日期 ?? new DateTime(1900, 1, 1)
+                             };
+
+            // 库存盘点
+            var inventory = from m in _pinhuaContext.InventoryCount
+                            join md in _pinhuaContext.InventoryCountDetails on m.ExcelServerRcid equals md.ExcelServerRcid
+                            join c in latestDate on new { m.盘点日期, m.仓库编号 } equals new { c.盘点日期, c.仓库编号 }
+                            select new
+                            {
+                                Warehouse = m.仓库编号,
+                                ModelNumber = md.型号编号,
+                                ModelName = md.型号名称,
+                                Description = md.描述,
+                                Specification = md.规格,
+                                Length = md.长,
+                                Width = md.宽,
+                                Height = md.高,
+                                Qty = md.数量,
+                            };
+
+            // 出库单，对应仓库库存减少
+            var stockout = from m in _pinhuaContext.StockOutMain
+                           join md in _pinhuaContext.StockOutDetails on m.ExcelServerRcid equals md.ExcelServerRcid
+                           join c in latestDate on m.WarehouseFrom equals c.仓库编号
+                           where m.OrderDate > c.盘点日期
+                           select new
+                           {
+                               Warehouse = m.WarehouseFrom,
+                               md.ModelNumber,
+                               md.ModelName,
+                               md.Description,
+                               md.Specification,
+                               md.Length,
+                               md.Width,
+                               md.Height,
+                               Qty = -md.Qty,
+                           };
+            // 入库单，对应仓库库存增多
+            var stockin = from m in _pinhuaContext.StockInMain
+                          join md in _pinhuaContext.StockInDetails on m.ExcelServerRcid equals md.ExcelServerRcid
+                          join c in latestDate on m.WarehouseTo equals c.仓库编号
+                          where m.DeliveryDate > c.盘点日期
+                          select new
+                          {
+                              Warehouse = m.WarehouseTo,
+                              md.ModelNumber,
+                              md.ModelName,
+                              md.Description,
+                              md.Specification,
+                              md.Length,
+                              md.Width,
+                              md.Height,
+                              md.Qty,
+                          };
+            // 转仓单，转出仓库库存减少
+            var stocktransfer_out = from m in _pinhuaContext.StockTransferMain
+                                    join md in _pinhuaContext.StockTransferDetails on m.ExcelServerRcid equals md.ExcelServerRcid
+                                    join c in latestDate on m.WarehouseTo equals c.仓库编号
+                                    where m.DeliveryDate > c.盘点日期
+                                    select new
+                                    {
+                                        Warehouse = m.WarehouseFrom,
+                                        md.ModelNumber,
+                                        md.ModelName,
+                                        md.Description,
+                                        md.Specification,
+                                        md.Length,
+                                        md.Width,
+                                        md.Height,
+                                        Qty = -md.Qty,
+                                    };
+            // 转仓单，转入仓库库存增加
+            var stocktransfer_in = from m in _pinhuaContext.StockTransferMain
+                                   join md in _pinhuaContext.StockTransferDetails on m.ExcelServerRcid equals md.ExcelServerRcid
+                                   join c in latestDate on m.WarehouseTo equals c.仓库编号
+                                   where m.DeliveryDate > c.盘点日期
+                                   select new
+                                   {
+                                       Warehouse = m.WarehouseTo,
+                                       md.ModelNumber,
+                                       md.ModelName,
+                                       md.Description,
+                                       md.Specification,
+                                       md.Length,
+                                       md.Width,
+                                       md.Height,
+                                       Qty = md.Qty,
+                                   };
+
+            // 外协加工单，转出仓库库存减少
+            var stocksubconctracting_in = from m in _pinhuaContext.StockSubconctractingMain
+                                          join md in _pinhuaContext.StockSubconctractingDetails on m.ExcelServerRcid equals md.ExcelServerRcid
+                                          join c in latestDate on m.WarehouseTo equals c.仓库编号
+                                          where m.DeliveryDate > c.盘点日期
+                                          select new
+                                          {
+                                              Warehouse = m.WarehouseFrom,
+                                              md.ModelNumber,
+                                              md.ModelName,
+                                              md.Description,
+                                              md.Specification,
+                                              md.Length,
+                                              md.Width,
+                                              md.Height,
+                                              Qty = -md.Qty,
+                                          };
+            // 外协加工单，转入仓库库存增加
+            var stocksubconctracting_out = from m in _pinhuaContext.StockSubconctractingMain
+                                           join md in _pinhuaContext.StockSubconctractingDetails on m.ExcelServerRcid equals md.ExcelServerRcid
+                                           join c in latestDate on m.WarehouseTo equals c.仓库编号
+                                           where m.DeliveryDate > c.盘点日期
+                                           select new
+                                           {
+                                               Warehouse = m.WarehouseTo,
+                                               md.ModelNumber,
+                                               md.ModelName,
+                                               md.Description,
+                                               md.Specification,
+                                               md.Length,
+                                               md.Width,
+                                               md.Height,
+                                               Qty = md.Qty,
+                                           };
+            var all = from p in inventory.Union(stockout).Union(stockin).Union(stocktransfer_out).Union(stocktransfer_in).Union(stocksubconctracting_out).Union(stocksubconctracting_in).ToList()
+                      orderby p.Warehouse, p.ModelNumber
+                      group p by new
+                      {
+                          p.Warehouse,
+                          p.ModelNumber,
+                          p.ModelName,
+                          p.Description,
+                          p.Specification,
+                          p.Length,
+                          p.Width,
+                          p.Height,
+                      } into g
+                      select new InventoryDto
+                      {
+                          Warehouse = g.Key.Warehouse,
+                          ModelNumber = g.Key.ModelNumber,
+                          ModelName = g.Key.ModelName,
+                          Description = g.Key.Description,
+                          Specification = g.Key.Specification,
+                          Length = g.Key.Length,
+                          Width = g.Key.Width,
+                          Height = g.Key.Height,
+                          Qty = g.Sum(p => p.Qty)
+                      };
+            return all;
+        }
+
+        public class InventoryDto
+        {
+            public string Warehouse { get; set; }
+            public string ModelNumber { get; set; }
+            public string ModelName { get; set; }
+            public string Description { get; set; }
+            public string Specification { get; set; }
+            public decimal? Length { get; set; }
+            public decimal? Width { get; set; }
+            public decimal? Height { get; set; }
+            public decimal? Qty { get; set; }
         }
 
         /// <summary>

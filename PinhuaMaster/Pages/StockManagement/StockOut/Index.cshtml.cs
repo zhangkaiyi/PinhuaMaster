@@ -26,7 +26,7 @@ namespace PinhuaMaster.Pages.StockManagement.StockOut
             StockOutOrders = _pinhuaContext.StockOutMain.ToList();
         }
 
-        public IActionResult OnGetAjaxEasyDelivery()
+        public IActionResult OnGetAjaxStockOutOrders()
         {
             var settings = new Newtonsoft.Json.JsonSerializerSettings();
             //EF Core中默认为驼峰样式序列化处理key
@@ -37,17 +37,21 @@ namespace PinhuaMaster.Pages.StockManagement.StockOut
             var orders = from p in _pinhuaContext.StockOutMain
                          join d in _pinhuaContext.StockOutDetails on p.ExcelServerRcid equals d.ExcelServerRcid into details
                          join u in _pinhuaContext.往来单位 on p.CustomerId equals u.单位编号
-                         join t in _pinhuaContext.业务类型 on p.DeliveryType equals t.业务类型1
-                         orderby p.DeliveryDate descending, p.CreatedDate descending
-                         select new StockOutDTO
+                         join t in _pinhuaContext.业务类型 on p.MovementType equals t.业务类型1
+                         join w in _pinhuaContext.Warehouse on p.WarehouseFrom equals w.Id
+                         orderby p.OrderDate descending, p.CreatedDate descending
+                         select new StockOutMainDTO
                          {
-                             DeliveryType = p.DeliveryType,
-                             DeliveryTypeDescription = t.类型描述,
-                             DeliveryId = p.DeliveryId,
+                             WarehouseFrom = p.WarehouseFrom,
+                             WarehouseFromName=w.Name,
+                             WarehouseTo = p.WarehouseTo,
+                             MovementType = p.MovementType,
+                             MovementTypeDescription = t.类型描述,
+                             OrderId = p.OrderId,
                              CustomerId = p.CustomerId,
                              CustomerName = u.单位名称,
-                             DeliveryAddress = p.DeliveryAddress,
-                             DeliveryDate = p.DeliveryDate,
+                             CustomerAddress = p.CustomerAddress,
+                             OrderDate = p.OrderDate,
                              Remarks = p.Remarks,
                              CreatedBy = p.CreatedBy,
                              CreatedDate = p.CreatedDate,
@@ -67,12 +71,12 @@ namespace PinhuaMaster.Pages.StockManagement.StockOut
             settings.ContractResolver = new Newtonsoft.Json.Serialization.DefaultContractResolver();
 
             var details = from d in _pinhuaContext.StockOutDetails.AsNoTracking()
-                          where d.DeliveryId == Id
+                          where d.OrderId == Id
                           select new StockOutDetailsDTO
                           {
                               ExcelServerRcid = d.ExcelServerRcid,
                               ExcelServerRtid = d.ExcelServerRtid,
-                              DeliveryId = d.DeliveryId,
+                              OrderId = d.OrderId,
                               Id = d.Id,
                               Description = d.Description,
                               Specification = d.Specification,
@@ -101,13 +105,13 @@ namespace PinhuaMaster.Pages.StockManagement.StockOut
             var deliveryIds = (from x in (from p in _pinhuaContext.StockOutMain.AsNoTracking()
                                           join d in _pinhuaContext.StockOutDetails.AsNoTracking() on p.ExcelServerRcid equals d.ExcelServerRcid
                                           //join u in _pinhuaContext.往来单位.AsNoTracking() on p.CustomerId equals u.单位编号
-                                          join t in _pinhuaContext.业务类型.AsNoTracking() on p.DeliveryType equals t.业务类型1
-                                          where (string.IsNullOrEmpty(search.DeliveryId) ? true : EF.Functions.Like(p.DeliveryId, $"%{search.DeliveryId}%"))
+                                          join t in _pinhuaContext.业务类型.AsNoTracking() on p.MovementType equals t.业务类型1
+                                          where (string.IsNullOrEmpty(search.OrderId) ? true : EF.Functions.Like(p.OrderId, $"%{search.OrderId}%"))
                                           && (string.IsNullOrEmpty(search.CustomerName) ? true : EF.Functions.Like(p.CustomerName, $"%{search.CustomerName}%"))
-                                          && (string.IsNullOrEmpty(search.DeliveryTypeDescription) ? true : EF.Functions.Like(t.类型描述, $"%{search.DeliveryTypeDescription}%"))
+                                          && (string.IsNullOrEmpty(search.MovementTypeDescription) ? true : EF.Functions.Like(t.类型描述, $"%{search.MovementTypeDescription}%"))
                                           && (string.IsNullOrEmpty(search.Contact) ? true : EF.Functions.Like(p.Contact, $"%{search.Contact}%"))
                                           && (string.IsNullOrEmpty(search.ContactNumber) ? true : EF.Functions.Like(p.ContactNumber, $"%{search.ContactNumber}%"))
-                                          && (string.IsNullOrEmpty(search.DeliveryAddress) ? true : EF.Functions.Like(p.DeliveryAddress, $"%{search.DeliveryAddress}%"))
+                                          && (string.IsNullOrEmpty(search.CustomerAddress) ? true : EF.Functions.Like(p.CustomerAddress, $"%{search.CustomerAddress}%"))
                                           && (string.IsNullOrEmpty(search.Remarks) ? true : EF.Functions.Like(p.Remarks, $"%{search.Remarks}%"))
                                           && (string.IsNullOrEmpty(search.CreatedBy) ? true : EF.Functions.Like(p.CreatedBy, $"%{search.CreatedBy}%"))
 
@@ -119,26 +123,26 @@ namespace PinhuaMaster.Pages.StockManagement.StockOut
                                           && (!search.ItemUnitQty.HasValue ? true : d.UnitQty == search.ItemUnitQty)
                                           && (!search.ItemPrice.HasValue ? true : d.Price == search.ItemPrice)
                                           && (!search.ItemAmount.HasValue ? true : d.Amount == search.ItemAmount)
-                                          orderby p.DeliveryDate descending, p.CreatedDate descending
+                                          orderby p.OrderDate descending, p.CreatedDate descending
                                           select p).ToList()
-                               where ((search.DeliveryDate != null && x.DeliveryDate != null) ? search.DeliveryDate.Value.Date == x.DeliveryDate.Value.Date : true)
+                               where ((search.OrderDate != null && x.OrderDate != null) ? search.OrderDate.Value.Date == x.OrderDate.Value.Date : true)
                                 && ((search.CreatedDate != null && x.CreatedDate != null) ? search.CreatedDate.Value.Date == x.CreatedDate.Value.Date : true)
-                               select x.DeliveryId).Distinct();
+                               select x.OrderId).Distinct();
             var orders = from p in _pinhuaContext.StockOutMain
                          join d in _pinhuaContext.StockOutDetails on p.ExcelServerRcid equals d.ExcelServerRcid into details
                          join u in _pinhuaContext.往来单位 on p.CustomerId equals u.单位编号
-                         join t in _pinhuaContext.业务类型 on p.DeliveryType equals t.业务类型1
-                         where deliveryIds.Contains(p.DeliveryId)
-                         orderby p.DeliveryDate descending, p.CreatedDate descending
-                         select new StockOutDTO
+                         join t in _pinhuaContext.业务类型 on p.MovementType equals t.业务类型1
+                         where deliveryIds.Contains(p.OrderId)
+                         orderby p.OrderDate descending, p.CreatedDate descending
+                         select new StockOutMainDTO
                          {
-                             DeliveryType = p.DeliveryType,
-                             DeliveryTypeDescription = t.类型描述,
-                             DeliveryId = p.DeliveryId,
+                             MovementType = p.MovementType,
+                             MovementTypeDescription = t.类型描述,
+                             OrderId = p.OrderId,
                              CustomerId = p.CustomerId,
                              CustomerName = u.单位名称,
-                             DeliveryAddress = p.DeliveryAddress,
-                             DeliveryDate = p.DeliveryDate,
+                             CustomerAddress = p.CustomerAddress,
+                             OrderDate = p.OrderDate,
                              Remarks = p.Remarks,
                              CreatedBy = p.CreatedBy,
                              CreatedDate = p.CreatedDate,

@@ -1,7 +1,7 @@
 ﻿@page
 @model PinhuaMaster.Pages.StockManagement.StockOut.IndexModel
 @{
-    ViewData["Title"] = "简易送货单";
+    ViewData["Title"] = "出库单";
 }
 
 <div class="row">
@@ -26,20 +26,21 @@
                            data-pagination="true"
                            data-page-size="15"
                            data-page-list="[15, 20, 50, 100, 200]"
-                           data-url="@Url.Page("Index", "AjaxEasyDelivery")"
+                           data-url="@Url.Page("Index", "AjaxStockOutOrders")"
                            id="mainTable">
                         <thead>
                             <tr>
                                 <th data-width="20" data-formatter="browseRecord"></th>
+                                <th data-field="WarehouseFromName">出仓</th>
+                                <th data-visible="false" data-field="MovementType">移动类型</th>
+                                <th data-field="MovementTypeDescription" class="hidden-xs">移动类型描述</th>
+                                <th data-field="OrderId" class="hidden-xs">单号</th>
                                 <th data-field="CustomerId" data-visible="false">客户编号</th>
                                 <th data-field="CustomerName">客户名称</th>
-                                <th data-field="DeliveryDate">送货日期</th>
+                                <th data-field="OrderDate">出库日期</th>
                                 <th data-field="Amount">金额</th>
-                                <th data-field="DeliveryId" class="hidden-xs">单号</th>
-                                <th data-visible="false" data-field="DeliveryType">类型编号</th>
-                                <th data-field="DeliveryTypeDescription" class="hidden-xs">类型</th>
-                                <th data-field="DeliveryAddress" class="hidden-xs">送货地址</th>
-                                <th data-field="Remarks">备注</th>
+                                <th data-visible="false" data-field="CustomerAddress" class="hidden-xs">送货地址</th>
+                                <th data-visible="false" data-field="Remarks">备注</th>
                                 <th data-visible="false" data-field="Contact">联系人</th>
                                 <th data-visible="false" data-field="ContactNumber">联系电话</th>
                                 <th data-visible="false" data-field="CreatedBy">制单人</th>
@@ -98,7 +99,7 @@
         <div class="row">
             <div class="col-md-6">
                 <div class="form-group has-error">
-                    <label class="control-label" asp-for="AdvanceSearchViewModel.DeliveryId"><i class="fa fa-angle-double-right"></i> @Html.DisplayNameFor(m => m.AdvanceSearchViewModel.DeliveryId)</label>
+                    <label class="control-label" asp-for="AdvanceSearchViewModel.OrderId"><i class="fa fa-angle-double-right"></i> @Html.DisplayNameFor(m => m.AdvanceSearchViewModel.OrderId)</label>
                     <div class="input-group">
                         <input v-model="searchModel.DeliveryId" class="form-control" />
                         <span class="input-group-addon no-padding">
@@ -116,7 +117,7 @@
                     </div>
                 </div>
                 <div class="form-group has-error">
-                    <label class="control-label" asp-for="AdvanceSearchViewModel.DeliveryTypeDescription"><i class="fa fa-angle-double-right"></i> @Html.DisplayNameFor(m => m.AdvanceSearchViewModel.DeliveryTypeDescription)</label>
+                    <label class="control-label" asp-for="AdvanceSearchViewModel.MovementTypeDescription"><i class="fa fa-angle-double-right"></i> @Html.DisplayNameFor(m => m.AdvanceSearchViewModel.MovementTypeDescription)</label>
                     <div class="input-group">
                         <input v-model="searchModel.DeliveryTypeDescription" class="form-control" />
                         <span class="input-group-addon no-padding">
@@ -125,7 +126,7 @@
                     </div>
                 </div>
                 <div class="form-group has-error">
-                    <label class="control-label" asp-for="AdvanceSearchViewModel.DeliveryDate"><i class="fa fa-angle-double-right"></i> @Html.DisplayNameFor(m => m.AdvanceSearchViewModel.DeliveryDate)</label>
+                    <label class="control-label" asp-for="AdvanceSearchViewModel.OrderDate"><i class="fa fa-angle-double-right"></i> @Html.DisplayNameFor(m => m.AdvanceSearchViewModel.OrderDate)</label>
                     <div class="input-group">
                         <input type="text" class="form-control" data-provide="datepicker" data-date-format="yyyy-mm-dd" id="DeliveryDate" />
                         <span class="input-group-addon no-padding">
@@ -154,7 +155,7 @@
                         </div>
                     </div>*@
                 <div class="form-group has-warning">
-                    <label class="control-label" asp-for="AdvanceSearchViewModel.DeliveryAddress"><i class="fa fa-angle-double-right"></i> @Html.DisplayNameFor(m => m.AdvanceSearchViewModel.DeliveryAddress)</label>
+                    <label class="control-label" asp-for="AdvanceSearchViewModel.CustomerAddress"><i class="fa fa-angle-double-right"></i> @Html.DisplayNameFor(m => m.AdvanceSearchViewModel.CustomerAddress)</label>
                     <div class="input-group">
                         <input v-model="searchModel.DeliveryAddress" class="form-control" />
                         <span class="input-group-addon no-padding">
@@ -278,23 +279,23 @@
 @section Scripts{
     <script>
         function browseRecord (value, row) {
-            return '<a href="@(Url.Page("Print2"))/' + row.DeliveryId + '">打印</a> <a href="@(Url.Page("Edit"))/' + row.DeliveryId + '">修改</a>'
+            return '<a href="@(Url.Page("Print2"))/' + row.OrderId + '">打印</a> <a href="@(Url.Page("Edit"))/' + row.OrderId + '">修改</a>'
             //return '<a href="@(Url.Page("Details"))/' + row.DeliveryId + '"><i class="fa fa-search"></i> </a>'
         }
         function deleteRecord (value, row) {
-            return '<a href="@(Url.Page("Delete"))/' + row.DeliveryId + '"><i class="fa fa-minus"></i></a>'
+            return '<a href="@(Url.Page("Delete"))/' + row.OrderId + '"><i class="fa fa-minus"></i></a>'
         }
         function formatterDeliveryId(value, row) {
-            return '<a href="@(Url.Page("Details"))/' + row.DeliveryId + '">' + value + '</a>'
+            return '<a href="@(Url.Page("Details"))/' + row.OrderId + '">' + value + '</a>'
         }
 
         var mainTable = $('#mainTable')
         var detailsTable = $('#detailsTable')
         var detailsTitle = $('#detailsTitle')
         mainTable.on('click-cell.bs.table', function (event, field, value, row, $element) {
-            var url = '@Url.Page("Index", "AjaxStockOutDetails")&id=' + row.DeliveryId
+            var url = '@Url.Page("Index", "AjaxStockOutDetails")&id=' + row.OrderId
             detailsTable.bootstrapTable('refresh', { url: url });
-            detailsTitle.html(row.CustomerName + ' <small>单号：'+row.DeliveryId+'</small> <small>金额：' + row.Amount + '</small>')
+            detailsTitle.html(row.CustomerName + ' <small>单号：'+row.OrderId+'</small> <small>金额：' + row.Amount + '</small>')
             console.log(field)
             if (field != 0 && field != 14) {
                 $('#detailsModal').modal()
