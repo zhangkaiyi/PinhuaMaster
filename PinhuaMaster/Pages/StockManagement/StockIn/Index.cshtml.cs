@@ -6,9 +6,9 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using PinhuaMaster.Data.Entities.Pinhua;
-using PinhuaMaster.Pages.StockManagement.StockOut.ViewModel;
+using PinhuaMaster.Pages.StockManagement.StockIn.ViewModel;
 
-namespace PinhuaMaster.Pages.StockManagement.StockOut
+namespace PinhuaMaster.Pages.StockManagement.StockIn
 {
     public class IndexModel : PageModel
     {
@@ -18,15 +18,15 @@ namespace PinhuaMaster.Pages.StockManagement.StockOut
             _pinhuaContext = pinhuaContext;
         }
 
-        public List<StockOutMain> StockOutOrders { get; set; }
-        public StockOutSearch AdvanceSearchViewModel { get; set; }
+        public List<StockInMain> StockInOrders { get; set; }
+        public StockInSearch AdvanceSearchViewModel { get; set; }
 
         public void OnGet()
         {
-            StockOutOrders = _pinhuaContext.StockOutMain.ToList();
+            StockInOrders = _pinhuaContext.StockInMain.ToList();
         }
 
-        public IActionResult OnGetAjaxStockOutOrders()
+        public IActionResult OnGetAjaxStockInOrders()
         {
             var settings = new Newtonsoft.Json.JsonSerializerSettings();
             //EF Core中默认为驼峰样式序列化处理key
@@ -34,17 +34,16 @@ namespace PinhuaMaster.Pages.StockManagement.StockOut
             //使用默认方式，不更改元数据的key的大小写
             settings.ContractResolver = new Newtonsoft.Json.Serialization.DefaultContractResolver();
 
-            var orders = from p in _pinhuaContext.StockOutMain
-                         join d in _pinhuaContext.StockOutDetails on p.ExcelServerRcid equals d.ExcelServerRcid into details
+            var orders = from p in _pinhuaContext.StockInMain
+                         join d in _pinhuaContext.StockInDetails on p.ExcelServerRcid equals d.ExcelServerRcid into details
                          join u in _pinhuaContext.往来单位 on p.CustomerId equals u.单位编号
                          join t in _pinhuaContext.业务类型 on p.MovementType equals t.业务类型1
-                         join w in _pinhuaContext.Warehouse on p.WarehouseFrom equals w.Id
+                         join w in _pinhuaContext.Warehouse on p.WarehouseTo equals w.Id
                          orderby p.OrderDate descending, p.CreatedDate descending
-                         select new StockOutMainDTO
+                         select new StockInMainDTO
                          {
-                             WarehouseFrom = p.WarehouseFrom,
-                             WarehouseFromName = w.Name,
                              WarehouseTo = p.WarehouseTo,
+                             WarehouseToName = w.Name,
                              MovementType = p.MovementType,
                              MovementTypeDescription = t.类型描述,
                              OrderId = p.OrderId,
@@ -62,7 +61,7 @@ namespace PinhuaMaster.Pages.StockManagement.StockOut
             return new JsonResult(orders, settings);
         }
 
-        public IActionResult OnGetAjaxStockOutDetails(string Id)
+        public IActionResult OnGetAjaxStockInDetails(string Id)
         {
             var settings = new Newtonsoft.Json.JsonSerializerSettings();
             //EF Core中默认为驼峰样式序列化处理key
@@ -70,9 +69,9 @@ namespace PinhuaMaster.Pages.StockManagement.StockOut
             //使用默认方式，不更改元数据的key的大小写
             settings.ContractResolver = new Newtonsoft.Json.Serialization.DefaultContractResolver();
 
-            var details = from d in _pinhuaContext.StockOutDetails.AsNoTracking()
+            var details = from d in _pinhuaContext.StockInDetails.AsNoTracking()
                           where d.OrderId == Id
-                          select new StockOutDetailsDTO
+                          select new StockInDetailsDTO
                           {
                               ExcelServerRcid = d.ExcelServerRcid,
                               ExcelServerRtid = d.ExcelServerRtid,
@@ -103,9 +102,9 @@ namespace PinhuaMaster.Pages.StockManagement.StockOut
             //settings.ContractResolver = new CamelCasePropertyNamesContractResolver();
             //使用默认方式，不更改元数据的key的大小写
             settings.ContractResolver = new Newtonsoft.Json.Serialization.DefaultContractResolver();
-            var search = Newtonsoft.Json.JsonConvert.DeserializeObject<StockOutSearch>(json);
-            var deliveryIds = (from x in (from p in _pinhuaContext.StockOutMain.AsNoTracking()
-                                          join d in _pinhuaContext.StockOutDetails.AsNoTracking() on p.ExcelServerRcid equals d.ExcelServerRcid
+            var search = Newtonsoft.Json.JsonConvert.DeserializeObject<StockInSearch>(json);
+            var deliveryIds = (from x in (from p in _pinhuaContext.StockInMain.AsNoTracking()
+                                          join d in _pinhuaContext.StockInDetails.AsNoTracking() on p.ExcelServerRcid equals d.ExcelServerRcid
                                           //join u in _pinhuaContext.往来单位.AsNoTracking() on p.CustomerId equals u.单位编号
                                           join t in _pinhuaContext.业务类型.AsNoTracking() on p.MovementType equals t.业务类型1
                                           where (string.IsNullOrEmpty(search.OrderId) ? true : EF.Functions.Like(p.OrderId, $"%{search.OrderId}%"))
@@ -130,13 +129,13 @@ namespace PinhuaMaster.Pages.StockManagement.StockOut
                                where ((search.OrderDate != null && x.OrderDate != null) ? search.OrderDate.Value.Date == x.OrderDate.Value.Date : true)
                                 && ((search.CreatedDate != null && x.CreatedDate != null) ? search.CreatedDate.Value.Date == x.CreatedDate.Value.Date : true)
                                select x.OrderId).Distinct();
-            var orders = from p in _pinhuaContext.StockOutMain
-                         join d in _pinhuaContext.StockOutDetails on p.ExcelServerRcid equals d.ExcelServerRcid into details
+            var orders = from p in _pinhuaContext.StockInMain
+                         join d in _pinhuaContext.StockInDetails on p.ExcelServerRcid equals d.ExcelServerRcid into details
                          join u in _pinhuaContext.往来单位 on p.CustomerId equals u.单位编号
                          join t in _pinhuaContext.业务类型 on p.MovementType equals t.业务类型1
                          where deliveryIds.Contains(p.OrderId)
                          orderby p.OrderDate descending, p.CreatedDate descending
-                         select new StockOutMainDTO
+                         select new StockInMainDTO
                          {
                              MovementType = p.MovementType,
                              MovementTypeDescription = t.类型描述,

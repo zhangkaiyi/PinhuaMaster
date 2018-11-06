@@ -1,23 +1,32 @@
-﻿@page "{Id?}"
+﻿@using PinhuaMaster.Data.Entities.Pinhua
 @using PinhuaMaster.Pages.StockManagement.StockOut.ViewModel
-@model PinhuaMaster.Pages.StockManagement.StockOut.EditModel
+@model PinhuaMaster.Pages.StockManagement.StockOut.ViewModel.StockOutViewModel
 @{
-    ViewData["Title"] = "编辑";
-
+    ViewData["Title"] = "录入";
     var emptyRecord = Newtonsoft.Json.JsonConvert.SerializeObject(new StockOutDetailsDTO
     {
         Unit = "平方米",
     });
-    var emptyRecordList = Newtonsoft.Json.JsonConvert.SerializeObject(Model?.Order?.Details ?? new List<StockOutDetailsDTO>());
-}
+    var emptyRecordList = Newtonsoft.Json.JsonConvert.SerializeObject(Model?.Details ?? new List<StockOutDetailsDTO>());
 
-@if (ModelState.Count > 1)
-{
-    <div class="alert alert-danger">
-        <h4><i class="icon fa fa-warning"></i> 提示</h4>
-        <div asp-validation-summary="All"></div>
-    </div>
+    pinhuaContext.Database.OpenConnection();
+    var cmd = pinhuaContext.Database.GetDbConnection().CreateCommand();
+    cmd.CommandText = "SELECT dbo.GetQuoID('SH',GETDATE())";
+    var result = cmd.ExecuteReader();
+    var deliveryId = string.Empty;
+    while (result.Read())
+    {
+        deliveryId = result[0].ToString();
+    }
+    pinhuaContext.Database.CloseConnection();
 }
+@*@if (ModelState.Count > 0)
+{
+<div class="alert alert-danger">
+    <h4><i class="icon fa fa-warning"></i> 提示</h4>
+    <div asp-validation-summary="All"></div>
+</div>
+}*@
 <div id="vueScope" v-cloak>
     <form method="post" id="myForm">
         <section class="box box-solid" id="invoice" style="margin:0px;margin-bottom:20px;">
@@ -60,7 +69,7 @@
                         <div class="form-group has-error">
                             <label class="control-label" asp-for="Order.Main.OrderDate"><i class="fa fa-angle-double-right"></i> @Html.DisplayNameFor(x => x.Order.Main.OrderDate)</label>
                             <div class="input-group">
-                                <input type="text" asp-for="Order.Main.OrderDate" data-provide="datepicker" data-date-format="yyyy-mm-dd" value="@Model?.Order?.Main?.OrderDate?.ToString("yyyy-MM-dd")" readonly class="form-control" />
+                                <input type="text" asp-for="Order.Main.OrderDate" data-provide="datepicker" data-date-format="yyyy-mm-dd" readonly class="form-control" />
                                 <span class="input-group-addon no-padding">
                                     <i class="fa fa-calendar-o" style="width:38px;"></i>
                                 </span>
@@ -114,7 +123,7 @@
                         <div class="form-group">
                             <label class="control-label" asp-for="Order.Main.OrderId"><i class="fa fa-angle-double-right"></i> @Html.DisplayNameFor(x => x.Order.Main.OrderId)</label>
                             <div class="input-group">
-                                <input type="text" asp-for="Order.Main.OrderId" class="form-control" readonly />
+                                <input type="text" asp-for="Order.Main.OrderId" class="form-control" value="@deliveryId" readonly />
                                 <span class="input-group-addon no-padding">
                                     <i class="fa fa-sticky-note-o" style="width:38px;"></i>
                                 </span>
@@ -123,7 +132,7 @@
                         <div class="form-group">
                             <label class="control-label" asp-for="Order.Main.CreatedBy"><i class="fa fa-angle-double-right"></i> @Html.DisplayNameFor(x => x.Order.Main.CreatedBy)</label>
                             <div class="input-group">
-                                <input type="text" asp-for="Order.Main.CreatedBy" class="form-control" readonly />
+                                <input type="text" asp-for="Order.Main.CreatedBy" class="form-control" value="@User.Identity.Name" readonly />
                                 <span class="input-group-addon no-padding">
                                     <i class="fa fa-user-o" style="width:38px;"></i>
                                 </span>
@@ -132,7 +141,7 @@
                         <div class="form-group">
                             <label class="control-label" asp-for="Order.Main.CreatedDate"><i class="fa fa-angle-double-right"></i> @Html.DisplayNameFor(x => x.Order.Main.CreatedDate)</label>
                             <div class="input-group">
-                                <input type="text" asp-for="Order.Main.CreatedDate" class="form-control" readonly />
+                                <input type="text" asp-for="Order.Main.CreatedDate" class="form-control" value="@DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss")" readonly />
                                 <span class="input-group-addon no-padding">
                                     <i class="fa fa-calendar-o" style="width:38px;"></i>
                                 </span>
@@ -242,14 +251,14 @@
                     <label class="control-label col-xs-4 col-md-3"><i class="fa fa-angle-double-right"></i> 描述</label>
                     <div class="col-xs-8 col-md-9">
                         <div class="input-group">
-                            <input class="form-control" v-model="itemCurrent.Description" readonly />
+                            <input class="form-control" v-model="itemCurrent.Description" />
                             <div class="input-group-addon no-padding">
                                 <i class="fa fa-info" style="width:38px;"></i>
                             </div>
                         </div>
                     </div>
                 </div>
-                @*<div class="form-group has-error">
+                <div class="form-group has-error">
                     <label class="control-label col-xs-4 col-md-3"><i class="fa fa-angle-double-right"></i> 规格</label>
                     <div class="col-xs-8 col-md-9">
                         <div class="input-group">
@@ -259,12 +268,12 @@
                             </span>
                         </div>
                     </div>
-                </div>*@
+                </div>
                 <div class="form-group has-error">
                     <label class="control-label col-xs-4 col-md-3"><i class="fa fa-angle-double-right"></i> 长</label>
                     <div class="col-xs-8 col-md-9">
                         <div class="input-group">
-                            <input type="number" class="form-control" v-model="itemCurrent.Length" readonly />
+                            <input type="number" class="form-control" v-model="itemCurrent.Length" />
                             <div class="input-group-btn">
                                 <button type="button" class="btn btn-danger btn-flat dropdown-toggle" style="width:40px" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="caret"></span></button>
                                 <ul class="dropdown-menu dropdown-menu-right">
@@ -282,7 +291,7 @@
                     <label class="control-label col-xs-4 col-md-3"><i class="fa fa-angle-double-right"></i> 宽</label>
                     <div class="col-xs-8 col-md-9">
                         <div class="input-group">
-                            <input type="number" class="form-control" v-model="itemCurrent.Width" readonly />
+                            <input type="number" class="form-control" v-model="itemCurrent.Width" />
                             <div class="input-group-btn">
                                 <button type="button" class="btn btn-danger btn-flat dropdown-toggle" style="width:40px" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="caret"></span></button>
                                 <ul class="dropdown-menu dropdown-menu-right">
@@ -299,7 +308,7 @@
                     <label class="control-label col-xs-4 col-md-3"><i class="fa fa-angle-double-right"></i> 高</label>
                     <div class="col-xs-8 col-md-9">
                         <div class="input-group">
-                            <input type="number" class="form-control" v-model="itemCurrent.Height" readonly />
+                            <input type="number" class="form-control" v-model="itemCurrent.Height" />
                             <div class="input-group-btn">
                                 <button type="button" class="btn btn-danger btn-flat dropdown-toggle" style="width:40px" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="caret"></span></button>
                                 <ul class="dropdown-menu dropdown-menu-right">

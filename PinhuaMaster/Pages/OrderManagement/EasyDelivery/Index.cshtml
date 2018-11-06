@@ -68,6 +68,7 @@
                 <table data-classes="table table-hover text-nowrap"
                        data-toggle="table"
                        data-striped="true"
+                       data-show-footer="true"
                        id="detailsTable">
                     <thead>
                         <tr>
@@ -78,7 +79,7 @@
                             <th data-field="UnitQty">单位数量</th>
                             <th data-field="Unit">单位</th>
                             <th data-field="Price">单价</th>
-                            <th data-field="Amount">金额</th>
+                            <th data-field="Amount" data-footer-formatter="footerFormatter">金额</th>
                         </tr>
                     </thead>
 
@@ -86,7 +87,7 @@
 
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
             </div>
 
         </div>
@@ -294,12 +295,20 @@
         mainTable.on('click-cell.bs.table', function (event, field, value, row, $element) {
             var url = '@Url.Page("Index", "AjaxEasyDeliveryDetails")&id=' + row.DeliveryId
             detailsTable.bootstrapTable('refresh', { url: url });
-            detailsTitle.html(row.CustomerName + ' <small>单号：'+row.DeliveryId+'</small> <small>金额：' + row.Amount + '</small>')
+            detailsTitle.html(row.CustomerName + ' <small>类型：' + row.MovementTypeDescription + '</small> <small>单号：' + row.OrderId + '</small>')
             console.log(field)
             if (field != 0 && field != 14) {
                 $('#detailsModal').modal()
             }
         })
+
+        footerFormatter = function (value) { //底部合计
+            var total = 0;
+            for (var i in value) {
+                total += isNaN(parseFloat(value[i].Amount)) ? 0 : parseFloat(value[i].Amount)
+            }
+            return total.toFixed(2);
+        }
     </script>
 
     <script>

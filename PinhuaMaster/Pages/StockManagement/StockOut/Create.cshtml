@@ -13,7 +13,7 @@
 
     pinhuaContext.Database.OpenConnection();
     var cmd = pinhuaContext.Database.GetDbConnection().CreateCommand();
-    cmd.CommandText = "SELECT dbo.GetQuoID('SH',GETDATE())";
+    cmd.CommandText = "SELECT dbo.GetStockOutID('CK',GETDATE())";
     var result = cmd.ExecuteReader();
     var deliveryId = string.Empty;
     while (result.Read())
@@ -253,7 +253,7 @@
                     <label class="control-label col-xs-4 col-md-3"><i class="fa fa-angle-double-right"></i> 描述</label>
                     <div class="col-xs-8 col-md-9">
                         <div class="input-group">
-                            <input class="form-control" v-model="itemCurrent.Description" />
+                            <input class="form-control" v-model="itemCurrent.Description" readonly />
                             <div class="input-group-addon no-padding">
                                 <i class="fa fa-info" style="width:38px;"></i>
                             </div>
@@ -261,21 +261,10 @@
                     </div>
                 </div>
                 <div class="form-group has-error">
-                        <label class="control-label col-xs-4 col-md-3"><i class="fa fa-angle-double-right"></i> 规格</label>
-                        <div class="col-xs-8 col-md-9">
-                            <div class="input-group">
-                                <input class="form-control" v-model="itemCurrent.Specification" />
-                                <span class="input-group-btn">
-                                    <button type="button" class="btn btn-danger btn-flat" style="width:40px"><i class="fa fa-info"></i></button>
-                                </span>
-                            </div>
-                        </div>
-                    </div>
-                <div class="form-group has-error">
                     <label class="control-label col-xs-4 col-md-3"><i class="fa fa-angle-double-right"></i> 长</label>
                     <div class="col-xs-8 col-md-9">
                         <div class="input-group">
-                            <input type="number" class="form-control" v-model="itemCurrent.Length" />
+                            <input type="number" class="form-control" v-model="itemCurrent.Length" readonly />
                             <div class="input-group-btn">
                                 <button type="button" class="btn btn-danger btn-flat dropdown-toggle" style="width:40px" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="caret"></span></button>
                                 <ul class="dropdown-menu dropdown-menu-right">
@@ -293,7 +282,7 @@
                     <label class="control-label col-xs-4 col-md-3"><i class="fa fa-angle-double-right"></i> 宽</label>
                     <div class="col-xs-8 col-md-9">
                         <div class="input-group">
-                            <input type="number" class="form-control" v-model="itemCurrent.Width" />
+                            <input type="number" class="form-control" v-model="itemCurrent.Width" readonly />
                             <div class="input-group-btn">
                                 <button type="button" class="btn btn-danger btn-flat dropdown-toggle" style="width:40px" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="caret"></span></button>
                                 <ul class="dropdown-menu dropdown-menu-right">
@@ -310,7 +299,7 @@
                     <label class="control-label col-xs-4 col-md-3"><i class="fa fa-angle-double-right"></i> 高</label>
                     <div class="col-xs-8 col-md-9">
                         <div class="input-group">
-                            <input type="number" class="form-control" v-model="itemCurrent.Height" />
+                            <input type="number" class="form-control" v-model="itemCurrent.Height" readonly />
                             <div class="input-group-btn">
                                 <button type="button" class="btn btn-danger btn-flat dropdown-toggle" style="width:40px" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="caret"></span></button>
                                 <ul class="dropdown-menu dropdown-menu-right">

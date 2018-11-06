@@ -5,12 +5,12 @@ namespace PinhuaMaster.Data.Entities.Pinhua
 {
     public partial class StockSubconctractingMain
     {
-        public string DeliveryId { get; set; }
-        public string DeliveryType { get; set; }
+        public string OrderId { get; set; }
+        public string MovementType { get; set; }
         public string CustomerId { get; set; }
         public string CustomerName { get; set; }
-        public string DeliveryAddress { get; set; }
-        public DateTime? DeliveryDate { get; set; }
+        public string CustomerAddress { get; set; }
+        public DateTime? OrderDate { get; set; }
         public string Remarks { get; set; }
         public string Contact { get; set; }
         public string ContactNumber { get; set; }

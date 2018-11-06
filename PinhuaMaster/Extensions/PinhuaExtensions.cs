@@ -159,6 +159,12 @@ namespace PinhuaMaster.Extensions
             return groupingCustomers;
         }
 
+        static public IEnumerable<产品型号> GetModelNames(this PinhuaContext _pinhuaContext)
+        {
+            var list = _pinhuaContext.产品型号.AsNoTracking().OrderBy(p => p.排序等级).ThenBy(p => p.编号).ToList();
+            return list;
+        }
+
         static public IEnumerable<InventoryDto> GetInventory(this PinhuaContext _pinhuaContext)
         {
             // 库存盘点日期
@@ -216,7 +222,7 @@ namespace PinhuaMaster.Extensions
             var stockin = from m in _pinhuaContext.StockInMain
                           join md in _pinhuaContext.StockInDetails on m.ExcelServerRcid equals md.ExcelServerRcid
                           join c in latestDate on m.WarehouseTo equals c.仓库编号
-                          where m.DeliveryDate > c.盘点日期
+                          where m.OrderDate > c.盘点日期
                           select new
                           {
                               Warehouse = m.WarehouseTo,
@@ -233,7 +239,7 @@ namespace PinhuaMaster.Extensions
             var stocktransfer_out = from m in _pinhuaContext.StockTransferMain
                                     join md in _pinhuaContext.StockTransferDetails on m.ExcelServerRcid equals md.ExcelServerRcid
                                     join c in latestDate on m.WarehouseTo equals c.仓库编号
-                                    where m.DeliveryDate > c.盘点日期
+                                    where m.OrderDate > c.盘点日期
                                     select new
                                     {
                                         Warehouse = m.WarehouseFrom,
@@ -250,7 +256,7 @@ namespace PinhuaMaster.Extensions
             var stocktransfer_in = from m in _pinhuaContext.StockTransferMain
                                    join md in _pinhuaContext.StockTransferDetails on m.ExcelServerRcid equals md.ExcelServerRcid
                                    join c in latestDate on m.WarehouseTo equals c.仓库编号
-                                   where m.DeliveryDate > c.盘点日期
+                                   where m.OrderDate > c.盘点日期
                                    select new
                                    {
                                        Warehouse = m.WarehouseTo,
@@ -268,7 +274,7 @@ namespace PinhuaMaster.Extensions
             var stocksubconctracting_in = from m in _pinhuaContext.StockSubconctractingMain
                                           join md in _pinhuaContext.StockSubconctractingDetails on m.ExcelServerRcid equals md.ExcelServerRcid
                                           join c in latestDate on m.WarehouseTo equals c.仓库编号
-                                          where m.DeliveryDate > c.盘点日期
+                                          where m.OrderDate > c.盘点日期
                                           select new
                                           {
                                               Warehouse = m.WarehouseFrom,
@@ -285,7 +291,7 @@ namespace PinhuaMaster.Extensions
             var stocksubconctracting_out = from m in _pinhuaContext.StockSubconctractingMain
                                            join md in _pinhuaContext.StockSubconctractingDetails on m.ExcelServerRcid equals md.ExcelServerRcid
                                            join c in latestDate on m.WarehouseTo equals c.仓库编号
-                                           where m.DeliveryDate > c.盘点日期
+                                           where m.OrderDate > c.盘点日期
                                            select new
                                            {
                                                Warehouse = m.WarehouseTo,

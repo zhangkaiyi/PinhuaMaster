@@ -6,7 +6,7 @@ namespace PinhuaMaster.Data.Entities.Pinhua
     public partial class StockSubconctractingDetails
     {
         public int Id { get; set; }
-        public string DeliveryId { get; set; }
+        public string OrderId { get; set; }
         public string ModelNumber { get; set; }
         public string ModelName { get; set; }
         public string Description { get; set; }

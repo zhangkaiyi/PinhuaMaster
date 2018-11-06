@@ -5362,14 +5362,14 @@ namespace PinhuaMaster.Data.Entities.Pinhua
 
             modelBuilder.Entity<StockInDetails>(entity =>
             {
-                entity.HasKey(e => new { e.Id, e.DeliveryId });
+                entity.HasKey(e => new { e.Id, e.OrderId });
 
                 entity.ToTable("StockIn_Details");
 
                 entity.HasIndex(e => new { e.ExcelServerRcid, e.ExcelServerWiid })
                     .HasName("idx1");
 
-                entity.Property(e => e.DeliveryId).HasMaxLength(20);
+                entity.Property(e => e.OrderId).HasMaxLength(20);
 
                 entity.Property(e => e.Amount).HasColumnType("decimal(20, 3)");
 
@@ -5422,14 +5422,14 @@ namespace PinhuaMaster.Data.Entities.Pinhua
 
             modelBuilder.Entity<StockInMain>(entity =>
             {
-                entity.HasKey(e => e.DeliveryId);
+                entity.HasKey(e => e.OrderId);
 
                 entity.ToTable("StockIn_Main");
 
                 entity.HasIndex(e => new { e.ExcelServerRcid, e.ExcelServerWiid })
                     .HasName("idx1");
 
-                entity.Property(e => e.DeliveryId)
+                entity.Property(e => e.OrderId)
                     .HasMaxLength(20)
                     .ValueGeneratedNever();
 
@@ -5441,15 +5441,11 @@ namespace PinhuaMaster.Data.Entities.Pinhua
 
                 entity.Property(e => e.CreatedDate).HasColumnType("datetime");
 
+                entity.Property(e => e.CustomerAddress).HasMaxLength(100);
+
                 entity.Property(e => e.CustomerId).HasMaxLength(20);
 
                 entity.Property(e => e.CustomerName).HasMaxLength(100);
-
-                entity.Property(e => e.DeliveryAddress).HasMaxLength(100);
-
-                entity.Property(e => e.DeliveryDate).HasColumnType("datetime");
-
-                entity.Property(e => e.DeliveryType).HasMaxLength(20);
 
                 entity.Property(e => e.ExcelServerChg).HasColumnName("ExcelServerCHG");
 
@@ -5472,6 +5468,10 @@ namespace PinhuaMaster.Data.Entities.Pinhua
                 entity.Property(e => e.ExcelServerWiid)
                     .HasColumnName("ExcelServerWIID")
                     .HasMaxLength(20);
+
+                entity.Property(e => e.MovementType).HasMaxLength(20);
+
+                entity.Property(e => e.OrderDate).HasColumnType("datetime");
 
                 entity.Property(e => e.Remarks).HasMaxLength(100);
 
@@ -5602,14 +5602,14 @@ namespace PinhuaMaster.Data.Entities.Pinhua
 
             modelBuilder.Entity<StockSubconctractingDetails>(entity =>
             {
-                entity.HasKey(e => new { e.Id, e.DeliveryId });
+                entity.HasKey(e => new { e.Id, e.OrderId });
 
                 entity.ToTable("StockSubconctracting_Details");
 
                 entity.HasIndex(e => new { e.ExcelServerRcid, e.ExcelServerWiid })
                     .HasName("idx1");
 
-                entity.Property(e => e.DeliveryId).HasMaxLength(20);
+                entity.Property(e => e.OrderId).HasMaxLength(20);
 
                 entity.Property(e => e.Amount).HasColumnType("decimal(20, 3)");
 
@@ -5662,14 +5662,14 @@ namespace PinhuaMaster.Data.Entities.Pinhua
 
             modelBuilder.Entity<StockSubconctractingMain>(entity =>
             {
-                entity.HasKey(e => e.DeliveryId);
+                entity.HasKey(e => e.OrderId);
 
                 entity.ToTable("StockSubconctracting_Main");
 
                 entity.HasIndex(e => new { e.ExcelServerRcid, e.ExcelServerWiid })
                     .HasName("idx1");
 
-                entity.Property(e => e.DeliveryId)
+                entity.Property(e => e.OrderId)
                     .HasMaxLength(20)
                     .ValueGeneratedNever();
 
@@ -5681,15 +5681,11 @@ namespace PinhuaMaster.Data.Entities.Pinhua
 
                 entity.Property(e => e.CreatedDate).HasColumnType("datetime");
 
+                entity.Property(e => e.CustomerAddress).HasMaxLength(100);
+
                 entity.Property(e => e.CustomerId).HasMaxLength(20);
 
                 entity.Property(e => e.CustomerName).HasMaxLength(100);
-
-                entity.Property(e => e.DeliveryAddress).HasMaxLength(100);
-
-                entity.Property(e => e.DeliveryDate).HasColumnType("datetime");
-
-                entity.Property(e => e.DeliveryType).HasMaxLength(20);
 
                 entity.Property(e => e.ExcelServerChg).HasColumnName("ExcelServerCHG");
 
@@ -5713,6 +5709,10 @@ namespace PinhuaMaster.Data.Entities.Pinhua
                     .HasColumnName("ExcelServerWIID")
                     .HasMaxLength(20);
 
+                entity.Property(e => e.MovementType).HasMaxLength(20);
+
+                entity.Property(e => e.OrderDate).HasColumnType("datetime");
+
                 entity.Property(e => e.Remarks).HasMaxLength(100);
 
                 entity.Property(e => e.WarehouseFrom).HasMaxLength(20);
@@ -5722,14 +5722,14 @@ namespace PinhuaMaster.Data.Entities.Pinhua
 
             modelBuilder.Entity<StockTransferDetails>(entity =>
             {
-                entity.HasKey(e => new { e.Id, e.DeliveryId });
+                entity.HasKey(e => new { e.Id, e.OrderId });
 
                 entity.ToTable("StockTransfer_Details");
 
                 entity.HasIndex(e => new { e.ExcelServerRcid, e.ExcelServerWiid })
                     .HasName("idx1");
 
-                entity.Property(e => e.DeliveryId).HasMaxLength(20);
+                entity.Property(e => e.OrderId).HasMaxLength(20);
 
                 entity.Property(e => e.Amount).HasColumnType("decimal(20, 3)");
 
@@ -5782,14 +5782,14 @@ namespace PinhuaMaster.Data.Entities.Pinhua
 
             modelBuilder.Entity<StockTransferMain>(entity =>
             {
-                entity.HasKey(e => e.DeliveryId);
+                entity.HasKey(e => e.OrderId);
 
                 entity.ToTable("StockTransfer_Main");
 
                 entity.HasIndex(e => new { e.ExcelServerRcid, e.ExcelServerWiid })
                     .HasName("idx1");
 
-                entity.Property(e => e.DeliveryId)
+                entity.Property(e => e.OrderId)
                     .HasMaxLength(20)
                     .ValueGeneratedNever();
 
@@ -5801,15 +5801,11 @@ namespace PinhuaMaster.Data.Entities.Pinhua
 
                 entity.Property(e => e.CreatedDate).HasColumnType("datetime");
 
+                entity.Property(e => e.CustomerAddress).HasMaxLength(100);
+
                 entity.Property(e => e.CustomerId).HasMaxLength(20);
 
                 entity.Property(e => e.CustomerName).HasMaxLength(100);
-
-                entity.Property(e => e.DeliveryAddress).HasMaxLength(100);
-
-                entity.Property(e => e.DeliveryDate).HasColumnType("datetime");
-
-                entity.Property(e => e.DeliveryType).HasMaxLength(20);
 
                 entity.Property(e => e.ExcelServerChg).HasColumnName("ExcelServerCHG");
 
@@ -5832,6 +5828,10 @@ namespace PinhuaMaster.Data.Entities.Pinhua
                 entity.Property(e => e.ExcelServerWiid)
                     .HasColumnName("ExcelServerWIID")
                     .HasMaxLength(20);
+
+                entity.Property(e => e.MovementType).HasMaxLength(20);
+
+                entity.Property(e => e.OrderDate).HasColumnType("datetime");
 
                 entity.Property(e => e.Remarks).HasMaxLength(100);
 

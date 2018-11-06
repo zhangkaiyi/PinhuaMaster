@@ -9,9 +9,9 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using PinhuaMaster.Data.Entities.Pinhua;
 using PinhuaMaster.Extensions;
-using PinhuaMaster.Pages.StockManagement.StockOut.ViewModel;
+using PinhuaMaster.Pages.StockManagement.StockIn.ViewModel;
 
-namespace PinhuaMaster.Pages.StockManagement.StockOut
+namespace PinhuaMaster.Pages.StockManagement.StockIn
 {
     public class EditModel : PageModel
     {
@@ -29,7 +29,7 @@ namespace PinhuaMaster.Pages.StockManagement.StockOut
         public List<SelectListItem> WarehouseList { get; set; } = new List<SelectListItem>();
 
         [BindProperty]
-        public StockOutViewModel Order { get; set; } = new StockOutViewModel();
+        public StockInViewModel Order { get; set; } = new StockInViewModel();
 
         public void OnGet(string Id)
         {
@@ -37,8 +37,8 @@ namespace PinhuaMaster.Pages.StockManagement.StockOut
             CustomerList = _pinhuaContext.GetCustomerSelectList();
             WarehouseList = _pinhuaContext.GetWarehouseSelectList();
 
-            Order.Main = _mapper.Map<StockOutMain, StockOutMainDTO>(_pinhuaContext.StockOutMain.AsNoTracking().Where(p => p.OrderId == Id).FirstOrDefault());
-            Order.Details = _mapper.Map<List<StockOutDetails>, List<StockOutDetailsDTO>>(_pinhuaContext.StockOutDetails.AsNoTracking().Where(p => p.OrderId == Id).ToList());
+            Order.Main = _mapper.Map<StockInMain, StockInMainDTO>(_pinhuaContext.StockInMain.AsNoTracking().Where(p => p.OrderId == Id).FirstOrDefault());
+            Order.Details = _mapper.Map<List<StockInDetails>, List<StockInDetailsDTO>>(_pinhuaContext.StockInDetails.AsNoTracking().Where(p => p.OrderId == Id).ToList());
 
         }
 
@@ -46,7 +46,7 @@ namespace PinhuaMaster.Pages.StockManagement.StockOut
         {
             if (ModelState.IsValid)
             {
-                var remoteOrder = _pinhuaContext.StockOutMain.FirstOrDefault(p => p.OrderId == Order.Main.OrderId);
+                var remoteOrder = _pinhuaContext.StockInMain.FirstOrDefault(p => p.OrderId == Order.Main.OrderId);
                 if (remoteOrder == null)
                 {
                     ModelState.AddModelError("", $"单号为 {Order.Main.OrderId} 的送货单不存在，操作失败。");
@@ -58,7 +58,7 @@ namespace PinhuaMaster.Pages.StockManagement.StockOut
                 Order.Main.ExcelServerRtid = remoteOrder.ExcelServerRtid;
                 Order.Main.CustomerName = _pinhuaContext.往来单位.FirstOrDefault(p => p.单位编号 == Order.Main.CustomerId).单位名称;
                 // 将修改标记到数据库中跟踪的数据，remoteOrder
-                _mapper.Map<StockOutMainDTO, StockOutMain>(Order.Main, remoteOrder);
+                _mapper.Map<StockInMainDTO, StockInMain>(Order.Main, remoteOrder);
                 // 对明细表的缺失信息赋值
                 Order.Details.ForEach(i =>
                 {
@@ -68,22 +68,22 @@ namespace PinhuaMaster.Pages.StockManagement.StockOut
                 });
                 Order.Details.ForEach(i =>
                 {
-                    var result = _pinhuaContext.StockOutDetails.FirstOrDefault(p => p.OrderId == i.OrderId && p.Id == i.Id);
+                    var result = _pinhuaContext.StockInDetails.FirstOrDefault(p => p.OrderId == i.OrderId && p.Id == i.Id);
                     if (result == null)
                     // 如果该条信息不存在，则添加
-                    _pinhuaContext.StockOutDetails.Add(_mapper.Map<StockOutDetailsDTO, StockOutDetails>(i));
+                    _pinhuaContext.StockInDetails.Add(_mapper.Map<StockInDetailsDTO, StockInDetails>(i));
                     else
                     {
                     // 如果该条信息存在，则修改
-                    _mapper.Map<StockOutDetailsDTO, StockOutDetails>(i, result);
+                    _mapper.Map<StockInDetailsDTO, StockInDetails>(i, result);
                     }
                 });
-                await _pinhuaContext.StockOutDetails.Where(p => p.OrderId == remoteOrder.OrderId).ForEachAsync(i =>
+                await _pinhuaContext.StockInDetails.Where(p => p.OrderId == remoteOrder.OrderId).ForEachAsync(i =>
                 {
                     var result = Order.Details.FirstOrDefault(p => p.Id == i.Id);
                     if (result == null)
                     // 如果该条信息多余，则删除
-                    _pinhuaContext.StockOutDetails.Remove(i);
+                    _pinhuaContext.StockInDetails.Remove(i);
                 });
 
                 // 保存修改
@@ -102,7 +102,7 @@ namespace PinhuaMaster.Pages.StockManagement.StockOut
         private List<SelectListItem> BuildTypes()
         {
             var types = (from p in _pinhuaContext.业务类型.AsNoTracking()
-                        where p.状态 == "Yes" && p.MvP == "GI"
+                        where p.状态 == "Yes" && p.MvP == "GR"
                         select p).ToList();
             var groups = from p in types
                          group p by p.MvP into g

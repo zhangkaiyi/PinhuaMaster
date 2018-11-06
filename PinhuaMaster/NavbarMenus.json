@@ -208,7 +208,7 @@
         {
           "name": "入库单",
           "icon": "fa fa-circle-o",
-          "url": "/User/Index"
+          "url": "/StockManagement/StockIn/Index"
         },
         {
           "name": "转仓单",

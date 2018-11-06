@@ -10,9 +10,9 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using PinhuaMaster.Data.Entities.Pinhua;
 using PinhuaMaster.Extensions;
-using PinhuaMaster.Pages.StockManagement.StockOut.ViewModel;
+using PinhuaMaster.Pages.StockManagement.StockIn.ViewModel;
 
-namespace PinhuaMaster.Pages.StockManagement.StockOut
+namespace PinhuaMaster.Pages.StockManagement.StockIn
 {
     public class CreateModel : PageModel
     {
@@ -26,7 +26,7 @@ namespace PinhuaMaster.Pages.StockManagement.StockOut
         }
 
         [BindProperty]
-        public StockOutViewModel Order { get; set; }
+        public StockInViewModel Order { get; set; }
         public List<SelectListItem> MovementTypeList { get; set; } = new List<SelectListItem>();
         public List<SelectListItem> CustomerList { get; set; } = new List<SelectListItem>();
         public List<SelectListItem> WarehouseList { get; set; } = new List<SelectListItem>();
@@ -38,7 +38,7 @@ namespace PinhuaMaster.Pages.StockManagement.StockOut
             WarehouseList = _pinhuaContext.GetWarehouseSelectList();
         }
 
-        public IActionResult OnGetAjaxInventory()
+        public IActionResult OnGetApiGetModelNames()
         {
             var settings = new Newtonsoft.Json.JsonSerializerSettings();
             //EF Core中默认为驼峰样式序列化处理key
@@ -46,7 +46,7 @@ namespace PinhuaMaster.Pages.StockManagement.StockOut
             //使用默认方式，不更改元数据的key的大小写
             settings.ContractResolver = new Newtonsoft.Json.Serialization.DefaultContractResolver();
 
-            return new JsonResult(_pinhuaContext.GetInventory(), settings);
+            return new JsonResult(_pinhuaContext.GetModelNames(), settings);
         }
 
         public IActionResult OnPost()
@@ -54,7 +54,7 @@ namespace PinhuaMaster.Pages.StockManagement.StockOut
             if (ModelState.IsValid)
             {
                 var Rcid = _pinhuaContext.GetNewRcId();
-                var rtId = "172.1";
+                var rtId = "175.1";
                 var repCase = new EsRepCase
                 {
                     RcId = Rcid,
@@ -67,12 +67,12 @@ namespace PinhuaMaster.Pages.StockManagement.StockOut
                     //state = 1,
                 };
 
-                var main = _mapper.Map<StockOutMainDTO, StockOutMain>(Order.Main);
+                var main = _mapper.Map<StockInMainDTO, StockInMain>(Order.Main);
                 main.ExcelServerRcid = Rcid;
                 main.ExcelServerRtid = rtId;
                 main.CustomerName = _pinhuaContext.往来单位.AsNoTracking().FirstOrDefault(p => p.单位编号 == Order.Main.CustomerId).单位名称;
 
-                var details = _mapper.Map<List<StockOutDetailsDTO>, List<StockOutDetails>>(Order.Details);
+                var details = _mapper.Map<List<StockInDetailsDTO>, List<StockInDetails>>(Order.Details);
                 details.ForEach(i =>
                 {
                     i.ExcelServerRcid = Rcid;
@@ -89,8 +89,8 @@ namespace PinhuaMaster.Pages.StockManagement.StockOut
                     return Page();
                 }
                 _pinhuaContext.EsRepCase.Add(repCase);
-                _pinhuaContext.StockOutMain.Add(main);
-                _pinhuaContext.StockOutDetails.AddRange(details);
+                _pinhuaContext.StockInMain.Add(main);
+                _pinhuaContext.StockInDetails.AddRange(details);
                 _pinhuaContext.SaveChanges();
 
                 return RedirectToPage("Index");
@@ -107,7 +107,7 @@ namespace PinhuaMaster.Pages.StockManagement.StockOut
         private List<SelectListItem> BuildTypes()
         {
             var types = (from p in _pinhuaContext.业务类型.AsNoTracking()
-                        where p.状态 == "Yes" && p.MvP == "GI"
+                        where p.状态 == "Yes" && p.MvP == "GR"
                         select p).ToList();
             var groups = from p in types
                          group p by p.MvP into g
