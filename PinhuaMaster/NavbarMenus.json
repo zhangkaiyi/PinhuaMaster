@@ -213,12 +213,12 @@
         {
           "name": "转仓单",
           "icon": "fa fa-circle-o",
-          "url": "/Role/Index"
+          "url": "/StockManagement/StockTransfer/Index"
         },
         {
           "name": "外协加工单",
           "icon": "fa fa-circle-o",
-          "url": "/Permission/Index"
+          "url": "/StockManagement/StockSubconctracting/Index"
         }
       ]
     }

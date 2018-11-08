@@ -1,28 +1,17 @@
-﻿@page
-@using PinhuaMaster.Pages.StockManagement.StockIn.ViewModel
-@using PinhuaMaster.Pages.StockManagement.StockIn
-@using Microsoft.EntityFrameworkCore
-@model CreateModel
+﻿@page "{Id?}"
+@using PinhuaMaster.Pages.StockManagement.StockTransfer.ViewModel
+@model PinhuaMaster.Pages.StockManagement.StockTransfer.EditModel
 @{
-    ViewData["Title"] = "录入";
-    var emptyRecord = Newtonsoft.Json.JsonConvert.SerializeObject(new StockInDetailsDTO
+    ViewData["Title"] = "编辑";
+
+    var emptyRecord = Newtonsoft.Json.JsonConvert.SerializeObject(new StockTransferDetailsDTO
     {
         Unit = "平方米",
     });
-    var emptyRecordList = Newtonsoft.Json.JsonConvert.SerializeObject(Model?.Order?.Details ?? new List<StockInDetailsDTO>());
-
-    pinhuaContext.Database.OpenConnection();
-    var cmd = pinhuaContext.Database.GetDbConnection().CreateCommand();
-    cmd.CommandText = "SELECT dbo.GetStockInID('RK',GETDATE())";
-    var result = cmd.ExecuteReader();
-    var deliveryId = string.Empty;
-    while (result.Read())
-    {
-        deliveryId = result[0].ToString();
-    }
-    pinhuaContext.Database.CloseConnection();
+    var emptyRecordList = Newtonsoft.Json.JsonConvert.SerializeObject(Model?.Order?.Details ?? new List<StockTransferDetailsDTO>());
 }
-@if (ModelState.Count > 0)
+
+@if (ModelState.Count > 1)
 {
     <div class="alert alert-danger">
         <h4><i class="icon fa fa-warning"></i> 提示</h4>
@@ -42,9 +31,9 @@
                 <div class="row invoice-info">
                     <div class="col-sm-4">
                         <div class="form-group has-error">
-                            <label class="control-label" asp-for="Order.Main.WarehouseTo"><i class="fa fa-angle-double-right"></i> @Html.DisplayNameFor(x => x.Order.Main.WarehouseTo)</label>
+                            <label class="control-label" asp-for="Order.Main.WarehouseFrom"><i class="fa fa-angle-double-right"></i> @Html.DisplayNameFor(x => x.Order.Main.WarehouseFrom)</label>
                             <div class="input-group">
-                                <select class="form-control" name="Order.Main.WarehouseTo" asp-for="Order.Main.WarehouseTo" asp-items="Model.WarehouseList"></select>
+                                <select class="form-control" name="Order.Main.WarehouseFrom" asp-for="Order.Main.WarehouseFrom" asp-items="Model.WarehouseList"></select>
                                 <span class="input-group-addon no-padding">
                                     <i class="fa fa-bars" style="width:38px;"></i>
                                 </span>
@@ -71,7 +60,7 @@
                         <div class="form-group has-error">
                             <label class="control-label" asp-for="Order.Main.OrderDate"><i class="fa fa-angle-double-right"></i> @Html.DisplayNameFor(x => x.Order.Main.OrderDate)</label>
                             <div class="input-group">
-                                <input type="text" asp-for="Order.Main.OrderDate" data-provide="datepicker" data-date-format="yyyy-mm-dd" readonly class="form-control" />
+                                <input type="text" asp-for="Order.Main.OrderDate" data-provide="datepicker" data-date-format="yyyy-mm-dd" value="@Model?.Order?.Main?.OrderDate?.ToString("yyyy-MM-dd")" readonly class="form-control" />
                                 <span class="input-group-addon no-padding">
                                     <i class="fa fa-calendar-o" style="width:38px;"></i>
                                 </span>
@@ -125,7 +114,7 @@
                         <div class="form-group">
                             <label class="control-label" asp-for="Order.Main.OrderId"><i class="fa fa-angle-double-right"></i> @Html.DisplayNameFor(x => x.Order.Main.OrderId)</label>
                             <div class="input-group">
-                                <input type="text" asp-for="Order.Main.OrderId" class="form-control" value="@deliveryId" readonly />
+                                <input type="text" asp-for="Order.Main.OrderId" class="form-control" readonly />
                                 <span class="input-group-addon no-padding">
                                     <i class="fa fa-sticky-note-o" style="width:38px;"></i>
                                 </span>
@@ -134,7 +123,7 @@
                         <div class="form-group">
                             <label class="control-label" asp-for="Order.Main.CreatedBy"><i class="fa fa-angle-double-right"></i> @Html.DisplayNameFor(x => x.Order.Main.CreatedBy)</label>
                             <div class="input-group">
-                                <input type="text" asp-for="Order.Main.CreatedBy" class="form-control" value="@User.Identity.Name" readonly />
+                                <input type="text" asp-for="Order.Main.CreatedBy" class="form-control" readonly />
                                 <span class="input-group-addon no-padding">
                                     <i class="fa fa-user-o" style="width:38px;"></i>
                                 </span>
@@ -143,7 +132,7 @@
                         <div class="form-group">
                             <label class="control-label" asp-for="Order.Main.CreatedDate"><i class="fa fa-angle-double-right"></i> @Html.DisplayNameFor(x => x.Order.Main.CreatedDate)</label>
                             <div class="input-group">
-                                <input type="text" asp-for="Order.Main.CreatedDate" class="form-control" value="@DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss")" readonly />
+                                <input type="text" asp-for="Order.Main.CreatedDate" class="form-control" readonly />
                                 <span class="input-group-addon no-padding">
                                     <i class="fa fa-calendar-o" style="width:38px;"></i>
                                 </span>
@@ -205,7 +194,7 @@
                                         <td class="hidden">{{ todo.ModelNumber }}<input :name="buildName(index,'ModelNumber')" type="hidden" v-bind:value="todo.ModelNumber" /></td>
                                         <td>{{ todo.ModelName }}<input :name="buildName(index,'ModelName')" type="hidden" v-model="todo.ModelName" /></td>
                                         <td>{{ todo.Description }}<input :name="buildName(index,'Description')" type="hidden" v-model="todo.Description" /></td>
-                                        <td>{{ computeSpecification(todo) }}<input :name="buildName(index,'Specification')" type="hidden" v-bind:value="computeSpecification(todo)" /></td>
+                                        <td>{{ todo.Specification }}<input :name="buildName(index,'Specification')" type="hidden" v-model="todo.Specification" /></td>
                                         <td class="hidden">{{ todo.Length }}<input :name="buildName(index,'Length')" type="hidden" v-bind:value="todo.Length" /></td>
                                         <td class="hidden">{{ todo.Width }}<input :name="buildName(index,'Width')" type="hidden" v-bind:value="todo.Width" /></td>
                                         <td class="hidden">{{ todo.Height }}<input :name="buildName(index,'Height')" type="hidden" v-bind:value="todo.Height" /></td>
@@ -230,53 +219,52 @@
         <div class="modal-body">
             <table data-classes="table table-hover text-nowrap"
                    data-toggle="table"
-                   data-search="true"
                    data-striped="true"
-                   data-pagination="true"
-                   data-page-size="10"
-                   data-url="@Url.Page("Create", "ApiGetModelNames")"
+                   data-url="@Url.Page("Create", "AjaxInventory")"
                    id="inventoryTable">
                 <thead>
                     <tr>
-                        <th data-visible="false" data-field="编号">编号</th>
-                        <th data-field="型号">型号</th>
+                        <th data-field="Warehouse">仓库</th>
+                        <th data-field="ModelName">型号</th>
+                        <th data-field="Description">描述</th>
+                        <th data-field="Specification">规格</th>
+                        <th data-field="Qty">片数</th>
                         <th data-events="inventorySelectEvent" data-formatter="inventorySelectFormatter">操作</th>
                     </tr>
                 </thead>
             </table>
         </div>
     </div>
-
     <div id="ItemDetail" style="display:none">
         <div class="modal-body">
             <div class="form-horizontal margin-r-5">
                 <div class="form-group has-error">
-                    <label class="control-label col-xs-4 col-md-3"><i class="fa fa-angle-double-right"></i> 型号</label>
-                    <div class="col-xs-8 col-md-9">
-                        <div class="input-group">
-                            <input class="form-control" v-model="itemCurrent.ModelName" readonly />
-                            <div class="input-group-btn">
-                                <button type="button" class="btn btn-danger btn-flat" style="width:40px" v-on:click="changeModelName"><span class="caret"></span></button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="form-group has-error">
                     <label class="control-label col-xs-4 col-md-3"><i class="fa fa-angle-double-right"></i> 描述</label>
                     <div class="col-xs-8 col-md-9">
                         <div class="input-group">
-                            <input class="form-control" v-model="itemCurrent.Description" />
+                            <input class="form-control" v-model="itemCurrent.Description" readonly />
                             <div class="input-group-addon no-padding">
                                 <i class="fa fa-info" style="width:38px;"></i>
                             </div>
                         </div>
                     </div>
                 </div>
+                @*<div class="form-group has-error">
+                    <label class="control-label col-xs-4 col-md-3"><i class="fa fa-angle-double-right"></i> 规格</label>
+                    <div class="col-xs-8 col-md-9">
+                        <div class="input-group">
+                            <input class="form-control" v-model="itemCurrent.Specification" />
+                            <span class="input-group-btn">
+                                <button type="button" class="btn btn-danger btn-flat" style="width:40px"><i class="fa fa-info"></i></button>
+                            </span>
+                        </div>
+                    </div>
+                </div>*@
                 <div class="form-group has-error">
                     <label class="control-label col-xs-4 col-md-3"><i class="fa fa-angle-double-right"></i> 长</label>
                     <div class="col-xs-8 col-md-9">
                         <div class="input-group">
-                            <input type="number" class="form-control" v-model="itemCurrent.Length" />
+                            <input type="number" class="form-control" v-model="itemCurrent.Length" readonly />
                             <div class="input-group-btn">
                                 <button type="button" class="btn btn-danger btn-flat dropdown-toggle" style="width:40px" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="caret"></span></button>
                                 <ul class="dropdown-menu dropdown-menu-right">
@@ -294,7 +282,7 @@
                     <label class="control-label col-xs-4 col-md-3"><i class="fa fa-angle-double-right"></i> 宽</label>
                     <div class="col-xs-8 col-md-9">
                         <div class="input-group">
-                            <input type="number" class="form-control" v-model="itemCurrent.Width" />
+                            <input type="number" class="form-control" v-model="itemCurrent.Width" readonly />
                             <div class="input-group-btn">
                                 <button type="button" class="btn btn-danger btn-flat dropdown-toggle" style="width:40px" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="caret"></span></button>
                                 <ul class="dropdown-menu dropdown-menu-right">
@@ -311,7 +299,7 @@
                     <label class="control-label col-xs-4 col-md-3"><i class="fa fa-angle-double-right"></i> 高</label>
                     <div class="col-xs-8 col-md-9">
                         <div class="input-group">
-                            <input type="number" class="form-control" v-model="itemCurrent.Height" />
+                            <input type="number" class="form-control" v-model="itemCurrent.Height" readonly />
                             <div class="input-group-btn">
                                 <button type="button" class="btn btn-danger btn-flat dropdown-toggle" style="width:40px" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="caret"></span></button>
                                 <ul class="dropdown-menu dropdown-menu-right">
@@ -427,13 +415,13 @@
 @section Scripts{
     <script>
         function layerInventorySelector() {
+            $('#inventoryTable').bootstrapTable('filterBy', { Warehouse: $('#Order_Main_WarehouseFrom').val() });
             layer.open({
                 type: 1,
                 area: $(window).width() < 992 ? ['98%', 'auto'] : ['800px', 'auto'],
                 content: $('#inventorySelector'),
                 shadeClose: true,
                 isOutAnim: false,
-                anim: -1,
                 fixed: false,
                 //closeBtn: false,
                 //scrollbar: false,
@@ -447,7 +435,6 @@
                 content: $('#ItemDetail'),
                 shadeClose: true,
                 isOutAnim: false,
-                anim: -1,
                 fixed: false,
                 //closeBtn: false,
                 //scrollbar: false,
@@ -461,8 +448,13 @@
         window.inventorySelectEvent = {
             'click #selectorButton': function (e, value, row, index) {
                 layer.closeAll('page')
-                vm.$data.itemCurrent.ModelNumber = row.编号
-                vm.$data.itemCurrent.ModelName = row.型号
+                vm.$data.itemCurrent.Description = row.Description
+                vm.$data.itemCurrent.Specification = row.Specification
+                vm.$data.itemCurrent.Length = row.Length
+                vm.$data.itemCurrent.Width = row.Width
+                vm.$data.itemCurrent.Height = row.Height
+                vm.$data.itemCurrent.ModelNumber = row.ModelNumber
+                vm.$data.itemCurrent.ModelName = row.ModelName
                 layerItemDetail()
             },
         }
@@ -523,9 +515,6 @@
                     this.$set(this.items, this.itemIndex, this.itemCurrent)
                     layer.closeAll('page')
 
-                },
-                changeModelName: function (isEdit) {
-                    layerInventorySelector()
                 },
                 removeTodo: function (index) {
                     this.items.splice(index, 1)
