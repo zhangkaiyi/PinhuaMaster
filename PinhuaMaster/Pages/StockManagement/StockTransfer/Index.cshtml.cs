@@ -36,7 +36,7 @@ namespace PinhuaMaster.Pages.StockManagement.StockTransfer
 
             var orders = from p in _pinhuaContext.StockTransferMain
                          join d in _pinhuaContext.StockTransferDetails on p.ExcelServerRcid equals d.ExcelServerRcid into details
-                         join u in _pinhuaContext.往来单位 on p.CustomerId equals u.单位编号
+                         //join u in _pinhuaContext.往来单位 on p.CustomerId equals u.单位编号
                          join t in _pinhuaContext.业务类型 on p.MovementType equals t.业务类型1
                          join w in _pinhuaContext.Warehouse on p.WarehouseFrom equals w.Id
                          orderby p.OrderDate descending, p.CreatedDate descending
@@ -49,7 +49,7 @@ namespace PinhuaMaster.Pages.StockManagement.StockTransfer
                              MovementTypeDescription = t.类型描述,
                              OrderId = p.OrderId,
                              CustomerId = p.CustomerId,
-                             CustomerName = u.单位名称,
+                             //CustomerName = u.单位名称,
                              CustomerAddress = p.CustomerAddress,
                              OrderDate = p.OrderDate,
                              Remarks = p.Remarks,

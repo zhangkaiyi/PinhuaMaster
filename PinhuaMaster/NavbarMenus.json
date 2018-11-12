@@ -22,6 +22,11 @@
       "url": "",
       "children": [
         {
+          "name": "库存清单",
+          "icon": "fa fa-circle-o",
+          "url": "/StockManagement/Inventory"
+        },
+        {
           "name": "出库单",
           "icon": "fa fa-circle-o",
           "url": "/StockManagement/StockOut/Index"
@@ -56,7 +61,7 @@
     {
       "name": "库存管理",
       "icon": "fa fa-hand-lizard-o",
-      "url": "/StockManagement/Inventory"
+      "url": "/StockManagement/Inventory2"
     },
     {
       "name": "运输单",

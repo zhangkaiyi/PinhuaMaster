@@ -24,18 +24,14 @@ namespace PinhuaMaster.Pages.StockManagement.StockTransfer
             _mapper = mapper;
         }
 
-        public List<SelectListItem> MovementTypeList { get; set; } = new List<SelectListItem>();
-        public List<SelectListItem> CustomerList { get; set; } = new List<SelectListItem>();
-        public List<SelectListItem> WarehouseList { get; set; } = new List<SelectListItem>();
-
         [BindProperty]
         public StockTransferViewModel Order { get; set; } = new StockTransferViewModel();
 
         public void OnGet(string Id)
         {
-            MovementTypeList = BuildTypes();
-            CustomerList = _pinhuaContext.GetCustomerSelectList();
-            WarehouseList = _pinhuaContext.GetWarehouseSelectList();
+            Order.MovementTypeList = BuildTypes();
+            Order.CustomerList = _pinhuaContext.GetCustomerSelectList();
+            Order.WarehouseList = _pinhuaContext.GetWarehouseSelectList();
 
             Order.Main = _mapper.Map<StockTransferMain, StockTransferMainDTO>(_pinhuaContext.StockTransferMain.AsNoTracking().Where(p => p.OrderId == Id).FirstOrDefault());
             Order.Details = _mapper.Map<List<StockTransferDetails>, List<StockTransferDetailsDTO>>(_pinhuaContext.StockTransferDetails.AsNoTracking().Where(p => p.OrderId == Id).ToList());
@@ -56,7 +52,7 @@ namespace PinhuaMaster.Pages.StockManagement.StockTransfer
                 // 对主表的缺失信息赋值，ExcelServerRcid，ExcelServerRtid，其他
                 Order.Main.ExcelServerRcid = remoteOrder.ExcelServerRcid;
                 Order.Main.ExcelServerRtid = remoteOrder.ExcelServerRtid;
-                Order.Main.CustomerName = _pinhuaContext.往来单位.FirstOrDefault(p => p.单位编号 == Order.Main.CustomerId).单位名称;
+                // Order.Main.CustomerName = _pinhuaContext.往来单位.FirstOrDefault(p => p.单位编号 == Order.Main.CustomerId)?.单位名称;
                 // 将修改标记到数据库中跟踪的数据，remoteOrder
                 _mapper.Map<StockTransferMainDTO, StockTransferMain>(Order.Main, remoteOrder);
                 // 对明细表的缺失信息赋值
@@ -92,9 +88,9 @@ namespace PinhuaMaster.Pages.StockManagement.StockTransfer
             }
             else
             {
-                MovementTypeList = BuildTypes();
-                CustomerList = _pinhuaContext.GetCustomerSelectList();
-                WarehouseList = _pinhuaContext.GetWarehouseSelectList();
+                Order.MovementTypeList = BuildTypes();
+                Order.CustomerList = _pinhuaContext.GetCustomerSelectList();
+                Order.WarehouseList = _pinhuaContext.GetWarehouseSelectList();
                 return Page();
             }
         }
@@ -102,7 +98,7 @@ namespace PinhuaMaster.Pages.StockManagement.StockTransfer
         private List<SelectListItem> BuildTypes()
         {
             var types = (from p in _pinhuaContext.业务类型.AsNoTracking()
-                        where p.状态 == "Yes" && p.MvP == "GI"
+                        where p.状态 == "Yes" && p.MvP == "TO"
                         select p).ToList();
             var groups = from p in types
                          group p by p.MvP into g

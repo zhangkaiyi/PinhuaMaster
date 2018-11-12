@@ -29,16 +29,6 @@ namespace PinhuaMaster.Pages.StockManagement
         public void OnGet()
         {
 
-            // Stock in
-            EasyPurchasingList = (from p in _pinhuaContext.Gr2Main.AsNoTracking()
-                                  join d in _pinhuaContext.Gr2Details.AsNoTracking() on p.ExcelServerRcid equals d.ExcelServerRcid into details
-                                  where p.PurchasingType == "171"   // 外协加工回库
-                                  select new PurchasingViewModel
-                                  {
-                                      Main = _mapper.Map<Gr2Main, Gr2MainDto>(p),
-                                      Details = _mapper.Map<IEnumerable<Gr2Details>, List<Gr2DetailsDto>>(details)
-                                  }).ToList();
-
         }
     }
 }

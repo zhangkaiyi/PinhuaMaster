@@ -26,16 +26,15 @@ namespace PinhuaMaster.Pages.StockManagement.StockSubconctracting
         }
 
         [BindProperty]
-        public StockSubconctractingViewModel Order { get; set; }
-        public List<SelectListItem> MovementTypeList { get; set; } = new List<SelectListItem>();
-        public List<SelectListItem> CustomerList { get; set; } = new List<SelectListItem>();
-        public List<SelectListItem> WarehouseList { get; set; } = new List<SelectListItem>();
+        public StockSubconctractingViewModel Order { get; set; } = new StockSubconctractingViewModel();
 
         public void OnGet()
         {
-            MovementTypeList = BuildTypes();
-            CustomerList = _pinhuaContext.GetCustomerSelectList();
-            WarehouseList = _pinhuaContext.GetWarehouseSelectList();
+            Order.MovementTypeList = BuildTypes();
+            Order.CustomerList = _pinhuaContext.GetCustomerSelectList();
+            Order.WarehouseList = _pinhuaContext.GetWarehouseSelectList();
+
+            Order.Main.OrderId = buildOrderId();
         }
 
         public IActionResult OnGetAjaxInventory()
@@ -83,9 +82,9 @@ namespace PinhuaMaster.Pages.StockManagement.StockSubconctracting
                 if (details.Count == 0)
                 {
                     ModelState.AddModelError("", "清单不可为空");
-                    MovementTypeList = BuildTypes();
-                    CustomerList = _pinhuaContext.GetCustomerSelectList();
-                    WarehouseList = _pinhuaContext.GetWarehouseSelectList();
+                    Order.MovementTypeList = BuildTypes();
+                    Order.CustomerList = _pinhuaContext.GetCustomerSelectList();
+                    Order.WarehouseList = _pinhuaContext.GetWarehouseSelectList();
                     return Page();
                 }
                 _pinhuaContext.EsRepCase.Add(repCase);
@@ -97,18 +96,33 @@ namespace PinhuaMaster.Pages.StockManagement.StockSubconctracting
             }
             else
             {
-                MovementTypeList = BuildTypes();
-                CustomerList = _pinhuaContext.GetCustomerSelectList();
-                WarehouseList = _pinhuaContext.GetWarehouseSelectList();
+                Order.MovementTypeList = BuildTypes();
+                Order.CustomerList = _pinhuaContext.GetCustomerSelectList();
+                Order.WarehouseList = _pinhuaContext.GetWarehouseSelectList();
                 return Page();
             }
+        }
+
+        private string buildOrderId()
+        {
+            _pinhuaContext.Database.OpenConnection();
+            var cmd = _pinhuaContext.Database.GetDbConnection().CreateCommand();
+            cmd.CommandText = "SELECT dbo.GetStockSubconctractingID('WX',GETDATE())";
+            var result = cmd.ExecuteReader();
+            var orderId = string.Empty;
+            while (result.Read())
+            {
+                orderId = result[0].ToString();
+            }
+            _pinhuaContext.Database.CloseConnection();
+            return orderId;
         }
 
         private List<SelectListItem> BuildTypes()
         {
             var types = (from p in _pinhuaContext.业务类型.AsNoTracking()
-                        where p.状态 == "Yes" && p.MvP == "GI"
-                        select p).ToList();
+                        where p.状态 == "Yes" && p.MvP == "GI" && p.性质 == "外协"
+                         select p).ToList();
             var groups = from p in types
                          group p by p.MvP into g
                          select g.Key;

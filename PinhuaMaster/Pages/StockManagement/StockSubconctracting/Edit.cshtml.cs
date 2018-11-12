@@ -24,18 +24,14 @@ namespace PinhuaMaster.Pages.StockManagement.StockSubconctracting
             _mapper = mapper;
         }
 
-        public List<SelectListItem> MovementTypeList { get; set; } = new List<SelectListItem>();
-        public List<SelectListItem> CustomerList { get; set; } = new List<SelectListItem>();
-        public List<SelectListItem> WarehouseList { get; set; } = new List<SelectListItem>();
-
         [BindProperty]
         public StockSubconctractingViewModel Order { get; set; } = new StockSubconctractingViewModel();
 
         public void OnGet(string Id)
         {
-            MovementTypeList = BuildTypes();
-            CustomerList = _pinhuaContext.GetCustomerSelectList();
-            WarehouseList = _pinhuaContext.GetWarehouseSelectList();
+            Order.MovementTypeList = BuildTypes();
+            Order.CustomerList = _pinhuaContext.GetCustomerSelectList();
+            Order.WarehouseList = _pinhuaContext.GetWarehouseSelectList();
 
             Order.Main = _mapper.Map<StockSubconctractingMain, StockSubconctractingMainDTO>(_pinhuaContext.StockSubconctractingMain.AsNoTracking().Where(p => p.OrderId == Id).FirstOrDefault());
             Order.Details = _mapper.Map<List<StockSubconctractingDetails>, List<StockSubconctractingDetailsDTO>>(_pinhuaContext.StockSubconctractingDetails.AsNoTracking().Where(p => p.OrderId == Id).ToList());
@@ -92,9 +88,9 @@ namespace PinhuaMaster.Pages.StockManagement.StockSubconctracting
             }
             else
             {
-                MovementTypeList = BuildTypes();
-                CustomerList = _pinhuaContext.GetCustomerSelectList();
-                WarehouseList = _pinhuaContext.GetWarehouseSelectList();
+                Order.MovementTypeList = BuildTypes();
+                Order.CustomerList = _pinhuaContext.GetCustomerSelectList();
+                Order.WarehouseList = _pinhuaContext.GetWarehouseSelectList();
                 return Page();
             }
         }
@@ -102,7 +98,7 @@ namespace PinhuaMaster.Pages.StockManagement.StockSubconctracting
         private List<SelectListItem> BuildTypes()
         {
             var types = (from p in _pinhuaContext.业务类型.AsNoTracking()
-                        where p.状态 == "Yes" && p.MvP == "GI"
+                        where p.状态 == "Yes" && p.MvP == "GI" && p.性质 == "外协"
                         select p).ToList();
             var groups = from p in types
                          group p by p.MvP into g

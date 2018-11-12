@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using PinhuaMaster.Data.Entities.Pinhua;
 using PinhuaMaster.Extensions.Converters;
 using System;
@@ -11,8 +12,11 @@ namespace PinhuaMaster.Pages.StockManagement.StockSubconctracting.ViewModel
 {
     public class StockSubconctractingViewModel
     {
-        public StockSubconctractingMainDTO Main { get; set; }
-        public List<StockSubconctractingDetailsDTO> Details { get; set; }
+        public StockSubconctractingMainDTO Main { get; set; } = new StockSubconctractingMainDTO();
+        public List<StockSubconctractingDetailsDTO> Details { get; set; } = new List<StockSubconctractingDetailsDTO>();
+        public List<SelectListItem> MovementTypeList { get; set; } = new List<SelectListItem>();
+        public List<SelectListItem> CustomerList { get; set; } = new List<SelectListItem>();
+        public List<SelectListItem> WarehouseList { get; set; } = new List<SelectListItem>();
     }
 
     public class StockSubconctractingMainDTO

@@ -5,11 +5,11 @@
     "jquery": "3.2.1",
     "jquery-validation": "1.17.0",
     "jquery-validation-unobtrusive": "3.2.6",
-    "font-awesome": "Font-Awesome#v4.7.0",
+    "font-awesome": "5.5.0",
     "Ionicons": "ionicons#v2.0.1",
     "fastclick": "v1.0.6",
     "jquery-slimscroll": "slimScroll#v1.3.8",
-    "vue": "v2.5.16",
+    "vue": "v2.5.17",
     "nestable": "*",
     "jquery-confirm2": "v3.3.2",
     "bootstrap": "v3.3.7",
@@ -26,8 +26,9 @@
     "jquery": ">= 1.7.2",
     "jquery-validation": "1.17.0",
     "bootstrap": "v4.0.0",
-    "vue": "v2.5.16",
+    "vue": "v2.5.17",
     "datatables": "1.10.16",
-    "layer": "v3.1.1"
+    "layer": "v3.1.1",
+    "font-awesome": "5.5.0"
   }
 }
