@@ -8,26 +8,26 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace PinhuaMaster.Pages.StockManagement.StockOut.ViewModel
+namespace PinhuaMaster.Pages.StockManagement.ProductionStockIn.ViewModel
 {
-    public class StockOutViewModel
+    public class ProductionStockInViewModel
     {
-        public StockOutMainDTO Main { get; set; } = new StockOutMainDTO();
-        public List<StockOutDetailsDTO> Details { get; set; } = new List<StockOutDetailsDTO>();
+        public ProductionStockInMainDTO Main { get; set; } = new ProductionStockInMainDTO();
+        public List<ProductionStockInDetailsDTO> Details { get; set; } = new List<ProductionStockInDetailsDTO>();
         public List<SelectListItem> MovementTypeList { get; set; } = new List<SelectListItem>();
         public List<SelectListItem> CustomerList { get; set; } = new List<SelectListItem>();
         public List<SelectListItem> WarehouseList { get; set; } = new List<SelectListItem>();
     }
 
-    public class StockOutMainDTO
+    public class ProductionStockInMainDTO
     {
         [Required, Display(Name = "单号")]
         public string OrderId { get; set; }
-        [Required, Display(Name = "客户单位")]
+        [Display(Name = "客户单位")]
         public string CustomerId { get; set; }
         [Display(Name = "客户单位名称")]
         public string CustomerName { get; set; }
-        [Required, Display(Name = "移动类型")]
+        [Display(Name = "移动类型")]
         public string MovementType { get; set; }
         [Display(Name = "移动类型描述")]
         public string MovementTypeDescription { get; set; }
@@ -49,13 +49,13 @@ namespace PinhuaMaster.Pages.StockManagement.StockOut.ViewModel
         [Display(Name = "制单日期")]
         [Newtonsoft.Json.JsonConverter(typeof(MyDateTimeConverter))]
         public DateTime? CreatedDate { get; set; }
-        [Required, Display(Name = "出仓")]
+        [Display(Name = "出库仓库")]
         public string WarehouseFrom { get; set; }
-        [Display(Name = "出仓名称")]
+        [Display(Name = "出库仓库名称")]
         public string WarehouseFromName { get; set; }
-        [Display(Name = "进仓")]
+        [Required, Display(Name = "入库仓库")]
         public string WarehouseTo { get; set; }
-        [Display(Name = "进仓名称")]
+        [Display(Name = "入库仓库名称")]
         public string WarehouseToName { get; set; }
         [Display(Name = "关联号")]
         public string ExcelServerRcid { get; set; }
@@ -68,7 +68,7 @@ namespace PinhuaMaster.Pages.StockManagement.StockOut.ViewModel
         //public int? ExcelServerChg { get; set; }
     }
 
-    public class StockOutDetailsDTO
+    public class ProductionStockInDetailsDTO
     {
         public string ModelNumber { get; set; }
         public string ModelName { get; set; }
@@ -98,7 +98,7 @@ namespace PinhuaMaster.Pages.StockManagement.StockOut.ViewModel
         //public int? ExcelServerChg { get; set; }
     }
 
-    public class StockOutSearch
+    public class ProductionStockInSearch
     {
         [Display(Name = "单号")]
         public string OrderId { get; set; }
@@ -152,20 +152,20 @@ namespace PinhuaMaster.Pages.StockManagement.StockOut.ViewModel
         public string ItemRemarks { get; set; }
     }
 
-    public class StockOutProfile : Profile
+    public class ProductionStockInProfile : Profile
     {
-        public StockOutProfile()
+        public ProductionStockInProfile()
         {
-            CreateMap<StockOutMain, StockOutMainDTO>();
+            CreateMap<StockInMain, ProductionStockInMainDTO>();
             //.ForMember(dst => dst.ExcelServerRcid, map => map.MapFrom(src => src.ExcelServerRcid))
             //.ForMember(dst => dst.DeliveryDate, map => map.MapFrom(src => src.DeliveryDate.Value.ToString("yyyy-MM-dd")));
-            CreateMap<StockOutMainDTO, StockOutMain>();
+            CreateMap<ProductionStockInMainDTO, StockInMain>();
             //.ForMember(dst => dst.ExcelServerRcid, map => map.MapFrom(src => src.ExcelServerRcid))
             //.ForMember(dst => dst.DeliveryDate, map => map.MapFrom(src => src.DeliveryDate));
 
-            CreateMap<StockOutDetails, StockOutDetailsDTO>();
+            CreateMap<StockInDetails, ProductionStockInDetailsDTO>();
             //.ForMember(dst => dst.DeliveryId, map => map.MapFrom(src => src.Id.ToString()));
-            CreateMap<StockOutDetailsDTO, StockOutDetails>();
+            CreateMap<ProductionStockInDetailsDTO, StockInDetails>();
             //.ForMember(dst => dst.Id, map => map.MapFrom(src => int.Parse(src.Index)));
         }
     }

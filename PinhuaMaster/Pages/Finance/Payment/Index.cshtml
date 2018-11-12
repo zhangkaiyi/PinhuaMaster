@@ -3,7 +3,7 @@
 @{
     ViewData["Title"] = "Index";
 
-    var paymentList = pinhuaContext.付款单.OrderByDescending(x => x.付款日期).ThenBy(x => x.单位编号);
+    var paymentList = pinhuaContext.付款单.OrderByDescending(x => x.付款日期).ThenByDescending(x=>x.付款单号).ThenBy(x => x.单位编号);
 }
 
 <div class="row">

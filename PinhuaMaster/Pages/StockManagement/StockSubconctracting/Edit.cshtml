@@ -3,6 +3,7 @@
 @model PinhuaMaster.Pages.StockManagement.StockSubconctracting.EditModel
 @{
     ViewData["Title"] = "编辑";
+    ViewBag.NoContentHeader = true;
 
     var emptyRecord = Newtonsoft.Json.JsonConvert.SerializeObject(new StockSubconctractingDetailsDTO
     {
@@ -22,7 +23,7 @@
     <form method="post" id="myForm">
         <section class="box box-solid" id="invoice" style="margin:0px;margin-bottom:20px;">
             <div class="box-header" style="font-size:22px">
-                <i class="fa fa-globe"></i> 胜美木业, Inc.
+                <i class="fa fa-globe"></i> 胜美木业外协加工单（修改）
                 @*<small class="pull-right">Date:  @DateTime.Now.ToString("yyyy/M/d")</small>*@
                 <!-- /.col -->
             </div>

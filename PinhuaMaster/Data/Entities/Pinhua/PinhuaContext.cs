@@ -157,7 +157,7 @@ namespace PinhuaMaster.Data.Entities.Pinhua
         public virtual DbSet<WeixinWorkPlan> WeixinWorkPlan { get; set; }
         public virtual DbSet<WeixinWorkPlanDetail> WeixinWorkPlanDetail { get; set; }
         public virtual DbSet<Wx异常说明> Wx异常说明 { get; set; }
-        public virtual DbSet<产品型号> 产品型号 { get; set; }
+        public virtual DbSet<产品型号清单> 产品型号清单 { get; set; }
         public virtual DbSet<打卡登记> 打卡登记 { get; set; }
         public virtual DbSet<打卡记录> 打卡记录 { get; set; }
         public virtual DbSet<对账结算主表> 对账结算主表 { get; set; }
@@ -6272,16 +6272,16 @@ namespace PinhuaMaster.Data.Entities.Pinhua
                 entity.Property(e => e.用户号).HasMaxLength(100);
             });
 
-            modelBuilder.Entity<产品型号>(entity =>
+            modelBuilder.Entity<产品型号清单>(entity =>
             {
-                entity.HasKey(e => new { e.编号, e.型号 });
+                entity.HasKey(e => new { e.编号, e.名称 });
 
                 entity.HasIndex(e => new { e.ExcelServerRcid, e.ExcelServerWiid })
                     .HasName("idx1");
 
                 entity.Property(e => e.编号).HasMaxLength(20);
 
-                entity.Property(e => e.型号).HasMaxLength(20);
+                entity.Property(e => e.名称).HasMaxLength(20);
 
                 entity.Property(e => e.ExcelServerChg).HasColumnName("ExcelServerCHG");
 

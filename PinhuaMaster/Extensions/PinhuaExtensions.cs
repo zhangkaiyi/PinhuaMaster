@@ -159,9 +159,9 @@ namespace PinhuaMaster.Extensions
             return groupingCustomers;
         }
 
-        static public IEnumerable<产品型号> GetModelNames(this PinhuaContext _pinhuaContext)
+        static public IEnumerable<产品型号清单> GetModelNames(this PinhuaContext _pinhuaContext)
         {
-            var list = _pinhuaContext.产品型号.AsNoTracking().OrderBy(p => p.排序等级).ThenBy(p => p.编号).ToList();
+            var list = _pinhuaContext.产品型号清单.AsNoTracking().OrderBy(p => p.排序).ThenBy(p => p.编号).ToList();
             return list;
         }
 

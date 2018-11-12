@@ -9,9 +9,9 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using PinhuaMaster.Data.Entities.Pinhua;
 using PinhuaMaster.Extensions;
-using PinhuaMaster.Pages.StockManagement.StockIn.ViewModel;
+using PinhuaMaster.Pages.StockManagement.ProductionStockIn.ViewModel;
 
-namespace PinhuaMaster.Pages.StockManagement.StockIn
+namespace PinhuaMaster.Pages.StockManagement.ProductionStockIn
 {
     public class EditModel : PageModel
     {
@@ -25,7 +25,7 @@ namespace PinhuaMaster.Pages.StockManagement.StockIn
         }
 
         [BindProperty]
-        public StockInViewModel Order { get; set; } = new StockInViewModel();
+        public ProductionStockInViewModel Order { get; set; } = new ProductionStockInViewModel();
 
         public void OnGet(string Id)
         {
@@ -33,8 +33,8 @@ namespace PinhuaMaster.Pages.StockManagement.StockIn
             Order.CustomerList = _pinhuaContext.GetCustomerSelectList();
             Order.WarehouseList = _pinhuaContext.GetWarehouseSelectList();
 
-            Order.Main = _mapper.Map<StockInMain, StockInMainDTO>(_pinhuaContext.StockInMain.AsNoTracking().Where(p => p.OrderId == Id).FirstOrDefault());
-            Order.Details = _mapper.Map<List<StockInDetails>, List<StockInDetailsDTO>>(_pinhuaContext.StockInDetails.AsNoTracking().Where(p => p.OrderId == Id).ToList());
+            Order.Main = _mapper.Map<StockInMain, ProductionStockInMainDTO>(_pinhuaContext.StockInMain.AsNoTracking().Where(p => p.OrderId == Id).FirstOrDefault());
+            Order.Details = _mapper.Map<List<StockInDetails>, List<ProductionStockInDetailsDTO>>(_pinhuaContext.StockInDetails.AsNoTracking().Where(p => p.OrderId == Id).ToList());
 
         }
 
@@ -52,9 +52,9 @@ namespace PinhuaMaster.Pages.StockManagement.StockIn
                 // 对主表的缺失信息赋值，ExcelServerRcid，ExcelServerRtid，其他
                 Order.Main.ExcelServerRcid = remoteOrder.ExcelServerRcid;
                 Order.Main.ExcelServerRtid = remoteOrder.ExcelServerRtid;
-                Order.Main.CustomerName = _pinhuaContext.往来单位.FirstOrDefault(p => p.单位编号 == Order.Main.CustomerId).单位名称;
+                
                 // 将修改标记到数据库中跟踪的数据，remoteOrder
-                _mapper.Map<StockInMainDTO, StockInMain>(Order.Main, remoteOrder);
+                _mapper.Map<ProductionStockInMainDTO, StockInMain>(Order.Main, remoteOrder);
                 // 对明细表的缺失信息赋值
                 Order.Details.ForEach(i =>
                 {
@@ -67,11 +67,11 @@ namespace PinhuaMaster.Pages.StockManagement.StockIn
                     var result = _pinhuaContext.StockInDetails.FirstOrDefault(p => p.OrderId == i.OrderId && p.Id == i.Id);
                     if (result == null)
                     // 如果该条信息不存在，则添加
-                    _pinhuaContext.StockInDetails.Add(_mapper.Map<StockInDetailsDTO, StockInDetails>(i));
+                    _pinhuaContext.StockInDetails.Add(_mapper.Map<ProductionStockInDetailsDTO, StockInDetails>(i));
                     else
                     {
                     // 如果该条信息存在，则修改
-                    _mapper.Map<StockInDetailsDTO, StockInDetails>(i, result);
+                    _mapper.Map<ProductionStockInDetailsDTO, StockInDetails>(i, result);
                     }
                 });
                 await _pinhuaContext.StockInDetails.Where(p => p.OrderId == remoteOrder.OrderId).ForEachAsync(i =>

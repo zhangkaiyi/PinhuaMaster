@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using PinhuaMaster.Data.Entities.Pinhua;
 using PinhuaMaster.Extensions.Converters;
 using System;
@@ -11,8 +12,11 @@ namespace PinhuaMaster.Pages.StockManagement.StockIn.ViewModel
 {
     public class StockInViewModel
     {
-        public StockInMainDTO Main { get; set; }
-        public List<StockInDetailsDTO> Details { get; set; }
+        public StockInMainDTO Main { get; set; } = new StockInMainDTO();
+        public List<StockInDetailsDTO> Details { get; set; } = new List<StockInDetailsDTO>();
+        public List<SelectListItem> MovementTypeList { get; set; } = new List<SelectListItem>();
+        public List<SelectListItem> CustomerList { get; set; } = new List<SelectListItem>();
+        public List<SelectListItem> WarehouseList { get; set; } = new List<SelectListItem>();
     }
 
     public class StockInMainDTO
@@ -45,13 +49,13 @@ namespace PinhuaMaster.Pages.StockManagement.StockIn.ViewModel
         [Display(Name = "制单日期")]
         [Newtonsoft.Json.JsonConverter(typeof(MyDateTimeConverter))]
         public DateTime? CreatedDate { get; set; }
-        [Display(Name = "出仓")]
+        [Display(Name = "出库仓库")]
         public string WarehouseFrom { get; set; }
-        [Display(Name = "出仓名称")]
+        [Display(Name = "出库仓库名称")]
         public string WarehouseFromName { get; set; }
-        [Required,Display(Name = "进仓")]
+        [Required,Display(Name = "入库仓库")]
         public string WarehouseTo { get; set; }
-        [Display(Name = "进仓名称")]
+        [Display(Name = "入库仓库名称")]
         public string WarehouseToName { get; set; }
         [Display(Name = "关联号")]
         public string ExcelServerRcid { get; set; }

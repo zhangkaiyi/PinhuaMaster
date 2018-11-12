@@ -26,16 +26,15 @@ namespace PinhuaMaster.Pages.StockManagement.StockIn
         }
 
         [BindProperty]
-        public StockInViewModel Order { get; set; }
-        public List<SelectListItem> MovementTypeList { get; set; } = new List<SelectListItem>();
-        public List<SelectListItem> CustomerList { get; set; } = new List<SelectListItem>();
-        public List<SelectListItem> WarehouseList { get; set; } = new List<SelectListItem>();
+        public StockInViewModel Order { get; set; } = new StockInViewModel();
 
         public void OnGet()
         {
-            MovementTypeList = BuildTypes();
-            CustomerList = _pinhuaContext.GetCustomerSelectList();
-            WarehouseList = _pinhuaContext.GetWarehouseSelectList();
+            Order.MovementTypeList = BuildTypes();
+            Order.CustomerList = _pinhuaContext.GetCustomerSelectList();
+            Order.WarehouseList = _pinhuaContext.GetWarehouseSelectList();
+
+            Order.Main.OrderId = buildOrderId();
         }
 
         public IActionResult OnGetApiGetModelNames()
@@ -83,9 +82,9 @@ namespace PinhuaMaster.Pages.StockManagement.StockIn
                 if (details.Count == 0)
                 {
                     ModelState.AddModelError("", "清单不可为空");
-                    MovementTypeList = BuildTypes();
-                    CustomerList = _pinhuaContext.GetCustomerSelectList();
-                    WarehouseList = _pinhuaContext.GetWarehouseSelectList();
+                    Order.MovementTypeList = BuildTypes();
+                    Order.CustomerList = _pinhuaContext.GetCustomerSelectList();
+                    Order.WarehouseList = _pinhuaContext.GetWarehouseSelectList();
                     return Page();
                 }
                 _pinhuaContext.EsRepCase.Add(repCase);
@@ -97,11 +96,26 @@ namespace PinhuaMaster.Pages.StockManagement.StockIn
             }
             else
             {
-                MovementTypeList = BuildTypes();
-                CustomerList = _pinhuaContext.GetCustomerSelectList();
-                WarehouseList = _pinhuaContext.GetWarehouseSelectList();
+                Order.MovementTypeList = BuildTypes();
+                Order.CustomerList = _pinhuaContext.GetCustomerSelectList();
+                Order.WarehouseList = _pinhuaContext.GetWarehouseSelectList();
                 return Page();
             }
+        }
+
+        private string buildOrderId()
+        {
+            _pinhuaContext.Database.OpenConnection();
+            var cmd = _pinhuaContext.Database.GetDbConnection().CreateCommand();
+            cmd.CommandText = "SELECT dbo.GetStockInID('RK',GETDATE())";
+            var result = cmd.ExecuteReader();
+            var orderId = string.Empty;
+            while (result.Read())
+            {
+                orderId = result[0].ToString();
+            }
+            _pinhuaContext.Database.CloseConnection();
+            return orderId;
         }
 
         private List<SelectListItem> BuildTypes()

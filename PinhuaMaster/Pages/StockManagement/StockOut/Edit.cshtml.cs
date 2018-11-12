@@ -24,18 +24,14 @@ namespace PinhuaMaster.Pages.StockManagement.StockOut
             _mapper = mapper;
         }
 
-        public List<SelectListItem> MovementTypeList { get; set; } = new List<SelectListItem>();
-        public List<SelectListItem> CustomerList { get; set; } = new List<SelectListItem>();
-        public List<SelectListItem> WarehouseList { get; set; } = new List<SelectListItem>();
-
         [BindProperty]
         public StockOutViewModel Order { get; set; } = new StockOutViewModel();
 
         public void OnGet(string Id)
         {
-            MovementTypeList = BuildTypes();
-            CustomerList = _pinhuaContext.GetCustomerSelectList();
-            WarehouseList = _pinhuaContext.GetWarehouseSelectList();
+            Order.MovementTypeList = BuildTypes();
+            Order.CustomerList = _pinhuaContext.GetCustomerSelectList();
+            Order.WarehouseList = _pinhuaContext.GetWarehouseSelectList();
 
             Order.Main = _mapper.Map<StockOutMain, StockOutMainDTO>(_pinhuaContext.StockOutMain.AsNoTracking().Where(p => p.OrderId == Id).FirstOrDefault());
             Order.Details = _mapper.Map<List<StockOutDetails>, List<StockOutDetailsDTO>>(_pinhuaContext.StockOutDetails.AsNoTracking().Where(p => p.OrderId == Id).ToList());
@@ -92,9 +88,9 @@ namespace PinhuaMaster.Pages.StockManagement.StockOut
             }
             else
             {
-                MovementTypeList = BuildTypes();
-                CustomerList = _pinhuaContext.GetCustomerSelectList();
-                WarehouseList = _pinhuaContext.GetWarehouseSelectList();
+                Order.MovementTypeList = BuildTypes();
+                Order.CustomerList = _pinhuaContext.GetCustomerSelectList();
+                Order.WarehouseList = _pinhuaContext.GetWarehouseSelectList();
                 return Page();
             }
         }

@@ -17,6 +17,38 @@
       "url": "/OrderManagement/EasyPurchasing/Index"
     },
     {
+      "name": "出入库管理",
+      "icon": "fa fa-circle-o",
+      "url": "",
+      "children": [
+        {
+          "name": "出库单",
+          "icon": "fa fa-circle-o",
+          "url": "/StockManagement/StockOut/Index"
+        },
+        {
+          "name": "入库单",
+          "icon": "fa fa-circle-o",
+          "url": "/StockManagement/StockIn/Index"
+        },
+        {
+          "name": "生产入库单",
+          "icon": "fa fa-circle-o",
+          "url": "/StockManagement/ProductionStockIn/Index"
+        },
+        {
+          "name": "转仓单",
+          "icon": "fa fa-circle-o",
+          "url": "/StockManagement/StockTransfer/Index"
+        },
+        {
+          "name": "外协加工单",
+          "icon": "fa fa-circle-o",
+          "url": "/StockManagement/StockSubconctracting/Index"
+        }
+      ]
+    },
+    {
       "name": "旧版销售与采购",
       "icon": "fa fa-sticky-note-o",
       "url": "/OrderManagement/Old/Index"
@@ -192,33 +224,6 @@
           "name": "权限",
           "icon": "fa fa-circle-o",
           "url": "/Permission/Index"
-        }
-      ]
-    },
-    {
-      "name": "出入库管理",
-      "icon": "fa fa-circle-o",
-      "url": "",
-      "children": [
-        {
-          "name": "出库单",
-          "icon": "fa fa-circle-o",
-          "url": "/StockManagement/StockOut/Index"
-        },
-        {
-          "name": "入库单",
-          "icon": "fa fa-circle-o",
-          "url": "/StockManagement/StockIn/Index"
-        },
-        {
-          "name": "转仓单",
-          "icon": "fa fa-circle-o",
-          "url": "/StockManagement/StockTransfer/Index"
-        },
-        {
-          "name": "外协加工单",
-          "icon": "fa fa-circle-o",
-          "url": "/StockManagement/StockSubconctracting/Index"
         }
       ]
     }

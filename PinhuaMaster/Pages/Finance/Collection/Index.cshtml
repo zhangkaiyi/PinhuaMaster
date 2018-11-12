@@ -3,7 +3,7 @@
 @{
     ViewData["Title"] = "Index";
 
-    var collectionList = pinhuaContext.收款单.OrderByDescending(x => x.收款日期).ThenBy(x => x.单位编号);
+    var collectionList = pinhuaContext.收款单.OrderByDescending(x => x.收款日期).ThenByDescending(x => x.收款单号).ThenBy(x => x.单位编号);
 }
 <div class="row">
     <section class="col-sm-9">
