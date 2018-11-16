@@ -23,9 +23,6 @@ namespace PinhuaMaster.Pages.StockManagement
             _mapper = mapper;
         }
 
-        public IList<Gi2ViewModel> EasyDeliveryList { get; set; }
-        public IList<PurchasingViewModel> EasyPurchasingList { get; set; }
-
         public void OnGet()
         {
 

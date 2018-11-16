@@ -56,12 +56,12 @@
                     <tbody>
                         @foreach (var item in sales.OrderByDescending(p => p.Year).ThenByDescending(p => p.Month))
                         {
-                        <tr>
-                            <td>@item.Year</td>
-                            <td>@item.Month</td>
-                            <td class="text-right">@item.Data.Where(p => p.Type == "销售").Sum(p => p.Amount)?.ToString("0.00")</td>
-                            <td class="text-right">@item.Data.Where(p => p.Type == "销售").Sum(p => p.Square)?.ToString("0.00")</td>
-                        </tr>
+                            <tr>
+                                <td>@item.Year</td>
+                                <td>@item.Month</td>
+                                <td class="text-right">@item.Data.Where(p => p.Type == "销售").Sum(p => p.Amount)?.ToString("0.00")</td>
+                                <td class="text-right">@item.Data.Where(p => p.Type == "销售").Sum(p => p.Square)?.ToString("0.00")</td>
+                            </tr>
                         }
                     </tbody>
                 </table>

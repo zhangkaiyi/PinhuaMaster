@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using PinhuaMaster.Data.Entities.Pinhua;
 using PinhuaMaster.Extensions.Converters;
 using System;
@@ -11,8 +12,10 @@ namespace PinhuaMaster.Pages.Retail.Delivery.ViewModel
 {
     public class Gi2ViewModel
     {
-        public Gi2MainDTO Main { get; set; }
-        public List<Gi2DetaislDTO> Details { get; set; }
+        public Gi2MainDTO Main { get; set; } = new Gi2MainDTO();
+        public List<Gi2DetaislDTO> Details { get; set; } = new List<Gi2DetaislDTO>();
+        public List<SelectListItem> DeliveryTypes { get; set; } = new List<SelectListItem>();
+        public List<SelectListItem> CustomerSelectList { get; set; } = new List<SelectListItem>();
     }
 
     public class Gi2MainDTO

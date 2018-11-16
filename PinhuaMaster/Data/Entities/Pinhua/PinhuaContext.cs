@@ -6,6 +6,15 @@ namespace PinhuaMaster.Data.Entities.Pinhua
 {
     public partial class PinhuaContext : DbContext
     {
+        public PinhuaContext()
+        {
+        }
+
+        public PinhuaContext(DbContextOptions<PinhuaContext> options)
+            : base(options)
+        {
+        }
+
         public virtual DbSet<AttendanceReport> AttendanceReport { get; set; }
         public virtual DbSet<AttendanceReportDetails> AttendanceReportDetails { get; set; }
         public virtual DbSet<AttendanceReportResults> AttendanceReportResults { get; set; }
@@ -256,9 +265,13 @@ namespace PinhuaMaster.Data.Entities.Pinhua
         // Unable to generate entity type for table 'dbo.工资档案_明细'. Please see the warning messages.
         // Unable to generate entity type for table 'dbo.月考勤汇总_明细'. Please see the warning messages.
 
-        public PinhuaContext(DbContextOptions<PinhuaContext> options) : base(options)
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-
+            if (!optionsBuilder.IsConfigured)
+            {
+#warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
+                optionsBuilder.UseSqlServer("Data Source=192.168.1.20;Initial Catalog=Pinhua;User ID=sa;Password=Benny0922");
+            }
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -408,8 +421,6 @@ namespace PinhuaMaster.Data.Entities.Pinhua
                     .IsRequired()
                     .HasMaxLength(200)
                     .HasDefaultValueSql("('')");
-
-                entity.Property(e => e.TmpScope).HasDefaultValueSql("((0))");
             });
 
             modelBuilder.Entity<EsCaseFormat>(entity =>
@@ -423,25 +434,17 @@ namespace PinhuaMaster.Data.Entities.Pinhua
                     .HasMaxLength(20)
                     .HasDefaultValueSql("('')");
 
-                entity.Property(e => e.RtfId)
-                    .HasColumnName("rtfId")
-                    .HasDefaultValueSql("((0))");
+                entity.Property(e => e.RtfId).HasColumnName("rtfId");
 
-                entity.Property(e => e.R)
-                    .HasColumnName("r")
-                    .HasDefaultValueSql("((0))");
+                entity.Property(e => e.R).HasColumnName("r");
 
-                entity.Property(e => e.C)
-                    .HasColumnName("c")
-                    .HasDefaultValueSql("((0))");
+                entity.Property(e => e.C).HasColumnName("c");
 
                 entity.Property(e => e.Data)
                     .HasColumnName("data")
                     .HasColumnType("ntext");
 
-                entity.Property(e => e.Sh)
-                    .HasColumnName("sh")
-                    .HasDefaultValueSql("((0))");
+                entity.Property(e => e.Sh).HasColumnName("sh");
             });
 
             modelBuilder.Entity<EsCaseLink>(entity =>
@@ -454,9 +457,7 @@ namespace PinhuaMaster.Data.Entities.Pinhua
 
                 entity.Property(e => e.LinkNo).HasMaxLength(20);
 
-                entity.Property(e => e.C)
-                    .HasColumnName("c")
-                    .HasDefaultValueSql("((0))");
+                entity.Property(e => e.C).HasColumnName("c");
 
                 entity.Property(e => e.Data)
                     .HasColumnName("data")
@@ -477,9 +478,7 @@ namespace PinhuaMaster.Data.Entities.Pinhua
                     .HasColumnName("fileType")
                     .HasMaxLength(20);
 
-                entity.Property(e => e.IsNew)
-                    .HasColumnName("isNew")
-                    .HasDefaultValueSql("((0))");
+                entity.Property(e => e.IsNew).HasColumnName("isNew");
 
                 entity.Property(e => e.Nfsfolder)
                     .HasColumnName("NFSFolder")
@@ -492,9 +491,7 @@ namespace PinhuaMaster.Data.Entities.Pinhua
                     .HasMaxLength(100)
                     .HasDefaultValueSql("('')");
 
-                entity.Property(e => e.R)
-                    .HasColumnName("r")
-                    .HasDefaultValueSql("((0))");
+                entity.Property(e => e.R).HasColumnName("r");
 
                 entity.Property(e => e.RelaFolder)
                     .HasMaxLength(100)
@@ -504,13 +501,7 @@ namespace PinhuaMaster.Data.Entities.Pinhua
                     .HasColumnName("rng")
                     .HasMaxLength(20);
 
-                entity.Property(e => e.RtfId).HasDefaultValueSql("((0))");
-
-                entity.Property(e => e.SaveInto).HasDefaultValueSql("((0))");
-
-                entity.Property(e => e.Sh)
-                    .HasColumnName("sh")
-                    .HasDefaultValueSql("((0))");
+                entity.Property(e => e.Sh).HasColumnName("sh");
             });
 
             modelBuilder.Entity<EsCasePic>(entity =>
@@ -523,9 +514,7 @@ namespace PinhuaMaster.Data.Entities.Pinhua
 
                 entity.Property(e => e.PicNo).HasMaxLength(50);
 
-                entity.Property(e => e.C)
-                    .HasColumnName("c")
-                    .HasDefaultValueSql("((0))");
+                entity.Property(e => e.C).HasColumnName("c");
 
                 entity.Property(e => e.FileType)
                     .IsRequired()
@@ -536,9 +525,7 @@ namespace PinhuaMaster.Data.Entities.Pinhua
                     .HasColumnName("img")
                     .HasColumnType("image");
 
-                entity.Property(e => e.IsNew)
-                    .HasColumnName("isNew")
-                    .HasDefaultValueSql("((0))");
+                entity.Property(e => e.IsNew).HasColumnName("isNew");
 
                 entity.Property(e => e.Nfsfolder)
                     .HasColumnName("NFSFolder")
@@ -551,9 +538,7 @@ namespace PinhuaMaster.Data.Entities.Pinhua
                     .HasMaxLength(100)
                     .HasDefaultValueSql("('')");
 
-                entity.Property(e => e.R)
-                    .HasColumnName("r")
-                    .HasDefaultValueSql("((0))");
+                entity.Property(e => e.R).HasColumnName("r");
 
                 entity.Property(e => e.RelaFolder)
                     .HasMaxLength(100)
@@ -563,13 +548,7 @@ namespace PinhuaMaster.Data.Entities.Pinhua
                     .HasColumnName("rng")
                     .HasMaxLength(20);
 
-                entity.Property(e => e.RtfId).HasDefaultValueSql("((0))");
-
-                entity.Property(e => e.SaveInto).HasDefaultValueSql("((0))");
-
-                entity.Property(e => e.Sh)
-                    .HasColumnName("sh")
-                    .HasDefaultValueSql("((0))");
+                entity.Property(e => e.Sh).HasColumnName("sh");
             });
 
             modelBuilder.Entity<EsDataDomain>(entity =>
@@ -583,9 +562,7 @@ namespace PinhuaMaster.Data.Entities.Pinhua
                     .HasMaxLength(100)
                     .HasDefaultValueSql("('')");
 
-                entity.Property(e => e.BaseType)
-                    .HasColumnName("baseType")
-                    .HasDefaultValueSql("((0))");
+                entity.Property(e => e.BaseType).HasColumnName("baseType");
 
                 entity.Property(e => e.CreUname)
                     .HasColumnName("CreUName")
@@ -611,13 +588,9 @@ namespace PinhuaMaster.Data.Entities.Pinhua
                     .HasColumnName("innerType")
                     .HasMaxLength(20);
 
-                entity.Property(e => e.IsIdentity)
-                    .HasColumnName("isIdentity")
-                    .HasDefaultValueSql("((0))");
+                entity.Property(e => e.IsIdentity).HasColumnName("isIdentity");
 
-                entity.Property(e => e.IsUrl)
-                    .HasColumnName("isUrl")
-                    .HasDefaultValueSql("((0))");
+                entity.Property(e => e.IsUrl).HasColumnName("isUrl");
 
                 entity.Property(e => e.L).HasColumnName("l");
 
@@ -628,9 +601,7 @@ namespace PinhuaMaster.Data.Entities.Pinhua
 
                 entity.Property(e => e.OtherCanUpd).HasDefaultValueSql("((1))");
 
-                entity.Property(e => e.PreDefined)
-                    .HasColumnName("preDefined")
-                    .HasDefaultValueSql("((0))");
+                entity.Property(e => e.PreDefined).HasColumnName("preDefined");
 
                 entity.Property(e => e.Remark)
                     .HasColumnName("remark")
@@ -654,8 +625,6 @@ namespace PinhuaMaster.Data.Entities.Pinhua
 
                 entity.Property(e => e.FldId).ValueGeneratedNever();
 
-                entity.Property(e => e.BaseType).HasDefaultValueSql("((0))");
-
                 entity.Property(e => e.DataType)
                     .HasMaxLength(100)
                     .HasDefaultValueSql("('')");
@@ -672,15 +641,9 @@ namespace PinhuaMaster.Data.Entities.Pinhua
 
                 entity.Property(e => e.InnerType).HasMaxLength(20);
 
-                entity.Property(e => e.IsIdentity)
-                    .HasColumnName("isIdentity")
-                    .HasDefaultValueSql("((0))");
+                entity.Property(e => e.IsIdentity).HasColumnName("isIdentity");
 
-                entity.Property(e => e.L)
-                    .HasColumnName("l")
-                    .HasDefaultValueSql("((0))");
-
-                entity.Property(e => e.NotNull).HasDefaultValueSql("((0))");
+                entity.Property(e => e.L).HasColumnName("l");
 
                 entity.Property(e => e.PicType).HasMaxLength(8);
 
@@ -693,17 +656,13 @@ namespace PinhuaMaster.Data.Entities.Pinhua
 
                 entity.ToTable("ES_DataRef");
 
-                entity.Property(e => e.ObjType)
-                    .HasColumnName("objType")
-                    .HasDefaultValueSql("((0))");
+                entity.Property(e => e.ObjType).HasColumnName("objType");
 
                 entity.Property(e => e.ObjId)
                     .HasColumnName("objId")
                     .HasMaxLength(20);
 
-                entity.Property(e => e.RefType)
-                    .HasColumnName("refType")
-                    .HasDefaultValueSql("((0))");
+                entity.Property(e => e.RefType).HasColumnName("refType");
 
                 entity.Property(e => e.RefId)
                     .HasColumnName("refId")
@@ -743,9 +702,7 @@ namespace PinhuaMaster.Data.Entities.Pinhua
                     .HasColumnName("db")
                     .HasMaxLength(256);
 
-                entity.Property(e => e.DbmsType)
-                    .HasColumnName("dbmsType")
-                    .HasDefaultValueSql("((0))");
+                entity.Property(e => e.DbmsType).HasColumnName("dbmsType");
 
                 entity.Property(e => e.DsName)
                     .IsRequired()
@@ -753,9 +710,7 @@ namespace PinhuaMaster.Data.Entities.Pinhua
                     .HasMaxLength(50)
                     .HasDefaultValueSql("('')");
 
-                entity.Property(e => e.DsType)
-                    .HasColumnName("dsType")
-                    .HasDefaultValueSql("((0))");
+                entity.Property(e => e.DsType).HasColumnName("dsType");
 
                 entity.Property(e => e.LnkServerName)
                     .HasColumnName("lnkServerName")
@@ -767,17 +722,11 @@ namespace PinhuaMaster.Data.Entities.Pinhua
                     .HasColumnName("pwd")
                     .HasMaxLength(256);
 
-                entity.Property(e => e.State)
-                    .HasColumnName("state")
-                    .HasDefaultValueSql("((0))");
+                entity.Property(e => e.State).HasColumnName("state");
 
-                entity.Property(e => e.SubType)
-                    .HasColumnName("subType")
-                    .HasDefaultValueSql("((0))");
+                entity.Property(e => e.SubType).HasColumnName("subType");
 
-                entity.Property(e => e.SupportTrans)
-                    .HasColumnName("supportTrans")
-                    .HasDefaultValueSql("((0))");
+                entity.Property(e => e.SupportTrans).HasColumnName("supportTrans");
 
                 entity.Property(e => e.Uid)
                     .HasColumnName("uid")
@@ -796,8 +745,6 @@ namespace PinhuaMaster.Data.Entities.Pinhua
                     .IsUnique();
 
                 entity.Property(e => e.DtId).ValueGeneratedNever();
-
-                entity.Property(e => e.BuiltIn).HasDefaultValueSql("((0))");
 
                 entity.Property(e => e.Catalog)
                     .IsRequired()
@@ -823,10 +770,6 @@ namespace PinhuaMaster.Data.Entities.Pinhua
 
                 entity.Property(e => e.IfCanMap).HasDefaultValueSql("((1))");
 
-                entity.Property(e => e.IfReadOnly).HasDefaultValueSql("((0))");
-
-                entity.Property(e => e.IsView).HasDefaultValueSql("((0))");
-
                 entity.Property(e => e.RealName)
                     .IsRequired()
                     .HasMaxLength(256)
@@ -843,8 +786,6 @@ namespace PinhuaMaster.Data.Entities.Pinhua
                     .IsRequired()
                     .HasMaxLength(256)
                     .HasDefaultValueSql("('')");
-
-                entity.Property(e => e.State).HasDefaultValueSql("((0))");
 
                 entity.Property(e => e.UpdTime)
                     .HasColumnName("updTime")
@@ -895,10 +836,6 @@ namespace PinhuaMaster.Data.Entities.Pinhua
                     .IsRequired()
                     .HasMaxLength(500)
                     .HasDefaultValueSql("('')");
-
-                entity.Property(e => e.IsOrg).HasDefaultValueSql("((0))");
-
-                entity.Property(e => e.IsOuter).HasDefaultValueSql("((0))");
 
                 entity.Property(e => e.Path)
                     .IsRequired()
@@ -958,10 +895,6 @@ namespace PinhuaMaster.Data.Entities.Pinhua
 
                 entity.Property(e => e.StdId).ValueGeneratedNever();
 
-                entity.Property(e => e.BuiltIn).HasDefaultValueSql("((0))");
-
-                entity.Property(e => e.BuiltInId).HasDefaultValueSql("((0))");
-
                 entity.Property(e => e.CreTime)
                     .HasColumnType("datetime")
                     .HasDefaultValueSql("(getdate())");
@@ -975,8 +908,6 @@ namespace PinhuaMaster.Data.Entities.Pinhua
                     .HasMaxLength(50)
                     .HasDefaultValueSql("('')");
 
-                entity.Property(e => e.DsType).HasDefaultValueSql("((0))");
-
                 entity.Property(e => e.Expr).HasColumnType("ntext");
 
                 entity.Property(e => e.Filter)
@@ -985,16 +916,12 @@ namespace PinhuaMaster.Data.Entities.Pinhua
 
                 entity.Property(e => e.GrpExpr).HasColumnType("ntext");
 
-                entity.Property(e => e.Mia).HasDefaultValueSql("((0))");
-
                 entity.Property(e => e.OtherCanUpd).HasDefaultValueSql("((1))");
 
                 entity.Property(e => e.StdName)
                     .IsRequired()
                     .HasMaxLength(100)
                     .HasDefaultValueSql("('')");
-
-                entity.Property(e => e.StdType).HasDefaultValueSql("((0))");
 
                 entity.Property(e => e.UpdTime)
                     .HasColumnType("datetime")
@@ -1020,47 +947,22 @@ namespace PinhuaMaster.Data.Entities.Pinhua
 
                 entity.Property(e => e.Id).HasDefaultValueSql("((1))");
 
-                entity.Property(e => e.AssDgnDeptSet).HasDefaultValueSql("((0))");
-
-                entity.Property(e => e.AssDgnRoleSet).HasDefaultValueSql("((0))");
-
-                entity.Property(e => e.AssDgnScope).HasDefaultValueSql("((0))");
-
                 entity.Property(e => e.AssExcludeAdmin).HasDefaultValueSql("((1))");
 
-                entity.Property(e => e.AssRwdeptSet)
-                    .HasColumnName("AssRWDeptSet")
-                    .HasDefaultValueSql("((0))");
+                entity.Property(e => e.AssRwdeptSet).HasColumnName("AssRWDeptSet");
 
-                entity.Property(e => e.AssRwroleSet)
-                    .HasColumnName("AssRWRoleSet")
-                    .HasDefaultValueSql("((0))");
+                entity.Property(e => e.AssRwroleSet).HasColumnName("AssRWRoleSet");
 
-                entity.Property(e => e.AssRwscope)
-                    .HasColumnName("AssRWScope")
-                    .HasDefaultValueSql("((0))");
-
-                entity.Property(e => e.AwakeLoginA).HasDefaultValueSql("((0))");
+                entity.Property(e => e.AssRwscope).HasColumnName("AssRWScope");
 
                 entity.Property(e => e.AwakeLoginM).HasDefaultValueSql("((1))");
 
-                entity.Property(e => e.DirectSql)
-                    .HasColumnName("directSql")
-                    .HasDefaultValueSql("((0))");
+                entity.Property(e => e.DirectSql).HasColumnName("directSql");
 
                 entity.Property(e => e.PwdCharset)
                     .IsRequired()
-                    .HasColumnType("char(20)");
-
-                entity.Property(e => e.PwdCycle).HasDefaultValueSql("((0))");
-
-                entity.Property(e => e.PwdErrTimes).HasDefaultValueSql("((0))");
-
-                entity.Property(e => e.PwdLockExp).HasDefaultValueSql("((0))");
-
-                entity.Property(e => e.PwdMaxDay).HasDefaultValueSql("((0))");
-
-                entity.Property(e => e.PwdMinLen).HasDefaultValueSql("((0))");
+                    .HasMaxLength(20)
+                    .IsUnicode(false);
 
                 entity.Property(e => e.SpecialChars)
                     .IsRequired()
@@ -1156,13 +1058,9 @@ namespace PinhuaMaster.Data.Entities.Pinhua
                     .HasColumnName("comBy")
                     .HasDefaultValueSql("((0))");
 
-                entity.Property(e => e.CreBy)
-                    .HasColumnName("creBy")
-                    .HasDefaultValueSql("((0))");
+                entity.Property(e => e.CreBy).HasColumnName("creBy");
 
-                entity.Property(e => e.Todo)
-                    .HasColumnName("todo")
-                    .HasDefaultValueSql("((0))");
+                entity.Property(e => e.Todo).HasColumnName("todo");
             });
 
             modelBuilder.Entity<EsHomeInfo>(entity =>
@@ -1179,9 +1077,7 @@ namespace PinhuaMaster.Data.Entities.Pinhua
                     .HasColumnName("acctMonth")
                     .HasDefaultValueSql("((1))");
 
-                entity.Property(e => e.AcctMonthType)
-                    .HasColumnName("acctMonth_type")
-                    .HasDefaultValueSql("((0))");
+                entity.Property(e => e.AcctMonthType).HasColumnName("acctMonth_type");
 
                 entity.Property(e => e.AcctTime).HasColumnName("acctTime");
 
@@ -1189,17 +1085,11 @@ namespace PinhuaMaster.Data.Entities.Pinhua
                     .HasColumnName("address")
                     .HasMaxLength(200);
 
-                entity.Property(e => e.AllowOuter)
-                    .HasColumnName("allowOuter")
-                    .HasDefaultValueSql("((0))");
+                entity.Property(e => e.AllowOuter).HasColumnName("allowOuter");
 
-                entity.Property(e => e.AllowSendEmail)
-                    .HasColumnName("allowSendEmail")
-                    .HasDefaultValueSql("((0))");
+                entity.Property(e => e.AllowSendEmail).HasColumnName("allowSendEmail");
 
-                entity.Property(e => e.AppId)
-                    .HasColumnName("appId")
-                    .HasDefaultValueSql("((0))");
+                entity.Property(e => e.AppId).HasColumnName("appId");
 
                 entity.Property(e => e.AppTitle)
                     .IsRequired()
@@ -1218,9 +1108,7 @@ namespace PinhuaMaster.Data.Entities.Pinhua
                     .HasMaxLength(20)
                     .HasDefaultValueSql("('')");
 
-                entity.Property(e => e.AutoRegUser)
-                    .HasColumnName("autoRegUser")
-                    .HasDefaultValueSql("((0))");
+                entity.Property(e => e.AutoRegUser).HasColumnName("autoRegUser");
 
                 entity.Property(e => e.BankAccount)
                     .HasColumnName("bankAccount")
@@ -1246,9 +1134,7 @@ namespace PinhuaMaster.Data.Entities.Pinhua
                     .HasMaxLength(500)
                     .HasDefaultValueSql("('')");
 
-                entity.Property(e => e.DomainUser)
-                    .HasColumnName("domainUser")
-                    .HasDefaultValueSql("((0))");
+                entity.Property(e => e.DomainUser).HasColumnName("domainUser");
 
                 entity.Property(e => e.Email)
                     .HasColumnName("email")
@@ -1272,15 +1158,7 @@ namespace PinhuaMaster.Data.Entities.Pinhua
                     .HasColumnName("fax")
                     .HasMaxLength(20);
 
-                entity.Property(e => e.FillSecurity)
-                    .HasColumnName("fillSecurity")
-                    .HasDefaultValueSql("((0))");
-
-                entity.Property(e => e.HideEditbox).HasDefaultValueSql("((0))");
-
-                entity.Property(e => e.HideGridline).HasDefaultValueSql("((0))");
-
-                entity.Property(e => e.HideHead).HasDefaultValueSql("((0))");
+                entity.Property(e => e.FillSecurity).HasColumnName("fillSecurity");
 
                 entity.Property(e => e.JPerson)
                     .HasColumnName("jPerson")
@@ -1294,9 +1172,7 @@ namespace PinhuaMaster.Data.Entities.Pinhua
                     .HasColumnName("LDBindDN")
                     .HasMaxLength(255);
 
-                entity.Property(e => e.Ldenable)
-                    .HasColumnName("LDEnable")
-                    .HasDefaultValueSql("((0))");
+                entity.Property(e => e.Ldenable).HasColumnName("LDEnable");
 
                 entity.Property(e => e.Ldhost)
                     .HasColumnName("LDHost")
@@ -1308,15 +1184,11 @@ namespace PinhuaMaster.Data.Entities.Pinhua
 
                 entity.Property(e => e.Ldport).HasColumnName("LDPort");
 
-                entity.Property(e => e.MenuStyle).HasDefaultValueSql("((0))");
-
                 entity.Property(e => e.RegPrompt)
                     .HasColumnName("regPrompt")
                     .HasMaxLength(200);
 
-                entity.Property(e => e.RoleGrp)
-                    .HasColumnName("roleGrp")
-                    .HasDefaultValueSql("((0))");
+                entity.Property(e => e.RoleGrp).HasColumnName("roleGrp");
 
                 entity.Property(e => e.TaxNo)
                     .HasColumnName("taxNo")
@@ -1338,9 +1210,7 @@ namespace PinhuaMaster.Data.Entities.Pinhua
                     .HasColumnName("webUrl")
                     .HasMaxLength(100);
 
-                entity.Property(e => e.WfConExec)
-                    .HasColumnName("wfConExec")
-                    .HasDefaultValueSql("((0))");
+                entity.Property(e => e.WfConExec).HasColumnName("wfConExec");
 
                 entity.Property(e => e.Zip)
                     .HasColumnName("zip")
@@ -1384,8 +1254,6 @@ namespace PinhuaMaster.Data.Entities.Pinhua
                 entity.HasKey(e => new { e.StdId, e.PartId });
 
                 entity.ToTable("ES_IdPart");
-
-                entity.Property(e => e.PartId).HasDefaultValueSql("((0))");
 
                 entity.Property(e => e.FixText)
                     .HasColumnName("fixText")
@@ -1433,16 +1301,12 @@ namespace PinhuaMaster.Data.Entities.Pinhua
 
                 entity.Property(e => e.StdId).ValueGeneratedNever();
 
-                entity.Property(e => e.GenAtSave).HasDefaultValueSql("((0))");
-
                 entity.Property(e => e.Pattern)
                     .IsRequired()
                     .HasColumnName("pattern")
                     .HasMaxLength(200);
 
-                entity.Property(e => e.Reuse)
-                    .HasColumnName("reuse")
-                    .HasDefaultValueSql("((0))");
+                entity.Property(e => e.Reuse).HasColumnName("reuse");
 
                 entity.Property(e => e.Sample)
                     .IsRequired()
@@ -1466,13 +1330,9 @@ namespace PinhuaMaster.Data.Entities.Pinhua
                     .HasColumnName("theId")
                     .HasMaxLength(200);
 
-                entity.Property(e => e.Dd)
-                    .HasColumnName("dd")
-                    .HasDefaultValueSql("((0))");
+                entity.Property(e => e.Dd).HasColumnName("dd");
 
-                entity.Property(e => e.Mm)
-                    .HasColumnName("mm")
-                    .HasDefaultValueSql("((0))");
+                entity.Property(e => e.Mm).HasColumnName("mm");
 
                 entity.Property(e => e.Prefix)
                     .HasColumnName("prefix")
@@ -1494,9 +1354,7 @@ namespace PinhuaMaster.Data.Entities.Pinhua
                     .HasMaxLength(20)
                     .HasDefaultValueSql("('')");
 
-                entity.Property(e => e.State)
-                    .HasColumnName("state")
-                    .HasDefaultValueSql("((0))");
+                entity.Property(e => e.State).HasColumnName("state");
 
                 entity.Property(e => e.WiId)
                     .HasColumnName("wiId")
@@ -1508,9 +1366,7 @@ namespace PinhuaMaster.Data.Entities.Pinhua
                     .HasColumnType("datetime")
                     .HasDefaultValueSql("(getdate())");
 
-                entity.Property(e => e.Yy)
-                    .HasColumnName("yy")
-                    .HasDefaultValueSql("((0))");
+                entity.Property(e => e.Yy).HasColumnName("yy");
             });
 
             modelBuilder.Entity<EsIdxFld>(entity =>
@@ -1547,17 +1403,11 @@ namespace PinhuaMaster.Data.Entities.Pinhua
                     .HasColumnName("idxName")
                     .HasMaxLength(50);
 
-                entity.Property(e => e.IsClustered)
-                    .HasColumnName("isClustered")
-                    .HasDefaultValueSql("((0))");
+                entity.Property(e => e.IsClustered).HasColumnName("isClustered");
 
-                entity.Property(e => e.IsIndex)
-                    .HasColumnName("isIndex")
-                    .HasDefaultValueSql("((0))");
+                entity.Property(e => e.IsIndex).HasColumnName("isIndex");
 
-                entity.Property(e => e.IsUnique)
-                    .HasColumnName("isUnique")
-                    .HasDefaultValueSql("((0))");
+                entity.Property(e => e.IsUnique).HasColumnName("isUnique");
             });
 
             modelBuilder.Entity<EsImContactGrp>(entity =>
@@ -1607,13 +1457,9 @@ namespace PinhuaMaster.Data.Entities.Pinhua
                     .HasColumnType("ntext")
                     .HasDefaultValueSql("('')");
 
-                entity.Property(e => e.MsgType)
-                    .HasColumnName("msgType")
-                    .HasDefaultValueSql("((0))");
+                entity.Property(e => e.MsgType).HasColumnName("msgType");
 
-                entity.Property(e => e.Recver)
-                    .HasColumnName("recver")
-                    .HasDefaultValueSql("((0))");
+                entity.Property(e => e.Recver).HasColumnName("recver");
 
                 entity.Property(e => e.RecverName)
                     .HasColumnName("recverName")
@@ -1671,8 +1517,6 @@ namespace PinhuaMaster.Data.Entities.Pinhua
                     .HasMaxLength(50)
                     .HasDefaultValueSql("('')");
 
-                entity.Property(e => e.AppNo).HasDefaultValueSql("((0))");
-
                 entity.Property(e => e.Computer)
                     .IsRequired()
                     .HasMaxLength(50)
@@ -1686,8 +1530,6 @@ namespace PinhuaMaster.Data.Entities.Pinhua
                 entity.Property(e => e.Ip)
                     .HasMaxLength(50)
                     .HasDefaultValueSql("('')");
-
-                entity.Property(e => e.LogType).HasDefaultValueSql("((0))");
 
                 entity.Property(e => e.OpDesc).HasMaxLength(500);
 
@@ -1709,8 +1551,6 @@ namespace PinhuaMaster.Data.Entities.Pinhua
                     .HasDefaultValueSql("('')");
 
                 entity.Property(e => e.SqlStmt).HasColumnType("ntext");
-
-                entity.Property(e => e.UserId).HasDefaultValueSql("((0))");
 
                 entity.Property(e => e.UserLogin)
                     .IsRequired()
@@ -1746,52 +1586,32 @@ namespace PinhuaMaster.Data.Entities.Pinhua
                     .HasColumnName("authId")
                     .ValueGeneratedNever();
 
-                entity.Property(e => e.AuthType)
-                    .HasColumnName("authType")
-                    .HasDefaultValueSql("((0))");
+                entity.Property(e => e.AuthType).HasColumnName("authType");
 
-                entity.Property(e => e.CreDir)
-                    .HasColumnName("creDir")
-                    .HasDefaultValueSql("((0))");
+                entity.Property(e => e.CreDir).HasColumnName("creDir");
 
-                entity.Property(e => e.CreFile)
-                    .HasColumnName("creFile")
-                    .HasDefaultValueSql("((0))");
+                entity.Property(e => e.CreFile).HasColumnName("creFile");
 
-                entity.Property(e => e.DelDir)
-                    .HasColumnName("delDir")
-                    .HasDefaultValueSql("((0))");
+                entity.Property(e => e.DelDir).HasColumnName("delDir");
 
-                entity.Property(e => e.DeleteFile)
-                    .HasColumnName("deleteFile")
-                    .HasDefaultValueSql("((0))");
+                entity.Property(e => e.DeleteFile).HasColumnName("deleteFile");
 
                 entity.Property(e => e.DeptIds)
                     .HasColumnName("deptIds")
                     .HasMaxLength(200)
                     .HasDefaultValueSql("('')");
 
-                entity.Property(e => e.DeptScope)
-                    .HasColumnName("deptScope")
-                    .HasDefaultValueSql("((0))");
+                entity.Property(e => e.DeptScope).HasColumnName("deptScope");
 
-                entity.Property(e => e.DownloadFile)
-                    .HasColumnName("downloadFile")
-                    .HasDefaultValueSql("((0))");
+                entity.Property(e => e.DownloadFile).HasColumnName("downloadFile");
 
-                entity.Property(e => e.ListSub)
-                    .HasColumnName("listSub")
-                    .HasDefaultValueSql("((0))");
+                entity.Property(e => e.ListSub).HasColumnName("listSub");
 
-                entity.Property(e => e.RenameDir)
-                    .HasColumnName("renameDir")
-                    .HasDefaultValueSql("((0))");
+                entity.Property(e => e.RenameDir).HasColumnName("renameDir");
 
                 entity.Property(e => e.RoleId).HasDefaultValueSql("((0))");
 
-                entity.Property(e => e.UpdFile)
-                    .HasColumnName("updFile")
-                    .HasDefaultValueSql("((0))");
+                entity.Property(e => e.UpdFile).HasColumnName("updFile");
 
                 entity.Property(e => e.UserId).HasDefaultValueSql("((0))");
             });
@@ -1858,9 +1678,7 @@ namespace PinhuaMaster.Data.Entities.Pinhua
                     .HasColumnName("deptIds")
                     .HasMaxLength(200);
 
-                entity.Property(e => e.DeptScope)
-                    .HasColumnName("deptScope")
-                    .HasDefaultValueSql("((0))");
+                entity.Property(e => e.DeptScope).HasColumnName("deptScope");
             });
 
             modelBuilder.Entity<EsQryAcl>(entity =>
@@ -1869,24 +1687,14 @@ namespace PinhuaMaster.Data.Entities.Pinhua
 
                 entity.ToTable("ES_QryAcl");
 
-                entity.Property(e => e.RoleId).HasDefaultValueSql("((0))");
+                entity.Property(e => e.UserId).HasColumnName("userId");
 
-                entity.Property(e => e.UserId)
-                    .HasColumnName("userId")
-                    .HasDefaultValueSql("((0))");
-
-                entity.Property(e => e.AuthType)
-                    .HasColumnName("authType")
-                    .HasDefaultValueSql("((0))");
+                entity.Property(e => e.AuthType).HasColumnName("authType");
 
                 entity.Property(e => e.DeptIds)
                     .IsRequired()
                     .HasMaxLength(200)
                     .HasDefaultValueSql("('')");
-
-                entity.Property(e => e.DeptScope).HasDefaultValueSql("((0))");
-
-                entity.Property(e => e.Export).HasDefaultValueSql("((0))");
 
                 entity.Property(e => e.R).HasDefaultValueSql("((1))");
             });
@@ -1896,8 +1704,6 @@ namespace PinhuaMaster.Data.Entities.Pinhua
                 entity.HasKey(e => new { e.UserId, e.StdId });
 
                 entity.ToTable("ES_QryDesignAcl");
-
-                entity.Property(e => e.Dgn).HasDefaultValueSql("((0))");
             });
 
             modelBuilder.Entity<EsRcAdd>(entity =>
@@ -1933,8 +1739,6 @@ namespace PinhuaMaster.Data.Entities.Pinhua
                 entity.Property(e => e.RelaFolder)
                     .HasMaxLength(100)
                     .HasDefaultValueSql("('')");
-
-                entity.Property(e => e.SaveInto).HasDefaultValueSql("((0))");
 
                 entity.Property(e => e.XlsFile)
                     .HasColumnName("xlsFile")
@@ -1973,13 +1777,9 @@ namespace PinhuaMaster.Data.Entities.Pinhua
                     .HasMaxLength(20)
                     .ValueGeneratedNever();
 
-                entity.Property(e => e.BackUpdate)
-                    .HasColumnName("backUpdate")
-                    .HasDefaultValueSql("((0))");
+                entity.Property(e => e.BackUpdate).HasColumnName("backUpdate");
 
-                entity.Property(e => e.CommitByDataWriter)
-                    .HasColumnName("commitByDataWriter")
-                    .HasDefaultValueSql("((0))");
+                entity.Property(e => e.CommitByDataWriter).HasColumnName("commitByDataWriter");
 
                 entity.Property(e => e.FillDate)
                     .HasColumnName("fillDate")
@@ -1998,13 +1798,9 @@ namespace PinhuaMaster.Data.Entities.Pinhua
                     .HasColumnName("fillUserName")
                     .HasMaxLength(50);
 
-                entity.Property(e => e.LockInServer)
-                    .HasColumnName("lockInServer")
-                    .HasDefaultValueSql("((0))");
+                entity.Property(e => e.LockInServer).HasColumnName("lockInServer");
 
-                entity.Property(e => e.LockState)
-                    .HasColumnName("lockState")
-                    .HasDefaultValueSql("((0))");
+                entity.Property(e => e.LockState).HasColumnName("lockState");
 
                 entity.Property(e => e.LstFillDate)
                     .HasColumnName("lstFillDate")
@@ -2017,9 +1813,7 @@ namespace PinhuaMaster.Data.Entities.Pinhua
                     .HasColumnName("lstFillerName")
                     .HasMaxLength(50);
 
-                entity.Property(e => e.NoticeState)
-                    .HasColumnName("noticeState")
-                    .HasDefaultValueSql("((0))");
+                entity.Property(e => e.NoticeState).HasColumnName("noticeState");
 
                 entity.Property(e => e.OpenBy).HasColumnName("openBy");
 
@@ -2029,9 +1823,7 @@ namespace PinhuaMaster.Data.Entities.Pinhua
 
                 entity.Property(e => e.OpenBySesId).HasMaxLength(20);
 
-                entity.Property(e => e.OpenState)
-                    .HasColumnName("openState")
-                    .HasDefaultValueSql("((0))");
+                entity.Property(e => e.OpenState).HasColumnName("openState");
 
                 entity.Property(e => e.PrintTime)
                     .HasColumnName("printTime")
@@ -2055,9 +1847,7 @@ namespace PinhuaMaster.Data.Entities.Pinhua
 
                 entity.Property(e => e.RtId).HasMaxLength(20);
 
-                entity.Property(e => e.SetNstateInServer)
-                    .HasColumnName("setNStateInServer")
-                    .HasDefaultValueSql("((0))");
+                entity.Property(e => e.SetNstateInServer).HasColumnName("setNStateInServer");
 
                 entity.Property(e => e.State)
                     .HasColumnName("state")
@@ -2082,29 +1872,17 @@ namespace PinhuaMaster.Data.Entities.Pinhua
 
                 entity.Property(e => e.RoleId).ValueGeneratedNever();
 
-                entity.Property(e => e.BuiltIn).HasDefaultValueSql("((0))");
-
-                entity.Property(e => e.BuiltinId).HasDefaultValueSql("((0))");
-
                 entity.Property(e => e.CanAssign).HasDefaultValueSql("((1))");
 
                 entity.Property(e => e.CreTime)
                     .HasColumnType("datetime")
                     .HasDefaultValueSql("(getdate())");
 
-                entity.Property(e => e.CreUid).HasDefaultValueSql("((0))");
-
                 entity.Property(e => e.CreUname)
                     .IsRequired()
                     .HasColumnName("CreUName")
                     .HasMaxLength(50)
                     .HasDefaultValueSql("('')");
-
-                entity.Property(e => e.DeptScope).HasDefaultValueSql("((0))");
-
-                entity.Property(e => e.HasSuper).HasDefaultValueSql("((0))");
-
-                entity.Property(e => e.OtherCanUpd).HasDefaultValueSql("((0))");
 
                 entity.Property(e => e.RoleDesc).HasMaxLength(500);
 
@@ -2116,8 +1894,6 @@ namespace PinhuaMaster.Data.Entities.Pinhua
                 entity.Property(e => e.RoleSpec)
                     .HasColumnName("roleSpec")
                     .HasColumnType("ntext");
-
-                entity.Property(e => e.SuperDeptType).HasDefaultValueSql("((0))");
 
                 entity.Property(e => e.SuperRoleName)
                     .HasMaxLength(50)
@@ -2172,9 +1948,7 @@ namespace PinhuaMaster.Data.Entities.Pinhua
 
                 entity.ToTable("ES_RtfLink");
 
-                entity.Property(e => e.EditMode)
-                    .HasColumnName("editMode")
-                    .HasDefaultValueSql("((0))");
+                entity.Property(e => e.EditMode).HasColumnName("editMode");
 
                 entity.Property(e => e.LinkIgnoreFill).HasDefaultValueSql("((1))");
 
@@ -2208,8 +1982,6 @@ namespace PinhuaMaster.Data.Entities.Pinhua
 
                 entity.Property(e => e.FldPrompt).HasMaxLength(1500);
 
-                entity.Property(e => e.FldSpecial).HasDefaultValueSql("((0))");
-
                 entity.Property(e => e.FullName)
                     .IsRequired()
                     .HasMaxLength(200)
@@ -2217,57 +1989,23 @@ namespace PinhuaMaster.Data.Entities.Pinhua
 
                 entity.Property(e => e.GrpNo).HasDefaultValueSql("((0))");
 
-                entity.Property(e => e.GrpOrdType).HasDefaultValueSql("((0))");
+                entity.Property(e => e.InExprTmpLock).HasColumnName("inExprTmpLock");
 
-                entity.Property(e => e.HeadMark).HasDefaultValueSql("((0))");
+                entity.Property(e => e.InExprTmpNotice).HasColumnName("inExprTmpNotice");
 
-                entity.Property(e => e.IfHidden).HasDefaultValueSql("((0))");
-
-                entity.Property(e => e.InExprTmpLock)
-                    .HasColumnName("inExprTmpLock")
-                    .HasDefaultValueSql("((0))");
-
-                entity.Property(e => e.InExprTmpNotice)
-                    .HasColumnName("inExprTmpNotice")
-                    .HasDefaultValueSql("((0))");
-
-                entity.Property(e => e.InExprWfLink)
-                    .HasColumnName("inExprWfLink")
-                    .HasDefaultValueSql("((0))");
+                entity.Property(e => e.InExprWfLink).HasColumnName("inExprWfLink");
 
                 entity.Property(e => e.IsFindFld).HasDefaultValueSql("((1))");
 
-                entity.Property(e => e.IsIndex).HasDefaultValueSql("((0))");
-
-                entity.Property(e => e.IsMerge)
-                    .HasColumnName("isMerge")
-                    .HasDefaultValueSql("((0))");
-
-                entity.Property(e => e.LinkRtFld).HasDefaultValueSql("((0))");
-
-                entity.Property(e => e.LinkType).HasDefaultValueSql("((0))");
+                entity.Property(e => e.IsMerge).HasColumnName("isMerge");
 
                 entity.Property(e => e.ListFill).HasMaxLength(1500);
 
                 entity.Property(e => e.ListGrpSpec).HasMaxLength(1500);
 
-                entity.Property(e => e.Locked).HasDefaultValueSql("((0))");
-
                 entity.Property(e => e.LogUpd).HasDefaultValueSql("((0))");
 
-                entity.Property(e => e.NoClear).HasDefaultValueSql("((0))");
-
-                entity.Property(e => e.NotNull).HasDefaultValueSql("((0))");
-
-                entity.Property(e => e.NotPrint).HasDefaultValueSql("((0))");
-
                 entity.Property(e => e.OccurNo).HasDefaultValueSql("((1))");
-
-                entity.Property(e => e.OrdNo).HasDefaultValueSql("((0))");
-
-                entity.Property(e => e.OrdType).HasDefaultValueSql("((0))");
-
-                entity.Property(e => e.Overprint).HasDefaultValueSql("((0))");
 
                 entity.Property(e => e.RtId)
                     .IsRequired()
@@ -2275,19 +2013,11 @@ namespace PinhuaMaster.Data.Entities.Pinhua
 
                 entity.Property(e => e.SheetId).HasDefaultValueSql("((1))");
 
-                entity.Property(e => e.StdLstIsMultiSel).HasDefaultValueSql("((0))");
-
-                entity.Property(e => e.StdType)
-                    .HasColumnName("stdType")
-                    .HasDefaultValueSql("((0))");
-
-                entity.Property(e => e.StdValRefresh).HasDefaultValueSql("((0))");
+                entity.Property(e => e.StdType).HasColumnName("stdType");
 
                 entity.Property(e => e.TreeFilter).HasMaxLength(1500);
 
                 entity.Property(e => e.TreeFilterSpec).HasMaxLength(1500);
-
-                entity.Property(e => e.TreeSeparateFill).HasDefaultValueSql("((0))");
             });
 
             modelBuilder.Entity<EsRtfStd>(entity =>
@@ -2302,9 +2032,7 @@ namespace PinhuaMaster.Data.Entities.Pinhua
                     .HasColumnName("rtfId")
                     .HasDefaultValueSql("('')");
 
-                entity.Property(e => e.AutoIdGen)
-                    .HasColumnName("autoIdGen")
-                    .HasDefaultValueSql("((0))");
+                entity.Property(e => e.AutoIdGen).HasColumnName("autoIdGen");
 
                 entity.Property(e => e.Filter)
                     .HasColumnName("filter")
@@ -2326,32 +2054,22 @@ namespace PinhuaMaster.Data.Entities.Pinhua
                     .HasColumnType("ntext")
                     .HasDefaultValueSql("('')");
 
-                entity.Property(e => e.ListMultiSel)
-                    .HasColumnName("listMultiSel")
-                    .HasDefaultValueSql("((0))");
+                entity.Property(e => e.ListMultiSel).HasColumnName("listMultiSel");
 
-                entity.Property(e => e.NewIdBindChg)
-                    .HasColumnName("newIdBindChg")
-                    .HasDefaultValueSql("((0))");
+                entity.Property(e => e.NewIdBindChg).HasColumnName("newIdBindChg");
 
                 entity.Property(e => e.No).HasColumnName("no");
 
-                entity.Property(e => e.NoBindNoId)
-                    .HasColumnName("noBindNoId")
-                    .HasDefaultValueSql("((0))");
+                entity.Property(e => e.NoBindNoId).HasColumnName("noBindNoId");
 
                 entity.Property(e => e.OpCond)
                     .HasColumnName("opCond")
                     .HasColumnType("ntext")
                     .HasDefaultValueSql("('')");
 
-                entity.Property(e => e.StdValRefresh)
-                    .HasColumnName("stdValRefresh")
-                    .HasDefaultValueSql("((0))");
+                entity.Property(e => e.StdValRefresh).HasColumnName("stdValRefresh");
 
-                entity.Property(e => e.TreeSeparateFill)
-                    .HasColumnName("treeSeparateFill")
-                    .HasDefaultValueSql("((0))");
+                entity.Property(e => e.TreeSeparateFill).HasColumnName("treeSeparateFill");
             });
 
             modelBuilder.Entity<EsRtts>(entity =>
@@ -2368,14 +2086,6 @@ namespace PinhuaMaster.Data.Entities.Pinhua
 
                 entity.Property(e => e.Alias).HasMaxLength(200);
 
-                entity.Property(e => e.Extendable).HasDefaultValueSql("((0))");
-
-                entity.Property(e => e.Extendable1).HasDefaultValueSql("((0))");
-
-                entity.Property(e => e.IfHidden).HasDefaultValueSql("((0))");
-
-                entity.Property(e => e.Num).HasDefaultValueSql("((0))");
-
                 entity.Property(e => e.OccurNo).HasDefaultValueSql("((1))");
 
                 entity.Property(e => e.RtId)
@@ -2383,8 +2093,6 @@ namespace PinhuaMaster.Data.Entities.Pinhua
                     .HasMaxLength(20);
 
                 entity.Property(e => e.SheetId).HasDefaultValueSql("((1))");
-
-                entity.Property(e => e.Style).HasDefaultValueSql("((0))");
             });
 
             modelBuilder.Entity<EsRuleDelCase>(entity =>
@@ -2438,17 +2146,11 @@ namespace PinhuaMaster.Data.Entities.Pinhua
                     .HasColumnName("locked")
                     .HasDefaultValueSql("((1))");
 
-                entity.Property(e => e.Num)
-                    .HasColumnName("num")
-                    .HasDefaultValueSql("((0))");
+                entity.Property(e => e.Num).HasColumnName("num");
 
-                entity.Property(e => e.Op)
-                    .HasColumnName("op")
-                    .HasDefaultValueSql("((0))");
+                entity.Property(e => e.Op).HasColumnName("op");
 
-                entity.Property(e => e.Ord)
-                    .HasColumnName("ord")
-                    .HasDefaultValueSql("((0))");
+                entity.Property(e => e.Ord).HasColumnName("ord");
             });
 
             modelBuilder.Entity<EsRuleInsDetail>(entity =>
@@ -2462,9 +2164,7 @@ namespace PinhuaMaster.Data.Entities.Pinhua
                     .HasMaxLength(20)
                     .ValueGeneratedNever();
 
-                entity.Property(e => e.IsRollBack)
-                    .HasColumnName("isRollBack")
-                    .HasDefaultValueSql("((0))");
+                entity.Property(e => e.IsRollBack).HasColumnName("isRollBack");
 
                 entity.Property(e => e.Matcher)
                     .HasColumnName("matcher")
@@ -2506,11 +2206,7 @@ namespace PinhuaMaster.Data.Entities.Pinhua
                     .HasMaxLength(20)
                     .ValueGeneratedNever();
 
-                entity.Property(e => e.FillerType).HasDefaultValueSql("((0))");
-
-                entity.Property(e => e.IfQuickOpen)
-                    .HasColumnName("ifQuickOpen")
-                    .HasDefaultValueSql("((0))");
+                entity.Property(e => e.IfQuickOpen).HasColumnName("ifQuickOpen");
 
                 entity.Property(e => e.RtIdDest)
                     .IsRequired()
@@ -2528,13 +2224,9 @@ namespace PinhuaMaster.Data.Entities.Pinhua
                     .HasMaxLength(20)
                     .ValueGeneratedNever();
 
-                entity.Property(e => e.AppHide)
-                    .HasColumnName("appHide")
-                    .HasDefaultValueSql("((0))");
+                entity.Property(e => e.AppHide).HasColumnName("appHide");
 
-                entity.Property(e => e.AppMenu)
-                    .HasColumnName("appMenu")
-                    .HasDefaultValueSql("((0))");
+                entity.Property(e => e.AppMenu).HasColumnName("appMenu");
 
                 entity.Property(e => e.ExecConSpec)
                     .HasColumnName("execConSpec")
@@ -2544,29 +2236,17 @@ namespace PinhuaMaster.Data.Entities.Pinhua
                     .HasColumnName("execCondition")
                     .HasMaxLength(1500);
 
-                entity.Property(e => e.FillAtTop).HasDefaultValueSql("((0))");
+                entity.Property(e => e.IfClearDataFld).HasColumnName("ifClearDataFld");
 
-                entity.Property(e => e.FillIfNotMatch).HasDefaultValueSql("((0))");
+                entity.Property(e => e.IfDelRow).HasColumnName("ifDelRow");
 
-                entity.Property(e => e.IfClearDataFld)
-                    .HasColumnName("ifClearDataFld")
-                    .HasDefaultValueSql("((0))");
-
-                entity.Property(e => e.IfDelRow)
-                    .HasColumnName("ifDelRow")
-                    .HasDefaultValueSql("((0))");
-
-                entity.Property(e => e.IfReOrder)
-                    .HasColumnName("ifReOrder")
-                    .HasDefaultValueSql("((0))");
+                entity.Property(e => e.IfReOrder).HasColumnName("ifReOrder");
 
                 entity.Property(e => e.InputVars)
                     .HasColumnName("inputVars")
                     .HasMaxLength(500);
 
-                entity.Property(e => e.IsDistinct)
-                    .HasColumnName("isDistinct")
-                    .HasDefaultValueSql("((0))");
+                entity.Property(e => e.IsDistinct).HasColumnName("isDistinct");
 
                 entity.Property(e => e.JoinCond)
                     .HasColumnName("joinCond")
@@ -2576,9 +2256,7 @@ namespace PinhuaMaster.Data.Entities.Pinhua
                     .HasColumnName("SDTs")
                     .HasMaxLength(500);
 
-                entity.Property(e => e.TopN)
-                    .HasColumnName("topN")
-                    .HasDefaultValueSql("((0))");
+                entity.Property(e => e.TopN).HasColumnName("topN");
             });
 
             modelBuilder.Entity<EsRuleRelDt>(entity =>
@@ -2640,9 +2318,7 @@ namespace PinhuaMaster.Data.Entities.Pinhua
                     .HasMaxLength(20)
                     .ValueGeneratedNever();
 
-                entity.Property(e => e.AppOrder)
-                    .HasColumnName("appOrder")
-                    .HasDefaultValueSql("((0))");
+                entity.Property(e => e.AppOrder).HasColumnName("appOrder");
 
                 entity.Property(e => e.CreTime).HasColumnType("datetime");
 
@@ -2650,9 +2326,7 @@ namespace PinhuaMaster.Data.Entities.Pinhua
                     .HasColumnName("CreUName")
                     .HasMaxLength(50);
 
-                entity.Property(e => e.Dbtype)
-                    .HasColumnName("DBType")
-                    .HasDefaultValueSql("((0))");
+                entity.Property(e => e.Dbtype).HasColumnName("DBType");
 
                 entity.Property(e => e.FilterCond)
                     .HasColumnName("filterCond")
@@ -2680,9 +2354,7 @@ namespace PinhuaMaster.Data.Entities.Pinhua
                     .HasColumnName("ruleSpec")
                     .HasColumnType("ntext");
 
-                entity.Property(e => e.RuleType)
-                    .HasColumnName("ruleType")
-                    .HasDefaultValueSql("((0))");
+                entity.Property(e => e.RuleType).HasColumnName("ruleType");
 
                 entity.Property(e => e.TIds)
                     .HasColumnName("tIds")
@@ -2697,8 +2369,6 @@ namespace PinhuaMaster.Data.Entities.Pinhua
                 entity.Property(e => e.UseIsNull)
                     .HasColumnName("useIsNull")
                     .HasDefaultValueSql("((1))");
-
-                entity.Property(e => e.Ver).HasDefaultValueSql("((0))");
             });
 
             modelBuilder.Entity<EsRuleUpd>(entity =>
@@ -2808,8 +2478,6 @@ namespace PinhuaMaster.Data.Entities.Pinhua
                 entity.ToTable("ES_SmQryAcl");
 
                 entity.Property(e => e.DeptIds).HasMaxLength(200);
-
-                entity.Property(e => e.DeptScope).HasDefaultValueSql("((0))");
             });
 
             modelBuilder.Entity<EsSmQryDesignAcl>(entity =>
@@ -2834,31 +2502,11 @@ namespace PinhuaMaster.Data.Entities.Pinhua
 
                 entity.ToTable("ES_StdFld");
 
-                entity.Property(e => e.Op)
-                    .HasColumnName("op")
-                    .HasDefaultValueSql("((0))");
+                entity.Property(e => e.Op).HasColumnName("op");
 
                 entity.Property(e => e.DispName).HasMaxLength(50);
 
-                entity.Property(e => e.DispTotal)
-                    .HasColumnName("dispTotal")
-                    .HasDefaultValueSql("((0))");
-
-                entity.Property(e => e.GrpInList).HasDefaultValueSql("((0))");
-
-                entity.Property(e => e.HiddenInList).HasDefaultValueSql("((0))");
-
-                entity.Property(e => e.IsFilter).HasDefaultValueSql("((0))");
-
-                entity.Property(e => e.IsReturn).HasDefaultValueSql("((0))");
-
-                entity.Property(e => e.Num).HasDefaultValueSql("((0))");
-
-                entity.Property(e => e.OrdType).HasDefaultValueSql("((0))");
-
-                entity.Property(e => e.TreeFldId).HasDefaultValueSql("((0))");
-
-                entity.Property(e => e.TreeId).HasDefaultValueSql("((0))");
+                entity.Property(e => e.DispTotal).HasColumnName("dispTotal");
             });
 
             modelBuilder.Entity<EsStdList>(entity =>
@@ -2869,17 +2517,11 @@ namespace PinhuaMaster.Data.Entities.Pinhua
 
                 entity.Property(e => e.StdId).ValueGeneratedNever();
 
-                entity.Property(e => e.HasGrp).HasDefaultValueSql("((0))");
-
                 entity.Property(e => e.IsDistinct).HasDefaultValueSql("((1))");
 
-                entity.Property(e => e.NoPage)
-                    .HasColumnName("noPage")
-                    .HasDefaultValueSql("((0))");
+                entity.Property(e => e.NoPage).HasColumnName("noPage");
 
-                entity.Property(e => e.ShowByFilter)
-                    .HasColumnName("showByFilter")
-                    .HasDefaultValueSql("((0))");
+                entity.Property(e => e.ShowByFilter).HasColumnName("showByFilter");
             });
 
             modelBuilder.Entity<EsStdQry>(entity =>
@@ -2894,13 +2536,9 @@ namespace PinhuaMaster.Data.Entities.Pinhua
 
                 entity.Property(e => e.StdId).ValueGeneratedNever();
 
-                entity.Property(e => e.AutoRmd)
-                    .HasColumnName("autoRmd")
-                    .HasDefaultValueSql("((0))");
+                entity.Property(e => e.AutoRmd).HasColumnName("autoRmd");
 
-                entity.Property(e => e.HasGrp)
-                    .HasColumnName("hasGrp")
-                    .HasDefaultValueSql("((0))");
+                entity.Property(e => e.HasGrp).HasColumnName("hasGrp");
 
                 entity.Property(e => e.QryNo)
                     .IsRequired()
@@ -2908,23 +2546,13 @@ namespace PinhuaMaster.Data.Entities.Pinhua
                     .HasMaxLength(20)
                     .HasDefaultValueSql("('')");
 
-                entity.Property(e => e.RmdByEmail)
-                    .HasColumnName("rmdByEmail")
-                    .HasDefaultValueSql("((0))");
+                entity.Property(e => e.RmdByEmail).HasColumnName("rmdByEmail");
 
-                entity.Property(e => e.RmdByIm)
-                    .HasColumnName("rmdByIm")
-                    .HasDefaultValueSql("((0))");
+                entity.Property(e => e.RmdByIm).HasColumnName("rmdByIm");
 
-                entity.Property(e => e.RmdBySm)
-                    .HasColumnName("rmdBySm")
-                    .HasDefaultValueSql("((0))");
+                entity.Property(e => e.RmdBySm).HasColumnName("rmdBySm");
 
-                entity.Property(e => e.RmdCon)
-                    .HasColumnName("rmdCon")
-                    .HasDefaultValueSql("((0))");
-
-                entity.Property(e => e.TaskId).HasDefaultValueSql("((0))");
+                entity.Property(e => e.RmdCon).HasColumnName("rmdCon");
             });
 
             modelBuilder.Entity<EsStdTree>(entity =>
@@ -2939,25 +2567,15 @@ namespace PinhuaMaster.Data.Entities.Pinhua
                     .HasColumnName("keyLen")
                     .HasMaxLength(100);
 
-                entity.Property(e => e.LeafOnly)
-                    .HasColumnName("leafOnly")
-                    .HasDefaultValueSql("((0))");
+                entity.Property(e => e.LeafOnly).HasColumnName("leafOnly");
 
-                entity.Property(e => e.MultiSelect)
-                    .HasColumnName("multiSelect")
-                    .HasDefaultValueSql("((0))");
+                entity.Property(e => e.MultiSelect).HasColumnName("multiSelect");
 
-                entity.Property(e => e.Ord)
-                    .HasColumnName("ord")
-                    .HasDefaultValueSql("((0))");
+                entity.Property(e => e.Ord).HasColumnName("ord");
 
-                entity.Property(e => e.OrdBy)
-                    .HasColumnName("ordBy")
-                    .HasDefaultValueSql("((0))");
+                entity.Property(e => e.OrdBy).HasColumnName("ordBy");
 
-                entity.Property(e => e.Style)
-                    .HasColumnName("style")
-                    .HasDefaultValueSql("((0))");
+                entity.Property(e => e.Style).HasColumnName("style");
             });
 
             modelBuilder.Entity<EsStdValSet>(entity =>
@@ -2966,9 +2584,7 @@ namespace PinhuaMaster.Data.Entities.Pinhua
 
                 entity.ToTable("ES_StdValSet");
 
-                entity.Property(e => e.Vno)
-                    .HasColumnName("VNo")
-                    .HasDefaultValueSql("((0))");
+                entity.Property(e => e.Vno).HasColumnName("VNo");
 
                 entity.Property(e => e.Fk).HasMaxLength(500);
 
@@ -2996,10 +2612,6 @@ namespace PinhuaMaster.Data.Entities.Pinhua
                     .HasColumnType("datetime")
                     .HasDefaultValueSql("(getdate())");
 
-                entity.Property(e => e.MaxId).HasDefaultValueSql("((0))");
-
-                entity.Property(e => e.NoNum).HasDefaultValueSql("((0))");
-
                 entity.Property(e => e.Prefix)
                     .HasMaxLength(20)
                     .HasDefaultValueSql("('')");
@@ -3015,9 +2627,7 @@ namespace PinhuaMaster.Data.Entities.Pinhua
                     .HasColumnName("idDate")
                     .HasColumnType("datetime");
 
-                entity.Property(e => e.MaxId)
-                    .HasColumnName("maxId")
-                    .HasDefaultValueSql("((0))");
+                entity.Property(e => e.MaxId).HasColumnName("maxId");
             });
 
             modelBuilder.Entity<EsTmp>(entity =>
@@ -3059,17 +2669,9 @@ namespace PinhuaMaster.Data.Entities.Pinhua
                     .HasColumnName("fileFormat")
                     .HasDefaultValueSql("((1))");
 
-                entity.Property(e => e.HasNoticeExp)
-                    .HasColumnName("hasNoticeExp")
-                    .HasDefaultValueSql("((0))");
+                entity.Property(e => e.HasNoticeExp).HasColumnName("hasNoticeExp");
 
-                entity.Property(e => e.IfCheckout).HasDefaultValueSql("((0))");
-
-                entity.Property(e => e.IfLockByExp).HasDefaultValueSql("((0))");
-
-                entity.Property(e => e.IfMakeWeb)
-                    .HasColumnName("ifMakeWeb")
-                    .HasDefaultValueSql("((0))");
+                entity.Property(e => e.IfMakeWeb).HasColumnName("ifMakeWeb");
 
                 entity.Property(e => e.IndexDesc)
                     .HasColumnName("indexDesc")
@@ -3079,19 +2681,13 @@ namespace PinhuaMaster.Data.Entities.Pinhua
                     .HasColumnName("indexSpec")
                     .HasMaxLength(1000);
 
-                entity.Property(e => e.IndexType)
-                    .HasColumnName("indexType")
-                    .HasDefaultValueSql("((0))");
-
-                entity.Property(e => e.LockDependDate).HasDefaultValueSql("((0))");
+                entity.Property(e => e.IndexType).HasColumnName("indexType");
 
                 entity.Property(e => e.LockExpSpec).HasMaxLength(2000);
 
                 entity.Property(e => e.LockExpText).HasMaxLength(2000);
 
                 entity.Property(e => e.ProtectType).HasDefaultValueSql("((1))");
-
-                entity.Property(e => e.QryOnly).HasDefaultValueSql("((0))");
 
                 entity.Property(e => e.RtName)
                     .IsRequired()
@@ -3105,8 +2701,6 @@ namespace PinhuaMaster.Data.Entities.Pinhua
 
                 entity.Property(e => e.RtPwd).HasMaxLength(500);
 
-                entity.Property(e => e.State).HasDefaultValueSql("((0))");
-
                 entity.Property(e => e.UpdTime)
                     .HasColumnType("datetime")
                     .HasDefaultValueSql("(getdate())");
@@ -3115,9 +2709,7 @@ namespace PinhuaMaster.Data.Entities.Pinhua
                     .HasMaxLength(50)
                     .HasDefaultValueSql("('')");
 
-                entity.Property(e => e.Ver)
-                    .HasColumnName("ver")
-                    .HasDefaultValueSql("((0))");
+                entity.Property(e => e.Ver).HasColumnName("ver");
             });
 
             modelBuilder.Entity<EsTmpAcl>(entity =>
@@ -3127,8 +2719,6 @@ namespace PinhuaMaster.Data.Entities.Pinhua
                 entity.ToTable("ES_TmpAcl");
 
                 entity.Property(e => e.AuthId).ValueGeneratedNever();
-
-                entity.Property(e => e.AuthType).HasDefaultValueSql("((0))");
 
                 entity.Property(e => e.ByFlds)
                     .HasColumnName("byFlds")
@@ -3143,8 +2733,6 @@ namespace PinhuaMaster.Data.Entities.Pinhua
                     .HasMaxLength(1500)
                     .HasDefaultValueSql("('')");
 
-                entity.Property(e => e.DeptScope).HasDefaultValueSql("((0))");
-
                 entity.Property(e => e.ExpDesc)
                     .HasColumnName("expDesc")
                     .HasColumnType("ntext");
@@ -3155,31 +2743,21 @@ namespace PinhuaMaster.Data.Entities.Pinhua
 
                 entity.Property(e => e.Export).HasDefaultValueSql("((1))");
 
-                entity.Property(e => e.FillBySuper).HasDefaultValueSql("((0))");
-
                 entity.Property(e => e.FillFlds)
                     .IsRequired()
                     .HasMaxLength(1000)
                     .HasDefaultValueSql("('')");
-
-                entity.Property(e => e.FillbySub).HasDefaultValueSql("((0))");
 
                 entity.Property(e => e.HiddenFlds)
                     .IsRequired()
                     .HasMaxLength(500)
                     .HasDefaultValueSql("('')");
 
-                entity.Property(e => e.Lock)
-                    .HasColumnName("lock")
-                    .HasDefaultValueSql("((0))");
-
-                entity.Property(e => e.PartinProc).HasDefaultValueSql("((0))");
+                entity.Property(e => e.Lock).HasColumnName("lock");
 
                 entity.Property(e => e.Prt).HasDefaultValueSql("((1))");
 
                 entity.Property(e => e.R).HasDefaultValueSql("((1))");
-
-                entity.Property(e => e.ReadScope).HasDefaultValueSql("((0))");
 
                 entity.Property(e => e.RoleId).HasDefaultValueSql("((0))");
 
@@ -3193,9 +2771,7 @@ namespace PinhuaMaster.Data.Entities.Pinhua
 
                 entity.Property(e => e.U).HasDefaultValueSql("((1))");
 
-                entity.Property(e => e.Unlock)
-                    .HasColumnName("unlock")
-                    .HasDefaultValueSql("((0))");
+                entity.Property(e => e.Unlock).HasColumnName("unlock");
 
                 entity.Property(e => e.UserId).HasDefaultValueSql("((0))");
             });
@@ -3248,8 +2824,6 @@ namespace PinhuaMaster.Data.Entities.Pinhua
                     .HasMaxLength(1500)
                     .HasDefaultValueSql("('')");
 
-                entity.Property(e => e.OrdNum).HasDefaultValueSql("((0))");
-
                 entity.Property(e => e.OrdPath)
                     .IsRequired()
                     .HasMaxLength(200)
@@ -3278,14 +2852,6 @@ namespace PinhuaMaster.Data.Entities.Pinhua
                 entity.ToTable("ES_TmpDesigner");
 
                 entity.Property(e => e.RtId).HasMaxLength(20);
-
-                entity.Property(e => e.Dgn).HasDefaultValueSql("((0))");
-
-                entity.Property(e => e.Map).HasDefaultValueSql("((0))");
-
-                entity.Property(e => e.Qry).HasDefaultValueSql("((0))");
-
-                entity.Property(e => e.Rewrite).HasDefaultValueSql("((0))");
             });
 
             modelBuilder.Entity<EsTmpPic>(entity =>
@@ -3298,9 +2864,7 @@ namespace PinhuaMaster.Data.Entities.Pinhua
                     .HasMaxLength(20)
                     .ValueGeneratedNever();
 
-                entity.Property(e => e.C)
-                    .HasColumnName("c")
-                    .HasDefaultValueSql("((0))");
+                entity.Property(e => e.C).HasColumnName("c");
 
                 entity.Property(e => e.FileType)
                     .IsRequired()
@@ -3310,52 +2874,38 @@ namespace PinhuaMaster.Data.Entities.Pinhua
 
                 entity.Property(e => e.H)
                     .HasColumnName("h")
-                    .HasColumnType("decimal(20, 2)")
-                    .HasDefaultValueSql("((0))");
+                    .HasColumnType("decimal(20, 2)");
 
                 entity.Property(e => e.Img)
                     .HasColumnName("img")
                     .HasColumnType("image")
                     .HasDefaultValueSql("('')");
 
-                entity.Property(e => e.IsMove)
-                    .HasColumnName("isMove")
-                    .HasDefaultValueSql("((0))");
+                entity.Property(e => e.IsMove).HasColumnName("isMove");
 
-                entity.Property(e => e.IsNew)
-                    .HasColumnName("isNew")
-                    .HasDefaultValueSql("((0))");
+                entity.Property(e => e.IsNew).HasColumnName("isNew");
 
                 entity.Property(e => e.L)
                     .HasColumnName("l")
-                    .HasColumnType("decimal(20, 2)")
-                    .HasDefaultValueSql("((0))");
+                    .HasColumnType("decimal(20, 2)");
 
-                entity.Property(e => e.R)
-                    .HasColumnName("r")
-                    .HasDefaultValueSql("((0))");
+                entity.Property(e => e.R).HasColumnName("r");
 
                 entity.Property(e => e.RtId)
                     .IsRequired()
                     .HasMaxLength(20);
 
-                entity.Property(e => e.Sh)
-                    .HasColumnName("sh")
-                    .HasDefaultValueSql("((0))");
+                entity.Property(e => e.Sh).HasColumnName("sh");
 
                 entity.Property(e => e.T)
                     .HasColumnName("t")
-                    .HasColumnType("decimal(20, 2)")
-                    .HasDefaultValueSql("((0))");
+                    .HasColumnType("decimal(20, 2)");
 
-                entity.Property(e => e.UseType)
-                    .HasColumnName("useType")
-                    .HasDefaultValueSql("((0))");
+                entity.Property(e => e.UseType).HasColumnName("useType");
 
                 entity.Property(e => e.W)
                     .HasColumnName("w")
-                    .HasColumnType("decimal(20, 2)")
-                    .HasDefaultValueSql("((0))");
+                    .HasColumnType("decimal(20, 2)");
             });
 
             modelBuilder.Entity<EsTmpProp>(entity =>
@@ -3368,49 +2918,15 @@ namespace PinhuaMaster.Data.Entities.Pinhua
                     .HasMaxLength(20)
                     .ValueGeneratedNever();
 
-                entity.Property(e => e.CanDownload).HasDefaultValueSql("((0))");
-
-                entity.Property(e => e.CheckDataType).HasDefaultValueSql("((0))");
-
-                entity.Property(e => e.CheckValid).HasDefaultValueSql("((0))");
-
-                entity.Property(e => e.CloseAfterSave).HasDefaultValueSql("((0))");
-
-                entity.Property(e => e.CycleType).HasDefaultValueSql("((0))");
-
-                entity.Property(e => e.LocalUnprotect).HasDefaultValueSql("((0))");
-
                 entity.Property(e => e.LockFormula).HasDefaultValueSql("((1))");
 
-                entity.Property(e => e.NoPaste).HasDefaultValueSql("((0))");
-
-                entity.Property(e => e.NoSaveNoPrint).HasDefaultValueSql("((0))");
-
-                entity.Property(e => e.PasteVonly)
-                    .HasColumnName("PasteVOnly")
-                    .HasDefaultValueSql("((0))");
-
-                entity.Property(e => e.PopWinOnSave).HasDefaultValueSql("((0))");
+                entity.Property(e => e.PasteVonly).HasColumnName("PasteVOnly");
 
                 entity.Property(e => e.PromptNext).HasDefaultValueSql("((1))");
 
-                entity.Property(e => e.PromptPrint).HasDefaultValueSql("((0))");
-
-                entity.Property(e => e.QrySaveLocal)
-                    .HasColumnName("qrySaveLocal")
-                    .HasDefaultValueSql("((0))");
-
-                entity.Property(e => e.SaveFile).HasDefaultValueSql("((0))");
-
-                entity.Property(e => e.SelLockedCell).HasDefaultValueSql("((0))");
+                entity.Property(e => e.QrySaveLocal).HasColumnName("qrySaveLocal");
 
                 entity.Property(e => e.SetFormat).HasDefaultValueSql("((1))");
-
-                entity.Property(e => e.StatCycle).HasDefaultValueSql("((0))");
-
-                entity.Property(e => e.TmpKind).HasDefaultValueSql("((0))");
-
-                entity.Property(e => e.WebFillable).HasDefaultValueSql("((0))");
             });
 
             modelBuilder.Entity<EsTmpSheet>(entity =>
@@ -3423,15 +2939,7 @@ namespace PinhuaMaster.Data.Entities.Pinhua
 
                 entity.Property(e => e.SheetId).HasDefaultValueSql("((1))");
 
-                entity.Property(e => e.C1).HasDefaultValueSql("((0))");
-
-                entity.Property(e => e.Cn).HasDefaultValueSql("((0))");
-
                 entity.Property(e => e.IfProtect).HasDefaultValueSql("((1))");
-
-                entity.Property(e => e.R1).HasDefaultValueSql("((0))");
-
-                entity.Property(e => e.Rn).HasDefaultValueSql("((0))");
 
                 entity.Property(e => e.SheetName)
                     .IsRequired()
@@ -3473,9 +2981,7 @@ namespace PinhuaMaster.Data.Entities.Pinhua
                     .HasColumnName("expr")
                     .HasMaxLength(3000);
 
-                entity.Property(e => e.IsUnique)
-                    .HasColumnName("isUnique")
-                    .HasDefaultValueSql("((0))");
+                entity.Property(e => e.IsUnique).HasColumnName("isUnique");
             });
 
             modelBuilder.Entity<EsUruleFillRt>(entity =>
@@ -3492,9 +2998,7 @@ namespace PinhuaMaster.Data.Entities.Pinhua
                     .HasColumnName("expr")
                     .HasMaxLength(3000);
 
-                entity.Property(e => e.IfIndex)
-                    .HasColumnName("ifIndex")
-                    .HasDefaultValueSql("((0))");
+                entity.Property(e => e.IfIndex).HasColumnName("ifIndex");
             });
 
             modelBuilder.Entity<EsUser>(entity =>
@@ -3516,14 +3020,10 @@ namespace PinhuaMaster.Data.Entities.Pinhua
 
                 entity.Property(e => e.UserId).ValueGeneratedNever();
 
-                entity.Property(e => e.AccState).HasDefaultValueSql("((0))");
-
                 entity.Property(e => e.AddPwd)
                     .HasColumnName("addPwd")
                     .HasMaxLength(200)
                     .HasDefaultValueSql("('')");
-
-                entity.Property(e => e.BuiltIn).HasDefaultValueSql("((0))");
 
                 entity.Property(e => e.DispName)
                     .IsRequired()
@@ -3552,8 +3052,6 @@ namespace PinhuaMaster.Data.Entities.Pinhua
 
                 entity.Property(e => e.IpList).HasMaxLength(500);
 
-                entity.Property(e => e.IsOuter).HasDefaultValueSql("((0))");
-
                 entity.Property(e => e.LastName)
                     .HasMaxLength(50)
                     .HasDefaultValueSql("('')");
@@ -3568,9 +3066,7 @@ namespace PinhuaMaster.Data.Entities.Pinhua
                     .HasMaxLength(50)
                     .HasDefaultValueSql("('')");
 
-                entity.Property(e => e.NoAgent)
-                    .HasColumnName("noAgent")
-                    .HasDefaultValueSql("((0))");
+                entity.Property(e => e.NoAgent).HasColumnName("noAgent");
 
                 entity.Property(e => e.Oaddress)
                     .HasColumnName("OAddress")
@@ -3599,11 +3095,7 @@ namespace PinhuaMaster.Data.Entities.Pinhua
                     .HasColumnType("datetime")
                     .HasDefaultValueSql("(getdate())");
 
-                entity.Property(e => e.PwdNoChange)
-                    .HasColumnName("pwdNoChange")
-                    .HasDefaultValueSql("((0))");
-
-                entity.Property(e => e.RegState).HasDefaultValueSql("((0))");
+                entity.Property(e => e.PwdNoChange).HasColumnName("pwdNoChange");
 
                 entity.Property(e => e.RoleNames)
                     .HasColumnName("roleNames")
@@ -3613,9 +3105,7 @@ namespace PinhuaMaster.Data.Entities.Pinhua
 
                 entity.Property(e => e.SynLogin).HasDefaultValueSql("((1))");
 
-                entity.Property(e => e.UseOtpauth)
-                    .HasColumnName("useOTPAuth")
-                    .HasDefaultValueSql("((0))");
+                entity.Property(e => e.UseOtpauth).HasColumnName("useOTPAuth");
 
                 entity.Property(e => e.UserLogin)
                     .IsRequired()
@@ -3631,9 +3121,7 @@ namespace PinhuaMaster.Data.Entities.Pinhua
                     .HasMaxLength(200)
                     .HasDefaultValueSql("('')");
 
-                entity.Property(e => e.Utype)
-                    .HasColumnName("UType")
-                    .HasDefaultValueSql("((0))");
+                entity.Property(e => e.Utype).HasColumnName("UType");
             });
 
             modelBuilder.Entity<EsUserDataFilter>(entity =>
@@ -3652,9 +3140,7 @@ namespace PinhuaMaster.Data.Entities.Pinhua
 
                 entity.Property(e => e.DataFilter).HasColumnType("ntext");
 
-                entity.Property(e => e.DataType)
-                    .HasColumnName("dataType")
-                    .HasDefaultValueSql("((0))");
+                entity.Property(e => e.DataType).HasColumnName("dataType");
 
                 entity.Property(e => e.FilterDesc).HasMaxLength(500);
 
@@ -3666,13 +3152,9 @@ namespace PinhuaMaster.Data.Entities.Pinhua
                     .IsRequired()
                     .HasMaxLength(20);
 
-                entity.Property(e => e.TId)
-                    .HasColumnName("tId")
-                    .HasDefaultValueSql("((0))");
+                entity.Property(e => e.TId).HasColumnName("tId");
 
-                entity.Property(e => e.TvType)
-                    .HasColumnName("tvType")
-                    .HasDefaultValueSql("((0))");
+                entity.Property(e => e.TvType).HasColumnName("tvType");
             });
 
             modelBuilder.Entity<EsUserMgr>(entity =>
@@ -3682,8 +3164,6 @@ namespace PinhuaMaster.Data.Entities.Pinhua
                 entity.ToTable("ES_UserMgr");
 
                 entity.Property(e => e.UserId).ValueGeneratedNever();
-
-                entity.Property(e => e.MgrType).HasDefaultValueSql("((0))");
             });
 
             modelBuilder.Entity<EsUserOption>(entity =>
@@ -3698,25 +3178,13 @@ namespace PinhuaMaster.Data.Entities.Pinhua
 
                 entity.Property(e => e.DftWin).HasDefaultValueSql("((1))");
 
-                entity.Property(e => e.ExitOnNewLogin)
-                    .HasColumnName("exitOnNewLogin")
-                    .HasDefaultValueSql("((0))");
+                entity.Property(e => e.ExitOnNewLogin).HasColumnName("exitOnNewLogin");
 
-                entity.Property(e => e.HideEditBox)
-                    .HasColumnName("hideEditBox")
-                    .HasDefaultValueSql("((0))");
+                entity.Property(e => e.HideEditBox).HasColumnName("hideEditBox");
 
-                entity.Property(e => e.HideGridline)
-                    .HasColumnName("hideGridline")
-                    .HasDefaultValueSql("((0))");
+                entity.Property(e => e.HideGridline).HasColumnName("hideGridline");
 
-                entity.Property(e => e.HideHead)
-                    .HasColumnName("hideHead")
-                    .HasDefaultValueSql("((0))");
-
-                entity.Property(e => e.MenuStyle).HasDefaultValueSql("((0))");
-
-                entity.Property(e => e.MoveDirect).HasDefaultValueSql("((0))");
+                entity.Property(e => e.HideHead).HasColumnName("hideHead");
 
                 entity.Property(e => e.MultiPage)
                     .HasColumnName("multiPage")
@@ -3728,35 +3196,21 @@ namespace PinhuaMaster.Data.Entities.Pinhua
 
                 entity.Property(e => e.QryAutoFill).HasDefaultValueSql("((1))");
 
-                entity.Property(e => e.ShowDoneWi)
-                    .HasColumnName("showDoneWi")
-                    .HasDefaultValueSql("((0))");
+                entity.Property(e => e.ShowDoneWi).HasColumnName("showDoneWi");
 
                 entity.Property(e => e.ShowField)
                     .HasMaxLength(2000)
                     .HasDefaultValueSql("('')");
 
-                entity.Property(e => e.TimeOnReport).HasDefaultValueSql("((0))");
-
-                entity.Property(e => e.TimeOnWork).HasDefaultValueSql("((0))");
-
                 entity.Property(e => e.UseDateObj).HasDefaultValueSql("((1))");
-
-                entity.Property(e => e.UseSms).HasDefaultValueSql("((0))");
 
                 entity.Property(e => e.UseTreeObj).HasDefaultValueSql("((1))");
 
-                entity.Property(e => e.WaQuicken)
-                    .HasColumnName("waQuicken")
-                    .HasDefaultValueSql("((0))");
+                entity.Property(e => e.WaQuicken).HasColumnName("waQuicken");
 
-                entity.Property(e => e.WiDateNum)
-                    .HasColumnName("wiDateNum")
-                    .HasDefaultValueSql("((0))");
+                entity.Property(e => e.WiDateNum).HasColumnName("wiDateNum");
 
-                entity.Property(e => e.WiDateUnit)
-                    .HasColumnName("wiDateUnit")
-                    .HasDefaultValueSql("((0))");
+                entity.Property(e => e.WiDateUnit).HasColumnName("wiDateUnit");
             });
 
             modelBuilder.Entity<EsUserPwdHis>(entity =>
@@ -3800,15 +3254,11 @@ namespace PinhuaMaster.Data.Entities.Pinhua
                     .HasMaxLength(200)
                     .HasDefaultValueSql("('')");
 
-                entity.Property(e => e.IsOuter).HasDefaultValueSql("((0))");
-
                 entity.Property(e => e.MobilePhone)
                     .HasMaxLength(50)
                     .HasDefaultValueSql("('')");
 
                 entity.Property(e => e.NoPassReason).HasMaxLength(1000);
-
-                entity.Property(e => e.RegState).HasDefaultValueSql("((0))");
 
                 entity.Property(e => e.RegTime)
                     .HasColumnType("datetime")
@@ -3848,9 +3298,7 @@ namespace PinhuaMaster.Data.Entities.Pinhua
                     .HasMaxLength(2000)
                     .HasDefaultValueSql("('')");
 
-                entity.Property(e => e.DeptScope)
-                    .HasColumnName("deptScope")
-                    .HasDefaultValueSql("((0))");
+                entity.Property(e => e.DeptScope).HasColumnName("deptScope");
             });
 
             modelBuilder.Entity<EsViewTable>(entity =>
@@ -3867,17 +3315,13 @@ namespace PinhuaMaster.Data.Entities.Pinhua
 
                 entity.Property(e => e.CreateStmt).HasColumnType("ntext");
 
-                entity.Property(e => e.DirectSql).HasDefaultValueSql("((0))");
-
                 entity.Property(e => e.Filter).HasColumnType("ntext");
 
                 entity.Property(e => e.JoinCond).HasMaxLength(1000);
 
                 entity.Property(e => e.SelectStmt).HasColumnType("ntext");
 
-                entity.Property(e => e.UseIsNull)
-                    .HasColumnName("useIsNull")
-                    .HasDefaultValueSql("((0))");
+                entity.Property(e => e.UseIsNull).HasColumnName("useIsNull");
 
                 entity.Property(e => e.ViewDesc).HasColumnType("ntext");
             });
@@ -3894,11 +3338,7 @@ namespace PinhuaMaster.Data.Entities.Pinhua
                     .IsUnicode(false)
                     .ValueGeneratedNever();
 
-                entity.Property(e => e.State)
-                    .HasColumnName("state")
-                    .HasDefaultValueSql("((0))");
-
-                entity.Property(e => e.SubWiComp).HasDefaultValueSql("((0))");
+                entity.Property(e => e.State).HasColumnName("state");
 
                 entity.Property(e => e.WiType).HasColumnName("wiType");
             });
@@ -3965,13 +3405,7 @@ namespace PinhuaMaster.Data.Entities.Pinhua
                     .HasColumnName("expSpec")
                     .HasColumnType("ntext");
 
-                entity.Property(e => e.HasExp)
-                    .HasColumnName("hasExp")
-                    .HasDefaultValueSql("((0))");
-
-                entity.Property(e => e.JointNumType).HasDefaultValueSql("((0))");
-
-                entity.Property(e => e.JointType).HasDefaultValueSql("((0))");
+                entity.Property(e => e.HasExp).HasColumnName("hasExp");
 
                 entity.Property(e => e.PId).HasColumnName("pId");
 
@@ -3999,57 +3433,29 @@ namespace PinhuaMaster.Data.Entities.Pinhua
                     .HasColumnName("tId")
                     .ValueGeneratedNever();
 
-                entity.Property(e => e.BackData)
-                    .HasColumnName("backData")
-                    .HasDefaultValueSql("((0))");
+                entity.Property(e => e.BackData).HasColumnName("backData");
 
-                entity.Property(e => e.CanReturn)
-                    .HasColumnName("canReturn")
-                    .HasDefaultValueSql("((0))");
+                entity.Property(e => e.CanReturn).HasColumnName("canReturn");
 
-                entity.Property(e => e.CommitByDataWriter)
-                    .HasColumnName("commitByDataWriter")
-                    .HasDefaultValueSql("((0))");
+                entity.Property(e => e.CommitByDataWriter).HasColumnName("commitByDataWriter");
 
-                entity.Property(e => e.DelFlag).HasDefaultValueSql("((0))");
+                entity.Property(e => e.Flag).HasColumnName("flag");
 
-                entity.Property(e => e.Flag)
-                    .HasColumnName("flag")
-                    .HasDefaultValueSql("((0))");
+                entity.Property(e => e.IfJointData).HasColumnName("ifJointData");
 
-                entity.Property(e => e.IfJointData)
-                    .HasColumnName("ifJointData")
-                    .HasDefaultValueSql("((0))");
+                entity.Property(e => e.IfReadOnly).HasColumnName("ifReadOnly");
 
-                entity.Property(e => e.IfReadOnly)
-                    .HasColumnName("ifReadOnly")
-                    .HasDefaultValueSql("((0))");
+                entity.Property(e => e.IfSendEmail).HasColumnName("ifSendEmail");
 
-                entity.Property(e => e.IfSendEmail)
-                    .HasColumnName("ifSendEmail")
-                    .HasDefaultValueSql("((0))");
+                entity.Property(e => e.IfSendSms).HasColumnName("ifSendSms");
 
-                entity.Property(e => e.IfSendSms)
-                    .HasColumnName("ifSendSms")
-                    .HasDefaultValueSql("((0))");
+                entity.Property(e => e.LogoutAfterCommit).HasColumnName("logoutAfterCommit");
 
-                entity.Property(e => e.JointNumType).HasDefaultValueSql("((0))");
-
-                entity.Property(e => e.JointType).HasDefaultValueSql("((0))");
-
-                entity.Property(e => e.LogoutAfterCommit)
-                    .HasColumnName("logoutAfterCommit")
-                    .HasDefaultValueSql("((0))");
-
-                entity.Property(e => e.NoTempSave)
-                    .HasColumnName("noTempSave")
-                    .HasDefaultValueSql("((0))");
+                entity.Property(e => e.NoTempSave).HasColumnName("noTempSave");
 
                 entity.Property(e => e.PId).HasColumnName("pId");
 
                 entity.Property(e => e.PIdNew).HasColumnName("pIdNew");
-
-                entity.Property(e => e.QuickOpen).HasDefaultValueSql("((0))");
 
                 entity.Property(e => e.RtId)
                     .IsRequired()
@@ -4065,9 +3471,7 @@ namespace PinhuaMaster.Data.Entities.Pinhua
                     .HasColumnName("savePrompt")
                     .HasMaxLength(500);
 
-                entity.Property(e => e.SaveRetData)
-                    .HasColumnName("saveRetData")
-                    .HasDefaultValueSql("((0))");
+                entity.Property(e => e.SaveRetData).HasColumnName("saveRetData");
 
                 entity.Property(e => e.ShapeName)
                     .IsRequired()
@@ -4085,9 +3489,7 @@ namespace PinhuaMaster.Data.Entities.Pinhua
                     .HasColumnName("tName")
                     .HasMaxLength(50);
 
-                entity.Property(e => e.TType)
-                    .HasColumnName("tType")
-                    .HasDefaultValueSql("((0))");
+                entity.Property(e => e.TType).HasColumnName("tType");
             });
 
             modelBuilder.Entity<EsWftAuth>(entity =>
@@ -4100,13 +3502,9 @@ namespace PinhuaMaster.Data.Entities.Pinhua
                     .HasColumnName("tId")
                     .ValueGeneratedNever();
 
-                entity.Property(e => e.AuthType)
-                    .HasColumnName("authType")
-                    .HasDefaultValueSql("((0))");
+                entity.Property(e => e.AuthType).HasColumnName("authType");
 
-                entity.Property(e => e.ExceptCom)
-                    .HasColumnName("exceptCom")
-                    .HasDefaultValueSql("((0))");
+                entity.Property(e => e.ExceptCom).HasColumnName("exceptCom");
             });
 
             modelBuilder.Entity<EsWftAuthScope>(entity =>
@@ -4117,19 +3515,13 @@ namespace PinhuaMaster.Data.Entities.Pinhua
 
                 entity.Property(e => e.TId).HasColumnName("tId");
 
-                entity.Property(e => e.ScopeType).HasDefaultValueSql("((0))");
-
-                entity.Property(e => e.ActorType)
-                    .HasColumnName("actorType")
-                    .HasDefaultValueSql("((0))");
+                entity.Property(e => e.ActorType).HasColumnName("actorType");
 
                 entity.Property(e => e.Relation)
                     .HasColumnName("relation")
                     .HasMaxLength(20);
 
                 entity.Property(e => e.RoleDisp).HasMaxLength(200);
-
-                entity.Property(e => e.RtfMeaning).HasDefaultValueSql("((0))");
             });
 
             modelBuilder.Entity<EsWftDataTrans>(entity =>
@@ -4155,8 +3547,6 @@ namespace PinhuaMaster.Data.Entities.Pinhua
                     .HasColumnName("tId")
                     .ValueGeneratedNever();
 
-                entity.Property(e => e.AutoCommit).HasDefaultValueSql("((0))");
-
                 entity.Property(e => e.DlDay).HasColumnName("dlDay");
 
                 entity.Property(e => e.DlTime)
@@ -4165,31 +3555,21 @@ namespace PinhuaMaster.Data.Entities.Pinhua
 
                 entity.Property(e => e.DlWk).HasColumnName("dlWk");
 
-                entity.Property(e => e.IfDeadLine)
-                    .HasColumnName("ifDeadLine")
-                    .HasDefaultValueSql("((0))");
+                entity.Property(e => e.IfDeadLine).HasColumnName("ifDeadLine");
 
-                entity.Property(e => e.IfRemind)
-                    .HasColumnName("ifRemind")
-                    .HasDefaultValueSql("((0))");
+                entity.Property(e => e.IfRemind).HasColumnName("ifRemind");
 
                 entity.Property(e => e.ReNum).HasColumnName("reNum");
 
-                entity.Property(e => e.ReUnit)
-                    .HasColumnName("reUnit")
-                    .HasDefaultValueSql("((0))");
+                entity.Property(e => e.ReUnit).HasColumnName("reUnit");
 
                 entity.Property(e => e.RmdNum).HasColumnName("rmdNum");
 
-                entity.Property(e => e.RmdUnit)
-                    .HasColumnName("rmdUnit")
-                    .HasDefaultValueSql("((0))");
+                entity.Property(e => e.RmdUnit).HasColumnName("rmdUnit");
 
                 entity.Property(e => e.TdNum).HasColumnName("tdNum");
 
-                entity.Property(e => e.TdUnit)
-                    .HasColumnName("tdUnit")
-                    .HasDefaultValueSql("((0))");
+                entity.Property(e => e.TdUnit).HasColumnName("tdUnit");
             });
 
             modelBuilder.Entity<EsWftFld>(entity =>
@@ -4207,13 +3587,7 @@ namespace PinhuaMaster.Data.Entities.Pinhua
                     .HasMaxLength(200)
                     .HasDefaultValueSql("((0))");
 
-                entity.Property(e => e.DelData)
-                    .HasColumnName("delData")
-                    .HasDefaultValueSql("((0))");
-
-                entity.Property(e => e.Editable).HasDefaultValueSql("((0))");
-
-                entity.Property(e => e.Hidden).HasDefaultValueSql("((0))");
+                entity.Property(e => e.DelData).HasColumnName("delData");
 
                 entity.Property(e => e.RecAuth).HasMaxLength(500);
 
@@ -4242,8 +3616,6 @@ namespace PinhuaMaster.Data.Entities.Pinhua
                 entity.Property(e => e.DeptIds).HasMaxLength(200);
 
                 entity.Property(e => e.DeptNames).HasMaxLength(1000);
-
-                entity.Property(e => e.DeptScope).HasDefaultValueSql("((0))");
             });
 
             modelBuilder.Entity<EsWftRules>(entity =>
@@ -4358,9 +3730,7 @@ namespace PinhuaMaster.Data.Entities.Pinhua
                     .HasMaxLength(20)
                     .ValueGeneratedNever();
 
-                entity.Property(e => e.AutoCommit)
-                    .HasColumnName("autoCommit")
-                    .HasDefaultValueSql("((0))");
+                entity.Property(e => e.AutoCommit).HasColumnName("autoCommit");
 
                 entity.Property(e => e.CheckOutByName).HasMaxLength(50);
 
@@ -4388,8 +3758,6 @@ namespace PinhuaMaster.Data.Entities.Pinhua
 
                 entity.Property(e => e.DlDate).HasColumnType("datetime");
 
-                entity.Property(e => e.IsFirst).HasDefaultValueSql("((0))");
-
                 entity.Property(e => e.PiId)
                     .IsRequired()
                     .HasColumnName("piId")
@@ -4407,25 +3775,17 @@ namespace PinhuaMaster.Data.Entities.Pinhua
 
                 entity.Property(e => e.RtnTime).HasColumnType("datetime");
 
-                entity.Property(e => e.State).HasDefaultValueSql("((0))");
-
-                entity.Property(e => e.State1)
-                    .HasColumnName("state1")
-                    .HasDefaultValueSql("((0))");
+                entity.Property(e => e.State1).HasColumnName("state1");
 
                 entity.Property(e => e.TId).HasColumnName("tId");
 
-                entity.Property(e => e.Temp1)
-                    .HasColumnName("temp1")
-                    .HasDefaultValueSql("((0))");
+                entity.Property(e => e.Temp1).HasColumnName("temp1");
 
                 entity.Property(e => e.WiDesc)
                     .HasColumnName("wiDesc")
                     .HasMaxLength(500);
 
-                entity.Property(e => e.WiType)
-                    .HasColumnName("wiType")
-                    .HasDefaultValueSql("((0))");
+                entity.Property(e => e.WiType).HasColumnName("wiType");
             });
 
             modelBuilder.Entity<Gi2Details>(entity =>

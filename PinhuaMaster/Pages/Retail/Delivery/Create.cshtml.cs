@@ -26,14 +26,14 @@ namespace PinhuaMaster.Pages.Retail.Delivery
         }
 
         [BindProperty]
-        public Gi2ViewModel Order { get; set; }
-        public List<SelectListItem> DeliveryTypes { get; set; } = new List<SelectListItem>();
-        public List<SelectListItem> CustomerSelectList { get; set; } = new List<SelectListItem>();
+        public Gi2ViewModel Order { get; set; } = new Gi2ViewModel();
 
         public void OnGet()
         {
-            DeliveryTypes = BuildTypes();
-            CustomerSelectList = _pinhuaContext.GetCustomerSelectList();
+            Order.DeliveryTypes = BuildTypes();
+            Order.CustomerSelectList = _pinhuaContext.GetCustomerSelectList();
+
+            Order.Main.DeliveryId = buildOrderId();
         }
 
         public IActionResult OnPost()
@@ -69,8 +69,8 @@ namespace PinhuaMaster.Pages.Retail.Delivery
                 if (details.Count == 0)
                 {
                     ModelState.AddModelError("", "出库清单不可为空");
-                    DeliveryTypes = BuildTypes();
-                    CustomerSelectList = _pinhuaContext.GetCustomerSelectList();
+                    Order.DeliveryTypes = BuildTypes();
+                    Order.CustomerSelectList = _pinhuaContext.GetCustomerSelectList();
                     return Page();
                 }
                 _pinhuaContext.EsRepCase.Add(repCase);
@@ -82,10 +82,25 @@ namespace PinhuaMaster.Pages.Retail.Delivery
             }
             else
             {
-                DeliveryTypes = BuildTypes();
-                CustomerSelectList = _pinhuaContext.GetCustomerSelectList();
+                Order.DeliveryTypes = BuildTypes();
+                Order.CustomerSelectList = _pinhuaContext.GetCustomerSelectList();
                 return Page();
             }
+        }
+
+        private string buildOrderId()
+        {
+            _pinhuaContext.Database.OpenConnection();
+            var cmd = _pinhuaContext.Database.GetDbConnection().CreateCommand();
+            cmd.CommandText = "SELECT dbo.GetRetailDeliveryID('RS',GETDATE())";
+            var result = cmd.ExecuteReader();
+            var orderId = string.Empty;
+            while (result.Read())
+            {
+                orderId = result[0].ToString();
+            }
+            _pinhuaContext.Database.CloseConnection();
+            return orderId;
         }
 
         private List<SelectListItem> BuildTypes()

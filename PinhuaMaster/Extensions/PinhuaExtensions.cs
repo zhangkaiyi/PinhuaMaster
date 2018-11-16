@@ -168,21 +168,21 @@ namespace PinhuaMaster.Extensions
         static public IEnumerable<InventoryDto> GetInventory(this PinhuaContext _pinhuaContext)
         {
             // 库存盘点日期
-            var latestDate = from w in _pinhuaContext.Warehouse
-                             join i in from p in _pinhuaContext.InventoryCount
-                                       group p by p.仓库编号 into g
-                                       select new
-                                       {
-                                           仓库编号 = g.Key,
-                                           盘点日期 = new DateTime?(g.Max(p => p.盘点日期))
-                                       }
-                             on w.Id equals i.仓库编号 into itmp
-                             from i in itmp.DefaultIfEmpty()
-                             select new
-                             {
-                                 仓库编号 = w.Id,
-                                 盘点日期 = i.盘点日期 ?? new DateTime(1900, 1, 1)
-                             };
+            var latestDate = (from w in _pinhuaContext.Warehouse
+                              join i in (from p in _pinhuaContext.InventoryCount
+                                         group p by p.仓库编号 into g
+                                         select new
+                                         {
+                                             仓库编号 = g.Key,
+                                             盘点日期 = new DateTime?(g.Max(p => p.盘点日期))
+                                         }).ToList()
+                              on w.Id equals i.仓库编号 into itmp
+                              from i in itmp.DefaultIfEmpty()
+                              select new
+                              {
+                                  仓库编号 = w.Id,
+                                  盘点日期 = i.盘点日期 ?? new DateTime(1900, 1, 1)
+                              }).ToList();
 
             // 库存盘点
             var inventory = from m in _pinhuaContext.InventoryCount
