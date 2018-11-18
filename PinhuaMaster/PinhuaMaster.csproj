@@ -70,6 +70,12 @@
     <Content Update="Pages\Retail\Delivery\_DeliveryPartial.cshtml">
       <Pack>$(IncludeRazorContentInPack)</Pack>
     </Content>
+    <Content Update="Pages\Statement\DetailsOld.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Pages\Statement\_Details_datatables_old.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
     <Content Update="Pages\StockManagement\Inventory.cshtml">
       <Pack>$(IncludeRazorContentInPack)</Pack>
     </Content>

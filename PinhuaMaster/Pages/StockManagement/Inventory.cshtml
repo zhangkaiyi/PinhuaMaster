@@ -13,8 +13,8 @@
 @foreach (var w in warehouseList)
 {
     <div class="box box-solid">
-        <div class="box-title">
-            <div class="box-header">@w @pinhuaContext.Warehouse.FirstOrDefault(x => x.Id == w)?.Name</div>
+        <div class="box-header with-border">
+            <div class="box-title">@w - @pinhuaContext.Warehouse.FirstOrDefault(x => x.Id == w)?.Name</div>
         </div>
         <div class="box-body">
             <table data-classes="table table-hover text-nowrap"

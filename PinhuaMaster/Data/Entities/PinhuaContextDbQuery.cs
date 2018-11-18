@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using PinhuaMaster.Extensions.Converters;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -31,6 +32,7 @@ namespace PinhuaMaster.Data.Entities.Pinhua
     {
         public string CustomerId { get; set; }
         public string OrderId { get; set; }
+        [Newtonsoft.Json.JsonConverter(typeof(MyDateConverter))]
         public DateTime? OrderDate { get; set; }
         public string MovementType { get; set; }
         public string MovementTypeDescription { get; set; }
@@ -40,8 +42,16 @@ namespace PinhuaMaster.Data.Entities.Pinhua
         public string Specification { get; set; }
         public decimal? Qty { get; set; }
         public string Unit { get; set; }
+        [Newtonsoft.Json.JsonConverter(typeof(MyDecimalSquareConverter))]
         public decimal? UnitQty { get; set; }
         public decimal? Price { get; set; }
+        [Newtonsoft.Json.JsonConverter(typeof(MyDecimalAmountConverter))]
+        public decimal? Amount { get; set; }
+    }
+    public class DbQuery_对账合计
+    {
+        public string CustomerId { get; set; }
+        public string CustomerName { get; set; }
         public decimal? Amount { get; set; }
     }
 
@@ -50,5 +60,6 @@ namespace PinhuaMaster.Data.Entities.Pinhua
         public DbQuery<DbQuery_盘点日期> view_盘点日期 { get; set; }
         public DbQuery<DbQuery_库存盘点> view_库存明细 { get; set; }
         public DbQuery<DbQuery_对账汇总> myView_对账_汇总 { get; set; }
+        public DbQuery<DbQuery_对账合计> myView_对账_合计 { get; set; }
     }
 }

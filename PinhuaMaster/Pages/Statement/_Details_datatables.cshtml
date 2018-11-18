@@ -1,10 +1,15 @@
 ﻿@using PinhuaMaster.Services
-
+@using PinhuaMaster.Data.Entities.Pinhua
+@model DetailsModel
+@{
+    var customer = pinhuaContext.往来单位.FirstOrDefault(p => p.单位编号 == Model.Id);
+    var sum = pinhuaContext.myView_对账_合计.FirstOrDefault(p => p.CustomerId == customer.单位编号)?.Amount;
+}
 <div class="box box-solid">
     <div class="box-header">
-        <div class="box-title" style="font-weight:bold">@Model?.StatementData?.单位名称 - <small class="text-danger">合计金额：@Model?.StatementData?.应收合计?.ToString("0.00")</small></div>
+        <div class="box-title" style="font-weight:bold">@customer.单位名称 - <small class="text-danger">合计金额：@sum</small></div>
     </div>
-    <div class="box-body no-padding">
+    <div class="box-body">
         <table id="details" class="table table-hover table-bordered table-striped nowrap"></table>
     </div>
 </div>
@@ -18,6 +23,12 @@
             <link rel="stylesheet" href="~/lib/datatables/media/css/dataTables.bootstrap.min.css" />
         </environment>
         <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/buttons/1.5.2/css/buttons.dataTables.min.css">
+
+        <style>
+            #details {
+                width: 100% !important;
+            }
+        </style>
     </text>)
 
 @Html.Script(
@@ -45,7 +56,8 @@
             ajax: {
                 url: "@Url.Page("Details","Ajax", new { Model.Id})",
                 type: "get",
-                dataSrc: "@(Html.Raw(nameof(ViewModel.Model应收应付.明细)))",
+                //dataSrc: "@(Html.Raw(nameof(ViewModel.Model应收应付.明细)))",
+                dataSrc:""
             },
             autoWidth: false,
             scrollX: true,
@@ -58,65 +70,18 @@
                 { extend: 'copy', attr: { id: 'allan' } }, 'csv', 'excel', 'pdf',
             ],
             columns: [
-                { data: "@(nameof(ViewModel.Model应收应付明细.TypeDescription))", title: "业务描述", visible: false },
-                { data: "@(nameof(ViewModel.Model应收应付明细.Date))", title: "日期", visible: false },
-                { data: "@(nameof(ViewModel.Model应收应付明细.OrderId))", name: "单号", title: "单号", visible: false },
-                { data: "@(nameof(ViewModel.Model应收应付明细.ItemId))", title: "产品编号", class:"hidden-xs" },
-                { data: "@(nameof(ViewModel.Model应收应付明细.ItemDescription))", title: "产品描述" },
-                { data: "@(nameof(ViewModel.Model应收应付明细.Specification))", title: "规格" },
-                { data: "@(nameof(ViewModel.Model应收应付明细.Qty))", title: "片数", class: "text-right" },
-                { data: "@(nameof(ViewModel.Model应收应付明细.UnitQty))", title: "数量", class: "hidden-xs text-right" },
-                { data: "@(nameof(ViewModel.Model应收应付明细.Unit))", title: "单位", class: "hidden-xs" },
-                { data: "@(nameof(ViewModel.Model应收应付明细.Price))", title: "单价", class:"text-right" },
-                { data: "@(nameof(ViewModel.Model应收应付明细.Amount))", title: "金额", class:"text-right" },
+                { data: "@(nameof(DbQuery_对账汇总.OrderDate))", title: "日期", visible: true },
+                { data: "@(nameof(DbQuery_对账汇总.MovementTypeDescription))", title: "业务描述", visible: true },
+                { data: "@(nameof(DbQuery_对账汇总.ItemId))", title: "产品编号", class:"hidden-xs",visible:true },
+                { data: "@(nameof(DbQuery_对账汇总.Description))", title: "产品描述" },
+                { data: "@(nameof(DbQuery_对账汇总.Specification))", title: "规格" },
+                { data: "@(nameof(DbQuery_对账汇总.Qty))", title: "片数", class: "text-right" },
+                { data: "@(nameof(DbQuery_对账汇总.UnitQty))", title: "数量", class: "hidden-xs text-right" },
+                { data: "@(nameof(DbQuery_对账汇总.Unit))", title: "单位", class: "hidden-xs" },
+                { data: "@(nameof(DbQuery_对账汇总.Price))", title: "单价", class:"text-right" },
+                { data: "@(nameof(DbQuery_对账汇总.Amount))", title: "金额", class:"text-right" },
             ],
-            drawCallback: function (settings) {
-                var api = this.api();
-                var rows = api.rows({
-                    page: 'current'
-                }).nodes();
-                var last = null;
-                api.column('单号:name', {
-                    page: 'current'
-                }).data().each(function (value, index) {
-                    if (last !== value) {
-                        var data = api.row(index).data()
-                        var remarks = data.@(nameof(ViewModel.Model应收应付明细.Remarks)) || "";
-                        if (remarks) {
-                            remarks = ' - 备注：' + remarks;
-                            remarks = '<span class="text-success" style="font-weight:bold">' + remarks + '</span>';
-                        }
-                        var totalAmount = data.@(nameof(ViewModel.Model应收应付明细.TotalAmount)) || "";
-                        if (totalAmount) {
-                            totalAmount = ' - 金额：' + totalAmount;
-                            totalAmount = '<span class="text-primary" style="font-weight:bold">' + totalAmount + '</span>';
-                        }
 
-                        var date = data.@(nameof(ViewModel.Model应收应付明细.Date));
-                        var orderId = data.@(nameof(ViewModel.Model应收应付明细.OrderId));
-                        var typeDescription = data.@(nameof(ViewModel.Model应收应付明细.TypeDescription));
-
-                        if ($.inArray(data.@(nameof(ViewModel.Model应收应付明细.TypeDescription)), ['收款', "付款", "结算"]) == -1) {
-                            $(rows).eq(index).before('<tr class="group"><td colspan="20"><b>' + orderId + ' - ' + date + ' - ' + typeDescription + totalAmount + '</b>' + '<span class="hidden-xs">' + remarks + '</span>' + '</td></tr>');
-                        }
-                        else {
-                            var financeAmount = data.@(nameof(ViewModel.Model应收应付明细.Amount));
-                            if (financeAmount != null && financeAmount != undefined) {
-                                    financeAmount = ' - 金额：' + financeAmount;
-                            }
-                            var cls = ""
-                            var description = data.@(nameof(ViewModel.Model应收应付明细.TypeDescription));
-                            if (description == '收款')
-                                cls = 'text-danger'
-                            else if (description == '付款')
-                                cls = 'text-success'
-
-                            $(rows).eq(index).html('<td colspan="20" class="' + cls + '"><b>' + orderId+' - '+ date + ' - ' + typeDescription + financeAmount + '<span class="hidden-xs">' + remarks + '</span>' + '</b></td>');
-                        }
-                        last = value;
-                    }
-                });
-            },
         })
         </script>
     </text>)

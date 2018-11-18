@@ -19,6 +19,7 @@ using AutoMapper;
 using PinhuaMaster.Extensions;
 using Zky.Utility;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
 
 namespace PinhuaMaster
 {
@@ -73,7 +74,7 @@ namespace PinhuaMaster
                     //options.Conventions.AuthorizePage("/Account/Logout");
                     options.Conventions.AuthorizeFolder("/", "Permissons").AllowAnonymousToFolder("/Account").AllowAnonymousToFolder("/Statement/External");
                 })
-                /*.SetCompatibilityVersion(CompatibilityVersion.Version_2_1)*/;
+                .SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
             services.AddAuthentication().AddCookie(options =>
             {
@@ -102,6 +103,7 @@ namespace PinhuaMaster
 
             services.AddTransient<IActionPermissionService, ActionPermissionService>();
             services.AddTransient<IAttendanceService, AttendanceService>();
+            services.AddTransient<IAuthorizationHandler, PermissionHandler>();
 
             //初始化应用配置
             //InitAppConfig(services);
@@ -121,7 +123,7 @@ namespace PinhuaMaster
             {
                 app.UseExceptionHandler("/Error");
                 // AspNetCore 2.1
-                //app.UseHsts();
+                app.UseHsts();
             }
 
             // AspNetCore 2.1

@@ -10,6 +10,7 @@ using PinhuaMaster.Pages.Retail.Delivery.ViewModel;
 
 namespace PinhuaMaster.Pages.Retail.Delivery
 {
+    [IdentityAuthorize]
     public class IndexModel : PageModel
     {
         private PinhuaContext _pinhuaContext { get; set; }

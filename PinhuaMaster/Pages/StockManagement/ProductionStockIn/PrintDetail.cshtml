@@ -96,7 +96,7 @@
                             @foreach (var detail in details)
                             {
                                 <tr>
-                                    <td>@detail.Description</td>
+                                    <td>@detail.ModelName（@detail.Description）</td>
                                     <td>@detail.Specification</td>
                                     <td class="text-right">@detail.Qty?.ToString("0")</td>
                                     <td class="text-right">@detail.UnitQty?.ToString("0.00") @detail.Unit</td>
