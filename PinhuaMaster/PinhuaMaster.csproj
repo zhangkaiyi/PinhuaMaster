@@ -28,6 +28,21 @@
     <Folder Include="Pages\Administrator\" />
   </ItemGroup>
   <ItemGroup>
+    <Content Update="Pages\BasicInformation\ModelNumber\Create.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Pages\BasicInformation\ModelNumber\Delete.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Pages\BasicInformation\ModelNumber\Edit.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Pages\BasicInformation\ModelNumber\Index.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Pages\BasicInformation\ModelNumber\_ModelNumberPartial.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
     <Content Update="Pages\OrderManagement\EasyDelivery\PrintDetail2.cshtml">
       <Pack>$(IncludeRazorContentInPack)</Pack>
     </Content>
@@ -104,6 +119,21 @@
       <Pack>$(IncludeRazorContentInPack)</Pack>
     </Content>
     <Content Update="Pages\StockManagement\ProductionStockIn\_ProductionStockInPartial.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Pages\StockManagement\Warehouse\Create.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Pages\StockManagement\Warehouse\Delete.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Pages\StockManagement\Warehouse\Edit.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Pages\StockManagement\Warehouse\Index.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Pages\StockManagement\Warehouse\_WarehousePartial.cshtml">
       <Pack>$(IncludeRazorContentInPack)</Pack>
     </Content>
     <Content Update="Pages\StockManagement\StockIn\Create.cshtml">

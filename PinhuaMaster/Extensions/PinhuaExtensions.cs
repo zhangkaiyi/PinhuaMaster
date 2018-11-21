@@ -161,7 +161,7 @@ namespace PinhuaMaster.Extensions
 
         static public IEnumerable<产品型号清单> GetModelNames(this PinhuaContext _pinhuaContext)
         {
-            var list = _pinhuaContext.产品型号清单.AsNoTracking().OrderBy(p => p.排序).ThenBy(p => p.编号).ToList();
+            var list = _pinhuaContext.产品型号清单.AsNoTracking().Where(p => !p.编号.StartsWith("DZ")).OrderBy(p => p.排序).ThenBy(p => p.编号).ToList();
             return list;
         }
 
