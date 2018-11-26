@@ -27,5 +27,6 @@ namespace PinhuaMaster.Data.Entities.Pinhua
         public int? ExcelServerChg { get; set; }
         public string ModelNumber { get; set; }
         public string ModelName { get; set; }
+        public string SubModelNumber { get; set; }
     }
 }

@@ -145,6 +145,7 @@ namespace PinhuaMaster.Data.Entities.Pinhua
         public virtual DbSet<OvertimeFormMain> OvertimeFormMain { get; set; }
         public virtual DbSet<PayrollDetails> PayrollDetails { get; set; }
         public virtual DbSet<PayrollMain> PayrollMain { get; set; }
+        public virtual DbSet<ProductRegistrationMain> ProductRegistrationMain { get; set; }
         public virtual DbSet<RetailGiDetails> RetailGiDetails { get; set; }
         public virtual DbSet<RetailGiMain> RetailGiMain { get; set; }
         public virtual DbSet<StockInDetails> StockInDetails { get; set; }
@@ -4085,6 +4086,8 @@ namespace PinhuaMaster.Data.Entities.Pinhua
                     .HasColumnName("ExcelServerWIID")
                     .HasMaxLength(20);
 
+                entity.Property(e => e.SubModelNumber).HasMaxLength(20);
+
                 entity.Property(e => e.型号名称).HasMaxLength(20);
 
                 entity.Property(e => e.型号编号).HasMaxLength(20);
@@ -4606,6 +4609,52 @@ namespace PinhuaMaster.Data.Entities.Pinhua
                     .HasMaxLength(20);
             });
 
+            modelBuilder.Entity<ProductRegistrationMain>(entity =>
+            {
+                entity.HasKey(e => new { e.ModelNumber, e.SubModelNumber });
+
+                entity.ToTable("ProductRegistration_Main");
+
+                entity.HasIndex(e => new { e.ExcelServerRcid, e.ExcelServerWiid })
+                    .HasName("idx1");
+
+                entity.Property(e => e.ModelNumber).HasMaxLength(100);
+
+                entity.Property(e => e.SubModelNumber).HasMaxLength(20);
+
+                entity.Property(e => e.Description).HasMaxLength(100);
+
+                entity.Property(e => e.ExcelServerChg).HasColumnName("ExcelServerCHG");
+
+                entity.Property(e => e.ExcelServerCn).HasColumnName("ExcelServerCN");
+
+                entity.Property(e => e.ExcelServerRc1)
+                    .HasColumnName("ExcelServerRC1")
+                    .HasMaxLength(20);
+
+                entity.Property(e => e.ExcelServerRcid)
+                    .HasColumnName("ExcelServerRCID")
+                    .HasMaxLength(20);
+
+                entity.Property(e => e.ExcelServerRn).HasColumnName("ExcelServerRN");
+
+                entity.Property(e => e.ExcelServerRtid)
+                    .HasColumnName("ExcelServerRTID")
+                    .HasMaxLength(20);
+
+                entity.Property(e => e.ExcelServerWiid)
+                    .HasColumnName("ExcelServerWIID")
+                    .HasMaxLength(20);
+
+                entity.Property(e => e.Height).HasColumnType("decimal(20, 3)");
+
+                entity.Property(e => e.Length).HasColumnType("decimal(20, 3)");
+
+                entity.Property(e => e.Specification).HasMaxLength(100);
+
+                entity.Property(e => e.Width).HasColumnType("decimal(20, 3)");
+            });
+
             modelBuilder.Entity<RetailGiDetails>(entity =>
             {
                 entity.HasKey(e => new { e.Id, e.DeliveryId });
@@ -4773,6 +4822,8 @@ namespace PinhuaMaster.Data.Entities.Pinhua
 
                 entity.Property(e => e.Specification).HasMaxLength(100);
 
+                entity.Property(e => e.SubModelNumber).HasMaxLength(20);
+
                 entity.Property(e => e.Unit).HasMaxLength(20);
 
                 entity.Property(e => e.UnitQty).HasColumnType("decimal(20, 3)");
@@ -4892,6 +4943,8 @@ namespace PinhuaMaster.Data.Entities.Pinhua
                 entity.Property(e => e.Remarks).HasMaxLength(500);
 
                 entity.Property(e => e.Specification).HasMaxLength(100);
+
+                entity.Property(e => e.SubModelNumber).HasMaxLength(20);
 
                 entity.Property(e => e.Unit).HasMaxLength(20);
 
@@ -5013,6 +5066,8 @@ namespace PinhuaMaster.Data.Entities.Pinhua
 
                 entity.Property(e => e.Specification).HasMaxLength(100);
 
+                entity.Property(e => e.SubModelNumber).HasMaxLength(20);
+
                 entity.Property(e => e.Unit).HasMaxLength(20);
 
                 entity.Property(e => e.UnitQty).HasColumnType("decimal(20, 3)");
@@ -5132,6 +5187,8 @@ namespace PinhuaMaster.Data.Entities.Pinhua
                 entity.Property(e => e.Remarks).HasMaxLength(500);
 
                 entity.Property(e => e.Specification).HasMaxLength(100);
+
+                entity.Property(e => e.SubModelNumber).HasMaxLength(20);
 
                 entity.Property(e => e.Unit).HasMaxLength(20);
 

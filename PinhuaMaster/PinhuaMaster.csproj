@@ -26,6 +26,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Pages\Administrator\" />
+    <Folder Include="Pages\StockManagement\StockCheck\" />
   </ItemGroup>
   <ItemGroup>
     <Content Update="Pages\BasicInformation\ModelNumber\Create.cshtml">

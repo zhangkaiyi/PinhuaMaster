@@ -45,7 +45,7 @@ namespace PinhuaMaster.Pages.StockManagement.StockSubconctracting
             //使用默认方式，不更改元数据的key的大小写
             settings.ContractResolver = new Newtonsoft.Json.Serialization.DefaultContractResolver();
 
-            return new JsonResult(_pinhuaContext.GetInventory(), settings);
+            return new JsonResult(_pinhuaContext.view_库存明细, settings);
         }
 
         public IActionResult OnPost()
@@ -53,7 +53,7 @@ namespace PinhuaMaster.Pages.StockManagement.StockSubconctracting
             if (ModelState.IsValid)
             {
                 var Rcid = _pinhuaContext.GetNewRcId();
-                var rtId = "176.1";
+                var rtId = "177.1";
                 var repCase = new EsRepCase
                 {
                     RcId = Rcid,

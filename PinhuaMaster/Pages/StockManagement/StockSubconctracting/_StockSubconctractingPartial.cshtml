@@ -181,8 +181,8 @@
                                         <th style="min-width:80px;">片数</th>
                                         <th class="hidden-xs" style="min-width:80px;">单位数量</th>
                                         <th class="hidden-xs" style="min-width:80px;">计价单位</th>
-                                        <th class="hidden-xs" style="min-width:80px;">单价</th>
-                                        <th class="hidden-xs" style="min-width:80px;">金额</th>
+                                        @*<th class="hidden-xs" style="min-width:80px;">单价</th>
+                                        <th class="hidden-xs" style="min-width:80px;">金额</th>*@
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -201,7 +201,10 @@
                                         </td>
                                         <td>{{ index + 1 }}<input :name="buildName(index,'Id')" type="hidden" v-bind:value="index + 1" /></td>
                                         <td class="hidden">{{ todo.ModelNumber }}<input :name="buildName(index,'ModelNumber')" type="hidden" v-bind:value="todo.ModelNumber" /></td>
-                                        <td>{{ todo.ModelName }}<input :name="buildName(index,'ModelName')" type="hidden" v-model="todo.ModelName" /></td>
+                                        <td>
+                                            {{ todo.ModelName }} - {{ todo.SubModelNumber }}<input :name="buildName(index,'ModelName')" type="hidden" v-model="todo.ModelName" />
+                                            <input :name="buildName(index,'SubModelNumber')" type="hidden" v-model="todo.SubModelNumber" />
+                                        </td>
                                         <td>{{ todo.Description }}<input :name="buildName(index,'Description')" type="hidden" v-model="todo.Description" /></td>
                                         <td>{{ todo.Specification }}<input :name="buildName(index,'Specification')" type="hidden" v-model="todo.Specification" /></td>
                                         <td class="hidden">{{ todo.Length }}<input :name="buildName(index,'Length')" type="hidden" v-bind:value="todo.Length" /></td>
@@ -210,8 +213,8 @@
                                         <td>{{ todo.Qty }}<input :name="buildName(index,'Qty')" type="hidden" v-bind:value="todo.Qty" /></td>
                                         <td class="hidden-xs">{{ computeUnitQty(todo) }}<input :name="buildName(index,'UnitQty')" type="hidden" v-bind:value="computeUnitQty(todo)" /></td>
                                         <td class="hidden-xs">{{ todo.Unit }}<input :name="buildName(index,'Unit')" type="hidden" v-bind:value="todo.Unit" /></td>
-                                        <td class="hidden-xs">{{ todo.Price }}<input :name="buildName(index,'Price')" type="hidden" v-bind:value="todo.Price" /></td>
-                                        <td class="hidden-xs">{{ computeAmount(todo) }}<input :name="buildName(index,'Amount')" type="hidden" v-bind:value="computeAmount(todo)" /></td>
+                                        @*<td class="hidden-xs">{{ todo.Price }}<input :name="buildName(index,'Price')" type="hidden" v-bind:value="todo.Price" /></td>
+                                        <td class="hidden-xs">{{ computeAmount(todo) }}<input :name="buildName(index,'Amount')" type="hidden" v-bind:value="computeAmount(todo)" /></td>*@
                                     </tr>
                                 </tbody>
                             </table>
@@ -235,6 +238,7 @@
                     <tr>
                         <th data-field="Warehouse">仓库</th>
                         <th data-field="ModelName">型号</th>
+                        <th data-field="SubModelNumber">子型号</th>
                         <th data-field="Description">描述</th>
                         <th data-field="Specification">规格</th>
                         <th data-field="Qty">片数</th>
@@ -248,6 +252,17 @@
         <div class="modal-body">
             <div class="form-horizontal margin-r-5">
                 <div class="form-group has-error">
+                    <label class="control-label col-xs-4 col-md-3"><i class="fa fa-angle-double-right"></i> 型号</label>
+                    <div class="col-xs-8 col-md-9">
+                        <div class="input-group">
+                            <input class="form-control" v-bind:value="itemCurrent.ModelName+' - '+itemCurrent.SubModelNumber" readonly />
+                            <div class="input-group-btn">
+                                <button type="button" class="btn btn-danger btn-flat" style="width:40px" v-on:click=""><span class="caret"></span></button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group has-error">
                     <label class="control-label col-xs-4 col-md-3"><i class="fa fa-angle-double-right"></i> 描述</label>
                     <div class="col-xs-8 col-md-9">
                         <div class="input-group">
@@ -259,56 +274,67 @@
                     </div>
                 </div>
                 <div class="form-group has-error">
-                    <label class="control-label col-xs-4 col-md-3"><i class="fa fa-angle-double-right"></i> 长</label>
+                    <label class="control-label col-xs-4 col-md-3"><i class="fa fa-angle-double-right"></i> 规格</label>
                     <div class="col-xs-8 col-md-9">
                         <div class="input-group">
-                            <input type="number" class="form-control" v-model="itemCurrent.Length" readonly />
+                            <input class="form-control" v-model="itemCurrent.Specification" readonly />
                             <div class="input-group-btn">
                                 <button type="button" class="btn btn-danger btn-flat dropdown-toggle" style="width:40px" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="caret"></span></button>
-                                <ul class="dropdown-menu dropdown-menu-right">
-                                    <li><a v-on:click="itemCurrent.Length=450">450</a></li>
-                                    <li><a v-on:click="itemCurrent.Length=500">500</a></li>
-                                    <li><a v-on:click="itemCurrent.Length=600">600</a></li>
-                                    <li><a v-on:click="itemCurrent.Length=300">300</a></li>
-                                </ul>
-                                @*<button type="button" class="btn btn-danger btn-flat" style="width:40px"><i class="fa fa-sort-numeric-asc"></i></button>*@
+                                <ul class="dropdown-menu dropdown-menu-right"></ul>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="form-group has-error">
-                    <label class="control-label col-xs-4 col-md-3"><i class="fa fa-angle-double-right"></i> 宽</label>
-                    <div class="col-xs-8 col-md-9">
-                        <div class="input-group">
-                            <input type="number" class="form-control" v-model="itemCurrent.Width" readonly />
-                            <div class="input-group-btn">
-                                <button type="button" class="btn btn-danger btn-flat dropdown-toggle" style="width:40px" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="caret"></span></button>
-                                <ul class="dropdown-menu dropdown-menu-right">
-                                    <li><a v-on:click="itemCurrent.Width=450">450</a></li>
-                                    <li><a v-on:click="itemCurrent.Width=500">500</a></li>
-                                    <li><a v-on:click="itemCurrent.Width=600">600</a></li>
-                                    <li><a v-on:click="itemCurrent.Width=300">300</a></li>
-                                </ul>
-                            </div>
-                        </div>
+                @*<div class="form-group has-error">
+            <label class="control-label col-xs-4 col-md-3"><i class="fa fa-angle-double-right"></i> 长</label>
+            <div class="col-xs-8 col-md-9">
+                <div class="input-group">
+                    <input type="number" class="form-control" v-model="itemCurrent.Length" readonly />
+                    <div class="input-group-btn">
+                        <button type="button" class="btn btn-danger btn-flat dropdown-toggle" style="width:40px" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="caret"></span></button>
+                        <ul class="dropdown-menu dropdown-menu-right">
+                            <li><a v-on:click="itemCurrent.Length=450">450</a></li>
+                            <li><a v-on:click="itemCurrent.Length=500">500</a></li>
+                            <li><a v-on:click="itemCurrent.Length=600">600</a></li>
+                            <li><a v-on:click="itemCurrent.Length=300">300</a></li>
+                        </ul>
                     </div>
                 </div>
-                <div class="form-group has-error">
-                    <label class="control-label col-xs-4 col-md-3"><i class="fa fa-angle-double-right"></i> 高</label>
-                    <div class="col-xs-8 col-md-9">
-                        <div class="input-group">
-                            <input type="number" class="form-control" v-model="itemCurrent.Height" readonly />
-                            <div class="input-group-btn">
-                                <button type="button" class="btn btn-danger btn-flat dropdown-toggle" style="width:40px" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="caret"></span></button>
-                                <ul class="dropdown-menu dropdown-menu-right">
-                                    <li><a v-on:click="itemCurrent.Height=15">15</a></li>
-                                    <li><a v-on:click="itemCurrent.Height=18">18</a></li>
-                                    <li><a v-on:click="itemCurrent.Height=12">12</a></li>
-                                </ul>
-                            </div>
-                        </div>
+            </div>
+        </div>
+        <div class="form-group has-error">
+            <label class="control-label col-xs-4 col-md-3"><i class="fa fa-angle-double-right"></i> 宽</label>
+            <div class="col-xs-8 col-md-9">
+                <div class="input-group">
+                    <input type="number" class="form-control" v-model="itemCurrent.Width" readonly />
+                    <div class="input-group-btn">
+                        <button type="button" class="btn btn-danger btn-flat dropdown-toggle" style="width:40px" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="caret"></span></button>
+                        <ul class="dropdown-menu dropdown-menu-right">
+                            <li><a v-on:click="itemCurrent.Width=450">450</a></li>
+                            <li><a v-on:click="itemCurrent.Width=500">500</a></li>
+                            <li><a v-on:click="itemCurrent.Width=600">600</a></li>
+                            <li><a v-on:click="itemCurrent.Width=300">300</a></li>
+                        </ul>
                     </div>
                 </div>
+            </div>
+        </div>
+        <div class="form-group has-error">
+            <label class="control-label col-xs-4 col-md-3"><i class="fa fa-angle-double-right"></i> 高</label>
+            <div class="col-xs-8 col-md-9">
+                <div class="input-group">
+                    <input type="number" class="form-control" v-model="itemCurrent.Height" readonly />
+                    <div class="input-group-btn">
+                        <button type="button" class="btn btn-danger btn-flat dropdown-toggle" style="width:40px" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="caret"></span></button>
+                        <ul class="dropdown-menu dropdown-menu-right">
+                            <li><a v-on:click="itemCurrent.Height=15">15</a></li>
+                            <li><a v-on:click="itemCurrent.Height=18">18</a></li>
+                            <li><a v-on:click="itemCurrent.Height=12">12</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>*@
                 <div class="form-group has-error">
                     <label class="control-label col-xs-4 col-md-3"><i class="fa fa-angle-double-right"></i> 数量</label>
                     <div class="col-xs-8 col-md-9">
@@ -340,29 +366,29 @@
                                 </ul>
                             </div>
                             @*<div class="input-group-addon no-padding">
-                                    <i class="fa fa-calculator" style="width:38px"></i>
-                                </div>*@
+                        <i class="fa fa-calculator" style="width:38px"></i>
+                    </div>*@
                         </div>
                     </div>
                 </div>
                 @*<div class="form-group has-error">
-                        <label class="control-label col-xs-4 col-md-3"><i class="fa fa-angle-double-right"></i> 单位</label>
-                        <div class="col-xs-8 col-md-9">
-                            <div class="input-group">
-                                <select class="form-control" v-model="itemCurrent.Unit">
-                                    <option>PCS</option>
-                                    <option>平方米</option>
-                                    <option>延长米</option>
-                                    <option>立方米</option>
-                                    <option>套</option>
-                                </select>
-                                <span class="input-group-addon no-padding">
-                                    <i class="fa fa-calculator" style="width:38px"></i>
-                                </span>
-                            </div>
-                        </div>
-                    </div>*@
-                <div class="form-group has-error">
+            <label class="control-label col-xs-4 col-md-3"><i class="fa fa-angle-double-right"></i> 单位</label>
+            <div class="col-xs-8 col-md-9">
+                <div class="input-group">
+                    <select class="form-control" v-model="itemCurrent.Unit">
+                        <option>PCS</option>
+                        <option>平方米</option>
+                        <option>延长米</option>
+                        <option>立方米</option>
+                        <option>套</option>
+                    </select>
+                    <span class="input-group-addon no-padding">
+                        <i class="fa fa-calculator" style="width:38px"></i>
+                    </span>
+                </div>
+            </div>
+        </div>*@
+                @*<div class="form-group has-error">
                     <label class="control-label col-xs-4 col-md-3"><i class="fa fa-angle-double-right"></i> 单价</label>
                     <div class="col-xs-8 col-md-9">
                         <div class="input-group">
@@ -383,7 +409,7 @@
                             </span>
                         </div>
                     </div>
-                </div>
+                </div>*@
                 <div class="form-group has-error">
                     <label class="control-label col-xs-4 col-md-3"><i class="fa fa-angle-double-right"></i> 备注</label>
                     <div class="col-xs-8 col-md-9">
@@ -450,6 +476,7 @@
                 vm.$data.itemCurrent.Height = row.Height
                 vm.$data.itemCurrent.ModelNumber = row.ModelNumber
                 vm.$data.itemCurrent.ModelName = row.ModelName
+                vm.$data.itemCurrent.SubModelNumber = row.SubModelNumber
                 layerItemDetail()
             },
         }

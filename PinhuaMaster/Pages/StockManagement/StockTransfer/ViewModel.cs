@@ -72,6 +72,7 @@ namespace PinhuaMaster.Pages.StockManagement.StockTransfer.ViewModel
     {
         public string ModelNumber { get; set; }
         public string ModelName { get; set; }
+        public string SubModelNumber { get; set; }
         public string Description { get; set; }
         public string Specification { get; set; }
         public decimal? Length { get; set; }

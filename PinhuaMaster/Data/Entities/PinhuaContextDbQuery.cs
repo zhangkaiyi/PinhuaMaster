@@ -20,6 +20,7 @@ namespace PinhuaMaster.Data.Entities.Pinhua
         public string WarehouseName { get; set; }
         public string ModelNumber { get; set; }
         public string ModelName { get; set; }
+        public string SubModelNumber { get; set; }
         public string Description { get; set; }
         public string Specification { get; set; }
         public decimal? Length { get; set; }
@@ -48,11 +49,25 @@ namespace PinhuaMaster.Data.Entities.Pinhua
         [Newtonsoft.Json.JsonConverter(typeof(MyDecimalAmountConverter))]
         public decimal? Amount { get; set; }
     }
+
     public class DbQuery_对账合计
     {
         public string CustomerId { get; set; }
         public string CustomerName { get; set; }
         public decimal? Amount { get; set; }
+    }
+
+    public class DbQuery_产品
+    {
+        public string ModelNumber { get; set; }
+        public string SubModelNumber { get; set; }
+        public string ModelName { get; set; }
+        public int? Rank { get; set; }
+        public string Description { get; set; }
+        public string Specification { get; set; }
+        public decimal? Length { get; set; }
+        public decimal? Width { get; set; }
+        public decimal? Height { get; set; }
     }
 
     public partial class PinhuaContext : DbContext
@@ -61,5 +76,6 @@ namespace PinhuaMaster.Data.Entities.Pinhua
         public DbQuery<DbQuery_库存盘点> view_库存明细 { get; set; }
         public DbQuery<DbQuery_对账汇总> myView_对账_汇总 { get; set; }
         public DbQuery<DbQuery_对账合计> myView_对账_合计 { get; set; }
+        public DbQuery<DbQuery_产品> myView_Product { get; set; }
     }
 }

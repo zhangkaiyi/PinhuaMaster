@@ -34,8 +34,37 @@ namespace PinhuaMaster.Pages.StockManagement.StockTransfer
             Order.WarehouseList = _pinhuaContext.GetWarehouseSelectList();
 
             Order.Main = _mapper.Map<StockTransferMain, StockTransferMainDTO>(_pinhuaContext.StockTransferMain.AsNoTracking().Where(p => p.OrderId == Id).FirstOrDefault());
-            Order.Details = _mapper.Map<List<StockTransferDetails>, List<StockTransferDetailsDTO>>(_pinhuaContext.StockTransferDetails.AsNoTracking().Where(p => p.OrderId == Id).ToList());
-
+            //Order.Details = _mapper.Map<List<StockTransferDetails>, List<StockTransferDetailsDTO>>(_pinhuaContext.StockTransferDetails.AsNoTracking().Where(p => p.OrderId == Id).ToList());
+            var details = (from d in _pinhuaContext.StockTransferDetails.AsNoTracking().Where(p => p.OrderId == Id)
+                           join product in _pinhuaContext.ProductRegistrationMain.AsNoTracking() on new { d.ModelNumber, d.SubModelNumber } equals new { product.ModelNumber, product.SubModelNumber }
+                           join model in _pinhuaContext.产品型号清单.AsNoTracking() on product.ModelNumber equals model.编号
+                           select new StockTransferDetails
+                           {
+                               Id = d.Id,
+                               Description = product.Description,
+                               SubModelNumber = product.SubModelNumber,
+                               ModelNumber = product.ModelNumber,
+                               ModelName = model.名称,
+                               Amount = d.Amount,
+                               Specification = d.Specification,
+                               Height = d.Height,
+                               Length = d.Length,
+                               Width = d.Width,
+                               OrderId = d.OrderId,
+                               Price = d.Price,
+                               Qty = d.Qty,
+                               Remarks = d.Remarks,
+                               Unit = d.Unit,
+                               UnitQty = d.UnitQty,
+                               ExcelServerRcid = d.ExcelServerRcid,
+                               ExcelServerRtid = d.ExcelServerRtid,
+                               ExcelServerChg = d.ExcelServerChg,
+                               ExcelServerCn = d.ExcelServerCn,
+                               ExcelServerRc1 = d.ExcelServerRc1,
+                               ExcelServerRn = d.ExcelServerRn,
+                               ExcelServerWiid = d.ExcelServerWiid
+                           }).ToList();
+            Order.Details = _mapper.Map<List<StockTransferDetails>, List<StockTransferDetailsDTO>>(details);
         }
 
         public async Task<IActionResult> OnPost()

@@ -22,5 +22,6 @@ namespace PinhuaMaster.Data.Entities.Pinhua
         public int? ExcelServerChg { get; set; }
         public string 型号名称 { get; set; }
         public int 自增列 { get; set; }
+        public string SubModelNumber { get; set; }
     }
 }
