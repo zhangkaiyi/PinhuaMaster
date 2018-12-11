@@ -25,12 +25,12 @@ namespace PinhuaMaster.Pages.Statement
         public void OnGet(string Id)
         {
             this.Id = Id;
-            StatementData = _pinhuaContext.myView_对账_汇总.Where(p => p.CustomerId == Id).OrderByDescending(p => p.OrderDate).ThenByDescending(p => p.OrderId).ToList(); 
+            StatementData = _pinhuaContext.myView_对账_汇总.Where(p => p.CustomerId == Id).OrderByDescending(p => p.OrderDate).ThenByDescending(p => p.OrderId).ThenBy(p => p.ItemId).ToList();
         }
 
         public IActionResult OnGetAjax(string Id)
         {
-            var dto = _pinhuaContext.myView_对账_汇总.Where(p => p.CustomerId == Id).OrderByDescending(p => p.OrderDate).ThenByDescending(p => p.OrderId).ToList(); 
+            var dto = _pinhuaContext.myView_对账_汇总.Where(p => p.CustomerId == Id).OrderByDescending(p => p.OrderDate).ThenByDescending(p => p.OrderId).ThenBy(p => p.ItemId).ToList();
             var settings = new Newtonsoft.Json.JsonSerializerSettings();
             //EF Core中默认为驼峰样式序列化处理key
             //settings.ContractResolver = new CamelCasePropertyNamesContractResolver();

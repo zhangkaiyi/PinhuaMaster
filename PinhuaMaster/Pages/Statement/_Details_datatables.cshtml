@@ -10,7 +10,7 @@
         <div class="box-title" style="font-weight:bold">@customer.单位名称 - <small class="text-danger">合计金额：@sum</small></div>
     </div>
     <div class="box-body">
-        <table id="details" class="table table-hover table-bordered table-striped nowrap"></table>
+        <table id="details" class="table table-hover table-bordered nowrap"></table>
     </div>
 </div>
 
@@ -23,11 +23,7 @@
             <link rel="stylesheet" href="~/lib/datatables/media/css/dataTables.bootstrap.min.css" />
         </environment>
         <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/buttons/1.5.2/css/buttons.dataTables.min.css">
-
         <style>
-            #details {
-                width: 100% !important;
-            }
         </style>
     </text>)
 
@@ -53,35 +49,115 @@
         $.extend(true, $.fn.DataTable.defaults, CONSTANT.DATA_TABLES.DEFAULT_OPTION);
 
         detailTable = $('#details').DataTable({
-            ajax: {
+            @*ajax: {
                 url: "@Url.Page("Details","Ajax", new { Model.Id})",
                 type: "get",
                 //dataSrc: "@(Html.Raw(nameof(ViewModel.Model应收应付.明细)))",
                 dataSrc:""
-            },
+            },*@
+            data: @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model.StatementData)),
             autoWidth: false,
             scrollX: true,
             pageLength: -1,
             searching: true,    //禁用原生搜索
             //scrollY:'600',
-            //dom: "fr<'#detailPanel.panel panel-primary'<'panel-heading'<'row'<'col-xs-5'<'panel-title'>><'col-xs-7'>>>t<'panel-footer'>><'row'<'col-xs-5'i><'col-xs-7'p>>",
+            dom: "fr<'#detailPanel.panel panel-primary'<'panel-heading'<'row'<'col-xs-5'<'panel-title'>><'col-xs-7'>>>t<'panel-footer'>><'row'<'col-xs-5'i><'col-xs-7'p>>",
             dom: 'Bfrtip',
             buttons: [
                 { extend: 'copy', attr: { id: 'allan' } }, 'csv', 'excel', 'pdf',
             ],
             columns: [
-                { data: "@(nameof(DbQuery_对账汇总.OrderDate))", title: "日期", visible: true },
+                { data: "@(nameof(DbQuery_对账汇总.OrderId))", title: "单号", className:["hidden"] },
+                { data: "@(nameof(DbQuery_对账汇总.OrderDate))", title: "日期", width: "200px", visible: true },
                 { data: "@(nameof(DbQuery_对账汇总.MovementTypeDescription))", title: "业务描述", visible: true },
-                { data: "@(nameof(DbQuery_对账汇总.ItemId))", title: "产品编号", class:"hidden-xs",visible:true },
+                { data: "@(nameof(DbQuery_对账汇总.ItemId))", title: "产品编号", class:"hidden-xs", visible: true },
                 { data: "@(nameof(DbQuery_对账汇总.Description))", title: "产品描述" },
                 { data: "@(nameof(DbQuery_对账汇总.Specification))", title: "规格" },
                 { data: "@(nameof(DbQuery_对账汇总.Qty))", title: "片数", class: "text-right" },
-                { data: "@(nameof(DbQuery_对账汇总.UnitQty))", title: "数量", class: "hidden-xs text-right" },
-                { data: "@(nameof(DbQuery_对账汇总.Unit))", title: "单位", class: "hidden-xs" },
+                { data: "@(nameof(DbQuery_对账汇总.UnitQty))", title: "数量", class: "hidden-xs text-right", visible: true },
+                { data: "@(nameof(DbQuery_对账汇总.Unit))", title: "单位", class: "hidden-xs", visible: true },
                 { data: "@(nameof(DbQuery_对账汇总.Price))", title: "单价", class:"text-right" },
                 { data: "@(nameof(DbQuery_对账汇总.Amount))", title: "金额", class:"text-right" },
             ],
+            rowCallback: function (row, data) {
+                if (data.Amount < 0) {
+                    $(row).addClass('text-red')
+                }
+            },
+            drawCallback: function (settings) {
+                var api = this.api();
+                var rows = api.rows({ page: 'current' }).nodes();
 
-        })
+                var idx = 0;    // 第一列进行合并
+                var last = null;
+                var tr = null;
+                var ltd = null;
+                var firstRowLineNo = [];
+                api.column(idx, { page: 'current' }).data().each(function (group, i) {
+                    tr = $(rows[i]);
+                    var td = $("td:eq(" + idx + ")", tr);
+                    if (last !== group) {
+                        td.attr("rowspan", 1);
+                        td.text(group);
+                        ltd = td;
+                        last = group;
+                        td.css("vertical-align", "middle");
+                        firstRowLineNo.push(i)
+                    }
+                    else {
+                        ltd.attr("rowspan", parseInt(ltd.attr("rowspan")) + 1);
+                        td.css("display", "none");
+                    }
+                });
+
+                var idx = 1;    // 第二列进行合并
+                var last = null;
+                var tr = null;
+                var ltd = null;
+                var i1s = [];
+                api.column(idx, { page: 'current' }).data().each(function (group, i) {
+                    tr = $(rows[i]);
+                    var td = $("td:eq(" + idx + ")", tr);
+                    if (last !== group || firstRowLineNo.indexOf(i) !== -1) {
+                        td.attr("rowspan", 1);
+                        td.text(group);
+                        ltd = td;
+                        last = group;
+                        td.css("vertical-align", "middle");
+                        firstRowLineNo.push(i)
+                    }
+                    else {
+                        ltd.attr("rowspan", parseInt(ltd.attr("rowspan")) + 1);
+                        td.css("display", "none");
+                    }
+                });
+
+                var idx = 2;    // 第三列进行合并
+                var last = null;
+                var tr = null;
+                var ltd = null;
+                var i1s = [];
+                api.column(idx, { page: 'current' }).data().each(function (group, i) {
+                    tr = $(rows[i]);
+                    var td = $("td:eq(" + idx + ")", tr);
+                    if (last !== group || firstRowLineNo.indexOf(i) !== -1) {
+                        td.attr("rowspan", 1);
+                        td.text(group);
+                        ltd = td;
+                        last = group;
+                        td.css("vertical-align", "middle");
+                        firstRowLineNo.push(i)
+                    }
+                    else {
+                        ltd.attr("rowspan", parseInt(ltd.attr("rowspan")) + 1);
+                        td.css("display", "none");
+                    }
+                });
+            },
+            })
+
+            $(window).resize(function () {
+                detailTable.columns.adjust();
+            })
         </script>
     </text>)

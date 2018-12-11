@@ -20,7 +20,7 @@ namespace PinhuaMaster.Data.Entities.Pinhua
         public string WarehouseName { get; set; }
         public string ModelNumber { get; set; }
         public string ModelName { get; set; }
-        public string SubModelNumber { get; set; }
+        public int SubModelNumber { get; set; }
         public string Description { get; set; }
         public string Specification { get; set; }
         public decimal? Length { get; set; }
@@ -60,7 +60,7 @@ namespace PinhuaMaster.Data.Entities.Pinhua
     public class DbQuery_产品
     {
         public string ModelNumber { get; set; }
-        public string SubModelNumber { get; set; }
+        public int SubModelNumber { get; set; }
         public string ModelName { get; set; }
         public int? Rank { get; set; }
         public string Description { get; set; }

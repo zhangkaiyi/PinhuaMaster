@@ -4620,8 +4620,6 @@ namespace PinhuaMaster.Data.Entities.Pinhua
 
                 entity.Property(e => e.ModelNumber).HasMaxLength(100);
 
-                entity.Property(e => e.SubModelNumber).HasMaxLength(20);
-
                 entity.Property(e => e.Description).HasMaxLength(100);
 
                 entity.Property(e => e.ExcelServerChg).HasColumnName("ExcelServerCHG");
@@ -4822,8 +4820,6 @@ namespace PinhuaMaster.Data.Entities.Pinhua
 
                 entity.Property(e => e.Specification).HasMaxLength(100);
 
-                entity.Property(e => e.SubModelNumber).HasMaxLength(20);
-
                 entity.Property(e => e.Unit).HasMaxLength(20);
 
                 entity.Property(e => e.UnitQty).HasColumnType("decimal(20, 3)");
@@ -4943,8 +4939,6 @@ namespace PinhuaMaster.Data.Entities.Pinhua
                 entity.Property(e => e.Remarks).HasMaxLength(500);
 
                 entity.Property(e => e.Specification).HasMaxLength(100);
-
-                entity.Property(e => e.SubModelNumber).HasMaxLength(20);
 
                 entity.Property(e => e.Unit).HasMaxLength(20);
 
@@ -5066,8 +5060,6 @@ namespace PinhuaMaster.Data.Entities.Pinhua
 
                 entity.Property(e => e.Specification).HasMaxLength(100);
 
-                entity.Property(e => e.SubModelNumber).HasMaxLength(20);
-
                 entity.Property(e => e.Unit).HasMaxLength(20);
 
                 entity.Property(e => e.UnitQty).HasColumnType("decimal(20, 3)");
@@ -5187,8 +5179,6 @@ namespace PinhuaMaster.Data.Entities.Pinhua
                 entity.Property(e => e.Remarks).HasMaxLength(500);
 
                 entity.Property(e => e.Specification).HasMaxLength(100);
-
-                entity.Property(e => e.SubModelNumber).HasMaxLength(20);
 
                 entity.Property(e => e.Unit).HasMaxLength(20);
 

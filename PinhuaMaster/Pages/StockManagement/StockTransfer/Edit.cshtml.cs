@@ -36,7 +36,7 @@ namespace PinhuaMaster.Pages.StockManagement.StockTransfer
             Order.Main = _mapper.Map<StockTransferMain, StockTransferMainDTO>(_pinhuaContext.StockTransferMain.AsNoTracking().Where(p => p.OrderId == Id).FirstOrDefault());
             //Order.Details = _mapper.Map<List<StockTransferDetails>, List<StockTransferDetailsDTO>>(_pinhuaContext.StockTransferDetails.AsNoTracking().Where(p => p.OrderId == Id).ToList());
             var details = (from d in _pinhuaContext.StockTransferDetails.AsNoTracking().Where(p => p.OrderId == Id)
-                           join product in _pinhuaContext.ProductRegistrationMain.AsNoTracking() on new { d.ModelNumber, d.SubModelNumber } equals new { product.ModelNumber, product.SubModelNumber }
+                           join product in _pinhuaContext.ProductRegistrationMain.AsNoTracking() on new { d.ModelNumber, SubModelNumber = d.SubModelNumber.Value } equals new { product.ModelNumber, product.SubModelNumber }
                            join model in _pinhuaContext.产品型号清单.AsNoTracking() on product.ModelNumber equals model.编号
                            select new StockTransferDetails
                            {
@@ -95,20 +95,20 @@ namespace PinhuaMaster.Pages.StockManagement.StockTransfer
                 {
                     var result = _pinhuaContext.StockTransferDetails.FirstOrDefault(p => p.OrderId == i.OrderId && p.Id == i.Id);
                     if (result == null)
-                    // 如果该条信息不存在，则添加
-                    _pinhuaContext.StockTransferDetails.Add(_mapper.Map<StockTransferDetailsDTO, StockTransferDetails>(i));
+                        // 如果该条信息不存在，则添加
+                        _pinhuaContext.StockTransferDetails.Add(_mapper.Map<StockTransferDetailsDTO, StockTransferDetails>(i));
                     else
                     {
-                    // 如果该条信息存在，则修改
-                    _mapper.Map<StockTransferDetailsDTO, StockTransferDetails>(i, result);
+                        // 如果该条信息存在，则修改
+                        _mapper.Map<StockTransferDetailsDTO, StockTransferDetails>(i, result);
                     }
                 });
                 await _pinhuaContext.StockTransferDetails.Where(p => p.OrderId == remoteOrder.OrderId).ForEachAsync(i =>
                 {
                     var result = Order.Details.FirstOrDefault(p => p.Id == i.Id);
                     if (result == null)
-                    // 如果该条信息多余，则删除
-                    _pinhuaContext.StockTransferDetails.Remove(i);
+                        // 如果该条信息多余，则删除
+                        _pinhuaContext.StockTransferDetails.Remove(i);
                 });
 
                 // 保存修改
@@ -127,8 +127,8 @@ namespace PinhuaMaster.Pages.StockManagement.StockTransfer
         private List<SelectListItem> BuildTypes()
         {
             var types = (from p in _pinhuaContext.业务类型.AsNoTracking()
-                        where p.状态 == "Yes" && p.MvP == "TO"
-                        select p).ToList();
+                         where p.状态 == "Yes" && p.MvP == "TO"
+                         select p).ToList();
             var groups = from p in types
                          group p by p.MvP into g
                          select g.Key;

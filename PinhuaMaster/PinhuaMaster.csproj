@@ -44,6 +44,21 @@
     <Content Update="Pages\BasicInformation\ModelNumber\_ModelNumberPartial.cshtml">
       <Pack>$(IncludeRazorContentInPack)</Pack>
     </Content>
+    <Content Update="Pages\BasicInformation\ProductRegistration\Create.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Pages\BasicInformation\ProductRegistration\Delete.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Pages\BasicInformation\ProductRegistration\Edit.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Pages\BasicInformation\ProductRegistration\Index.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Pages\BasicInformation\ProductRegistration\_ProductRegistrationPartial.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
     <Content Update="Pages\OrderManagement\EasyDelivery\PrintDetail2.cshtml">
       <Pack>$(IncludeRazorContentInPack)</Pack>
     </Content>
@@ -87,6 +102,9 @@
       <Pack>$(IncludeRazorContentInPack)</Pack>
     </Content>
     <Content Update="Pages\Statement\DetailsOld.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Pages\Statement\External\YiJiaOld.cshtml">
       <Pack>$(IncludeRazorContentInPack)</Pack>
     </Content>
     <Content Update="Pages\Statement\_Details_datatables_old.cshtml">

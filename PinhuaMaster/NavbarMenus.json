@@ -179,6 +179,11 @@
           "name": "产品型号",
           "icon": "fa fa-circle-o",
           "url": "/BasicInformation/ModelNumber/Index"
+        },
+        {
+          "name": "产品登记",
+          "icon": "fa fa-circle-o",
+          "url": "/BasicInformation/ProductRegistration/Index"
         }
       ]
     },

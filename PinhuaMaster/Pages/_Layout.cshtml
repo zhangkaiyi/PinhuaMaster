@@ -17,7 +17,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <meta name="renderer" content="webkit">
     <title>@ViewBag.Title</title>
     <!-- Tell the browser to be responsive to screen width -->
-    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <meta content="width=1024, maximum-scale=2" name="viewport">
 
     <environment include="Development">
         <!-- Bootstrap -->
@@ -176,7 +176,7 @@ desired effect
                 </section>
             }
             <!-- Main content -->
-            <section class="content container-fluid" id="mainContent" style="display:none">
+            <section class="content container-fluid" id="mainContent">
                 <!--------------------------
                   | Your Page Content Here |
                   -------------------------->
@@ -263,10 +263,5 @@ desired effect
     </script>
     @RenderSection("Scripts", required: false)
 
-    <script>
-        $(function () {
-            $('#mainContent').show()
-        })
-    </script>
 </body>
 </html>

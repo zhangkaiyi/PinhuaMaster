@@ -17,7 +17,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <meta name="renderer" content="webkit">
     <title>@ViewBag.Title</title>
     <!-- Tell the browser to be responsive to screen width -->
-    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <meta content="width=1024, maximum-scale=2" name="viewport">
 
     <environment include="Development">
         <!-- Bootstrap -->
@@ -112,7 +112,7 @@ desired effect
         <!-- Content Wrapper. Contains page content -->
         <div class="content-wrapper">
             <!-- Main content -->
-            <section class="content container-fluid" id="mainContent" style="display:none">
+            <section class="content container-fluid" id="mainContent">
                 <!--------------------------
                   | Your Page Content Here |
                   -------------------------->
@@ -146,10 +146,10 @@ desired effect
         <!-- Bootstrap 3.3.7 -->
         <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
         <!-- Bootstrap Table -->
-        <script src="~/lib/bootstrap-table/dist/bootstrap-table.js"></script>
+        @*<script src="~/lib/bootstrap-table/dist/bootstrap-table.js"></script>
         <script src="~/lib/bootstrap-table/dist/locale/bootstrap-table-zh-CN.js"></script>
         <script src="~/lib/bootstrap-table/dist/extensions/group-by-v2/bootstrap-table-group-by.js"></script>
-        <script src="~/lib/bootstrap-table/dist/extensions/fixed-columns/bootstrap-table-fixed-columns.js"></script>
+        <script src="~/lib/bootstrap-table/dist/extensions/fixed-columns/bootstrap-table-fixed-columns.js"></script>*@
         <!-- AdminLTE App -->
         <script src="~/lib/AdminLTE-2.4.3/dist/js/adminlte.js"></script>
         <!-- Vue -->
@@ -199,10 +199,5 @@ desired effect
     </script>
     @RenderSection("Scripts", required: false)
 
-    <script>
-        $(function () {
-            $('#mainContent').show()
-        })
-    </script>
 </body>
 </html>
