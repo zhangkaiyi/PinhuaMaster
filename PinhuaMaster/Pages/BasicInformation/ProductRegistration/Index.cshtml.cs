@@ -37,9 +37,19 @@ namespace PinhuaMaster.Pages.BasicInformation.ProductRegistration
             //使用默认方式，不更改元数据的key的大小写
             settings.ContractResolver = new Newtonsoft.Json.Serialization.DefaultContractResolver();
 
-            var orders = from p in _pinhuaContext.ProductRegistrationMain
+            var orders = from p in _pinhuaContext.myView_Product
                          orderby p.ModelNumber ascending, p.SubModelNumber ascending
-                         select _mapper.Map<ProductRegistrationMain, ProductRegistrationDTO>(p);
+                         select new ProductRegistrationDTO
+                         {
+                             ModelNumber = p.ModelNumber,
+                             SubModelNumber = p.SubModelNumber,
+                             ModelName = p.ModelName,
+                             Description = p.Description,
+                             Specification = p.Specification,
+                             Length = p.Length,
+                             Width = p.Width,
+                             Height = p.Height,
+                         };
 
             return new JsonResult(orders, settings);
         }

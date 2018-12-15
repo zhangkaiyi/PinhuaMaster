@@ -12,21 +12,21 @@ namespace PinhuaMaster.Pages.BasicInformation.ProductRegistration.ViewModel
 {
     public class ProductRegistrationDTO
     {
-        [Display(Name = "描述")]
+        [Required, Display(Name = "描述")]
         public string Description { get; set; }
-        [Display(Name = "型号")]
+        [Required, Display(Name = "型号")]
         public string ModelNumber { get; set; }
-        [Display(Name = "名称")]
+        [Display(Name = "型号名称")]
         public string ModelName { get; set; }
-        [Display(Name = "子型号")]
+        [Required, Display(Name = "子型号")]
         public int? SubModelNumber { get; set; }
-        [Display(Name = "规格")]
+        [Required, Display(Name = "规格")]
         public string Specification { get; set; }
-        [Display(Name = "长")]
+        [Required, Display(Name = "长")]
         public decimal? Length { get; set; }
-        [Display(Name = "宽")]
+        [Required, Display(Name = "宽")]
         public decimal? Width { get; set; }
-        [Display(Name = "高")]
+        [Required, Display(Name = "高")]
         public decimal? Height { get; set; }
         public string ExcelServerRcid { get; set; }
         public int? ExcelServerRn { get; set; }

@@ -47,7 +47,7 @@ namespace PinhuaMaster.Pages.StockManagement.ProductionStockIn
             //使用默认方式，不更改元数据的key的大小写
             settings.ContractResolver = new Newtonsoft.Json.Serialization.DefaultContractResolver();
 
-            return new JsonResult(_pinhuaContext.产品型号清单.AsNoTracking().ToList(), settings);
+            return new JsonResult(_pinhuaContext.myView_Product.AsNoTracking().ToList(), settings);
         }
 
         public IActionResult OnPost()

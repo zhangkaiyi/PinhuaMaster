@@ -37,7 +37,7 @@ namespace PinhuaMaster.Pages.BasicInformation.ProductRegistration
         {
             if (ModelState.IsValid)
             {
-                var remoteOrder = _pinhuaContext.ProductRegistrationMain.FirstOrDefault(p => p.ModelNumber == ProductRegistrationInfo.ModelNumber);
+                var remoteOrder = _pinhuaContext.ProductRegistrationMain.FirstOrDefault(p => p.ModelNumber == ProductRegistrationInfo.ModelNumber && p.SubModelNumber == ProductRegistrationInfo.SubModelNumber);
                 if (remoteOrder == null)
                 {
                     ModelState.AddModelError("", $"单号为 {ProductRegistrationInfo.ModelNumber} 的送货单不存在，操作失败。");

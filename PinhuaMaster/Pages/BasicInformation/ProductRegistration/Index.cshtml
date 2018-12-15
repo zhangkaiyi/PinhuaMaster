@@ -5,7 +5,7 @@
 }
 
 <div class="row">
-    <div class="col-md-12">
+    <div class="col-md-9">
         <div class="box box-solid">
             <div class="box-body">
                 <div id="tableContainer">
@@ -28,13 +28,14 @@
                         <thead>
                             <tr>
                                 <th data-width="20" data-formatter="browseRecord"></th>
-                                <th data-field="@(nameof(ViewModel.ProductRegistrationDTO.ModelNumber))">型号</th>
-                                <th data-field="@(nameof(ViewModel.ProductRegistrationDTO.SubModelNumber))">子型号</th>
+                                <th data-field="@(nameof(ViewModel.ProductRegistrationDTO.ModelNumber))" data-visible="false">型号</th>
+                                <th data-field="@(nameof(ViewModel.ProductRegistrationDTO.ModelName))" data-formatter="modelNameFormatter">型号</th>
+                                <th data-field="@(nameof(ViewModel.ProductRegistrationDTO.SubModelNumber))" data-visible="false">子型号</th>
                                 <th data-field="@(nameof(ViewModel.ProductRegistrationDTO.Description))">描述</th>
                                 <th data-field="@(nameof(ViewModel.ProductRegistrationDTO.Specification))">规格</th>
-                                <th data-field="@(nameof(ViewModel.ProductRegistrationDTO.Length))">长</th>
-                                <th data-field="@(nameof(ViewModel.ProductRegistrationDTO.Width))">宽</th>
-                                <th data-field="@(nameof(ViewModel.ProductRegistrationDTO.Height))">高</th>
+                                <th data-field="@(nameof(ViewModel.ProductRegistrationDTO.Length))" data-visible="false">长</th>
+                                <th data-field="@(nameof(ViewModel.ProductRegistrationDTO.Width))" data-visible="false">宽</th>
+                                <th data-field="@(nameof(ViewModel.ProductRegistrationDTO.Height))" data-visible="false">高</th>
                             </tr>
                         </thead>
 
@@ -61,6 +62,9 @@
         }
         function formatterDeliveryId(value, row) {
             return '<a href="@(Url.Page("Details"))/' + row.ProductRegistration + '">' + value + '</a>'
+        }
+        function modelNameFormatter(value, row) {
+            return value + ' - ' + row.SubModelNumber
         }
 
         var mainTable = $('#mainTable')
