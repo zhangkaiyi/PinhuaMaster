@@ -35,6 +35,7 @@ namespace PinhuaMaster.Pages.StockManagement.ProductionStockIn
             Order.WarehouseList = _pinhuaContext.GetWarehouseSelectList();
 
             Order.Main.OrderId = buildOrderId();
+            Order.Main.MovementType = "131";
             Order.Main.CreatedBy = User.Identity.Name;
             Order.Main.CreatedDate = DateTime.Now;
         }

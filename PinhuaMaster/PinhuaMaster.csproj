@@ -45,6 +45,21 @@
     <Content Update="Pages\BasicInformation\ModelNumber\_ModelNumberPartial.cshtml">
       <Pack>$(IncludeRazorContentInPack)</Pack>
     </Content>
+    <Content Update="Pages\BasicInformation\Partner\Create.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Pages\BasicInformation\Partner\Delete.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Pages\BasicInformation\Partner\Edit.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Pages\BasicInformation\Partner\Index.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Pages\BasicInformation\Partner\_PartnerPartial.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
     <Content Update="Pages\BasicInformation\ProductRegistration\Create.cshtml">
       <Pack>$(IncludeRazorContentInPack)</Pack>
     </Content>

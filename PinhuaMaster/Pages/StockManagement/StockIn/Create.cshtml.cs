@@ -35,6 +35,7 @@ namespace PinhuaMaster.Pages.StockManagement.StockIn
             Order.WarehouseList = _pinhuaContext.GetWarehouseSelectList();
 
             Order.Main.OrderId = buildOrderId();
+            Order.Main.MovementType = "101";
         }
 
         public IActionResult OnGetApiGetModelNames()

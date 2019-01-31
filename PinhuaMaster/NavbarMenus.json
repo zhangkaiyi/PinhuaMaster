@@ -184,6 +184,11 @@
           "name": "产品登记",
           "icon": "fa fa-circle-o",
           "url": "/BasicInformation/ProductRegistration/Index"
+        },
+        {
+          "name": "合作单位",
+          "icon": "fa fa-circle-o",
+          "url": "/BasicInformation/Partner/Index"
         }
       ]
     },

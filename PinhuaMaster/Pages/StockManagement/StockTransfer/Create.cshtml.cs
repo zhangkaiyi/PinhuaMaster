@@ -35,6 +35,7 @@ namespace PinhuaMaster.Pages.StockManagement.StockTransfer
             Order.WarehouseList = _pinhuaContext.GetWarehouseSelectList();
 
             Order.Main.OrderId = buildOrderId();
+            Order.Main.MovementType = "701";
         }
 
         public IActionResult OnGetAjaxInventory()
