@@ -4,60 +4,68 @@
     ViewData["Title"] = "查帐";
 }
 
-@*<div id="toolbar">
-    <div class="label label-primary" style="font-size:14px;">金额：@Model?.StatementData?.应收合计?.ToString("0.00")</div>
-</div>
-<div class="box box-solid hidden">
-    <div class="box-body">
-        <table id="detailsTable"
-               data-toggle="table"
-               data-classes="table table-striped"
-               data-toolbar="#toolbar"
-               data-search="true"
-               data-striped="true"
-               data-pagination="true"
-               data-mobile-responsive="true"
-               data-page-size="50"
-               data-page-list="[50, 100, 200, ALL]"
-               data-sort-name="2"
-               data-sort-order="desc"
-               style="white-space:nowrap">
-            <thead>
-                <tr>
-                    <th data-visible="false">业务类型</th>
-                    <th>业务描述</th>
-                    <th data-visible="false">日期</th>
-                    <th data-visible="false">单号</th>
-                    <th>产品描述</th>
-                    <th>规格</th>
-                    <th data-align="right" data-halign="center">片数</th>
-                    <th data-align="right" data-halign="center">单位数量</th>
-                    <th>计价单位</th>
-                    <th data-align="right" data-halign="center">单价</th>
-                    <th data-align="right">金额</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (var record in Model.StatementData.明细)
-                {
-                    <tr>
-                        <td>@record.Type</td>
-                        <td>@record.TypeDescription</td>
-                        <td>@record.Date.Value.ToString("yyyy-MM-dd")</td>
-                        <td>@record.OrderId</td>
-                        <td>@record.ItemDescription</td>
-                        <td>@record.Specification</td>
-                        <td>@record?.Qty?.ToString("0.00")</td>
-                        <td>@record?.UnitQty?.ToString("0.0000")</td>
-                        <td>@record.Unit</td>
-                        <td>@record?.Price?.ToString("0.00")</td>
-                        <td>@record?.Amount?.ToString("0.00")</td>
-                    </tr>
-                }
-            </tbody>
-        </table>
-    </div>
-</div>*@
+@using NPOI.HSSF.UserModel;
+@using NPOI.SS.UserModel;
+@using NPOI.SS.Util;
+@using NPOI.HSSF.Util;
+@using NPOI.POIFS.FileSystem;
+@using NPOI.HPSF;
+@using System.IO;
+@using Microsoft.AspNetCore.StaticFiles;
+
+@{
+    var workbook = new HSSFWorkbook();
+    var sheet = workbook.CreateSheet("Statement");
+    // Add header labels
+    var rowIndex = 0;
+    var row = sheet.CreateRow(rowIndex);
+    row.CreateCell(0).SetCellValue("日期");
+    row.CreateCell(1).SetCellValue("业务描述");
+    row.CreateCell(2).SetCellValue("产品编号");
+    row.CreateCell(3).SetCellValue("产品描述");
+    row.CreateCell(4).SetCellValue("规格");
+    row.CreateCell(5).SetCellValue("片数");
+    row.CreateCell(6).SetCellValue("数量");
+    row.CreateCell(7).SetCellValue("单位");
+    row.CreateCell(8).SetCellValue("单价");
+    row.CreateCell(9).SetCellValue("金额");
+    rowIndex++;
+    // Add data rows
+    foreach (var data in Model.StatementData)
+    {
+        row = sheet.CreateRow(rowIndex);
+        row.CreateCell(0).SetCellValue(data.OrderDate.Value);
+        row.CreateCell(1).SetCellValue(data.MovementTypeDescription);
+        row.CreateCell(2).SetCellValue(data.ItemId);
+        row.CreateCell(3).SetCellValue(data.Description);
+        row.CreateCell(4).SetCellValue(data.Specification);
+        row.CreateCell(5).SetCellValue((double)(data.Qty ?? 0));
+        row.CreateCell(6).SetCellValue((double)(data.UnitQty ?? 0));
+        row.CreateCell(7).SetCellValue(data.Unit);
+        row.CreateCell(8).SetCellValue((double)(data.Price ?? 0));
+        row.CreateCell(9).SetCellValue((double)(data.Amount ?? 0));
+        rowIndex++;
+    }
+    //using (var fileData = new FileStream("C:\\Statement.xls", FileMode.Create))
+    //{
+    //    workbook.Write(fileData);
+    //}
+    //using (var exportData = new MemoryStream())
+    //{
+    //    workbook.Write(exportData);
+    //    var saveAsFileName = Html.UrlEncoder.Encode("对帐单");
+    //    var fileExt = ".xls";
+    //    Response.Body.Close();
+    //    //Response.Headers["Content-Type"] = "application/x-bittorrent";
+    //    //Response.Headers["Content-Type"] = "application/vnd.ms-excel";
+    //    var provider = new FileExtensionContentTypeProvider();
+    //    Response.Headers["Content-Type"] = provider.Mappings[fileExt];
+    //    Response.Headers["Content-Disposition"] = $"attachment; filename={saveAsFileName}{fileExt}";
+    //    //Response.Headers.ContentLength = exportData.Length;
+    //    Response.Body.Write(exportData.GetBuffer(), 0, (int)exportData.Length);
+    //    Response.Body.Flush();
+    //}
+}
 
 @Html.Partial("_Details_datatables")
 

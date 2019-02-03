@@ -7,7 +7,12 @@
 }
 <div class="box box-solid">
     <div class="box-header">
-        <div class="box-title" style="font-weight:bold">@customer.单位名称 - <small class="text-danger">合计金额：@sum</small></div>
+        <div class="box-title" style="font-weight:bold">
+            @customer.单位名称 - <small class="text-danger">合计金额：@sum</small>
+            <a class="btn btn-default" href="@Url.Page("Details", "ExportExcel", new { Id = Model.Id })"><i class="fa fa-table"></i> 导出 Excel</a>
+            <a class="btn btn-default" href="@Url.Page("Details", "ExportExcelEPPlus", new { Id = Model.Id })"><i class="fa fa-table"></i> 导出 Excel EPPlus</a>
+            <a class="btn btn-default" href="@Url.Page("Details", "ExportExcelEPPlus2", new { Id = Model.Id })"><i class="fa fa-table"></i> 导出 Excel EPPlus Template</a>
+        </div>
     </div>
     <div class="box-body">
         <table id="details" class="table table-hover table-bordered nowrap"></table>
