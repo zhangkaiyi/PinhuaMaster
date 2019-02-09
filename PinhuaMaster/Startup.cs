@@ -74,7 +74,7 @@ namespace PinhuaMaster
                     //options.Conventions.AuthorizePage("/Account/Logout");
                     options.Conventions.AuthorizeFolder("/", "Permissons").AllowAnonymousToFolder("/Account").AllowAnonymousToFolder("/Statement/External");
                 })
-                .SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+                .SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
             services.AddAuthentication().AddCookie(options =>
             {

@@ -9,9 +9,8 @@
     <div class="box-header">
         <div class="box-title" style="font-weight:bold">
             @customer.单位名称 - <small class="text-danger">合计金额：@sum</small>
-            <a class="btn btn-default" href="@Url.Page("Details", "ExportExcel", new { Id = Model.Id })"><i class="fa fa-table"></i> 导出 Excel</a>
-            <a class="btn btn-default" href="@Url.Page("Details", "ExportExcelEPPlus", new { Id = Model.Id })"><i class="fa fa-table"></i> 导出 Excel EPPlus</a>
-            <a class="btn btn-default" href="@Url.Page("Details", "ExportExcelEPPlus2", new { Id = Model.Id })"><i class="fa fa-table"></i> 导出 Excel EPPlus Template</a>
+            @*<a class="btn btn-default" href="@Url.Page("Details", "ExportExcel", new { Id = Model.Id })"><i class="fa fa-table"></i> 导出 Excel</a>*@
+            @*<a class="btn btn-default" href="@Url.Page("Details", "ExportExcelEPPlus", new { Id = Model.Id })"><i class="fa fa-table"></i> 导出 Excel</a>*@
         </div>
     </div>
     <div class="box-body">
@@ -67,11 +66,12 @@
             pageLength: -1,
             searching: true,    //禁用原生搜索
             //scrollY:'600',
-            dom: "fr<'#detailPanel.panel panel-primary'<'panel-heading'<'row'<'col-xs-5'<'panel-title'>><'col-xs-7'>>>t<'panel-footer'>><'row'<'col-xs-5'i><'col-xs-7'p>>",
-            dom: 'Bfrtip',
-            buttons: [
-                { extend: 'copy', attr: { id: 'allan' } }, 'csv', 'excel', 'pdf',
-            ],
+            //dom: "fr<'#detailPanel.panel panel-primary'<'panel-heading'<'row'<'col-xs-5'<'panel-title'>><'col-xs-7'>>>t<'panel-footer'>><'row'<'col-xs-5'i><'col-xs-7'p>>",
+            //dom: 'Bfrtip',
+            dom: '<"#myTools"fr>tip',
+            //buttons: [
+            //    { extend: 'copy', attr: { id: 'allan' } }, 'csv', 'excel', 'pdf',
+            //],
             columns: [
                 { data: "@(nameof(DbQuery_对账汇总.OrderId))", title: "单号", className:["hidden"] },
                 { data: "@(nameof(DbQuery_对账汇总.OrderDate))", title: "日期", width: "200px", visible: true },
@@ -161,6 +161,8 @@
                 });
             },
             })
+
+            $("div#myTools").prepend('<div class="pull-left"><a class="btn btn-default" href="@Url.Page("Details", "ExportExcelEPPlus", new { Id = Model.Id })"><i class="fa fa-table"></i> 导出 Excel</a> <a class="btn btn-default" href="@Url.Page("Details", "ExportExcelEPPlus2", new { Id = Model.Id })"><i class="fa fa-table"></i> 模板导出 Excel</a></div>');
 
             $(window).resize(function () {
                 detailTable.columns.adjust();

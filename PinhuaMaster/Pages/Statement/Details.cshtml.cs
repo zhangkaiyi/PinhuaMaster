@@ -241,7 +241,7 @@ namespace PinhuaMaster.Pages.Statement
                     ws.Cells[rowNum, 10].Style.Numberformat.Format = "0.00";
                     if (data.Amount < 0)
                     {
-                        ws.Row(rowNum).Style.Font.Color.SetColor(ColorTranslator.FromHtml("#A94442"));
+                        //ws.Row(rowNum).Style.Font.Color.SetColor(ColorTranslator.FromHtml("#A94442"));
                     }
                     rowNum++;
                 }
@@ -267,10 +267,10 @@ namespace PinhuaMaster.Pages.Statement
                 ws.Cells.AutoFitColumns();
                 ws.View.FreezePanes(3, 1);
 
-                //var cfAddress = new ExcelAddress(3, 1, StatementData.Count() + 2, 10);
-                //var cfRule1 = ws.ConditionalFormatting.AddExpression(cfAddress);
-                //cfRule1.Formula = "$J3<0";
-                //cfRule1.Style.Font.Color.Color = ColorTranslator.FromHtml("#A94442"); // text-danger
+                var cfAddress = new ExcelAddress(3, 1, StatementData.Count() + 2, 10);
+                var cfRule1 = ws.ConditionalFormatting.AddExpression(cfAddress);
+                cfRule1.Formula = "$J3<0";
+                cfRule1.Style.Font.Color.Color = ColorTranslator.FromHtml("#A94442"); // text-danger
                 //var cfRule2 = ws.ConditionalFormatting.AddExpression(cfAddress);
                 //cfRule2.Formula = "$J3>=0";
                 //cfRule2.Style.Font.Color.Color = Color.FromArgb(0x337AB7); // text-primary
@@ -286,7 +286,7 @@ namespace PinhuaMaster.Pages.Statement
             this.Id = Id;
             var customer = _pinhuaContext.往来单位.FirstOrDefault(p => p.单位编号 == Id);
             StatementData = _pinhuaContext.myView_对账_汇总.Where(p => p.CustomerId == Id).OrderByDescending(p => p.OrderDate).ThenByDescending(p => p.OrderId).ThenBy(p => p.ItemId).ToList();
-            using (ExcelPackage pck = new ExcelPackage(new FileInfo("epplus_template.xlsx")))
+            using (ExcelPackage pck = new ExcelPackage(new FileInfo("epplus_template.xlsx"), new FileInfo("epplus_template.xlsx")))
             {
                 //Create the worksheet
                 string sheetName = "Sheet1";
@@ -298,8 +298,7 @@ namespace PinhuaMaster.Pages.Statement
                 //ws.Cells["A1"].LoadFromCollection<DbQuery_对账汇总>(StatementData);
                 ws.Cells[1, 1].Value = $"对帐单，{customer.单位名称} - {DateTime.Now.ToString("yyyyMMddHHmmss")}";
                 var rowNum = 3;
-                ws.Cells["Body"].Value = "";
-                ws.InsertRow(3, StatementData.Count());
+                ws.InsertRow(rowNum + 1, StatementData.Count() - 1);
                 foreach (var data in StatementData)
                 {
                     ws.Cells[rowNum, 1].Value = data.OrderDate.Value.ToString("yyyy-MM-dd");
@@ -315,35 +314,6 @@ namespace PinhuaMaster.Pages.Statement
                     rowNum++;
                 }
                 ws.Cells.AutoFitColumns();
-                //Format the row
-                //ExcelBorderStyle borderStyle = ExcelBorderStyle.Thin;
-                //Color borderColor = Color.FromArgb(155, 155, 155);
-
-                //using (ExcelRange rng = ws.Cells[1, 1, sourceTable.Rows.Count + 1, sourceTable.Columns.Count])
-                //{
-                //    rng.Style.Font.Name = "宋体";
-                //    rng.Style.Font.Size = 10;
-                //    rng.Style.Fill.PatternType = ExcelFillStyle.Solid;                      //Set Pattern for the background to Solid
-                //    rng.Style.Fill.BackgroundColor.SetColor(Color.FromArgb(255, 255, 255));
-
-                //    rng.Style.Border.Top.Style = borderStyle;
-                //    rng.Style.Border.Top.Color.SetColor(borderColor);
-
-                //    rng.Style.Border.Bottom.Style = borderStyle;
-                //    rng.Style.Border.Bottom.Color.SetColor(borderColor);
-
-                //    rng.Style.Border.Right.Style = borderStyle;
-                //    rng.Style.Border.Right.Color.SetColor(borderColor);
-                //}
-
-                ////Format the header row
-                //using (ExcelRange rng = ws.Cells[1, 1, 1, sourceTable.Columns.Count])
-                //{
-                //    rng.Style.Font.Bold = true;
-                //    rng.Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
-                //    rng.Style.Fill.BackgroundColor.SetColor(Color.FromArgb(234, 241, 246));  //Set color to dark blue
-                //    rng.Style.Font.Color.SetColor(Color.FromArgb(51, 51, 51));
-                //}
                 var saveAsFileName = $"对帐单，{customer.单位名称}-{DateTime.Now.ToString("yyyyMMddHHmmss")}.xlsx";
                 var fileExt = Path.GetExtension(saveAsFileName);
                 var provider = new FileExtensionContentTypeProvider();
