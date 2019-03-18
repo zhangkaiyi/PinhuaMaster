@@ -127,8 +127,8 @@ namespace PinhuaMaster
             }
 
             // AspNetCore 2.1
-            //app.UseCookiePolicy();
-            //app.UseHttpsRedirection();
+            app.UseCookiePolicy();
+            app.UseHttpsRedirection();
 
             app.UseStaticFiles();
 

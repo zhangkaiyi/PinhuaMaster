@@ -49,14 +49,15 @@ module.exports = {
     },
     resolve: {
         alias: {
-            'vue$': 'vue/dist/vue.esm.js'
+            'vue$': 'vue/dist/vue.esm.js',
         },
-        extensions: ['*', '.js', '.vue', '.json']
+        extensions: ['.js', '.vue', '.json']
     },
     devServer: {
         historyApiFallback: true,
         noInfo: true,
-        overlay: true
+        overlay: true,
+        hot: true,
     },
     performance: {
         hints: false
@@ -67,7 +68,7 @@ module.exports = {
     },
     devtool: '#eval-source-map',
     plugins: [
-        new webpack.HotModuleReplacementPlugin(),
+        //new webpack.HotModuleReplacementPlugin(),
         new webpack.NamedModulesPlugin(), // HMR shows correct file names in console on update.
         new webpack.NoEmitOnErrorsPlugin(),
         // https://github.com/ampedandwired/html-webpack-plugin

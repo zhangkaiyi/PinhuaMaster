@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Hosting;
+using Microsoft.EntityFrameworkCore;
 using PinhuaMaster.Data;
 using System;
 using System.Collections.Generic;
@@ -50,9 +51,11 @@ namespace PinhuaMaster.Services
     public class NavMenuService : INavMenuService
     {
         private readonly ApplicationDbContext _context;
-        public NavMenuService(ApplicationDbContext context)
+        private readonly IHostingEnvironment _env;
+        public NavMenuService(ApplicationDbContext context, IHostingEnvironment env)
         {
             _context = context;
+            _env = env;
         }
 
         private static IList<NavMenu> NavMenus { get; set; }
@@ -61,7 +64,7 @@ namespace PinhuaMaster.Services
 
         public IList<NavbarMenu> GetNavbarMenus()
         {
-            using (var fs = new FileStream(_filename, FileMode.Open))
+            using (var fs = new FileStream($"{_env.ContentRootPath}\\{_filename}", FileMode.Open))
             using (var sr = new StreamReader(fs, System.Text.Encoding.Default))
             {
                 var jsonString = sr.ReadToEnd();

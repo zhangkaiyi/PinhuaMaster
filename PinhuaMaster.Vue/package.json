@@ -1,5 +1,5 @@
 {
-  "name": "ClientApp",
+  "name": "clientapp",
   "private": true,
   "version": "1.0.0",
   "devDependencies": {
@@ -17,7 +17,7 @@
     "style-loader": "^0.13.1",
     "url-loader": "^0.5.7",
     "webpack": "^2.7.0",
-    "webpack-hot-middleware": "^2.21.0",
+    "webpack-hot-middleware": "^2.24.3",
     "html-webpack-plugin": "^2.30.1"
   },
   "dependencies": {
@@ -26,6 +26,7 @@
     "babel-polyfill": "^6.26.0",
     "babel-preset-env": "^1.6.1",
     "babel-preset-stage-3": "^6.24.1",
+    "muse-ui": "^3.0.2",
     "vue": "^2.5.13",
     "vue-loader": "^14.0.3",
     "vue-router": "^3.0.1",

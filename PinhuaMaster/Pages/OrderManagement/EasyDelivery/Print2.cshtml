@@ -9,6 +9,7 @@
 <!-- /.content -->
 <button class="btn btn-default" onclick="previewiframe('iframe1')"><i class="fa fa-search"></i> 预览模板1</button>
 <button class="btn btn-default" onclick="printiframe('iframe1')"><i class="fa fa-search"></i> 打印模板1</button>
+<button class="btn btn-default" onclick="printiframepaginate('iframe1')"><i class="fa fa-search"></i> 分页打印模板1</button>
 
 <div style="margin-bottom:20px;"></div>
 
@@ -23,7 +24,7 @@
     <script src='http://qy.pinhuadashi.com:6800/CLodopfuncs.js'></script>
     <script language="javascript" type="text/javascript">
         function previewiframe(tagId) {
-            LODOP.PRINT_INIT("打印控件功能演示_Lodop功能_打印Iframe");
+            LODOP.PRINT_INIT("预览 @(Model.Id)");
             strHtml = document.getElementById(tagId).contentWindow.document.documentElement.innerHTML;
             LODOP.ADD_PRINT_HTM(0, 0, "100%", "100%", strHtml);
             //console.log(strHtml)
@@ -33,7 +34,7 @@
             LODOP.PREVIEW();
         }
         function printiframe(tagId) {
-            LODOP.PRINT_INIT("打印控件功能演示_Lodop功能_打印Iframe");
+            LODOP.PRINT_INIT("打印 @(Model.Id)");
             strHtml = document.getElementById(tagId).contentWindow.document.documentElement.innerHTML;
             LODOP.ADD_PRINT_HTM(0, 0, "100%", "100%", strHtml);
             //console.log(strHtml)
@@ -42,6 +43,26 @@
             LODOP.SET_PRINTER_INDEXA(printerName)
             if (confirm("确认通过 " + printerName + " 打印吗?")) {
                 LODOP.PRINT();
+            }
+        }
+        function printiframepaginate(tagId) {
+            
+            LODOP.PRINT_INIT("分页打印 @(Model.Id)");
+            strHtml = document.getElementById(tagId).contentWindow.document.documentElement.innerHTML;
+            var $dom1 = $(document.getElementById(tagId).contentWindow.document.documentElement).clone();
+            $dom1.find('tbody>tr:gt(8)').hide();
+            LODOP.SET_PRINT_PAGESIZE(1, '241mm', '150mm');
+            LODOP.ADD_PRINT_HTM(0, 0, "100%", "100%", $dom1.html());
+            LODOP.NewPageA();
+            var $dom2 = $(document.getElementById(tagId).contentWindow.document.documentElement).clone();
+            $dom2.find('tbody>tr:lt(9)').hide();
+            LODOP.ADD_PRINT_HTM(0, 0, "100%", "100%", $dom2.html());
+            
+            var printerName = 'EPSON LQ-635K ESC/P2'
+            LODOP.SET_PRINTER_INDEX(printerName)
+            LODOP.SET_PRINTER_INDEXA(printerName)
+            if (confirm("确认通过 " + printerName + " 打印吗?")) {
+                LODOP.PREVIEWA();
             }
         }
     </script>
