@@ -48,9 +48,9 @@ namespace PinhuaMaster.Data.Entities.Pinhua
         public virtual DbSet<EsIdxFld> EsIdxFld { get; set; }
         public virtual DbSet<EsIdxTable> EsIdxTable { get; set; }
         public virtual DbSet<EsImContactGrp> EsImContactGrp { get; set; }
+        public virtual DbSet<EsImUserContact> EsImUserContact { get; set; }
         public virtual DbSet<EsImfastReply> EsImfastReply { get; set; }
         public virtual DbSet<EsImmsgLog> EsImmsgLog { get; set; }
-        public virtual DbSet<EsImUserContact> EsImUserContact { get; set; }
         public virtual DbSet<EsJob> EsJob { get; set; }
         public virtual DbSet<EsLog> EsLog { get; set; }
         public virtual DbSet<EsNewRepBar> EsNewRepBar { get; set; }
@@ -65,8 +65,8 @@ namespace PinhuaMaster.Data.Entities.Pinhua
         public virtual DbSet<EsRoleGroup> EsRoleGroup { get; set; }
         public virtual DbSet<EsRtfIdbind> EsRtfIdbind { get; set; }
         public virtual DbSet<EsRtfLink> EsRtfLink { get; set; }
-        public virtual DbSet<EsRtfs> EsRtfs { get; set; }
         public virtual DbSet<EsRtfStd> EsRtfStd { get; set; }
+        public virtual DbSet<EsRtfs> EsRtfs { get; set; }
         public virtual DbSet<EsRtts> EsRtts { get; set; }
         public virtual DbSet<EsRuleDelCase> EsRuleDelCase { get; set; }
         public virtual DbSet<EsRuleDelDetail> EsRuleDelDetail { get; set; }
@@ -79,8 +79,8 @@ namespace PinhuaMaster.Data.Entities.Pinhua
         public virtual DbSet<EsRuleRelDtfld> EsRuleRelDtfld { get; set; }
         public virtual DbSet<EsRuleRelRtfs> EsRuleRelRtfs { get; set; }
         public virtual DbSet<EsRuleRelRtts> EsRuleRelRtts { get; set; }
-        public virtual DbSet<EsRules> EsRules { get; set; }
         public virtual DbSet<EsRuleUpd> EsRuleUpd { get; set; }
+        public virtual DbSet<EsRules> EsRules { get; set; }
         public virtual DbSet<EsSheetProp> EsSheetProp { get; set; }
         public virtual DbSet<EsSmFill> EsSmFill { get; set; }
         public virtual DbSet<EsSmQry> EsSmQry { get; set; }
@@ -145,6 +145,7 @@ namespace PinhuaMaster.Data.Entities.Pinhua
         public virtual DbSet<OvertimeFormMain> OvertimeFormMain { get; set; }
         public virtual DbSet<PayrollDetails> PayrollDetails { get; set; }
         public virtual DbSet<PayrollMain> PayrollMain { get; set; }
+        public virtual DbSet<PmAutoId> PmAutoId { get; set; }
         public virtual DbSet<ProductRegistrationMain> ProductRegistrationMain { get; set; }
         public virtual DbSet<RetailGiDetails> RetailGiDetails { get; set; }
         public virtual DbSet<RetailGiMain> RetailGiMain { get; set; }
@@ -156,8 +157,8 @@ namespace PinhuaMaster.Data.Entities.Pinhua
         public virtual DbSet<StockSubconctractingMain> StockSubconctractingMain { get; set; }
         public virtual DbSet<StockTransferDetails> StockTransferDetails { get; set; }
         public virtual DbSet<StockTransferMain> StockTransferMain { get; set; }
-        public virtual DbSet<Test明细> Test明细 { get; set; }
         public virtual DbSet<Test主表> Test主表 { get; set; }
+        public virtual DbSet<Test明细> Test明细 { get; set; }
         public virtual DbSet<WageSchemaDetailsByTime> WageSchemaDetailsByTime { get; set; }
         public virtual DbSet<WageSchemaMain> WageSchemaMain { get; set; }
         public virtual DbSet<Warehouse> Warehouse { get; set; }
@@ -167,42 +168,44 @@ namespace PinhuaMaster.Data.Entities.Pinhua
         public virtual DbSet<WeixinWorkPlan> WeixinWorkPlan { get; set; }
         public virtual DbSet<WeixinWorkPlanDetail> WeixinWorkPlanDetail { get; set; }
         public virtual DbSet<Wx异常说明> Wx异常说明 { get; set; }
+        public virtual DbSet<业务类型> 业务类型 { get; set; }
         public virtual DbSet<产品型号清单> 产品型号清单 { get; set; }
-        public virtual DbSet<打卡登记> 打卡登记 { get; set; }
-        public virtual DbSet<打卡记录> 打卡记录 { get; set; }
-        public virtual DbSet<对账结算主表> 对账结算主表 { get; set; }
+        public virtual DbSet<人员档案> 人员档案 { get; set; }
+        public virtual DbSet<付款单> 付款单 { get; set; }
         public virtual DbSet<发货> 发货 { get; set; }
         public virtual DbSet<发货Detail> 发货Detail { get; set; }
-        public virtual DbSet<放假登记> 放假登记 { get; set; }
-        public virtual DbSet<付款单> 付款单 { get; set; }
+        public virtual DbSet<图形登记表> 图形登记表 { get; set; }
+        public virtual DbSet<对账结算主表> 对账结算主表 { get; set; }
         public virtual DbSet<岗位主表> 岗位主表 { get; set; }
         public virtual DbSet<工资档案主表> 工资档案主表 { get; set; }
         public virtual DbSet<工资计算备份年月> 工资计算备份年月 { get; set; }
         public virtual DbSet<工资计算年月> 工资计算年月 { get; set; }
-        public virtual DbSet<计量单位主表> 计量单位主表 { get; set; }
+        public virtual DbSet<应付款对账单> 应付款对账单 { get; set; }
+        public virtual DbSet<应收款对账单> 应收款对账单 { get; set; }
+        public virtual DbSet<往来单位> 往来单位 { get; set; }
+        public virtual DbSet<打卡登记> 打卡登记 { get; set; }
+        public virtual DbSet<打卡记录> 打卡记录 { get; set; }
+        public virtual DbSet<收款单> 收款单 { get; set; }
+        public virtual DbSet<收货> 收货 { get; set; }
+        public virtual DbSet<收货D> 收货D { get; set; }
+        public virtual DbSet<放假登记> 放假登记 { get; set; }
+        public virtual DbSet<月考勤汇总主表> 月考勤汇总主表 { get; set; }
+        public virtual DbSet<物料分类> 物料分类 { get; set; }
+        public virtual DbSet<物料登记> 物料登记 { get; set; }
+        public virtual DbSet<物料登记Old> 物料登记Old { get; set; }
+        public virtual DbSet<生产入库> 生产入库 { get; set; }
+        public virtual DbSet<生产入库D> 生产入库D { get; set; }
+        public virtual DbSet<生产单> 生产单 { get; set; }
+        public virtual DbSet<生产单d> 生产单d { get; set; }
+        public virtual DbSet<生产型号> 生产型号 { get; set; }
         public virtual DbSet<考勤卡号变动> 考勤卡号变动 { get; set; }
         public virtual DbSet<考勤明细> 考勤明细 { get; set; }
         public virtual DbSet<考勤期间> 考勤期间 { get; set; }
-        public virtual DbSet<门店录入主表> 门店录入主表 { get; set; }
-        public virtual DbSet<门店送样明细> 门店送样明细 { get; set; }
-        public virtual DbSet<门店送样主表> 门店送样主表 { get; set; }
+        public virtual DbSet<计量单位主表> 计量单位主表 { get; set; }
         public virtual DbSet<请假登记> 请假登记 { get; set; }
-        public virtual DbSet<人员档案> 人员档案 { get; set; }
-        public virtual DbSet<生产入库> 生产入库 { get; set; }
-        public virtual DbSet<生产入库D> 生产入库D { get; set; }
-        public virtual DbSet<生产型号> 生产型号 { get; set; }
-        public virtual DbSet<收货> 收货 { get; set; }
-        public virtual DbSet<收货D> 收货D { get; set; }
-        public virtual DbSet<收款单> 收款单 { get; set; }
-        public virtual DbSet<图形登记表> 图形登记表 { get; set; }
-        public virtual DbSet<往来单位> 往来单位 { get; set; }
-        public virtual DbSet<物料登记> 物料登记 { get; set; }
-        public virtual DbSet<物料登记Old> 物料登记Old { get; set; }
-        public virtual DbSet<物料分类> 物料分类 { get; set; }
-        public virtual DbSet<业务类型> 业务类型 { get; set; }
-        public virtual DbSet<应付款对账单> 应付款对账单 { get; set; }
-        public virtual DbSet<应收款对账单> 应收款对账单 { get; set; }
-        public virtual DbSet<月考勤汇总主表> 月考勤汇总主表 { get; set; }
+        public virtual DbSet<门店录入主表> 门店录入主表 { get; set; }
+        public virtual DbSet<门店送样主表> 门店送样主表 { get; set; }
+        public virtual DbSet<门店送样明细> 门店送样明细 { get; set; }
 
         // Unable to generate entity type for table 'dbo.宿舍清单_D_历史记录'. Please see the warning messages.
         // Unable to generate entity type for table 'dbo.宿舍清单'. Please see the warning messages.
@@ -277,9 +280,12 @@ namespace PinhuaMaster.Data.Entities.Pinhua
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.HasAnnotation("ProductVersion", "2.2.1-servicing-10028");
+
             modelBuilder.Entity<AttendanceReport>(entity =>
             {
-                entity.HasKey(e => new { e.Y, e.M });
+                entity.HasKey(e => new { e.Y, e.M })
+                    .HasName("pk_405");
 
                 entity.HasIndex(e => new { e.ExcelServerRcid, e.ExcelServerWiid })
                     .HasName("idx1");
@@ -309,7 +315,8 @@ namespace PinhuaMaster.Data.Entities.Pinhua
 
             modelBuilder.Entity<AttendanceReportDetails>(entity =>
             {
-                entity.HasKey(e => e.主键);
+                entity.HasKey(e => e.主键)
+                    .HasName("pk_409");
 
                 entity.HasIndex(e => new { e.ExcelServerRcid, e.ExcelServerWiid })
                     .HasName("idx1");
@@ -355,7 +362,8 @@ namespace PinhuaMaster.Data.Entities.Pinhua
 
             modelBuilder.Entity<AttendanceReportResults>(entity =>
             {
-                entity.HasKey(e => new { e.Y, e.M, e.编号 });
+                entity.HasKey(e => new { e.Y, e.M, e.编号 })
+                    .HasName("pk_406");
 
                 entity.HasIndex(e => new { e.ExcelServerRcid, e.ExcelServerWiid })
                     .HasName("idx1");
@@ -397,7 +405,8 @@ namespace PinhuaMaster.Data.Entities.Pinhua
 
             modelBuilder.Entity<EsAgentSet>(entity =>
             {
-                entity.HasKey(e => e.UserId);
+                entity.HasKey(e => e.UserId)
+                    .HasName("PK__ES_AgentSet__14E61A24");
 
                 entity.ToTable("ES_AgentSet");
 
@@ -414,7 +423,8 @@ namespace PinhuaMaster.Data.Entities.Pinhua
 
             modelBuilder.Entity<EsAgentUser>(entity =>
             {
-                entity.HasKey(e => new { e.AgentUserId, e.UserId });
+                entity.HasKey(e => new { e.AgentUserId, e.UserId })
+                    .HasName("PK__ES_AgentUser__16CE6296");
 
                 entity.ToTable("ES_AgentUser");
 
@@ -426,7 +436,8 @@ namespace PinhuaMaster.Data.Entities.Pinhua
 
             modelBuilder.Entity<EsCaseFormat>(entity =>
             {
-                entity.HasKey(e => new { e.RcId, e.RtfId, e.R, e.C });
+                entity.HasKey(e => new { e.RcId, e.RtfId, e.R, e.C })
+                    .HasName("PK__ES_CaseFormat__01342732");
 
                 entity.ToTable("ES_CaseFormat");
 
@@ -450,7 +461,8 @@ namespace PinhuaMaster.Data.Entities.Pinhua
 
             modelBuilder.Entity<EsCaseLink>(entity =>
             {
-                entity.HasKey(e => new { e.RcId, e.LinkNo });
+                entity.HasKey(e => new { e.RcId, e.LinkNo })
+                    .HasName("PK__ES_CaseLink__74CE504D");
 
                 entity.ToTable("ES_CaseLink");
 
@@ -507,7 +519,8 @@ namespace PinhuaMaster.Data.Entities.Pinhua
 
             modelBuilder.Entity<EsCasePic>(entity =>
             {
-                entity.HasKey(e => new { e.RcId, e.PicNo });
+                entity.HasKey(e => new { e.RcId, e.PicNo })
+                    .HasName("PK__ES_CasePic__6A50C1DA");
 
                 entity.ToTable("ES_CasePic");
 
@@ -554,7 +567,8 @@ namespace PinhuaMaster.Data.Entities.Pinhua
 
             modelBuilder.Entity<EsDataDomain>(entity =>
             {
-                entity.HasKey(e => e.DomainName);
+                entity.HasKey(e => e.DomainName)
+                    .HasName("PK__ES_DataDomain__2DB1C7EE");
 
                 entity.ToTable("ES_DataDomain");
 
@@ -616,7 +630,8 @@ namespace PinhuaMaster.Data.Entities.Pinhua
 
             modelBuilder.Entity<EsDataField>(entity =>
             {
-                entity.HasKey(e => e.FldId);
+                entity.HasKey(e => e.FldId)
+                    .HasName("PK__ES_DataField__477199F1");
 
                 entity.ToTable("ES_DataField");
 
@@ -677,7 +692,8 @@ namespace PinhuaMaster.Data.Entities.Pinhua
 
             modelBuilder.Entity<EsDataSource>(entity =>
             {
-                entity.HasKey(e => e.DsId);
+                entity.HasKey(e => e.DsId)
+                    .HasName("PK__ES_DataSource__2136E270");
 
                 entity.ToTable("ES_DataSource");
 
@@ -737,6 +753,7 @@ namespace PinhuaMaster.Data.Entities.Pinhua
             modelBuilder.Entity<EsDataTable>(entity =>
             {
                 entity.HasKey(e => e.DtId)
+                    .HasName("PK__ES_DataTable__3A179ED3")
                     .ForSqlServerIsClustered(false);
 
                 entity.ToTable("ES_DataTable");
@@ -802,7 +819,8 @@ namespace PinhuaMaster.Data.Entities.Pinhua
 
             modelBuilder.Entity<EsDept>(entity =>
             {
-                entity.HasKey(e => e.DeptId);
+                entity.HasKey(e => e.DeptId)
+                    .HasName("PK__ES_Dept__1920BF5C");
 
                 entity.ToTable("ES_Dept");
 
@@ -846,14 +864,16 @@ namespace PinhuaMaster.Data.Entities.Pinhua
 
             modelBuilder.Entity<EsDeptAdmin>(entity =>
             {
-                entity.HasKey(e => new { e.DeptId, e.UserId });
+                entity.HasKey(e => new { e.DeptId, e.UserId })
+                    .HasName("PK__ES_DeptAdmin__7A672E12");
 
                 entity.ToTable("ES_DeptAdmin");
             });
 
             modelBuilder.Entity<EsDomainMatch>(entity =>
             {
-                entity.HasKey(e => new { e.DomainName, e.Pattern });
+                entity.HasKey(e => new { e.DomainName, e.Pattern })
+                    .HasName("PK__ES_DomainMatch__373B3228");
 
                 entity.ToTable("ES_DomainMatch");
 
@@ -867,7 +887,8 @@ namespace PinhuaMaster.Data.Entities.Pinhua
 
             modelBuilder.Entity<EsDtDesignAcl>(entity =>
             {
-                entity.HasKey(e => new { e.UserId, e.DtId });
+                entity.HasKey(e => new { e.UserId, e.DtId })
+                    .HasName("PK__ES_DtDesignAcl__1975C517");
 
                 entity.ToTable("ES_DtDesignAcl");
 
@@ -886,7 +907,8 @@ namespace PinhuaMaster.Data.Entities.Pinhua
 
             modelBuilder.Entity<EsFillStd>(entity =>
             {
-                entity.HasKey(e => e.StdId);
+                entity.HasKey(e => e.StdId)
+                    .HasName("PK__ES_FillStd__4F12BBB9");
 
                 entity.ToTable("ES_FillStd");
 
@@ -975,7 +997,8 @@ namespace PinhuaMaster.Data.Entities.Pinhua
 
             modelBuilder.Entity<EsGrpRole>(entity =>
             {
-                entity.HasKey(e => new { e.GId, e.RoleId });
+                entity.HasKey(e => new { e.GId, e.RoleId })
+                    .HasName("PK__ES_GrpRole__7C4F7684");
 
                 entity.ToTable("ES_GrpRole");
 
@@ -984,7 +1007,8 @@ namespace PinhuaMaster.Data.Entities.Pinhua
 
             modelBuilder.Entity<EsGrpUser>(entity =>
             {
-                entity.HasKey(e => new { e.UserId, e.GId });
+                entity.HasKey(e => new { e.UserId, e.GId })
+                    .HasName("PK__ES_GrpUser__7E37BEF6");
 
                 entity.ToTable("ES_GrpUser");
 
@@ -993,7 +1017,8 @@ namespace PinhuaMaster.Data.Entities.Pinhua
 
             modelBuilder.Entity<EsHandoverJob>(entity =>
             {
-                entity.HasKey(e => e.Hid);
+                entity.HasKey(e => e.Hid)
+                    .HasName("PK__ES_HandoverJob__5EDF0F2E");
 
                 entity.ToTable("ES_HandoverJob");
 
@@ -1030,7 +1055,8 @@ namespace PinhuaMaster.Data.Entities.Pinhua
 
             modelBuilder.Entity<EsHandoverRc>(entity =>
             {
-                entity.HasKey(e => new { e.Hid, e.RcId });
+                entity.HasKey(e => new { e.Hid, e.RcId })
+                    .HasName("PK__ES_HandoverRc__61BB7BD9");
 
                 entity.ToTable("ES_HandoverRc");
 
@@ -1043,7 +1069,8 @@ namespace PinhuaMaster.Data.Entities.Pinhua
 
             modelBuilder.Entity<EsHandoverWi>(entity =>
             {
-                entity.HasKey(e => new { e.Hid, e.WiId });
+                entity.HasKey(e => new { e.Hid, e.WiId })
+                    .HasName("PK__ES_HandoverWi__63A3C44B");
 
                 entity.ToTable("ES_HandoverWi");
 
@@ -1220,7 +1247,8 @@ namespace PinhuaMaster.Data.Entities.Pinhua
 
             modelBuilder.Entity<EsIdDel>(entity =>
             {
-                entity.HasKey(e => new { e.StdId, e.TheId });
+                entity.HasKey(e => new { e.StdId, e.TheId })
+                    .HasName("PK__ES_IdDel__29AC2CE0");
 
                 entity.ToTable("ES_IdDel");
 
@@ -1252,7 +1280,8 @@ namespace PinhuaMaster.Data.Entities.Pinhua
 
             modelBuilder.Entity<EsIdPart>(entity =>
             {
-                entity.HasKey(e => new { e.StdId, e.PartId });
+                entity.HasKey(e => new { e.StdId, e.PartId })
+                    .HasName("PK__ES_IdPart__14D10B8B");
 
                 entity.ToTable("ES_IdPart");
 
@@ -1279,7 +1308,8 @@ namespace PinhuaMaster.Data.Entities.Pinhua
 
             modelBuilder.Entity<EsIdRec>(entity =>
             {
-                entity.HasKey(e => new { e.StdId, e.Prefix });
+                entity.HasKey(e => new { e.StdId, e.Prefix })
+                    .HasName("PK__ES_IdRec__27C3E46E");
 
                 entity.ToTable("ES_IdRec");
 
@@ -1296,7 +1326,8 @@ namespace PinhuaMaster.Data.Entities.Pinhua
 
             modelBuilder.Entity<EsIdRule>(entity =>
             {
-                entity.HasKey(e => e.StdId);
+                entity.HasKey(e => e.StdId)
+                    .HasName("PK__ES_IdRule__1E3A7A34");
 
                 entity.ToTable("ES_IdRule");
 
@@ -1317,7 +1348,8 @@ namespace PinhuaMaster.Data.Entities.Pinhua
 
             modelBuilder.Entity<EsIdUsed>(entity =>
             {
-                entity.HasKey(e => new { e.TheId, e.StdId });
+                entity.HasKey(e => new { e.TheId, e.StdId })
+                    .HasName("PK__ES_IdUsed__2F650636");
 
                 entity.ToTable("ES_IdUsed");
 
@@ -1372,7 +1404,8 @@ namespace PinhuaMaster.Data.Entities.Pinhua
 
             modelBuilder.Entity<EsIdxFld>(entity =>
             {
-                entity.HasKey(e => new { e.IdxId, e.FldId });
+                entity.HasKey(e => new { e.IdxId, e.FldId })
+                    .HasName("PK__ES_IdxFld__33BFA6FF");
 
                 entity.ToTable("ES_IdxFld");
 
@@ -1387,7 +1420,8 @@ namespace PinhuaMaster.Data.Entities.Pinhua
 
             modelBuilder.Entity<EsIdxTable>(entity =>
             {
-                entity.HasKey(e => e.IdxId);
+                entity.HasKey(e => e.IdxId)
+                    .HasName("PK__ES_IdxTable__2EFAF1E2");
 
                 entity.ToTable("ES_IdxTable");
 
@@ -1413,7 +1447,8 @@ namespace PinhuaMaster.Data.Entities.Pinhua
 
             modelBuilder.Entity<EsImContactGrp>(entity =>
             {
-                entity.HasKey(e => new { e.GrpName, e.UserId });
+                entity.HasKey(e => new { e.GrpName, e.UserId })
+                    .HasName("PK__ES_ImContactGrp__35A7EF71");
 
                 entity.ToTable("ES_ImContactGrp");
 
@@ -1422,9 +1457,29 @@ namespace PinhuaMaster.Data.Entities.Pinhua
                     .HasMaxLength(50);
             });
 
+            modelBuilder.Entity<EsImUserContact>(entity =>
+            {
+                entity.HasKey(e => new { e.UserId, e.ContactId })
+                    .HasName("PK__ES_ImUserContact__4301EA8F");
+
+                entity.ToTable("ES_ImUserContact");
+
+                entity.Property(e => e.ContactId).HasColumnName("contactId");
+
+                entity.Property(e => e.Alias)
+                    .HasColumnName("alias")
+                    .HasMaxLength(50)
+                    .HasDefaultValueSql("('')");
+
+                entity.Property(e => e.GrpName)
+                    .HasColumnName("grpName")
+                    .HasMaxLength(50);
+            });
+
             modelBuilder.Entity<EsImfastReply>(entity =>
             {
-                entity.HasKey(e => new { e.UserId, e.Num });
+                entity.HasKey(e => new { e.UserId, e.Num })
+                    .HasName("PK__ES_IMFastReply__379037E3");
 
                 entity.ToTable("ES_IMFastReply");
 
@@ -1439,7 +1494,8 @@ namespace PinhuaMaster.Data.Entities.Pinhua
 
             modelBuilder.Entity<EsImmsgLog>(entity =>
             {
-                entity.HasKey(e => new { e.SendTime, e.SenderName });
+                entity.HasKey(e => new { e.SendTime, e.SenderName })
+                    .HasName("PK__ES_IMMsgLog__3A6CA48E");
 
                 entity.ToTable("ES_IMMsgLog");
 
@@ -1472,34 +1528,18 @@ namespace PinhuaMaster.Data.Entities.Pinhua
                     .HasDefaultValueSql("((0))");
             });
 
-            modelBuilder.Entity<EsImUserContact>(entity =>
-            {
-                entity.HasKey(e => new { e.UserId, e.ContactId });
-
-                entity.ToTable("ES_ImUserContact");
-
-                entity.Property(e => e.ContactId).HasColumnName("contactId");
-
-                entity.Property(e => e.Alias)
-                    .HasColumnName("alias")
-                    .HasMaxLength(50)
-                    .HasDefaultValueSql("('')");
-
-                entity.Property(e => e.GrpName)
-                    .HasColumnName("grpName")
-                    .HasMaxLength(50);
-            });
-
             modelBuilder.Entity<EsJob>(entity =>
             {
-                entity.HasKey(e => new { e.RoleId, e.DeptId });
+                entity.HasKey(e => new { e.RoleId, e.DeptId })
+                    .HasName("PK__ES_Job__30F848ED");
 
                 entity.ToTable("ES_Job");
             });
 
             modelBuilder.Entity<EsLog>(entity =>
             {
-                entity.HasKey(e => e.LogId);
+                entity.HasKey(e => e.LogId)
+                    .HasName("PK__ES_Log__07F6335A");
 
                 entity.ToTable("ES_Log");
 
@@ -1570,7 +1610,8 @@ namespace PinhuaMaster.Data.Entities.Pinhua
 
             modelBuilder.Entity<EsNewRepBar>(entity =>
             {
-                entity.HasKey(e => new { e.UserId, e.RtId });
+                entity.HasKey(e => new { e.UserId, e.RtId })
+                    .HasName("PK__ES_NewRepBar__1209AD79");
 
                 entity.ToTable("ES_NewRepBar");
 
@@ -1579,7 +1620,8 @@ namespace PinhuaMaster.Data.Entities.Pinhua
 
             modelBuilder.Entity<EsNfsauth>(entity =>
             {
-                entity.HasKey(e => e.AuthId);
+                entity.HasKey(e => e.AuthId)
+                    .HasName("PK__ES_NFSAuth__20ACD28B");
 
                 entity.ToTable("ES_NFSAuth");
 
@@ -1619,7 +1661,8 @@ namespace PinhuaMaster.Data.Entities.Pinhua
 
             modelBuilder.Entity<EsOuterLink>(entity =>
             {
-                entity.HasKey(e => e.LinkId);
+                entity.HasKey(e => e.LinkId)
+                    .HasName("PK__ES_OuterLink__190BB0C3");
 
                 entity.ToTable("ES_OuterLink");
 
@@ -1669,7 +1712,8 @@ namespace PinhuaMaster.Data.Entities.Pinhua
 
             modelBuilder.Entity<EsOuterLinkAcl>(entity =>
             {
-                entity.HasKey(e => new { e.LinkId, e.RoleId });
+                entity.HasKey(e => new { e.LinkId, e.RoleId })
+                    .HasName("PK__ES_OuterLinkAcl__1DD065E0");
 
                 entity.ToTable("ES_OuterLinkAcl");
 
@@ -1684,7 +1728,8 @@ namespace PinhuaMaster.Data.Entities.Pinhua
 
             modelBuilder.Entity<EsQryAcl>(entity =>
             {
-                entity.HasKey(e => new { e.StdId, e.RoleId, e.UserId });
+                entity.HasKey(e => new { e.StdId, e.RoleId, e.UserId })
+                    .HasName("PK__ES_QryAcl__1E5A75C5");
 
                 entity.ToTable("ES_QryAcl");
 
@@ -1702,14 +1747,16 @@ namespace PinhuaMaster.Data.Entities.Pinhua
 
             modelBuilder.Entity<EsQryDesignAcl>(entity =>
             {
-                entity.HasKey(e => new { e.UserId, e.StdId });
+                entity.HasKey(e => new { e.UserId, e.StdId })
+                    .HasName("PK__ES_QryDesignAcl__567ED357");
 
                 entity.ToTable("ES_QryDesignAcl");
             });
 
             modelBuilder.Entity<EsRcAdd>(entity =>
             {
-                entity.HasKey(e => e.RcId);
+                entity.HasKey(e => e.RcId)
+                    .HasName("PK__ES_RcAdd__2610A626");
 
                 entity.ToTable("ES_RcAdd");
 
@@ -1748,7 +1795,8 @@ namespace PinhuaMaster.Data.Entities.Pinhua
 
             modelBuilder.Entity<EsRepCase>(entity =>
             {
-                entity.HasKey(e => e.RcId);
+                entity.HasKey(e => e.RcId)
+                    .HasName("PK__ES_RepCase__1A9EF37A");
 
                 entity.ToTable("ES_RepCase");
 
@@ -1863,7 +1911,8 @@ namespace PinhuaMaster.Data.Entities.Pinhua
 
             modelBuilder.Entity<EsRole>(entity =>
             {
-                entity.HasKey(e => e.RoleId);
+                entity.HasKey(e => e.RoleId)
+                    .HasName("PK__ES_Role__20C1E124");
 
                 entity.ToTable("ES_Role");
 
@@ -1914,7 +1963,8 @@ namespace PinhuaMaster.Data.Entities.Pinhua
 
             modelBuilder.Entity<EsRoleGroup>(entity =>
             {
-                entity.HasKey(e => e.GId);
+                entity.HasKey(e => e.GId)
+                    .HasName("PK__ES_RoleGroup__00200768");
 
                 entity.ToTable("ES_RoleGroup");
 
@@ -1930,7 +1980,8 @@ namespace PinhuaMaster.Data.Entities.Pinhua
 
             modelBuilder.Entity<EsRtfIdbind>(entity =>
             {
-                entity.HasKey(e => new { e.StdId, e.RtfId, e.PartId });
+                entity.HasKey(e => new { e.StdId, e.RtfId, e.PartId })
+                    .HasName("PK__ES_RTF_IDBIND__049AA3C2");
 
                 entity.ToTable("ES_RTF_IDBIND");
 
@@ -1945,7 +1996,8 @@ namespace PinhuaMaster.Data.Entities.Pinhua
 
             modelBuilder.Entity<EsRtfLink>(entity =>
             {
-                entity.HasKey(e => new { e.RtfId, e.No });
+                entity.HasKey(e => new { e.RtfId, e.No })
+                    .HasName("PK__ES_RtfLink__11D4A34F");
 
                 entity.ToTable("ES_RtfLink");
 
@@ -1960,9 +2012,63 @@ namespace PinhuaMaster.Data.Entities.Pinhua
                 entity.Property(e => e.Url).HasMaxLength(200);
             });
 
+            modelBuilder.Entity<EsRtfStd>(entity =>
+            {
+                entity.HasKey(e => new { e.StdId, e.RtfId })
+                    .HasName("PK__ES_RTF_STD__0682EC34");
+
+                entity.ToTable("ES_RTF_STD");
+
+                entity.Property(e => e.StdId).HasColumnName("stdId");
+
+                entity.Property(e => e.RtfId)
+                    .HasColumnName("rtfId")
+                    .HasDefaultValueSql("('')");
+
+                entity.Property(e => e.AutoIdGen).HasColumnName("autoIdGen");
+
+                entity.Property(e => e.Filter)
+                    .HasColumnName("filter")
+                    .HasColumnType("ntext")
+                    .HasDefaultValueSql("('')");
+
+                entity.Property(e => e.FilterSpec)
+                    .HasColumnName("filterSpec")
+                    .HasColumnType("ntext")
+                    .HasDefaultValueSql("('')");
+
+                entity.Property(e => e.FilterSpecListGrp)
+                    .HasColumnName("filterSpecListGrp")
+                    .HasColumnType("ntext")
+                    .HasDefaultValueSql("('')");
+
+                entity.Property(e => e.ListFill)
+                    .HasColumnName("listFill")
+                    .HasColumnType("ntext")
+                    .HasDefaultValueSql("('')");
+
+                entity.Property(e => e.ListMultiSel).HasColumnName("listMultiSel");
+
+                entity.Property(e => e.NewIdBindChg).HasColumnName("newIdBindChg");
+
+                entity.Property(e => e.No).HasColumnName("no");
+
+                entity.Property(e => e.NoBindNoId).HasColumnName("noBindNoId");
+
+                entity.Property(e => e.OpCond)
+                    .HasColumnName("opCond")
+                    .HasColumnType("ntext")
+                    .HasDefaultValueSql("('')");
+
+                entity.Property(e => e.StdValRefresh).HasColumnName("stdValRefresh");
+
+                entity.Property(e => e.TreeSeparateFill).HasColumnName("treeSeparateFill");
+            });
+
             modelBuilder.Entity<EsRtfs>(entity =>
             {
-                entity.HasKey(e => e.RtfId);
+                entity.HasKey(e => e.RtfId)
+                    .HasName("PK__ES_RTFS__762C88DA");
 
                 entity.ToTable("ES_RTFS");
 
@@ -2021,61 +2127,10 @@ namespace PinhuaMaster.Data.Entities.Pinhua
                 entity.Property(e => e.TreeFilterSpec).HasMaxLength(1500);
             });
 
-            modelBuilder.Entity<EsRtfStd>(entity =>
-            {
-                entity.HasKey(e => new { e.StdId, e.RtfId });
-
-                entity.ToTable("ES_RTF_STD");
-
-                entity.Property(e => e.StdId).HasColumnName("stdId");
-
-                entity.Property(e => e.RtfId)
-                    .HasColumnName("rtfId")
-                    .HasDefaultValueSql("('')");
-
-                entity.Property(e => e.AutoIdGen).HasColumnName("autoIdGen");
-
-                entity.Property(e => e.Filter)
-                    .HasColumnName("filter")
-                    .HasColumnType("ntext")
-                    .HasDefaultValueSql("('')");
-
-                entity.Property(e => e.FilterSpec)
-                    .HasColumnName("filterSpec")
-                    .HasColumnType("ntext")
-                    .HasDefaultValueSql("('')");
-
-                entity.Property(e => e.FilterSpecListGrp)
-                    .HasColumnName("filterSpecListGrp")
-                    .HasColumnType("ntext")
-                    .HasDefaultValueSql("('')");
-
-                entity.Property(e => e.ListFill)
-                    .HasColumnName("listFill")
-                    .HasColumnType("ntext")
-                    .HasDefaultValueSql("('')");
-
-                entity.Property(e => e.ListMultiSel).HasColumnName("listMultiSel");
-
-                entity.Property(e => e.NewIdBindChg).HasColumnName("newIdBindChg");
-
-                entity.Property(e => e.No).HasColumnName("no");
-
-                entity.Property(e => e.NoBindNoId).HasColumnName("noBindNoId");
-
-                entity.Property(e => e.OpCond)
-                    .HasColumnName("opCond")
-                    .HasColumnType("ntext")
-                    .HasDefaultValueSql("('')");
-
-                entity.Property(e => e.StdValRefresh).HasColumnName("stdValRefresh");
-
-                entity.Property(e => e.TreeSeparateFill).HasColumnName("treeSeparateFill");
-            });
-
             modelBuilder.Entity<EsRtts>(entity =>
             {
-                entity.HasKey(e => e.RttId);
+                entity.HasKey(e => e.RttId)
+                    .HasName("PK__ES_RTTS__6D9742D9");
 
                 entity.ToTable("ES_RTTS");
 
@@ -2098,7 +2153,8 @@ namespace PinhuaMaster.Data.Entities.Pinhua
 
             modelBuilder.Entity<EsRuleDelCase>(entity =>
             {
-                entity.HasKey(e => e.RuleId);
+                entity.HasKey(e => e.RuleId)
+                    .HasName("PK__ES_RuleDelCase__4DB4832C");
 
                 entity.ToTable("ES_RuleDelCase");
 
@@ -2114,7 +2170,8 @@ namespace PinhuaMaster.Data.Entities.Pinhua
 
             modelBuilder.Entity<EsRuleDelDetail>(entity =>
             {
-                entity.HasKey(e => e.RuleId);
+                entity.HasKey(e => e.RuleId)
+                    .HasName("PK__ES_RuleDelDetail__48EFCE0F");
 
                 entity.ToTable("ES_RuleDelDetail");
 
@@ -2130,7 +2187,8 @@ namespace PinhuaMaster.Data.Entities.Pinhua
 
             modelBuilder.Entity<EsRuleFill>(entity =>
             {
-                entity.HasKey(e => new { e.RuleId, e.RtfIdDest });
+                entity.HasKey(e => new { e.RuleId, e.RtfIdDest })
+                    .HasName("PK__ES_RuleFill__36D11DD4");
 
                 entity.ToTable("ES_RuleFill");
 
@@ -2156,7 +2214,8 @@ namespace PinhuaMaster.Data.Entities.Pinhua
 
             modelBuilder.Entity<EsRuleInsDetail>(entity =>
             {
-                entity.HasKey(e => e.RuleId);
+                entity.HasKey(e => e.RuleId)
+                    .HasName("PK__ES_RuleInsDetail__4AD81681");
 
                 entity.ToTable("ES_RuleInsDetail");
 
@@ -2178,7 +2237,8 @@ namespace PinhuaMaster.Data.Entities.Pinhua
 
             modelBuilder.Entity<EsRuleInsDt>(entity =>
             {
-                entity.HasKey(e => e.RuleId);
+                entity.HasKey(e => e.RuleId)
+                    .HasName("PK__ES_RuleInsDT__4F9CCB9E");
 
                 entity.ToTable("ES_RuleInsDT");
 
@@ -2198,7 +2258,8 @@ namespace PinhuaMaster.Data.Entities.Pinhua
 
             modelBuilder.Entity<EsRuleNewCase>(entity =>
             {
-                entity.HasKey(e => e.RuleId);
+                entity.HasKey(e => e.RuleId)
+                    .HasName("PK__ES_RuleNewCase__51851410");
 
                 entity.ToTable("ES_RuleNewCase");
 
@@ -2216,7 +2277,8 @@ namespace PinhuaMaster.Data.Entities.Pinhua
 
             modelBuilder.Entity<EsRuleQry>(entity =>
             {
-                entity.HasKey(e => e.RuleId);
+                entity.HasKey(e => e.RuleId)
+                    .HasName("PK__ES_RuleQry__2C538F61");
 
                 entity.ToTable("ES_RuleQry");
 
@@ -2262,7 +2324,8 @@ namespace PinhuaMaster.Data.Entities.Pinhua
 
             modelBuilder.Entity<EsRuleRelDt>(entity =>
             {
-                entity.HasKey(e => new { e.RuleId, e.DtId });
+                entity.HasKey(e => new { e.RuleId, e.DtId })
+                    .HasName("PK__ES_RuleRel_DT__3C89F72A");
 
                 entity.ToTable("ES_RuleRel_DT");
 
@@ -2273,7 +2336,8 @@ namespace PinhuaMaster.Data.Entities.Pinhua
 
             modelBuilder.Entity<EsRuleRelDtfld>(entity =>
             {
-                entity.HasKey(e => new { e.RuleId, e.FldId });
+                entity.HasKey(e => new { e.RuleId, e.FldId })
+                    .HasName("PK__ES_RuleRel_DTFld__3E723F9C");
 
                 entity.ToTable("ES_RuleRel_DTFld");
 
@@ -2284,7 +2348,8 @@ namespace PinhuaMaster.Data.Entities.Pinhua
 
             modelBuilder.Entity<EsRuleRelRtfs>(entity =>
             {
-                entity.HasKey(e => new { e.RuleId, e.RtfId });
+                entity.HasKey(e => new { e.RuleId, e.RtfId })
+                    .HasName("PK__ES_RuleRel_Rtfs__405A880E");
 
                 entity.ToTable("ES_RuleRel_Rtfs");
 
@@ -2295,7 +2360,8 @@ namespace PinhuaMaster.Data.Entities.Pinhua
 
             modelBuilder.Entity<EsRuleRelRtts>(entity =>
             {
-                entity.HasKey(e => new { e.RuleId, e.RttId });
+                entity.HasKey(e => new { e.RuleId, e.RttId })
+                    .HasName("PK__ES_RuleRel_Rtts__4242D080");
 
                 entity.ToTable("ES_RuleRel_Rtts");
 
@@ -2304,9 +2370,23 @@ namespace PinhuaMaster.Data.Entities.Pinhua
                     .HasMaxLength(20);
             });
 
+            modelBuilder.Entity<EsRuleUpd>(entity =>
+            {
+                entity.HasKey(e => e.RuleId)
+                    .HasName("PK__ES_RuleUpd__442B18F2");
+
+                entity.ToTable("ES_RuleUpd");
+
+                entity.Property(e => e.RuleId)
+                    .HasColumnName("ruleId")
+                    .HasMaxLength(20)
+                    .ValueGeneratedNever();
+            });
+
             modelBuilder.Entity<EsRules>(entity =>
             {
-                entity.HasKey(e => e.RuleId);
+                entity.HasKey(e => e.RuleId)
+                    .HasName("PK__ES_Rules__25A691D2");
 
                 entity.ToTable("ES_Rules");
 
@@ -2372,21 +2452,10 @@ namespace PinhuaMaster.Data.Entities.Pinhua
                     .HasDefaultValueSql("((1))");
             });
 
-            modelBuilder.Entity<EsRuleUpd>(entity =>
-            {
-                entity.HasKey(e => e.RuleId);
-
-                entity.ToTable("ES_RuleUpd");
-
-                entity.Property(e => e.RuleId)
-                    .HasColumnName("ruleId")
-                    .HasMaxLength(20)
-                    .ValueGeneratedNever();
-            });
-
             modelBuilder.Entity<EsSheetProp>(entity =>
             {
-                entity.HasKey(e => new { e.RtId, e.SheetId, e.PropType, e.PropName });
+                entity.HasKey(e => new { e.RtId, e.SheetId, e.PropType, e.PropName })
+                    .HasName("PK__ES_SheetProp__662B2B3B");
 
                 entity.ToTable("ES_SheetProp");
 
@@ -2407,7 +2476,8 @@ namespace PinhuaMaster.Data.Entities.Pinhua
 
             modelBuilder.Entity<EsSmFill>(entity =>
             {
-                entity.HasKey(e => e.CmdId);
+                entity.HasKey(e => e.CmdId)
+                    .HasName("PK__ES_SmFill__0BB1B5A5");
 
                 entity.ToTable("ES_SmFill");
 
@@ -2430,7 +2500,8 @@ namespace PinhuaMaster.Data.Entities.Pinhua
 
             modelBuilder.Entity<EsSmQry>(entity =>
             {
-                entity.HasKey(e => e.CmdId);
+                entity.HasKey(e => e.CmdId)
+                    .HasName("PK__ES_SmQry__0D99FE17");
 
                 entity.ToTable("ES_SmQry");
 
@@ -2474,7 +2545,8 @@ namespace PinhuaMaster.Data.Entities.Pinhua
 
             modelBuilder.Entity<EsSmQryAcl>(entity =>
             {
-                entity.HasKey(e => new { e.CmdId, e.RoleId });
+                entity.HasKey(e => new { e.CmdId, e.RoleId })
+                    .HasName("PK__ES_SmQryAcl__1446FBA6");
 
                 entity.ToTable("ES_SmQryAcl");
 
@@ -2483,14 +2555,16 @@ namespace PinhuaMaster.Data.Entities.Pinhua
 
             modelBuilder.Entity<EsSmQryDesignAcl>(entity =>
             {
-                entity.HasKey(e => new { e.CmdId, e.UserId });
+                entity.HasKey(e => new { e.CmdId, e.UserId })
+                    .HasName("PK__ES_SmQryDesignAc__17236851");
 
                 entity.ToTable("ES_SmQryDesignAcl");
             });
 
             modelBuilder.Entity<EsStdComp>(entity =>
             {
-                entity.HasKey(e => e.StdId);
+                entity.HasKey(e => e.StdId)
+                    .HasName("PK__ES_StdComp__68687968");
 
                 entity.ToTable("ES_StdComp");
 
@@ -2499,7 +2573,8 @@ namespace PinhuaMaster.Data.Entities.Pinhua
 
             modelBuilder.Entity<EsStdFld>(entity =>
             {
-                entity.HasKey(e => new { e.FldId, e.StdId, e.Op });
+                entity.HasKey(e => new { e.FldId, e.StdId, e.Op })
+                    .HasName("PK__ES_StdFld__6225902D");
 
                 entity.ToTable("ES_StdFld");
 
@@ -2512,7 +2587,8 @@ namespace PinhuaMaster.Data.Entities.Pinhua
 
             modelBuilder.Entity<EsStdList>(entity =>
             {
-                entity.HasKey(e => e.StdId);
+                entity.HasKey(e => e.StdId)
+                    .HasName("PK__ES_StdList__4183B671");
 
                 entity.ToTable("ES_StdList");
 
@@ -2527,7 +2603,8 @@ namespace PinhuaMaster.Data.Entities.Pinhua
 
             modelBuilder.Entity<EsStdQry>(entity =>
             {
-                entity.HasKey(e => e.StdId);
+                entity.HasKey(e => e.StdId)
+                    .HasName("PK__ES_StdQry__473C8FC7");
 
                 entity.ToTable("ES_StdQry");
 
@@ -2558,7 +2635,8 @@ namespace PinhuaMaster.Data.Entities.Pinhua
 
             modelBuilder.Entity<EsStdTree>(entity =>
             {
-                entity.HasKey(e => e.StdId);
+                entity.HasKey(e => e.StdId)
+                    .HasName("PK__ES_StdTree__3AD6B8E2");
 
                 entity.ToTable("ES_StdTree");
 
@@ -2581,7 +2659,8 @@ namespace PinhuaMaster.Data.Entities.Pinhua
 
             modelBuilder.Entity<EsStdValSet>(entity =>
             {
-                entity.HasKey(e => new { e.StdId, e.Vno });
+                entity.HasKey(e => new { e.StdId, e.Vno })
+                    .HasName("PK__ES_StdValSet__5F492382");
 
                 entity.ToTable("ES_StdValSet");
 
@@ -2598,7 +2677,8 @@ namespace PinhuaMaster.Data.Entities.Pinhua
 
             modelBuilder.Entity<EsSysId>(entity =>
             {
-                entity.HasKey(e => e.IdName);
+                entity.HasKey(e => e.IdName)
+                    .HasName("PK__ES_SysId__7C8480AE");
 
                 entity.ToTable("ES_SysId");
 
@@ -2620,7 +2700,8 @@ namespace PinhuaMaster.Data.Entities.Pinhua
 
             modelBuilder.Entity<EsSysIdS>(entity =>
             {
-                entity.HasKey(e => new { e.IdName, e.IdDate });
+                entity.HasKey(e => new { e.IdName, e.IdDate })
+                    .HasName("PK__ES_SysId_s__03317E3D");
 
                 entity.ToTable("ES_SysId_s");
 
@@ -2633,7 +2714,8 @@ namespace PinhuaMaster.Data.Entities.Pinhua
 
             modelBuilder.Entity<EsTmp>(entity =>
             {
-                entity.HasKey(e => e.RtId);
+                entity.HasKey(e => e.RtId)
+                    .HasName("PK__ES_Tmp__31B762FC");
 
                 entity.ToTable("ES_Tmp");
 
@@ -2715,7 +2797,8 @@ namespace PinhuaMaster.Data.Entities.Pinhua
 
             modelBuilder.Entity<EsTmpAcl>(entity =>
             {
-                entity.HasKey(e => e.AuthId);
+                entity.HasKey(e => e.AuthId)
+                    .HasName("PK__ES_TmpAcl__69FBBC1F");
 
                 entity.ToTable("ES_TmpAcl");
 
@@ -2779,7 +2862,8 @@ namespace PinhuaMaster.Data.Entities.Pinhua
 
             modelBuilder.Entity<EsTmpAdd>(entity =>
             {
-                entity.HasKey(e => e.RtId);
+                entity.HasKey(e => e.RtId)
+                    .HasName("PK__ES_TmpAdd__5AB9788F");
 
                 entity.ToTable("ES_TmpAdd");
 
@@ -2796,7 +2880,8 @@ namespace PinhuaMaster.Data.Entities.Pinhua
 
             modelBuilder.Entity<EsTmpClass>(entity =>
             {
-                entity.HasKey(e => e.ClassId);
+                entity.HasKey(e => e.ClassId)
+                    .HasName("PK__ES_TmpClass__2645B050");
 
                 entity.ToTable("ES_TmpClass");
 
@@ -2848,7 +2933,8 @@ namespace PinhuaMaster.Data.Entities.Pinhua
 
             modelBuilder.Entity<EsTmpDesigner>(entity =>
             {
-                entity.HasKey(e => new { e.UserId, e.RtId });
+                entity.HasKey(e => new { e.UserId, e.RtId })
+                    .HasName("PK__ES_TmpDesigner__7E02B4CC");
 
                 entity.ToTable("ES_TmpDesigner");
 
@@ -2857,7 +2943,8 @@ namespace PinhuaMaster.Data.Entities.Pinhua
 
             modelBuilder.Entity<EsTmpPic>(entity =>
             {
-                entity.HasKey(e => e.PicNo);
+                entity.HasKey(e => e.PicNo)
+                    .HasName("PK__ES_TmpPic__04AFB25B");
 
                 entity.ToTable("ES_TmpPic");
 
@@ -2911,7 +2998,8 @@ namespace PinhuaMaster.Data.Entities.Pinhua
 
             modelBuilder.Entity<EsTmpProp>(entity =>
             {
-                entity.HasKey(e => e.RtId);
+                entity.HasKey(e => e.RtId)
+                    .HasName("PK__ES_TmpProp__45BE5BA9");
 
                 entity.ToTable("ES_TmpProp");
 
@@ -2932,7 +3020,8 @@ namespace PinhuaMaster.Data.Entities.Pinhua
 
             modelBuilder.Entity<EsTmpSheet>(entity =>
             {
-                entity.HasKey(e => new { e.RtId, e.SheetId });
+                entity.HasKey(e => new { e.RtId, e.SheetId })
+                    .HasName("PK__ES_TmpSheet__5CA1C101");
 
                 entity.ToTable("ES_TmpSheet");
 
@@ -2955,7 +3044,8 @@ namespace PinhuaMaster.Data.Entities.Pinhua
 
             modelBuilder.Entity<EsUrecent>(entity =>
             {
-                entity.HasKey(e => new { e.UserId, e.RecType, e.RecNo });
+                entity.HasKey(e => new { e.UserId, e.RecType, e.RecNo })
+                    .HasName("PK__ES_URecent__5832119F");
 
                 entity.ToTable("ES_URecent");
 
@@ -2970,7 +3060,8 @@ namespace PinhuaMaster.Data.Entities.Pinhua
 
             modelBuilder.Entity<EsUruleFill>(entity =>
             {
-                entity.HasKey(e => new { e.RuleId, e.FldIdDest });
+                entity.HasKey(e => new { e.RuleId, e.FldIdDest })
+                    .HasName("PK__ES_URuleFill__46136164");
 
                 entity.ToTable("ES_URuleFill");
 
@@ -2987,7 +3078,8 @@ namespace PinhuaMaster.Data.Entities.Pinhua
 
             modelBuilder.Entity<EsUruleFillRt>(entity =>
             {
-                entity.HasKey(e => new { e.RuleId, e.RtfIdDest });
+                entity.HasKey(e => new { e.RuleId, e.RtfIdDest })
+                    .HasName("PK__ES_URuleFillRt__5555A4F4");
 
                 entity.ToTable("ES_URuleFillRt");
 
@@ -3004,7 +3096,8 @@ namespace PinhuaMaster.Data.Entities.Pinhua
 
             modelBuilder.Entity<EsUser>(entity =>
             {
-                entity.HasKey(e => e.UserId);
+                entity.HasKey(e => e.UserId)
+                    .HasName("PK__ES_User__32E0915F");
 
                 entity.ToTable("ES_User");
 
@@ -3127,7 +3220,8 @@ namespace PinhuaMaster.Data.Entities.Pinhua
 
             modelBuilder.Entity<EsUserDataFilter>(entity =>
             {
-                entity.HasKey(e => e.Dfid);
+                entity.HasKey(e => e.Dfid)
+                    .HasName("PK__ES_UserDataFilte__5A1A5A11");
 
                 entity.ToTable("ES_UserDataFilter");
 
@@ -3160,7 +3254,8 @@ namespace PinhuaMaster.Data.Entities.Pinhua
 
             modelBuilder.Entity<EsUserMgr>(entity =>
             {
-                entity.HasKey(e => e.UserId);
+                entity.HasKey(e => e.UserId)
+                    .HasName("PK__ES_UserMgr__66603565");
 
                 entity.ToTable("ES_UserMgr");
 
@@ -3169,7 +3264,8 @@ namespace PinhuaMaster.Data.Entities.Pinhua
 
             modelBuilder.Entity<EsUserOption>(entity =>
             {
-                entity.HasKey(e => e.UserId);
+                entity.HasKey(e => e.UserId)
+                    .HasName("PK__ES_UserOption__5165187F");
 
                 entity.ToTable("ES_UserOption");
 
@@ -3216,7 +3312,8 @@ namespace PinhuaMaster.Data.Entities.Pinhua
 
             modelBuilder.Entity<EsUserPwdHis>(entity =>
             {
-                entity.HasKey(e => new { e.UserId, e.CreTime });
+                entity.HasKey(e => new { e.UserId, e.CreTime })
+                    .HasName("PK__ES_UserPwdHis__693CA210");
 
                 entity.ToTable("ES_UserPwdHis");
 
@@ -3231,7 +3328,8 @@ namespace PinhuaMaster.Data.Entities.Pinhua
 
             modelBuilder.Entity<EsUserRegInfo>(entity =>
             {
-                entity.HasKey(e => e.UserId);
+                entity.HasKey(e => e.UserId)
+                    .HasName("PK__ES_UserRegInfo__6D0D32F4");
 
                 entity.ToTable("ES_UserRegInfo");
 
@@ -3290,7 +3388,8 @@ namespace PinhuaMaster.Data.Entities.Pinhua
 
             modelBuilder.Entity<EsUserRole>(entity =>
             {
-                entity.HasKey(e => new { e.UserId, e.RoleId });
+                entity.HasKey(e => new { e.UserId, e.RoleId })
+                    .HasName("PK__ES_UserRole__4D94879B");
 
                 entity.ToTable("ES_UserRole");
 
@@ -3304,7 +3403,8 @@ namespace PinhuaMaster.Data.Entities.Pinhua
 
             modelBuilder.Entity<EsViewTable>(entity =>
             {
-                entity.HasKey(e => e.DtId);
+                entity.HasKey(e => e.DtId)
+                    .HasName("PK__ES_ViewTable__15A53433");
 
                 entity.ToTable("ES_ViewTable");
 
@@ -3329,7 +3429,8 @@ namespace PinhuaMaster.Data.Entities.Pinhua
 
             modelBuilder.Entity<EsVirtualWi>(entity =>
             {
-                entity.HasKey(e => e.WiId);
+                entity.HasKey(e => e.WiId)
+                    .HasName("PK__ES_VirtualWi__1C1D2798");
 
                 entity.ToTable("ES_VirtualWi");
 
@@ -3346,7 +3447,8 @@ namespace PinhuaMaster.Data.Entities.Pinhua
 
             modelBuilder.Entity<EsVwiGroup>(entity =>
             {
-                entity.HasKey(e => e.SubWiId);
+                entity.HasKey(e => e.SubWiId)
+                    .HasName("PK__ES_VWiGroup__1FEDB87C");
 
                 entity.ToTable("ES_VWiGroup");
 
@@ -3362,7 +3464,8 @@ namespace PinhuaMaster.Data.Entities.Pinhua
 
             modelBuilder.Entity<EsWfCase>(entity =>
             {
-                entity.HasKey(e => e.PiId);
+                entity.HasKey(e => e.PiId)
+                    .HasName("PK__ES_WfCase__10AB74EC");
 
                 entity.ToTable("ES_WfCase");
 
@@ -3390,7 +3493,8 @@ namespace PinhuaMaster.Data.Entities.Pinhua
 
             modelBuilder.Entity<EsWfLink>(entity =>
             {
-                entity.HasKey(e => e.RouteId);
+                entity.HasKey(e => e.RouteId)
+                    .HasName("PK__ES_WfLink__0BE6BFCF");
 
                 entity.ToTable("ES_WfLink");
 
@@ -3426,7 +3530,8 @@ namespace PinhuaMaster.Data.Entities.Pinhua
 
             modelBuilder.Entity<EsWfTask>(entity =>
             {
-                entity.HasKey(e => e.TId);
+                entity.HasKey(e => e.TId)
+                    .HasName("PK__ES_WfTask__5B438874");
 
                 entity.ToTable("ES_WfTask");
 
@@ -3495,7 +3600,8 @@ namespace PinhuaMaster.Data.Entities.Pinhua
 
             modelBuilder.Entity<EsWftAuth>(entity =>
             {
-                entity.HasKey(e => e.TId);
+                entity.HasKey(e => e.TId)
+                    .HasName("PK__ES_WftAuth__76EBA2E9");
 
                 entity.ToTable("ES_WftAuth");
 
@@ -3510,7 +3616,8 @@ namespace PinhuaMaster.Data.Entities.Pinhua
 
             modelBuilder.Entity<EsWftAuthScope>(entity =>
             {
-                entity.HasKey(e => new { e.TId, e.ScopeType });
+                entity.HasKey(e => new { e.TId, e.ScopeType })
+                    .HasName("PK__ES_WftAuthScope__0539C240");
 
                 entity.ToTable("ES_WftAuthScope");
 
@@ -3527,7 +3634,8 @@ namespace PinhuaMaster.Data.Entities.Pinhua
 
             modelBuilder.Entity<EsWftDataTrans>(entity =>
             {
-                entity.HasKey(e => new { e.RtfIdTo, e.TId });
+                entity.HasKey(e => new { e.RtfIdTo, e.TId })
+                    .HasName("PK__ES_wftDataTrans__025D5595");
 
                 entity.ToTable("ES_wftDataTrans");
 
@@ -3540,7 +3648,8 @@ namespace PinhuaMaster.Data.Entities.Pinhua
 
             modelBuilder.Entity<EsWftDeadline>(entity =>
             {
-                entity.HasKey(e => e.TId);
+                entity.HasKey(e => e.TId)
+                    .HasName("PK__ES_WftDeadline__6C6E1476");
 
                 entity.ToTable("ES_WftDeadline");
 
@@ -3575,7 +3684,8 @@ namespace PinhuaMaster.Data.Entities.Pinhua
 
             modelBuilder.Entity<EsWftFld>(entity =>
             {
-                entity.HasKey(e => new { e.TId, e.RtfId });
+                entity.HasKey(e => new { e.TId, e.RtfId })
+                    .HasName("PK__ES_WftFld__7CA47C3F");
 
                 entity.ToTable("ES_WftFld");
 
@@ -3597,7 +3707,8 @@ namespace PinhuaMaster.Data.Entities.Pinhua
 
             modelBuilder.Entity<EsWftJointCond>(entity =>
             {
-                entity.HasKey(e => new { e.TId, e.RtfId });
+                entity.HasKey(e => new { e.TId, e.RtfId })
+                    .HasName("PK__ES_WftJointCond__7ABC33CD");
 
                 entity.ToTable("ES_WftJointCond");
 
@@ -3606,7 +3717,8 @@ namespace PinhuaMaster.Data.Entities.Pinhua
 
             modelBuilder.Entity<EsWftRoles>(entity =>
             {
-                entity.HasKey(e => new { e.RoleId, e.TId });
+                entity.HasKey(e => new { e.RoleId, e.TId })
+                    .HasName("PK__ES_WftRoles__740F363E");
 
                 entity.ToTable("ES_WftRoles");
 
@@ -3621,7 +3733,8 @@ namespace PinhuaMaster.Data.Entities.Pinhua
 
             modelBuilder.Entity<EsWftRules>(entity =>
             {
-                entity.HasKey(e => new { e.TId, e.RuleId });
+                entity.HasKey(e => new { e.TId, e.RuleId })
+                    .HasName("PK__ES_WftRules__09FE775D");
 
                 entity.ToTable("ES_WftRules");
 
@@ -3634,7 +3747,8 @@ namespace PinhuaMaster.Data.Entities.Pinhua
 
             modelBuilder.Entity<EsWiLink>(entity =>
             {
-                entity.HasKey(e => new { e.PrevWiId, e.WiId });
+                entity.HasKey(e => new { e.PrevWiId, e.WiId })
+                    .HasName("PK__ES_WiLink__21D600EE");
 
                 entity.ToTable("ES_WiLink");
 
@@ -3650,7 +3764,8 @@ namespace PinhuaMaster.Data.Entities.Pinhua
 
             modelBuilder.Entity<EsWitodo>(entity =>
             {
-                entity.HasKey(e => new { e.WiId, e.UserId });
+                entity.HasKey(e => new { e.WiId, e.UserId })
+                    .HasName("PK__ES_Witodo__23BE4960");
 
                 entity.ToTable("ES_Witodo");
 
@@ -3667,7 +3782,8 @@ namespace PinhuaMaster.Data.Entities.Pinhua
 
             modelBuilder.Entity<EsWorkFlow>(entity =>
             {
-                entity.HasKey(e => e.PId);
+                entity.HasKey(e => e.PId)
+                    .HasName("PK__ES_WorkFlow__595B4002");
 
                 entity.ToTable("ES_WorkFlow");
 
@@ -3696,7 +3812,8 @@ namespace PinhuaMaster.Data.Entities.Pinhua
 
             modelBuilder.Entity<EsWorkItem>(entity =>
             {
-                entity.HasKey(e => e.WiId);
+                entity.HasKey(e => e.WiId)
+                    .HasName("PK__ES_WorkItem__147C05D0");
 
                 entity.ToTable("ES_WorkItem");
 
@@ -3791,7 +3908,8 @@ namespace PinhuaMaster.Data.Entities.Pinhua
 
             modelBuilder.Entity<Gi2Details>(entity =>
             {
-                entity.HasKey(e => new { e.Id, e.DeliveryId });
+                entity.HasKey(e => new { e.Id, e.DeliveryId })
+                    .HasName("pk_398");
 
                 entity.ToTable("GI2_Details");
 
@@ -3849,7 +3967,8 @@ namespace PinhuaMaster.Data.Entities.Pinhua
 
             modelBuilder.Entity<Gi2Main>(entity =>
             {
-                entity.HasKey(e => e.DeliveryId);
+                entity.HasKey(e => e.DeliveryId)
+                    .HasName("pk_393");
 
                 entity.ToTable("GI2_Main");
 
@@ -3909,7 +4028,8 @@ namespace PinhuaMaster.Data.Entities.Pinhua
 
             modelBuilder.Entity<Gr2Details>(entity =>
             {
-                entity.HasKey(e => new { e.PurchasingId, e.ItemId });
+                entity.HasKey(e => new { e.PurchasingId, e.ItemId })
+                    .HasName("pk_415");
 
                 entity.ToTable("GR2_Details");
 
@@ -3965,7 +4085,8 @@ namespace PinhuaMaster.Data.Entities.Pinhua
 
             modelBuilder.Entity<Gr2Main>(entity =>
             {
-                entity.HasKey(e => e.PurchasingId);
+                entity.HasKey(e => e.PurchasingId)
+                    .HasName("pk_413");
 
                 entity.ToTable("GR2_Main");
 
@@ -4021,7 +4142,8 @@ namespace PinhuaMaster.Data.Entities.Pinhua
 
             modelBuilder.Entity<InventoryCount>(entity =>
             {
-                entity.HasKey(e => new { e.盘点日期, e.仓库编号 });
+                entity.HasKey(e => new { e.盘点日期, e.仓库编号 })
+                    .HasName("pk_417");
 
                 entity.HasIndex(e => new { e.ExcelServerRcid, e.ExcelServerWiid })
                     .HasName("idx1");
@@ -4057,7 +4179,8 @@ namespace PinhuaMaster.Data.Entities.Pinhua
 
             modelBuilder.Entity<InventoryCountDetails>(entity =>
             {
-                entity.HasKey(e => e.自增列);
+                entity.HasKey(e => e.自增列)
+                    .HasName("pk_429");
 
                 entity.ToTable("InventoryCount_Details");
 
@@ -4109,7 +4232,8 @@ namespace PinhuaMaster.Data.Entities.Pinhua
 
             modelBuilder.Entity<NCollectionMain>(entity =>
             {
-                entity.HasKey(e => e.CollectionId);
+                entity.HasKey(e => e.CollectionId)
+                    .HasName("pk_381");
 
                 entity.ToTable("N_Collection_Main");
 
@@ -4165,7 +4289,8 @@ namespace PinhuaMaster.Data.Entities.Pinhua
 
             modelBuilder.Entity<NewDeliveryDetails>(entity =>
             {
-                entity.HasKey(e => new { e.DetailsId, e.DeliveryId });
+                entity.HasKey(e => new { e.DetailsId, e.DeliveryId })
+                    .HasName("pk_380");
 
                 entity.ToTable("NEW_DELIVERY_DETAILS");
 
@@ -4213,7 +4338,8 @@ namespace PinhuaMaster.Data.Entities.Pinhua
 
             modelBuilder.Entity<NewDeliveryMain>(entity =>
             {
-                entity.HasKey(e => e.DeliveryId);
+                entity.HasKey(e => e.DeliveryId)
+                    .HasName("pk_379");
 
                 entity.ToTable("NEW_DELIVERY_MAIN");
 
@@ -4286,7 +4412,8 @@ namespace PinhuaMaster.Data.Entities.Pinhua
 
             modelBuilder.Entity<NewOrderDetails>(entity =>
             {
-                entity.HasKey(e => new { e.DetailsId, e.OrderId });
+                entity.HasKey(e => new { e.DetailsId, e.OrderId })
+                    .HasName("pk_378");
 
                 entity.ToTable("NEW_ORDER_DETAILS");
 
@@ -4368,7 +4495,8 @@ namespace PinhuaMaster.Data.Entities.Pinhua
 
             modelBuilder.Entity<NewOrderMain>(entity =>
             {
-                entity.HasKey(e => e.OrderId);
+                entity.HasKey(e => e.OrderId)
+                    .HasName("pk_377");
 
                 entity.ToTable("NEW_ORDER_MAIN");
 
@@ -4449,7 +4577,8 @@ namespace PinhuaMaster.Data.Entities.Pinhua
 
             modelBuilder.Entity<OvertimeFormDetails>(entity =>
             {
-                entity.HasKey(e => new { e.Id, e.Y, e.M, e.D });
+                entity.HasKey(e => new { e.Id, e.Y, e.M, e.D })
+                    .HasName("pk_408");
 
                 entity.ToTable("OvertimeForm_Details");
 
@@ -4489,7 +4618,8 @@ namespace PinhuaMaster.Data.Entities.Pinhua
 
             modelBuilder.Entity<OvertimeFormMain>(entity =>
             {
-                entity.HasKey(e => new { e.Y, e.M, e.D });
+                entity.HasKey(e => new { e.Y, e.M, e.D })
+                    .HasName("pk_407");
 
                 entity.ToTable("OvertimeForm_Main");
 
@@ -4525,7 +4655,8 @@ namespace PinhuaMaster.Data.Entities.Pinhua
 
             modelBuilder.Entity<PayrollDetails>(entity =>
             {
-                entity.HasKey(e => e.PrimayKey);
+                entity.HasKey(e => e.PrimayKey)
+                    .HasName("pk_403");
 
                 entity.HasIndex(e => new { e.ExcelServerRcid, e.ExcelServerWiid })
                     .HasName("idx1");
@@ -4581,7 +4712,8 @@ namespace PinhuaMaster.Data.Entities.Pinhua
 
             modelBuilder.Entity<PayrollMain>(entity =>
             {
-                entity.HasKey(e => new { e.Y, e.M });
+                entity.HasKey(e => new { e.Y, e.M })
+                    .HasName("pk_402");
 
                 entity.HasIndex(e => new { e.ExcelServerRcid, e.ExcelServerWiid })
                     .HasName("idx1");
@@ -4609,9 +4741,53 @@ namespace PinhuaMaster.Data.Entities.Pinhua
                     .HasMaxLength(20);
             });
 
+            modelBuilder.Entity<PmAutoId>(entity =>
+            {
+                entity.HasKey(e => e.Idx)
+                    .HasName("pk_460");
+
+                entity.ToTable("PM_AutoId");
+
+                entity.HasIndex(e => new { e.ExcelServerRcid, e.ExcelServerWiid })
+                    .HasName("idx1");
+
+                entity.Property(e => e.Idx).HasColumnName("idx");
+
+                entity.Property(e => e.ExcelServerChg).HasColumnName("ExcelServerCHG");
+
+                entity.Property(e => e.ExcelServerCn).HasColumnName("ExcelServerCN");
+
+                entity.Property(e => e.ExcelServerRc1)
+                    .HasColumnName("ExcelServerRC1")
+                    .HasMaxLength(20);
+
+                entity.Property(e => e.ExcelServerRcid)
+                    .HasColumnName("ExcelServerRCID")
+                    .HasMaxLength(20);
+
+                entity.Property(e => e.ExcelServerRn).HasColumnName("ExcelServerRN");
+
+                entity.Property(e => e.ExcelServerRtid)
+                    .HasColumnName("ExcelServerRTID")
+                    .HasMaxLength(20);
+
+                entity.Property(e => e.ExcelServerWiid)
+                    .HasColumnName("ExcelServerWIID")
+                    .HasMaxLength(20);
+
+                entity.Property(e => e.TheId)
+                    .HasColumnName("theId")
+                    .HasMaxLength(20);
+
+                entity.Property(e => e.TmpId)
+                    .HasColumnName("tmpId")
+                    .HasMaxLength(20);
+            });
+
             modelBuilder.Entity<ProductRegistrationMain>(entity =>
             {
-                entity.HasKey(e => new { e.ModelNumber, e.SubModelNumber });
+                entity.HasKey(e => new { e.ModelNumber, e.SubModelNumber })
+                    .HasName("pk_449");
 
                 entity.ToTable("ProductRegistration_Main");
 
@@ -4655,7 +4831,8 @@ namespace PinhuaMaster.Data.Entities.Pinhua
 
             modelBuilder.Entity<RetailGiDetails>(entity =>
             {
-                entity.HasKey(e => new { e.Id, e.DeliveryId });
+                entity.HasKey(e => new { e.Id, e.DeliveryId })
+                    .HasName("pk_424");
 
                 entity.ToTable("RETAIL_GI_Details");
 
@@ -4713,7 +4890,8 @@ namespace PinhuaMaster.Data.Entities.Pinhua
 
             modelBuilder.Entity<RetailGiMain>(entity =>
             {
-                entity.HasKey(e => e.DeliveryId);
+                entity.HasKey(e => e.DeliveryId)
+                    .HasName("pk_423");
 
                 entity.ToTable("RETAIL_GI_Main");
 
@@ -4769,7 +4947,8 @@ namespace PinhuaMaster.Data.Entities.Pinhua
 
             modelBuilder.Entity<StockInDetails>(entity =>
             {
-                entity.HasKey(e => new { e.Id, e.OrderId });
+                entity.HasKey(e => new { e.Id, e.OrderId })
+                    .HasName("pk_440");
 
                 entity.ToTable("StockIn_Details");
 
@@ -4829,7 +5008,8 @@ namespace PinhuaMaster.Data.Entities.Pinhua
 
             modelBuilder.Entity<StockInMain>(entity =>
             {
-                entity.HasKey(e => e.OrderId);
+                entity.HasKey(e => e.OrderId)
+                    .HasName("pk_438");
 
                 entity.ToTable("StockIn_Main");
 
@@ -4889,7 +5069,8 @@ namespace PinhuaMaster.Data.Entities.Pinhua
 
             modelBuilder.Entity<StockOutDetails>(entity =>
             {
-                entity.HasKey(e => new { e.Id, e.OrderId });
+                entity.HasKey(e => new { e.Id, e.OrderId })
+                    .HasName("pk_427");
 
                 entity.ToTable("StockOut_Details");
 
@@ -4949,7 +5130,8 @@ namespace PinhuaMaster.Data.Entities.Pinhua
 
             modelBuilder.Entity<StockOutMain>(entity =>
             {
-                entity.HasKey(e => e.OrderId);
+                entity.HasKey(e => e.OrderId)
+                    .HasName("pk_426");
 
                 entity.ToTable("StockOut_Main");
 
@@ -5009,7 +5191,8 @@ namespace PinhuaMaster.Data.Entities.Pinhua
 
             modelBuilder.Entity<StockSubconctractingDetails>(entity =>
             {
-                entity.HasKey(e => new { e.Id, e.OrderId });
+                entity.HasKey(e => new { e.Id, e.OrderId })
+                    .HasName("pk_446");
 
                 entity.ToTable("StockSubconctracting_Details");
 
@@ -5069,7 +5252,8 @@ namespace PinhuaMaster.Data.Entities.Pinhua
 
             modelBuilder.Entity<StockSubconctractingMain>(entity =>
             {
-                entity.HasKey(e => e.OrderId);
+                entity.HasKey(e => e.OrderId)
+                    .HasName("pk_444");
 
                 entity.ToTable("StockSubconctracting_Main");
 
@@ -5129,7 +5313,8 @@ namespace PinhuaMaster.Data.Entities.Pinhua
 
             modelBuilder.Entity<StockTransferDetails>(entity =>
             {
-                entity.HasKey(e => new { e.Id, e.OrderId });
+                entity.HasKey(e => new { e.Id, e.OrderId })
+                    .HasName("pk_443");
 
                 entity.ToTable("StockTransfer_Details");
 
@@ -5189,7 +5374,8 @@ namespace PinhuaMaster.Data.Entities.Pinhua
 
             modelBuilder.Entity<StockTransferMain>(entity =>
             {
-                entity.HasKey(e => e.OrderId);
+                entity.HasKey(e => e.OrderId)
+                    .HasName("pk_441");
 
                 entity.ToTable("StockTransfer_Main");
 
@@ -5247,9 +5433,43 @@ namespace PinhuaMaster.Data.Entities.Pinhua
                 entity.Property(e => e.WarehouseTo).HasMaxLength(20);
             });
 
+            modelBuilder.Entity<Test主表>(entity =>
+            {
+                entity.HasKey(e => new { e.年份, e.月份 })
+                    .HasName("pk_335");
+
+                entity.ToTable("test_主表");
+
+                entity.HasIndex(e => new { e.ExcelServerRcid, e.ExcelServerWiid })
+                    .HasName("idx1");
+
+                entity.Property(e => e.ExcelServerChg).HasColumnName("ExcelServerCHG");
+
+                entity.Property(e => e.ExcelServerCn).HasColumnName("ExcelServerCN");
+
+                entity.Property(e => e.ExcelServerRc1)
+                    .HasColumnName("ExcelServerRC1")
+                    .HasMaxLength(20);
+
+                entity.Property(e => e.ExcelServerRcid)
+                    .HasColumnName("ExcelServerRCID")
+                    .HasMaxLength(20);
+
+                entity.Property(e => e.ExcelServerRn).HasColumnName("ExcelServerRN");
+
+                entity.Property(e => e.ExcelServerRtid)
+                    .HasColumnName("ExcelServerRTID")
+                    .HasMaxLength(20);
+
+                entity.Property(e => e.ExcelServerWiid)
+                    .HasColumnName("ExcelServerWIID")
+                    .HasMaxLength(20);
+            });
+
             modelBuilder.Entity<Test明细>(entity =>
             {
-                entity.HasKey(e => e.UniqueId);
+                entity.HasKey(e => e.UniqueId)
+                    .HasName("pk_334");
 
                 entity.ToTable("test_明细");
 
@@ -5293,41 +5513,10 @@ namespace PinhuaMaster.Data.Entities.Pinhua
                 entity.Property(e => e.起始日期).HasColumnType("datetime");
             });
 
-            modelBuilder.Entity<Test主表>(entity =>
-            {
-                entity.HasKey(e => new { e.年份, e.月份 });
-
-                entity.ToTable("test_主表");
-
-                entity.HasIndex(e => new { e.ExcelServerRcid, e.ExcelServerWiid })
-                    .HasName("idx1");
-
-                entity.Property(e => e.ExcelServerChg).HasColumnName("ExcelServerCHG");
-
-                entity.Property(e => e.ExcelServerCn).HasColumnName("ExcelServerCN");
-
-                entity.Property(e => e.ExcelServerRc1)
-                    .HasColumnName("ExcelServerRC1")
-                    .HasMaxLength(20);
-
-                entity.Property(e => e.ExcelServerRcid)
-                    .HasColumnName("ExcelServerRCID")
-                    .HasMaxLength(20);
-
-                entity.Property(e => e.ExcelServerRn).HasColumnName("ExcelServerRN");
-
-                entity.Property(e => e.ExcelServerRtid)
-                    .HasColumnName("ExcelServerRTID")
-                    .HasMaxLength(20);
-
-                entity.Property(e => e.ExcelServerWiid)
-                    .HasColumnName("ExcelServerWIID")
-                    .HasMaxLength(20);
-            });
-
             modelBuilder.Entity<WageSchemaDetailsByTime>(entity =>
             {
-                entity.HasKey(e => new { e.SchemaId, e.Id, e.Sex });
+                entity.HasKey(e => new { e.SchemaId, e.Id, e.Sex })
+                    .HasName("pk_401");
 
                 entity.ToTable("WageSchemaDetails_ByTime");
 
@@ -5679,9 +5868,54 @@ namespace PinhuaMaster.Data.Entities.Pinhua
                 entity.Property(e => e.用户号).HasMaxLength(100);
             });
 
+            modelBuilder.Entity<业务类型>(entity =>
+            {
+                entity.HasKey(e => e.业务类型1)
+                    .HasName("pk_266");
+
+                entity.HasIndex(e => new { e.ExcelServerRcid, e.ExcelServerWiid })
+                    .HasName("idx1");
+
+                entity.Property(e => e.业务类型1)
+                    .HasColumnName("业务类型")
+                    .HasMaxLength(20)
+                    .ValueGeneratedNever();
+
+                entity.Property(e => e.ExcelServerChg).HasColumnName("ExcelServerCHG");
+
+                entity.Property(e => e.ExcelServerCn).HasColumnName("ExcelServerCN");
+
+                entity.Property(e => e.ExcelServerRc1)
+                    .HasColumnName("ExcelServerRC1")
+                    .HasMaxLength(20);
+
+                entity.Property(e => e.ExcelServerRcid)
+                    .HasColumnName("ExcelServerRCID")
+                    .HasMaxLength(20);
+
+                entity.Property(e => e.ExcelServerRn).HasColumnName("ExcelServerRN");
+
+                entity.Property(e => e.ExcelServerRtid)
+                    .HasColumnName("ExcelServerRTID")
+                    .HasMaxLength(20);
+
+                entity.Property(e => e.ExcelServerWiid)
+                    .HasColumnName("ExcelServerWIID")
+                    .HasMaxLength(20);
+
+                entity.Property(e => e.MvP).HasMaxLength(20);
+
+                entity.Property(e => e.性质).HasMaxLength(20);
+
+                entity.Property(e => e.状态).HasMaxLength(20);
+
+                entity.Property(e => e.类型描述).HasMaxLength(100);
+            });
+
             modelBuilder.Entity<产品型号清单>(entity =>
             {
-                entity.HasKey(e => new { e.编号, e.名称 });
+                entity.HasKey(e => new { e.编号, e.名称 })
+                    .HasName("pk_419");
 
                 entity.HasIndex(e => new { e.ExcelServerRcid, e.ExcelServerWiid })
                     .HasName("idx1");
@@ -5717,14 +5951,17 @@ namespace PinhuaMaster.Data.Entities.Pinhua
                 entity.Property(e => e.线稿).HasMaxLength(20);
             });
 
-            modelBuilder.Entity<打卡登记>(entity =>
+            modelBuilder.Entity<人员档案>(entity =>
             {
-                entity.HasKey(e => e.Pk);
+                entity.HasKey(e => e.人员编号)
+                    .HasName("pk_66");
 
                 entity.HasIndex(e => new { e.ExcelServerRcid, e.ExcelServerWiid })
                     .HasName("idx1");
 
-                entity.Property(e => e.Pk).HasColumnName("pk");
+                entity.Property(e => e.人员编号)
+                    .HasMaxLength(20)
+                    .ValueGeneratedNever();
 
                 entity.Property(e => e.ExcelServerChg).HasColumnName("ExcelServerCHG");
 
@@ -5748,31 +5985,46 @@ namespace PinhuaMaster.Data.Entities.Pinhua
                     .HasColumnName("ExcelServerWIID")
                     .HasMaxLength(20);
 
-                entity.Property(e => e.人员编号).HasMaxLength(20);
+                entity.Property(e => e.入职时间).HasColumnType("datetime");
+
+                entity.Property(e => e.出生年月).HasColumnType("datetime");
 
                 entity.Property(e => e.姓名).HasMaxLength(20);
 
-                entity.Property(e => e.审核人).HasMaxLength(20);
+                entity.Property(e => e.工作岗位).HasMaxLength(20);
 
-                entity.Property(e => e.审核时间).HasColumnType("datetime");
+                entity.Property(e => e.工资方案).HasMaxLength(20);
 
-                entity.Property(e => e.审核状态).HasMaxLength(20);
+                entity.Property(e => e.性别).HasMaxLength(20);
 
-                entity.Property(e => e.时间).HasColumnType("datetime");
+                entity.Property(e => e.状态).HasMaxLength(20);
 
-                entity.Property(e => e.签卡原因).HasMaxLength(20);
+                entity.Property(e => e.登记时间).HasColumnType("datetime");
+
+                entity.Property(e => e.离职或辞退原因).HasMaxLength(100);
+
+                entity.Property(e => e.离职时间).HasColumnType("datetime");
+
+                entity.Property(e => e.考勤班次).HasMaxLength(20);
+
+                entity.Property(e => e.联系地址).HasMaxLength(100);
+
+                entity.Property(e => e.联系电话).HasMaxLength(20);
+
+                entity.Property(e => e.证件号码).HasMaxLength(20);
             });
 
-            modelBuilder.Entity<打卡记录>(entity =>
+            modelBuilder.Entity<付款单>(entity =>
             {
-                entity.HasKey(e => new { e.Yy, e.Mm });
+                entity.HasKey(e => e.付款单号)
+                    .HasName("pk_198");
 
                 entity.HasIndex(e => new { e.ExcelServerRcid, e.ExcelServerWiid })
                     .HasName("idx1");
 
-                entity.Property(e => e.Yy).HasColumnName("yy");
-
-                entity.Property(e => e.Mm).HasColumnName("mm");
+                entity.Property(e => e.付款单号)
+                    .HasMaxLength(20)
+                    .ValueGeneratedNever();
 
                 entity.Property(e => e.ExcelServerChg).HasColumnName("ExcelServerCHG");
 
@@ -5795,53 +6047,24 @@ namespace PinhuaMaster.Data.Entities.Pinhua
                 entity.Property(e => e.ExcelServerWiid)
                     .HasColumnName("ExcelServerWIID")
                     .HasMaxLength(20);
-            });
 
-            modelBuilder.Entity<对账结算主表>(entity =>
-            {
-                entity.HasKey(e => new { e.单位编号, e.日期 });
+                entity.Property(e => e.付款单位).HasMaxLength(100);
 
-                entity.ToTable("对账结算_主表");
+                entity.Property(e => e.付款日期).HasColumnType("datetime");
 
-                entity.HasIndex(e => new { e.ExcelServerRcid, e.ExcelServerWiid })
-                    .HasName("idx1");
+                entity.Property(e => e.付款类型).HasMaxLength(20);
+
+                entity.Property(e => e.付款金额).HasColumnType("decimal(20, 2)");
 
                 entity.Property(e => e.单位编号).HasMaxLength(20);
 
-                entity.Property(e => e.日期).HasColumnType("datetime");
-
-                entity.Property(e => e.ExcelServerChg).HasColumnName("ExcelServerCHG");
-
-                entity.Property(e => e.ExcelServerCn).HasColumnName("ExcelServerCN");
-
-                entity.Property(e => e.ExcelServerRc1)
-                    .HasColumnName("ExcelServerRC1")
-                    .HasMaxLength(20);
-
-                entity.Property(e => e.ExcelServerRcid)
-                    .HasColumnName("ExcelServerRCID")
-                    .HasMaxLength(20);
-
-                entity.Property(e => e.ExcelServerRn).HasColumnName("ExcelServerRN");
-
-                entity.Property(e => e.ExcelServerRtid)
-                    .HasColumnName("ExcelServerRTID")
-                    .HasMaxLength(20);
-
-                entity.Property(e => e.ExcelServerWiid)
-                    .HasColumnName("ExcelServerWIID")
-                    .HasMaxLength(20);
-
-                entity.Property(e => e.单位名称).HasMaxLength(20);
-
-                entity.Property(e => e.应付).HasColumnType("decimal(20, 3)");
-
-                entity.Property(e => e.应收).HasColumnType("decimal(20, 2)");
+                entity.Property(e => e.备注).HasMaxLength(100);
             });
 
             modelBuilder.Entity<发货>(entity =>
             {
-                entity.HasKey(e => e.送货单号);
+                entity.HasKey(e => e.送货单号)
+                    .HasName("pk_146");
 
                 entity.HasIndex(e => new { e.ExcelServerRcid, e.ExcelServerWiid })
                     .HasName("idx1");
@@ -5957,54 +6180,15 @@ namespace PinhuaMaster.Data.Entities.Pinhua
                 entity.Property(e => e.金额).HasColumnType("decimal(20, 2)");
             });
 
-            modelBuilder.Entity<放假登记>(entity =>
+            modelBuilder.Entity<图形登记表>(entity =>
             {
-                entity.HasKey(e => new { e.编号, e.期初 });
+                entity.HasKey(e => e.图形编号)
+                    .HasName("pk_43");
 
                 entity.HasIndex(e => new { e.ExcelServerRcid, e.ExcelServerWiid })
                     .HasName("idx1");
 
-                entity.Property(e => e.编号).HasMaxLength(20);
-
-                entity.Property(e => e.期初).HasColumnType("datetime");
-
-                entity.Property(e => e.ExcelServerChg).HasColumnName("ExcelServerCHG");
-
-                entity.Property(e => e.ExcelServerCn).HasColumnName("ExcelServerCN");
-
-                entity.Property(e => e.ExcelServerRc1)
-                    .HasColumnName("ExcelServerRC1")
-                    .HasMaxLength(20);
-
-                entity.Property(e => e.ExcelServerRcid)
-                    .HasColumnName("ExcelServerRCID")
-                    .HasMaxLength(20);
-
-                entity.Property(e => e.ExcelServerRn).HasColumnName("ExcelServerRN");
-
-                entity.Property(e => e.ExcelServerRtid)
-                    .HasColumnName("ExcelServerRTID")
-                    .HasMaxLength(20);
-
-                entity.Property(e => e.ExcelServerWiid)
-                    .HasColumnName("ExcelServerWIID")
-                    .HasMaxLength(20);
-
-                entity.Property(e => e.备注).HasMaxLength(50);
-
-                entity.Property(e => e.性质).HasMaxLength(20);
-
-                entity.Property(e => e.期末).HasColumnType("datetime");
-            });
-
-            modelBuilder.Entity<付款单>(entity =>
-            {
-                entity.HasKey(e => e.付款单号);
-
-                entity.HasIndex(e => new { e.ExcelServerRcid, e.ExcelServerWiid })
-                    .HasName("idx1");
-
-                entity.Property(e => e.付款单号)
+                entity.Property(e => e.图形编号)
                     .HasMaxLength(20)
                     .ValueGeneratedNever();
 
@@ -6030,17 +6214,54 @@ namespace PinhuaMaster.Data.Entities.Pinhua
                     .HasColumnName("ExcelServerWIID")
                     .HasMaxLength(20);
 
-                entity.Property(e => e.付款单位).HasMaxLength(100);
+                entity.Property(e => e.图形).HasMaxLength(20);
 
-                entity.Property(e => e.付款日期).HasColumnType("datetime");
+                entity.Property(e => e.图形名称).HasMaxLength(100);
 
-                entity.Property(e => e.付款类型).HasMaxLength(20);
+                entity.Property(e => e.描述).HasMaxLength(500);
+            });
 
-                entity.Property(e => e.付款金额).HasColumnType("decimal(20, 2)");
+            modelBuilder.Entity<对账结算主表>(entity =>
+            {
+                entity.HasKey(e => new { e.单位编号, e.日期 })
+                    .HasName("pk_315");
+
+                entity.ToTable("对账结算_主表");
+
+                entity.HasIndex(e => new { e.ExcelServerRcid, e.ExcelServerWiid })
+                    .HasName("idx1");
 
                 entity.Property(e => e.单位编号).HasMaxLength(20);
 
-                entity.Property(e => e.备注).HasMaxLength(100);
+                entity.Property(e => e.日期).HasColumnType("datetime");
+
+                entity.Property(e => e.ExcelServerChg).HasColumnName("ExcelServerCHG");
+
+                entity.Property(e => e.ExcelServerCn).HasColumnName("ExcelServerCN");
+
+                entity.Property(e => e.ExcelServerRc1)
+                    .HasColumnName("ExcelServerRC1")
+                    .HasMaxLength(20);
+
+                entity.Property(e => e.ExcelServerRcid)
+                    .HasColumnName("ExcelServerRCID")
+                    .HasMaxLength(20);
+
+                entity.Property(e => e.ExcelServerRn).HasColumnName("ExcelServerRN");
+
+                entity.Property(e => e.ExcelServerRtid)
+                    .HasColumnName("ExcelServerRTID")
+                    .HasMaxLength(20);
+
+                entity.Property(e => e.ExcelServerWiid)
+                    .HasColumnName("ExcelServerWIID")
+                    .HasMaxLength(20);
+
+                entity.Property(e => e.单位名称).HasMaxLength(20);
+
+                entity.Property(e => e.应付).HasColumnType("decimal(20, 3)");
+
+                entity.Property(e => e.应收).HasColumnType("decimal(20, 2)");
             });
 
             modelBuilder.Entity<岗位主表>(entity =>
@@ -6081,7 +6302,8 @@ namespace PinhuaMaster.Data.Entities.Pinhua
 
             modelBuilder.Entity<工资档案主表>(entity =>
             {
-                entity.HasKey(e => e.流水号);
+                entity.HasKey(e => e.流水号)
+                    .HasName("pk_103");
 
                 entity.ToTable("工资档案_主表");
 
@@ -6121,7 +6343,8 @@ namespace PinhuaMaster.Data.Entities.Pinhua
 
             modelBuilder.Entity<工资计算备份年月>(entity =>
             {
-                entity.HasKey(e => new { e.年, e.月 });
+                entity.HasKey(e => new { e.年, e.月 })
+                    .HasName("pk_177");
 
                 entity.ToTable("工资计算备份_年月");
 
@@ -6157,7 +6380,8 @@ namespace PinhuaMaster.Data.Entities.Pinhua
 
             modelBuilder.Entity<工资计算年月>(entity =>
             {
-                entity.HasKey(e => new { e.年, e.月 });
+                entity.HasKey(e => new { e.年, e.月 })
+                    .HasName("pk_101");
 
                 entity.ToTable("工资计算_年月");
 
@@ -6191,16 +6415,93 @@ namespace PinhuaMaster.Data.Entities.Pinhua
                 entity.Property(e => e.月末).HasColumnType("datetime");
             });
 
-            modelBuilder.Entity<计量单位主表>(entity =>
+            modelBuilder.Entity<应付款对账单>(entity =>
             {
-                entity.HasKey(e => e.计量单位组编号);
-
-                entity.ToTable("计量单位_主表");
+                entity.HasKey(e => new { e.单位编码, e.对账日期 })
+                    .HasName("pk_208");
 
                 entity.HasIndex(e => new { e.ExcelServerRcid, e.ExcelServerWiid })
                     .HasName("idx1");
 
-                entity.Property(e => e.计量单位组编号)
+                entity.Property(e => e.单位编码).HasMaxLength(20);
+
+                entity.Property(e => e.对账日期).HasColumnType("datetime");
+
+                entity.Property(e => e.ExcelServerChg).HasColumnName("ExcelServerCHG");
+
+                entity.Property(e => e.ExcelServerCn).HasColumnName("ExcelServerCN");
+
+                entity.Property(e => e.ExcelServerRc1)
+                    .HasColumnName("ExcelServerRC1")
+                    .HasMaxLength(20);
+
+                entity.Property(e => e.ExcelServerRcid)
+                    .HasColumnName("ExcelServerRCID")
+                    .HasMaxLength(20);
+
+                entity.Property(e => e.ExcelServerRn).HasColumnName("ExcelServerRN");
+
+                entity.Property(e => e.ExcelServerRtid)
+                    .HasColumnName("ExcelServerRTID")
+                    .HasMaxLength(20);
+
+                entity.Property(e => e.ExcelServerWiid)
+                    .HasColumnName("ExcelServerWIID")
+                    .HasMaxLength(20);
+
+                entity.Property(e => e.单位名称).HasMaxLength(100);
+
+                entity.Property(e => e.对账金额).HasColumnType("decimal(20, 2)");
+            });
+
+            modelBuilder.Entity<应收款对账单>(entity =>
+            {
+                entity.HasKey(e => new { e.客户编码, e.对账日期 })
+                    .HasName("pk_132");
+
+                entity.HasIndex(e => new { e.ExcelServerRcid, e.ExcelServerWiid })
+                    .HasName("idx1");
+
+                entity.Property(e => e.客户编码).HasMaxLength(20);
+
+                entity.Property(e => e.对账日期).HasColumnType("datetime");
+
+                entity.Property(e => e.ExcelServerChg).HasColumnName("ExcelServerCHG");
+
+                entity.Property(e => e.ExcelServerCn).HasColumnName("ExcelServerCN");
+
+                entity.Property(e => e.ExcelServerRc1)
+                    .HasColumnName("ExcelServerRC1")
+                    .HasMaxLength(20);
+
+                entity.Property(e => e.ExcelServerRcid)
+                    .HasColumnName("ExcelServerRCID")
+                    .HasMaxLength(20);
+
+                entity.Property(e => e.ExcelServerRn).HasColumnName("ExcelServerRN");
+
+                entity.Property(e => e.ExcelServerRtid)
+                    .HasColumnName("ExcelServerRTID")
+                    .HasMaxLength(20);
+
+                entity.Property(e => e.ExcelServerWiid)
+                    .HasColumnName("ExcelServerWIID")
+                    .HasMaxLength(20);
+
+                entity.Property(e => e.客户名称).HasMaxLength(100);
+
+                entity.Property(e => e.对账金额).HasColumnType("decimal(20, 2)");
+            });
+
+            modelBuilder.Entity<往来单位>(entity =>
+            {
+                entity.HasKey(e => e.单位编号)
+                    .HasName("pk_25");
+
+                entity.HasIndex(e => new { e.ExcelServerRcid, e.ExcelServerWiid })
+                    .HasName("idx1");
+
+                entity.Property(e => e.单位编号)
                     .HasMaxLength(20)
                     .ValueGeneratedNever();
 
@@ -6226,12 +6527,29 @@ namespace PinhuaMaster.Data.Entities.Pinhua
                     .HasColumnName("ExcelServerWIID")
                     .HasMaxLength(20);
 
-                entity.Property(e => e.计量单位组名称).HasMaxLength(20);
+                entity.Property(e => e.Rank).HasColumnName("RANK");
+
+                entity.Property(e => e.传真).HasMaxLength(20);
+
+                entity.Property(e => e.单位名称).HasMaxLength(100);
+
+                entity.Property(e => e.单位地址).HasMaxLength(100);
+
+                entity.Property(e => e.单位性质).HasMaxLength(20);
+
+                entity.Property(e => e.单位类型).HasMaxLength(20);
+
+                entity.Property(e => e.外协关联仓库).HasMaxLength(20);
+
+                entity.Property(e => e.电话).HasMaxLength(20);
+
+                entity.Property(e => e.登记日期).HasColumnType("datetime");
             });
 
-            modelBuilder.Entity<考勤卡号变动>(entity =>
+            modelBuilder.Entity<打卡登记>(entity =>
             {
-                entity.HasKey(e => e.Pk);
+                entity.HasKey(e => e.Pk)
+                    .HasName("pk_110");
 
                 entity.HasIndex(e => new { e.ExcelServerRcid, e.ExcelServerWiid })
                     .HasName("idx1");
@@ -6260,77 +6578,32 @@ namespace PinhuaMaster.Data.Entities.Pinhua
                     .HasColumnName("ExcelServerWIID")
                     .HasMaxLength(20);
 
-                entity.Property(e => e.卡号).HasMaxLength(20);
-
-                entity.Property(e => e.截止日期).HasColumnType("datetime");
-
-                entity.Property(e => e.状态).HasMaxLength(20);
-
-                entity.Property(e => e.起始日期).HasColumnType("datetime");
-            });
-
-            modelBuilder.Entity<考勤明细>(entity =>
-            {
-                entity.HasKey(e => new { e.人员编号, e.日期 });
-
-                entity.HasIndex(e => new { e.ExcelServerRcid, e.ExcelServerWiid })
-                    .HasName("idx1");
-
                 entity.Property(e => e.人员编号).HasMaxLength(20);
 
-                entity.Property(e => e.日期).HasColumnType("datetime");
-
-                entity.Property(e => e.ExcelServerChg).HasColumnName("ExcelServerCHG");
-
-                entity.Property(e => e.ExcelServerCn).HasColumnName("ExcelServerCN");
-
-                entity.Property(e => e.ExcelServerRc1)
-                    .HasColumnName("ExcelServerRC1")
-                    .HasMaxLength(20);
-
-                entity.Property(e => e.ExcelServerRcid)
-                    .HasColumnName("ExcelServerRCID")
-                    .HasMaxLength(20);
-
-                entity.Property(e => e.ExcelServerRn).HasColumnName("ExcelServerRN");
-
-                entity.Property(e => e.ExcelServerRtid)
-                    .HasColumnName("ExcelServerRTID")
-                    .HasMaxLength(20);
-
-                entity.Property(e => e.ExcelServerWiid)
-                    .HasColumnName("ExcelServerWIID")
-                    .HasMaxLength(20);
-
-                entity.Property(e => e.上班1).HasMaxLength(20);
-
-                entity.Property(e => e.上班2).HasMaxLength(20);
-
-                entity.Property(e => e.上班3).HasMaxLength(20);
-
-                entity.Property(e => e.下班1).HasMaxLength(20);
-
-                entity.Property(e => e.下班2).HasMaxLength(20);
-
-                entity.Property(e => e.下班3).HasMaxLength(20);
-
-                entity.Property(e => e.加班).HasColumnType("decimal(20, 3)");
-
                 entity.Property(e => e.姓名).HasMaxLength(20);
 
-                entity.Property(e => e.正常出勤).HasColumnType("decimal(20, 3)");
+                entity.Property(e => e.审核人).HasMaxLength(20);
 
-                entity.Property(e => e.状态).HasMaxLength(20);
+                entity.Property(e => e.审核时间).HasColumnType("datetime");
 
-                entity.Property(e => e.首打日期).HasColumnType("datetime");
+                entity.Property(e => e.审核状态).HasMaxLength(20);
+
+                entity.Property(e => e.时间).HasColumnType("datetime");
+
+                entity.Property(e => e.签卡原因).HasMaxLength(20);
             });
 
-            modelBuilder.Entity<考勤期间>(entity =>
+            modelBuilder.Entity<打卡记录>(entity =>
             {
-                entity.HasKey(e => new { e.年, e.月 });
+                entity.HasKey(e => new { e.Yy, e.Mm })
+                    .HasName("pk_226");
 
                 entity.HasIndex(e => new { e.ExcelServerRcid, e.ExcelServerWiid })
                     .HasName("idx1");
+
+                entity.Property(e => e.Yy).HasColumnName("yy");
+
+                entity.Property(e => e.Mm).HasColumnName("mm");
 
                 entity.Property(e => e.ExcelServerChg).HasColumnName("ExcelServerCHG");
 
@@ -6355,16 +6628,15 @@ namespace PinhuaMaster.Data.Entities.Pinhua
                     .HasMaxLength(20);
             });
 
-            modelBuilder.Entity<门店录入主表>(entity =>
+            modelBuilder.Entity<收款单>(entity =>
             {
-                entity.HasKey(e => e.门店编号);
-
-                entity.ToTable("门店录入_主表");
+                entity.HasKey(e => e.收款单号)
+                    .HasName("pk_30");
 
                 entity.HasIndex(e => new { e.ExcelServerRcid, e.ExcelServerWiid })
                     .HasName("idx1");
 
-                entity.Property(e => e.门店编号)
+                entity.Property(e => e.收款单号)
                     .HasMaxLength(20)
                     .ValueGeneratedNever();
 
@@ -6390,328 +6662,23 @@ namespace PinhuaMaster.Data.Entities.Pinhua
                     .HasColumnName("ExcelServerWIID")
                     .HasMaxLength(20);
 
-                entity.Property(e => e.传真).HasMaxLength(20);
+                entity.Property(e => e.单位编号).HasMaxLength(20);
 
-                entity.Property(e => e.出样照片).HasMaxLength(20);
+                entity.Property(e => e.备注).HasMaxLength(100);
 
-                entity.Property(e => e.地址).HasMaxLength(100);
+                entity.Property(e => e.收款单位).HasMaxLength(100);
 
-                entity.Property(e => e.备注).HasMaxLength(500);
+                entity.Property(e => e.收款日期).HasColumnType("datetime");
 
-                entity.Property(e => e.座机).HasMaxLength(20);
+                entity.Property(e => e.收款类型).HasMaxLength(20);
 
-                entity.Property(e => e.录入日期).HasColumnType("datetime");
-
-                entity.Property(e => e.手机).HasMaxLength(20);
-
-                entity.Property(e => e.联系人).HasMaxLength(20);
-
-                entity.Property(e => e.门店名称).HasMaxLength(100);
-
-                entity.Property(e => e.门店照片).HasMaxLength(20);
-            });
-
-            modelBuilder.Entity<门店送样明细>(entity =>
-            {
-                entity.HasKey(e => e.PrimaryKey);
-
-                entity.ToTable("门店送样_明细");
-
-                entity.HasIndex(e => new { e.ExcelServerRcid, e.ExcelServerWiid })
-                    .HasName("idx1");
-
-                entity.Property(e => e.PrimaryKey).HasColumnName("primaryKey");
-
-                entity.Property(e => e.ExcelServerChg).HasColumnName("ExcelServerCHG");
-
-                entity.Property(e => e.ExcelServerCn).HasColumnName("ExcelServerCN");
-
-                entity.Property(e => e.ExcelServerRc1)
-                    .HasColumnName("ExcelServerRC1")
-                    .HasMaxLength(20);
-
-                entity.Property(e => e.ExcelServerRcid)
-                    .HasColumnName("ExcelServerRCID")
-                    .HasMaxLength(20);
-
-                entity.Property(e => e.ExcelServerRn).HasColumnName("ExcelServerRN");
-
-                entity.Property(e => e.ExcelServerRtid)
-                    .HasColumnName("ExcelServerRTID")
-                    .HasMaxLength(20);
-
-                entity.Property(e => e.ExcelServerWiid)
-                    .HasColumnName("ExcelServerWIID")
-                    .HasMaxLength(20);
-
-                entity.Property(e => e.品名).HasMaxLength(100);
-
-                entity.Property(e => e.类型).HasMaxLength(100);
-            });
-
-            modelBuilder.Entity<门店送样主表>(entity =>
-            {
-                entity.HasKey(e => new { e.日期, e.门店编号 });
-
-                entity.ToTable("门店送样_主表");
-
-                entity.HasIndex(e => new { e.ExcelServerRcid, e.ExcelServerWiid })
-                    .HasName("idx1");
-
-                entity.Property(e => e.日期).HasColumnType("datetime");
-
-                entity.Property(e => e.门店编号).HasMaxLength(20);
-
-                entity.Property(e => e.ExcelServerChg).HasColumnName("ExcelServerCHG");
-
-                entity.Property(e => e.ExcelServerCn).HasColumnName("ExcelServerCN");
-
-                entity.Property(e => e.ExcelServerRc1)
-                    .HasColumnName("ExcelServerRC1")
-                    .HasMaxLength(20);
-
-                entity.Property(e => e.ExcelServerRcid)
-                    .HasColumnName("ExcelServerRCID")
-                    .HasMaxLength(20);
-
-                entity.Property(e => e.ExcelServerRn).HasColumnName("ExcelServerRN");
-
-                entity.Property(e => e.ExcelServerRtid)
-                    .HasColumnName("ExcelServerRTID")
-                    .HasMaxLength(20);
-
-                entity.Property(e => e.ExcelServerWiid)
-                    .HasColumnName("ExcelServerWIID")
-                    .HasMaxLength(20);
-
-                entity.Property(e => e.门店名称).HasMaxLength(100);
-            });
-
-            modelBuilder.Entity<请假登记>(entity =>
-            {
-                entity.HasKey(e => new { e.编号, e.开始日期 });
-
-                entity.HasIndex(e => new { e.ExcelServerRcid, e.ExcelServerWiid })
-                    .HasName("idx1");
-
-                entity.Property(e => e.编号).HasMaxLength(20);
-
-                entity.Property(e => e.开始日期).HasColumnType("datetime");
-
-                entity.Property(e => e.ExcelServerChg).HasColumnName("ExcelServerCHG");
-
-                entity.Property(e => e.ExcelServerCn).HasColumnName("ExcelServerCN");
-
-                entity.Property(e => e.ExcelServerRc1)
-                    .HasColumnName("ExcelServerRC1")
-                    .HasMaxLength(20);
-
-                entity.Property(e => e.ExcelServerRcid)
-                    .HasColumnName("ExcelServerRCID")
-                    .HasMaxLength(20);
-
-                entity.Property(e => e.ExcelServerRn).HasColumnName("ExcelServerRN");
-
-                entity.Property(e => e.ExcelServerRtid)
-                    .HasColumnName("ExcelServerRTID")
-                    .HasMaxLength(20);
-
-                entity.Property(e => e.ExcelServerWiid)
-                    .HasColumnName("ExcelServerWIID")
-                    .HasMaxLength(20);
-
-                entity.Property(e => e.姓名).HasMaxLength(20);
-
-                entity.Property(e => e.结束日期).HasColumnType("datetime");
-
-                entity.Property(e => e.请假理由).HasMaxLength(100);
-            });
-
-            modelBuilder.Entity<人员档案>(entity =>
-            {
-                entity.HasKey(e => e.人员编号);
-
-                entity.HasIndex(e => new { e.ExcelServerRcid, e.ExcelServerWiid })
-                    .HasName("idx1");
-
-                entity.Property(e => e.人员编号)
-                    .HasMaxLength(20)
-                    .ValueGeneratedNever();
-
-                entity.Property(e => e.ExcelServerChg).HasColumnName("ExcelServerCHG");
-
-                entity.Property(e => e.ExcelServerCn).HasColumnName("ExcelServerCN");
-
-                entity.Property(e => e.ExcelServerRc1)
-                    .HasColumnName("ExcelServerRC1")
-                    .HasMaxLength(20);
-
-                entity.Property(e => e.ExcelServerRcid)
-                    .HasColumnName("ExcelServerRCID")
-                    .HasMaxLength(20);
-
-                entity.Property(e => e.ExcelServerRn).HasColumnName("ExcelServerRN");
-
-                entity.Property(e => e.ExcelServerRtid)
-                    .HasColumnName("ExcelServerRTID")
-                    .HasMaxLength(20);
-
-                entity.Property(e => e.ExcelServerWiid)
-                    .HasColumnName("ExcelServerWIID")
-                    .HasMaxLength(20);
-
-                entity.Property(e => e.入职时间).HasColumnType("datetime");
-
-                entity.Property(e => e.出生年月).HasColumnType("datetime");
-
-                entity.Property(e => e.姓名).HasMaxLength(20);
-
-                entity.Property(e => e.工作岗位).HasMaxLength(20);
-
-                entity.Property(e => e.工资方案).HasMaxLength(20);
-
-                entity.Property(e => e.性别).HasMaxLength(20);
-
-                entity.Property(e => e.状态).HasMaxLength(20);
-
-                entity.Property(e => e.登记时间).HasColumnType("datetime");
-
-                entity.Property(e => e.离职或辞退原因).HasMaxLength(100);
-
-                entity.Property(e => e.离职时间).HasColumnType("datetime");
-
-                entity.Property(e => e.考勤班次).HasMaxLength(20);
-
-                entity.Property(e => e.联系地址).HasMaxLength(100);
-
-                entity.Property(e => e.联系电话).HasMaxLength(20);
-
-                entity.Property(e => e.证件号码).HasMaxLength(20);
-            });
-
-            modelBuilder.Entity<生产入库>(entity =>
-            {
-                entity.HasKey(e => e.日期);
-
-                entity.HasIndex(e => new { e.ExcelServerRcid, e.ExcelServerWiid })
-                    .HasName("idx1");
-
-                entity.Property(e => e.日期).HasColumnType("datetime");
-
-                entity.Property(e => e.ExcelServerChg).HasColumnName("ExcelServerCHG");
-
-                entity.Property(e => e.ExcelServerCn).HasColumnName("ExcelServerCN");
-
-                entity.Property(e => e.ExcelServerRc1)
-                    .HasColumnName("ExcelServerRC1")
-                    .HasMaxLength(20);
-
-                entity.Property(e => e.ExcelServerRcid)
-                    .HasColumnName("ExcelServerRCID")
-                    .HasMaxLength(20);
-
-                entity.Property(e => e.ExcelServerRn).HasColumnName("ExcelServerRN");
-
-                entity.Property(e => e.ExcelServerRtid)
-                    .HasColumnName("ExcelServerRTID")
-                    .HasMaxLength(20);
-
-                entity.Property(e => e.ExcelServerWiid)
-                    .HasColumnName("ExcelServerWIID")
-                    .HasMaxLength(20);
-
-                entity.Property(e => e.内容).HasMaxLength(500);
-
-                entity.Property(e => e.总数).HasColumnType("decimal(20, 3)");
-
-                entity.Property(e => e.自增).ValueGeneratedOnAdd();
-            });
-
-            modelBuilder.Entity<生产入库D>(entity =>
-            {
-                entity.HasKey(e => e.自增);
-
-                entity.ToTable("生产入库_D");
-
-                entity.HasIndex(e => new { e.ExcelServerRcid, e.ExcelServerWiid })
-                    .HasName("idx1");
-
-                entity.Property(e => e.ExcelServerChg).HasColumnName("ExcelServerCHG");
-
-                entity.Property(e => e.ExcelServerCn).HasColumnName("ExcelServerCN");
-
-                entity.Property(e => e.ExcelServerRc1)
-                    .HasColumnName("ExcelServerRC1")
-                    .HasMaxLength(20);
-
-                entity.Property(e => e.ExcelServerRcid)
-                    .HasColumnName("ExcelServerRCID")
-                    .HasMaxLength(20);
-
-                entity.Property(e => e.ExcelServerRn).HasColumnName("ExcelServerRN");
-
-                entity.Property(e => e.ExcelServerRtid)
-                    .HasColumnName("ExcelServerRTID")
-                    .HasMaxLength(20);
-
-                entity.Property(e => e.ExcelServerWiid)
-                    .HasColumnName("ExcelServerWIID")
-                    .HasMaxLength(20);
-
-                entity.Property(e => e.型号).HasMaxLength(20);
-
-                entity.Property(e => e.宽).HasColumnType("decimal(20, 3)");
-
-                entity.Property(e => e.平方数).HasColumnType("decimal(20, 3)");
-
-                entity.Property(e => e.描述).HasMaxLength(50);
-
-                entity.Property(e => e.生产难度).HasMaxLength(20);
-
-                entity.Property(e => e.长).HasColumnType("decimal(20, 3)");
-            });
-
-            modelBuilder.Entity<生产型号>(entity =>
-            {
-                entity.HasKey(e => e.型号);
-
-                entity.HasIndex(e => new { e.ExcelServerRcid, e.ExcelServerWiid })
-                    .HasName("idx1");
-
-                entity.Property(e => e.型号)
-                    .HasMaxLength(20)
-                    .ValueGeneratedNever();
-
-                entity.Property(e => e.ExcelServerChg).HasColumnName("ExcelServerCHG");
-
-                entity.Property(e => e.ExcelServerCn).HasColumnName("ExcelServerCN");
-
-                entity.Property(e => e.ExcelServerRc1)
-                    .HasColumnName("ExcelServerRC1")
-                    .HasMaxLength(20);
-
-                entity.Property(e => e.ExcelServerRcid)
-                    .HasColumnName("ExcelServerRCID")
-                    .HasMaxLength(20);
-
-                entity.Property(e => e.ExcelServerRn).HasColumnName("ExcelServerRN");
-
-                entity.Property(e => e.ExcelServerRtid)
-                    .HasColumnName("ExcelServerRTID")
-                    .HasMaxLength(20);
-
-                entity.Property(e => e.ExcelServerWiid)
-                    .HasColumnName("ExcelServerWIID")
-                    .HasMaxLength(20);
-
-                entity.Property(e => e.自增).ValueGeneratedOnAdd();
-
-                entity.Property(e => e.难易度).HasMaxLength(20);
+                entity.Property(e => e.收款金额).HasColumnType("decimal(20, 2)");
             });
 
             modelBuilder.Entity<收货>(entity =>
             {
-                entity.HasKey(e => e.单号);
+                entity.HasKey(e => e.单号)
+                    .HasName("pk_194");
 
                 entity.HasIndex(e => new { e.ExcelServerRcid, e.ExcelServerWiid })
                     .HasName("idx1");
@@ -6809,16 +6776,17 @@ namespace PinhuaMaster.Data.Entities.Pinhua
                 entity.Property(e => e.金额).HasColumnType("decimal(20, 2)");
             });
 
-            modelBuilder.Entity<收款单>(entity =>
+            modelBuilder.Entity<放假登记>(entity =>
             {
-                entity.HasKey(e => e.收款单号);
+                entity.HasKey(e => new { e.编号, e.期初 })
+                    .HasName("pk_233");
 
                 entity.HasIndex(e => new { e.ExcelServerRcid, e.ExcelServerWiid })
                     .HasName("idx1");
 
-                entity.Property(e => e.收款单号)
-                    .HasMaxLength(20)
-                    .ValueGeneratedNever();
+                entity.Property(e => e.编号).HasMaxLength(20);
+
+                entity.Property(e => e.期初).HasColumnType("datetime");
 
                 entity.Property(e => e.ExcelServerChg).HasColumnName("ExcelServerCHG");
 
@@ -6842,29 +6810,22 @@ namespace PinhuaMaster.Data.Entities.Pinhua
                     .HasColumnName("ExcelServerWIID")
                     .HasMaxLength(20);
 
-                entity.Property(e => e.单位编号).HasMaxLength(20);
+                entity.Property(e => e.备注).HasMaxLength(50);
 
-                entity.Property(e => e.备注).HasMaxLength(100);
+                entity.Property(e => e.性质).HasMaxLength(20);
 
-                entity.Property(e => e.收款单位).HasMaxLength(100);
-
-                entity.Property(e => e.收款日期).HasColumnType("datetime");
-
-                entity.Property(e => e.收款类型).HasMaxLength(20);
-
-                entity.Property(e => e.收款金额).HasColumnType("decimal(20, 2)");
+                entity.Property(e => e.期末).HasColumnType("datetime");
             });
 
-            modelBuilder.Entity<图形登记表>(entity =>
+            modelBuilder.Entity<月考勤汇总主表>(entity =>
             {
-                entity.HasKey(e => e.图形编号);
+                entity.HasKey(e => new { e.年份, e.月份 })
+                    .HasName("pk_105");
+
+                entity.ToTable("月考勤汇总_主表");
 
                 entity.HasIndex(e => new { e.ExcelServerRcid, e.ExcelServerWiid })
                     .HasName("idx1");
-
-                entity.Property(e => e.图形编号)
-                    .HasMaxLength(20)
-                    .ValueGeneratedNever();
 
                 entity.Property(e => e.ExcelServerChg).HasColumnName("ExcelServerCHG");
 
@@ -6887,22 +6848,17 @@ namespace PinhuaMaster.Data.Entities.Pinhua
                 entity.Property(e => e.ExcelServerWiid)
                     .HasColumnName("ExcelServerWIID")
                     .HasMaxLength(20);
-
-                entity.Property(e => e.图形).HasMaxLength(20);
-
-                entity.Property(e => e.图形名称).HasMaxLength(100);
-
-                entity.Property(e => e.描述).HasMaxLength(500);
             });
 
-            modelBuilder.Entity<往来单位>(entity =>
+            modelBuilder.Entity<物料分类>(entity =>
             {
-                entity.HasKey(e => e.单位编号);
+                entity.HasKey(e => e.完整编码)
+                    .HasName("pk_141");
 
                 entity.HasIndex(e => new { e.ExcelServerRcid, e.ExcelServerWiid })
                     .HasName("idx1");
 
-                entity.Property(e => e.单位编号)
+                entity.Property(e => e.完整编码)
                     .HasMaxLength(20)
                     .ValueGeneratedNever();
 
@@ -6928,28 +6884,23 @@ namespace PinhuaMaster.Data.Entities.Pinhua
                     .HasColumnName("ExcelServerWIID")
                     .HasMaxLength(20);
 
-                entity.Property(e => e.Rank).HasColumnName("RANK");
+                entity.Property(e => e.上级全称).HasMaxLength(100);
 
-                entity.Property(e => e.传真).HasMaxLength(20);
+                entity.Property(e => e.上级名称).HasMaxLength(100);
 
-                entity.Property(e => e.单位名称).HasMaxLength(100);
+                entity.Property(e => e.上级编码).HasMaxLength(100);
 
-                entity.Property(e => e.单位地址).HasMaxLength(100);
+                entity.Property(e => e.全称).HasMaxLength(100);
 
-                entity.Property(e => e.单位性质).HasMaxLength(20);
+                entity.Property(e => e.本级名称).HasMaxLength(100);
 
-                entity.Property(e => e.单位类型).HasMaxLength(20);
-
-                entity.Property(e => e.外协关联仓库).HasMaxLength(20);
-
-                entity.Property(e => e.电话).HasMaxLength(20);
-
-                entity.Property(e => e.登记日期).HasColumnType("datetime");
+                entity.Property(e => e.本级编码).HasMaxLength(20);
             });
 
             modelBuilder.Entity<物料登记>(entity =>
             {
-                entity.HasKey(e => e.编号);
+                entity.HasKey(e => e.编号)
+                    .HasName("pk_142");
 
                 entity.HasIndex(e => new { e.ExcelServerRcid, e.ExcelServerWiid })
                     .HasName("idx1");
@@ -7011,7 +6962,8 @@ namespace PinhuaMaster.Data.Entities.Pinhua
 
             modelBuilder.Entity<物料登记Old>(entity =>
             {
-                entity.HasKey(e => e.编号);
+                entity.HasKey(e => e.编号)
+                    .HasName("pk_138");
 
                 entity.ToTable("物料登记_Old");
 
@@ -7083,16 +7035,15 @@ namespace PinhuaMaster.Data.Entities.Pinhua
                 entity.Property(e => e.辅单位编号).HasMaxLength(20);
             });
 
-            modelBuilder.Entity<物料分类>(entity =>
+            modelBuilder.Entity<生产入库>(entity =>
             {
-                entity.HasKey(e => e.完整编码);
+                entity.HasKey(e => e.日期)
+                    .HasName("pk_346");
 
                 entity.HasIndex(e => new { e.ExcelServerRcid, e.ExcelServerWiid })
                     .HasName("idx1");
 
-                entity.Property(e => e.完整编码)
-                    .HasMaxLength(20)
-                    .ValueGeneratedNever();
+                entity.Property(e => e.日期).HasColumnType("datetime");
 
                 entity.Property(e => e.ExcelServerChg).HasColumnName("ExcelServerCHG");
 
@@ -7116,28 +7067,67 @@ namespace PinhuaMaster.Data.Entities.Pinhua
                     .HasColumnName("ExcelServerWIID")
                     .HasMaxLength(20);
 
-                entity.Property(e => e.上级全称).HasMaxLength(100);
+                entity.Property(e => e.内容).HasMaxLength(500);
 
-                entity.Property(e => e.上级名称).HasMaxLength(100);
+                entity.Property(e => e.总数).HasColumnType("decimal(20, 3)");
 
-                entity.Property(e => e.上级编码).HasMaxLength(100);
-
-                entity.Property(e => e.全称).HasMaxLength(100);
-
-                entity.Property(e => e.本级名称).HasMaxLength(100);
-
-                entity.Property(e => e.本级编码).HasMaxLength(20);
+                entity.Property(e => e.自增).ValueGeneratedOnAdd();
             });
 
-            modelBuilder.Entity<业务类型>(entity =>
+            modelBuilder.Entity<生产入库D>(entity =>
             {
-                entity.HasKey(e => e.业务类型1);
+                entity.HasKey(e => e.自增)
+                    .HasName("pk_344");
+
+                entity.ToTable("生产入库_D");
 
                 entity.HasIndex(e => new { e.ExcelServerRcid, e.ExcelServerWiid })
                     .HasName("idx1");
 
-                entity.Property(e => e.业务类型1)
-                    .HasColumnName("业务类型")
+                entity.Property(e => e.ExcelServerChg).HasColumnName("ExcelServerCHG");
+
+                entity.Property(e => e.ExcelServerCn).HasColumnName("ExcelServerCN");
+
+                entity.Property(e => e.ExcelServerRc1)
+                    .HasColumnName("ExcelServerRC1")
+                    .HasMaxLength(20);
+
+                entity.Property(e => e.ExcelServerRcid)
+                    .HasColumnName("ExcelServerRCID")
+                    .HasMaxLength(20);
+
+                entity.Property(e => e.ExcelServerRn).HasColumnName("ExcelServerRN");
+
+                entity.Property(e => e.ExcelServerRtid)
+                    .HasColumnName("ExcelServerRTID")
+                    .HasMaxLength(20);
+
+                entity.Property(e => e.ExcelServerWiid)
+                    .HasColumnName("ExcelServerWIID")
+                    .HasMaxLength(20);
+
+                entity.Property(e => e.型号).HasMaxLength(20);
+
+                entity.Property(e => e.宽).HasColumnType("decimal(20, 3)");
+
+                entity.Property(e => e.平方数).HasColumnType("decimal(20, 3)");
+
+                entity.Property(e => e.描述).HasMaxLength(50);
+
+                entity.Property(e => e.生产难度).HasMaxLength(20);
+
+                entity.Property(e => e.长).HasColumnType("decimal(20, 3)");
+            });
+
+            modelBuilder.Entity<生产单>(entity =>
+            {
+                entity.HasKey(e => e.单号)
+                    .HasName("pk_457");
+
+                entity.HasIndex(e => new { e.ExcelServerRcid, e.ExcelServerWiid })
+                    .HasName("idx1");
+
+                entity.Property(e => e.单号)
                     .HasMaxLength(20)
                     .ValueGeneratedNever();
 
@@ -7163,25 +7153,171 @@ namespace PinhuaMaster.Data.Entities.Pinhua
                     .HasColumnName("ExcelServerWIID")
                     .HasMaxLength(20);
 
-                entity.Property(e => e.MvP).HasMaxLength(20);
+                entity.Property(e => e.交期).HasColumnType("datetime");
 
-                entity.Property(e => e.性质).HasMaxLength(20);
+                entity.Property(e => e.备注).HasMaxLength(100);
+
+                entity.Property(e => e.客户号).HasMaxLength(20);
+
+                entity.Property(e => e.客户名).HasMaxLength(100);
+
+                entity.Property(e => e.日期).HasColumnType("datetime");
+
+                entity.Property(e => e.概要).HasMaxLength(100);
+
+                entity.Property(e => e.状态).HasMaxLength(20);
+            });
+
+            modelBuilder.Entity<生产单d>(entity =>
+            {
+                entity.HasKey(e => e.Idx)
+                    .HasName("pk_461");
+
+                entity.ToTable("生产单D");
+
+                entity.HasIndex(e => new { e.ExcelServerRcid, e.ExcelServerWiid })
+                    .HasName("idx1");
+
+                entity.Property(e => e.Idx).HasColumnName("idx");
+
+                entity.Property(e => e.ExcelServerChg).HasColumnName("ExcelServerCHG");
+
+                entity.Property(e => e.ExcelServerCn).HasColumnName("ExcelServerCN");
+
+                entity.Property(e => e.ExcelServerRc1)
+                    .HasColumnName("ExcelServerRC1")
+                    .HasMaxLength(20);
+
+                entity.Property(e => e.ExcelServerRcid)
+                    .HasColumnName("ExcelServerRCID")
+                    .HasMaxLength(20);
+
+                entity.Property(e => e.ExcelServerRn).HasColumnName("ExcelServerRN");
+
+                entity.Property(e => e.ExcelServerRtid)
+                    .HasColumnName("ExcelServerRTID")
+                    .HasMaxLength(20);
+
+                entity.Property(e => e.ExcelServerWiid)
+                    .HasColumnName("ExcelServerWIID")
+                    .HasMaxLength(20);
+
+                entity.Property(e => e.其他要求).HasMaxLength(100);
+
+                entity.Property(e => e.刻线要求).HasMaxLength(100);
+
+                entity.Property(e => e.图片).HasMaxLength(20);
+
+                entity.Property(e => e.平方数).HasColumnType("decimal(20, 3)");
+
+                entity.Property(e => e.开槽要求).HasMaxLength(100);
+
+                entity.Property(e => e.拉丝要求).HasMaxLength(100);
+
+                entity.Property(e => e.描述).HasMaxLength(50);
+
+                entity.Property(e => e.是否刻线).HasMaxLength(20);
+
+                entity.Property(e => e.是否开槽).HasMaxLength(20);
+
+                entity.Property(e => e.是否拉丝).HasMaxLength(20);
+
+                entity.Property(e => e.是否油漆).HasMaxLength(20);
+
+                entity.Property(e => e.油漆要求).HasMaxLength(100);
+            });
+
+            modelBuilder.Entity<生产型号>(entity =>
+            {
+                entity.HasKey(e => e.型号)
+                    .HasName("pk_345");
+
+                entity.HasIndex(e => new { e.ExcelServerRcid, e.ExcelServerWiid })
+                    .HasName("idx1");
+
+                entity.Property(e => e.型号)
+                    .HasMaxLength(20)
+                    .ValueGeneratedNever();
+
+                entity.Property(e => e.ExcelServerChg).HasColumnName("ExcelServerCHG");
+
+                entity.Property(e => e.ExcelServerCn).HasColumnName("ExcelServerCN");
+
+                entity.Property(e => e.ExcelServerRc1)
+                    .HasColumnName("ExcelServerRC1")
+                    .HasMaxLength(20);
+
+                entity.Property(e => e.ExcelServerRcid)
+                    .HasColumnName("ExcelServerRCID")
+                    .HasMaxLength(20);
+
+                entity.Property(e => e.ExcelServerRn).HasColumnName("ExcelServerRN");
+
+                entity.Property(e => e.ExcelServerRtid)
+                    .HasColumnName("ExcelServerRTID")
+                    .HasMaxLength(20);
+
+                entity.Property(e => e.ExcelServerWiid)
+                    .HasColumnName("ExcelServerWIID")
+                    .HasMaxLength(20);
+
+                entity.Property(e => e.自增).ValueGeneratedOnAdd();
+
+                entity.Property(e => e.难易度).HasMaxLength(20);
+            });
+
+            modelBuilder.Entity<考勤卡号变动>(entity =>
+            {
+                entity.HasKey(e => e.Pk)
+                    .HasName("pk_71");
+
+                entity.HasIndex(e => new { e.ExcelServerRcid, e.ExcelServerWiid })
+                    .HasName("idx1");
+
+                entity.Property(e => e.Pk).HasColumnName("pk");
+
+                entity.Property(e => e.ExcelServerChg).HasColumnName("ExcelServerCHG");
+
+                entity.Property(e => e.ExcelServerCn).HasColumnName("ExcelServerCN");
+
+                entity.Property(e => e.ExcelServerRc1)
+                    .HasColumnName("ExcelServerRC1")
+                    .HasMaxLength(20);
+
+                entity.Property(e => e.ExcelServerRcid)
+                    .HasColumnName("ExcelServerRCID")
+                    .HasMaxLength(20);
+
+                entity.Property(e => e.ExcelServerRn).HasColumnName("ExcelServerRN");
+
+                entity.Property(e => e.ExcelServerRtid)
+                    .HasColumnName("ExcelServerRTID")
+                    .HasMaxLength(20);
+
+                entity.Property(e => e.ExcelServerWiid)
+                    .HasColumnName("ExcelServerWIID")
+                    .HasMaxLength(20);
+
+                entity.Property(e => e.卡号).HasMaxLength(20);
+
+                entity.Property(e => e.截止日期).HasColumnType("datetime");
 
                 entity.Property(e => e.状态).HasMaxLength(20);
 
-                entity.Property(e => e.类型描述).HasMaxLength(100);
+                entity.Property(e => e.起始日期).HasColumnType("datetime");
             });
 
-            modelBuilder.Entity<应付款对账单>(entity =>
+            modelBuilder.Entity<考勤明细>(entity =>
             {
-                entity.HasKey(e => new { e.单位编码, e.对账日期 });
+                entity.HasKey(e => new { e.人员编号, e.日期 })
+                    .HasName("pk_78");
 
                 entity.HasIndex(e => new { e.ExcelServerRcid, e.ExcelServerWiid })
                     .HasName("idx1");
 
-                entity.Property(e => e.单位编码).HasMaxLength(20);
+                entity.Property(e => e.人员编号).HasMaxLength(20);
 
-                entity.Property(e => e.对账日期).HasColumnType("datetime");
+                entity.Property(e => e.日期).HasColumnType("datetime");
 
                 entity.Property(e => e.ExcelServerChg).HasColumnName("ExcelServerCHG");
 
@@ -7205,54 +7341,33 @@ namespace PinhuaMaster.Data.Entities.Pinhua
                     .HasColumnName("ExcelServerWIID")
                     .HasMaxLength(20);
 
-                entity.Property(e => e.单位名称).HasMaxLength(100);
+                entity.Property(e => e.上班1).HasMaxLength(20);
 
-                entity.Property(e => e.对账金额).HasColumnType("decimal(20, 2)");
+                entity.Property(e => e.上班2).HasMaxLength(20);
+
+                entity.Property(e => e.上班3).HasMaxLength(20);
+
+                entity.Property(e => e.下班1).HasMaxLength(20);
+
+                entity.Property(e => e.下班2).HasMaxLength(20);
+
+                entity.Property(e => e.下班3).HasMaxLength(20);
+
+                entity.Property(e => e.加班).HasColumnType("decimal(20, 3)");
+
+                entity.Property(e => e.姓名).HasMaxLength(20);
+
+                entity.Property(e => e.正常出勤).HasColumnType("decimal(20, 3)");
+
+                entity.Property(e => e.状态).HasMaxLength(20);
+
+                entity.Property(e => e.首打日期).HasColumnType("datetime");
             });
 
-            modelBuilder.Entity<应收款对账单>(entity =>
+            modelBuilder.Entity<考勤期间>(entity =>
             {
-                entity.HasKey(e => new { e.客户编码, e.对账日期 });
-
-                entity.HasIndex(e => new { e.ExcelServerRcid, e.ExcelServerWiid })
-                    .HasName("idx1");
-
-                entity.Property(e => e.客户编码).HasMaxLength(20);
-
-                entity.Property(e => e.对账日期).HasColumnType("datetime");
-
-                entity.Property(e => e.ExcelServerChg).HasColumnName("ExcelServerCHG");
-
-                entity.Property(e => e.ExcelServerCn).HasColumnName("ExcelServerCN");
-
-                entity.Property(e => e.ExcelServerRc1)
-                    .HasColumnName("ExcelServerRC1")
-                    .HasMaxLength(20);
-
-                entity.Property(e => e.ExcelServerRcid)
-                    .HasColumnName("ExcelServerRCID")
-                    .HasMaxLength(20);
-
-                entity.Property(e => e.ExcelServerRn).HasColumnName("ExcelServerRN");
-
-                entity.Property(e => e.ExcelServerRtid)
-                    .HasColumnName("ExcelServerRTID")
-                    .HasMaxLength(20);
-
-                entity.Property(e => e.ExcelServerWiid)
-                    .HasColumnName("ExcelServerWIID")
-                    .HasMaxLength(20);
-
-                entity.Property(e => e.客户名称).HasMaxLength(100);
-
-                entity.Property(e => e.对账金额).HasColumnType("decimal(20, 2)");
-            });
-
-            modelBuilder.Entity<月考勤汇总主表>(entity =>
-            {
-                entity.HasKey(e => new { e.年份, e.月份 });
-
-                entity.ToTable("月考勤汇总_主表");
+                entity.HasKey(e => new { e.年, e.月 })
+                    .HasName("pk_81");
 
                 entity.HasIndex(e => new { e.ExcelServerRcid, e.ExcelServerWiid })
                     .HasName("idx1");
@@ -7278,6 +7393,221 @@ namespace PinhuaMaster.Data.Entities.Pinhua
                 entity.Property(e => e.ExcelServerWiid)
                     .HasColumnName("ExcelServerWIID")
                     .HasMaxLength(20);
+            });
+
+            modelBuilder.Entity<计量单位主表>(entity =>
+            {
+                entity.HasKey(e => e.计量单位组编号)
+                    .HasName("pk_31");
+
+                entity.ToTable("计量单位_主表");
+
+                entity.HasIndex(e => new { e.ExcelServerRcid, e.ExcelServerWiid })
+                    .HasName("idx1");
+
+                entity.Property(e => e.计量单位组编号)
+                    .HasMaxLength(20)
+                    .ValueGeneratedNever();
+
+                entity.Property(e => e.ExcelServerChg).HasColumnName("ExcelServerCHG");
+
+                entity.Property(e => e.ExcelServerCn).HasColumnName("ExcelServerCN");
+
+                entity.Property(e => e.ExcelServerRc1)
+                    .HasColumnName("ExcelServerRC1")
+                    .HasMaxLength(20);
+
+                entity.Property(e => e.ExcelServerRcid)
+                    .HasColumnName("ExcelServerRCID")
+                    .HasMaxLength(20);
+
+                entity.Property(e => e.ExcelServerRn).HasColumnName("ExcelServerRN");
+
+                entity.Property(e => e.ExcelServerRtid)
+                    .HasColumnName("ExcelServerRTID")
+                    .HasMaxLength(20);
+
+                entity.Property(e => e.ExcelServerWiid)
+                    .HasColumnName("ExcelServerWIID")
+                    .HasMaxLength(20);
+
+                entity.Property(e => e.计量单位组名称).HasMaxLength(20);
+            });
+
+            modelBuilder.Entity<请假登记>(entity =>
+            {
+                entity.HasKey(e => new { e.编号, e.开始日期 })
+                    .HasName("pk_114");
+
+                entity.HasIndex(e => new { e.ExcelServerRcid, e.ExcelServerWiid })
+                    .HasName("idx1");
+
+                entity.Property(e => e.编号).HasMaxLength(20);
+
+                entity.Property(e => e.开始日期).HasColumnType("datetime");
+
+                entity.Property(e => e.ExcelServerChg).HasColumnName("ExcelServerCHG");
+
+                entity.Property(e => e.ExcelServerCn).HasColumnName("ExcelServerCN");
+
+                entity.Property(e => e.ExcelServerRc1)
+                    .HasColumnName("ExcelServerRC1")
+                    .HasMaxLength(20);
+
+                entity.Property(e => e.ExcelServerRcid)
+                    .HasColumnName("ExcelServerRCID")
+                    .HasMaxLength(20);
+
+                entity.Property(e => e.ExcelServerRn).HasColumnName("ExcelServerRN");
+
+                entity.Property(e => e.ExcelServerRtid)
+                    .HasColumnName("ExcelServerRTID")
+                    .HasMaxLength(20);
+
+                entity.Property(e => e.ExcelServerWiid)
+                    .HasColumnName("ExcelServerWIID")
+                    .HasMaxLength(20);
+
+                entity.Property(e => e.姓名).HasMaxLength(20);
+
+                entity.Property(e => e.结束日期).HasColumnType("datetime");
+
+                entity.Property(e => e.请假理由).HasMaxLength(100);
+            });
+
+            modelBuilder.Entity<门店录入主表>(entity =>
+            {
+                entity.HasKey(e => e.门店编号)
+                    .HasName("pk_372");
+
+                entity.ToTable("门店录入_主表");
+
+                entity.HasIndex(e => new { e.ExcelServerRcid, e.ExcelServerWiid })
+                    .HasName("idx1");
+
+                entity.Property(e => e.门店编号)
+                    .HasMaxLength(20)
+                    .ValueGeneratedNever();
+
+                entity.Property(e => e.ExcelServerChg).HasColumnName("ExcelServerCHG");
+
+                entity.Property(e => e.ExcelServerCn).HasColumnName("ExcelServerCN");
+
+                entity.Property(e => e.ExcelServerRc1)
+                    .HasColumnName("ExcelServerRC1")
+                    .HasMaxLength(20);
+
+                entity.Property(e => e.ExcelServerRcid)
+                    .HasColumnName("ExcelServerRCID")
+                    .HasMaxLength(20);
+
+                entity.Property(e => e.ExcelServerRn).HasColumnName("ExcelServerRN");
+
+                entity.Property(e => e.ExcelServerRtid)
+                    .HasColumnName("ExcelServerRTID")
+                    .HasMaxLength(20);
+
+                entity.Property(e => e.ExcelServerWiid)
+                    .HasColumnName("ExcelServerWIID")
+                    .HasMaxLength(20);
+
+                entity.Property(e => e.传真).HasMaxLength(20);
+
+                entity.Property(e => e.出样照片).HasMaxLength(20);
+
+                entity.Property(e => e.地址).HasMaxLength(100);
+
+                entity.Property(e => e.备注).HasMaxLength(500);
+
+                entity.Property(e => e.座机).HasMaxLength(20);
+
+                entity.Property(e => e.录入日期).HasColumnType("datetime");
+
+                entity.Property(e => e.手机).HasMaxLength(20);
+
+                entity.Property(e => e.联系人).HasMaxLength(20);
+
+                entity.Property(e => e.门店名称).HasMaxLength(100);
+
+                entity.Property(e => e.门店照片).HasMaxLength(20);
+            });
+
+            modelBuilder.Entity<门店送样主表>(entity =>
+            {
+                entity.HasKey(e => new { e.日期, e.门店编号 })
+                    .HasName("pk_374");
+
+                entity.ToTable("门店送样_主表");
+
+                entity.HasIndex(e => new { e.ExcelServerRcid, e.ExcelServerWiid })
+                    .HasName("idx1");
+
+                entity.Property(e => e.日期).HasColumnType("datetime");
+
+                entity.Property(e => e.门店编号).HasMaxLength(20);
+
+                entity.Property(e => e.ExcelServerChg).HasColumnName("ExcelServerCHG");
+
+                entity.Property(e => e.ExcelServerCn).HasColumnName("ExcelServerCN");
+
+                entity.Property(e => e.ExcelServerRc1)
+                    .HasColumnName("ExcelServerRC1")
+                    .HasMaxLength(20);
+
+                entity.Property(e => e.ExcelServerRcid)
+                    .HasColumnName("ExcelServerRCID")
+                    .HasMaxLength(20);
+
+                entity.Property(e => e.ExcelServerRn).HasColumnName("ExcelServerRN");
+
+                entity.Property(e => e.ExcelServerRtid)
+                    .HasColumnName("ExcelServerRTID")
+                    .HasMaxLength(20);
+
+                entity.Property(e => e.ExcelServerWiid)
+                    .HasColumnName("ExcelServerWIID")
+                    .HasMaxLength(20);
+
+                entity.Property(e => e.门店名称).HasMaxLength(100);
+            });
+
+            modelBuilder.Entity<门店送样明细>(entity =>
+            {
+                entity.HasKey(e => e.PrimaryKey)
+                    .HasName("pk_375");
+
+                entity.ToTable("门店送样_明细");
+
+                entity.HasIndex(e => new { e.ExcelServerRcid, e.ExcelServerWiid })
+                    .HasName("idx1");
+
+                entity.Property(e => e.PrimaryKey).HasColumnName("primaryKey");
+
+                entity.Property(e => e.ExcelServerChg).HasColumnName("ExcelServerCHG");
+
+                entity.Property(e => e.ExcelServerCn).HasColumnName("ExcelServerCN");
+
+                entity.Property(e => e.ExcelServerRc1)
+                    .HasColumnName("ExcelServerRC1")
+                    .HasMaxLength(20);
+
+                entity.Property(e => e.ExcelServerRcid)
+                    .HasColumnName("ExcelServerRCID")
+                    .HasMaxLength(20);
+
+                entity.Property(e => e.ExcelServerRn).HasColumnName("ExcelServerRN");
+
+                entity.Property(e => e.ExcelServerRtid)
+                    .HasColumnName("ExcelServerRTID")
+                    .HasMaxLength(20);
+
+                entity.Property(e => e.ExcelServerWiid)
+                    .HasColumnName("ExcelServerWIID")
+                    .HasMaxLength(20);
+
+                entity.Property(e => e.品名).HasMaxLength(100);
+
+                entity.Property(e => e.类型).HasMaxLength(100);
             });
         }
     }

@@ -1,0 +1,197 @@
+﻿@page "{Id?}"
+@model PinhuaMaster.Pages.ProductionManagement.ProductionOrder.DetailsModel
+@{
+    ViewData["Title"] = "Details";
+    ViewBag.NoContentHeader = true;
+}
+
+<div class="row">
+    <div class="col-xs-12">
+        <div class="box box-solid">
+            <div class="box-header">
+                <h3><i class="fa fa-globe"></i> 生产订单</h3>
+            </div>
+            <div class="box-body">
+                <div class="row">
+                    <div class="col-sm-6">
+                        <table class="table">
+                            <tbody>
+                                <tr>
+                                    <th style="width:50%">客户</th>
+                                    <td>@(Model.Order.M.客户名)</td>
+                                </tr>
+                                <tr>
+                                    <th>单号</th>
+                                    <td> @(Model.Order.M?.单号)</td>
+                                </tr>
+                                <tr>
+                                    <th>日期</th>
+                                    <td>@(Model.Order.M?.日期?.ToString("yyyy-MM-dd"))</td>
+                                </tr>
+                                <tr>
+                                    <th>交期</th>
+                                    <td>@(Model.Order.M?.交期?.ToString("yyyy-MM-dd"))</td>
+                                </tr>
+                                <tr>
+                                    <th>备注</th>
+                                    <th class="text-danger">@(Model.Order.M.备注)</th>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <!-- /.col -->
+                </div>
+                <!-- /.row -->
+                <!-- Table row -->
+                <div class="row">
+                    <div class="col-xs-12">
+                        <div class="table-responsive">
+                            <table class="table table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th>Idx</th>
+                                        <th>图片</th>
+                                        <th>描述</th>
+                                        <th>规格</th>
+                                        <th>片数</th>
+                                        @*<th>平方</th>*@
+                                        <th>刻线</th>
+                                        <th>拉丝</th>
+                                        <th>开槽</th>
+                                        <th>油漆</th>
+                                        <th>其他要求</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var tr in Model.Order.D)
+                                    {
+                                        <tr>
+                                            <td style="vertical-align: middle;">@(Model.Order.D.IndexOf(tr) + 1)</td>
+                                            <td>
+                                                @if (!string.IsNullOrEmpty(tr.图片))
+                                                {<a href="@Url.Action("Image","PinhuaImage",new {contentType="image/jpeg" , picNo=tr.图片})"><img src="@Url.Action("Image","PinhuaImage",new {contentType="image/jpeg" , picNo=tr.图片})" style="min-width: 80px;max-width: 80px;height: auto;" /></a>
+                                                }
+                                            </td>
+                                            <td style="vertical-align: middle;">@(tr.描述)</td>
+                                            <td style="vertical-align: middle;">@(tr.长)×@(tr.宽)×@(tr.高)</td>
+                                            <td style="vertical-align: middle;">@(tr.片数)</td>
+                                            @*<td>@(tr.平方数)</td>*@
+                                            <td style="vertical-align: middle;"><zky-tag-yesno description="@(tr.刻线要求)">@(tr.是否刻线)</zky-tag-yesno></td>
+                                            <td style="vertical-align: middle;"><zky-tag-yesno description="@(tr.拉丝要求)">@(tr.是否拉丝)</zky-tag-yesno></td>
+                                            <td style="vertical-align: middle;"><zky-tag-yesno description="@(tr.开槽要求)">@(tr.是否开槽)</zky-tag-yesno></td>
+                                            <td style="vertical-align: middle;"><zky-tag-yesno description="@(tr.油漆要求)">@(tr.是否油漆)</zky-tag-yesno></td>
+                                            <td style="vertical-align: middle;">@(tr.其他要求)</td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <!-- /.col -->
+                </div>
+                <!-- /.row -->
+                <!-- Table row -->
+                <div class="row hidden">
+                    <div class="col-xs-12">
+                        <div class="">
+                            <table data-toggle="table"
+                                   data-detail-view="true"
+                                   data-detail-formatter="detailFormatter"
+                                   style="margin-bottom:20px">
+                                <thead>
+                                    <tr>
+                                        <th>Idx</th>
+                                        @*<th>图片</th>*@
+                                        <th>描述</th>
+                                        <th>规格 #</th>
+                                        <th>片数</th>
+                                        @*<th>平方</th>*@
+                                        <th>刻线</th>
+                                        <th>拉丝</th>
+                                        <th>开槽</th>
+                                        <th>油漆</th>
+                                        <th>其他要求</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var tr in Model.Order.D)
+                                    {
+                                        <tr>
+                                            <td style="vertical-align: middle;">@(Model.Order.D.IndexOf(tr) + 1)</td>
+                                            @*<td>
+                                                    @if (!string.IsNullOrEmpty(tr.图片))
+                                                    {<a href="@Url.Action("Image","PinhuaImage",new {contentType="image/jpeg" , picNo=tr.图片})"><img src="@Url.Action("Image","PinhuaImage",new {contentType="image/jpeg" , picNo=tr.图片})" style="min-width: 100px;max-width: 100px;height: auto;" /></a>
+                                                    }
+                                                </td>*@
+                                            <td style="vertical-align: middle;">@(tr.描述)</td>
+                                            <td style="vertical-align: middle;">@(tr.长)×@(tr.宽)×@(tr.高)</td>
+                                            <td style="vertical-align: middle;">@(tr.片数)</td>
+                                            @*<td>@(tr.平方数)</td>*@
+                                            <td><zky-tag-yesno description="@(tr.刻线要求)">@(tr.是否刻线)</zky-tag-yesno></td>
+                                            <td><zky-tag-yesno description="@(tr.拉丝要求)">@(tr.是否拉丝)</zky-tag-yesno></td>
+                                            <td><zky-tag-yesno description="@(tr.开槽要求)">@(tr.是否开槽)</zky-tag-yesno></td>
+                                            <td><zky-tag-yesno description="@(tr.油漆要求)">@(tr.是否油漆)</zky-tag-yesno></td>
+                                            <td style="vertical-align: middle;">@(tr.其他要求)</td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <!-- /.col -->
+                </div>
+                <!-- /.row -->
+                <!-- this row will not appear when printing -->
+                <div class="row no-print">
+                    <div class="col-xs-12">
+                        @*<a href="invoice-print.html" target="_blank" class="btn btn-default"><i class="fa fa-print"></i> Print</a>*@
+                        <a href="javascript:history.back(-1);" class="btn btn-default"><i class="fa fa-long-arrow-left"></i> 返回</a>
+                        <button type="button" class="btn btn-success pull-right">
+                            <i class="fa fa-credit-card"></i> 订单完成
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@section Scripts{
+    <script>
+        function detailFormatter(index, row) {
+            var html = []
+            $.each(row, function (key, value) {
+                html.push('<p><b>' + key + ':</b> ' + value + '</p>')
+            })
+            return html.join('')
+        }
+    </script>
+}
+@section Styles{
+    <style>
+        [v-cloak] {
+            display: none;
+        }
+
+        .form-horizontal .control-label {
+            text-align: right;
+            margin-bottom: 0;
+            padding-top: 7px;
+        }
+
+        body.modal-open {
+            position: fixed;
+            overflow: hidden;
+            left: 0;
+            right: 0;
+        }
+
+        .modal {
+            -webkit-overflow-scrolling: auto;
+        }
+
+        .zky {
+            min-width: 100px;
+            max-width: 100px;
+        }
+    </style>
+}

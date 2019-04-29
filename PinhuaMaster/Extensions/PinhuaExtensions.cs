@@ -36,6 +36,28 @@ namespace PinhuaMaster.Extensions
         }
 
         /// <summary>
+        /// 获取自动编号
+        /// </summary>
+        /// <param name="context"></param>
+        /// <param name="stdId">ES_IdRule中的stdId</param>
+        /// <param name="prefix">需要的前缀</param>
+        /// <param name="n">需要增大的数字</param>
+        /// <param name="len">数字部分需要补足的位数</param>
+        /// <returns></returns>
+        public static string GetAutoId(this PinhuaContext context, int stdId, string prefix, int n, int len)
+        {
+            context.Database.ExecuteSqlCommand($"exec ES_p_AutoIdNum @stdId, @prefix, @n", new[]{
+                 new SqlParameter("stdId", stdId) ,new SqlParameter("prefix", prefix) ,new SqlParameter("n", n)
+            });
+
+            var obj = context.EsIdRec
+                .Where(p => p.StdId == stdId && p.Prefix == prefix)
+                .FirstOrDefault();
+
+            return obj == null ? string.Empty : prefix+ obj.MaxNum.ToString($"D{len}");
+        }
+
+        /// <summary>
         /// 获取最大的Id
         /// </summary>
         /// <param name="context"></param>

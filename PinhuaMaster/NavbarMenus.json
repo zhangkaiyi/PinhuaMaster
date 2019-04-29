@@ -67,6 +67,11 @@
       "url": "",
       "children": [
         {
+          "name": "生产订单",
+          "icon": "fa fa-circle-o",
+          "url": "/ProductionManagement/ProductionOrder/Index"
+        },
+        {
           "name": "生产入库单",
           "icon": "fa fa-circle-o",
           "url": "/StockManagement/ProductionStockIn/Index"

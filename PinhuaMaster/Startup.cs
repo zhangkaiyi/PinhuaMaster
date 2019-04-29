@@ -20,6 +20,9 @@ using PinhuaMaster.Extensions;
 using Zky.Utility;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.Extensions.Options;
+using Microsoft.AspNetCore.Mvc.Razor;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 
 namespace PinhuaMaster
 {
@@ -72,7 +75,10 @@ namespace PinhuaMaster
                 {
                     //options.Conventions.AuthorizeFolder("/Account/Manage");
                     //options.Conventions.AuthorizePage("/Account/Logout");
-                    options.Conventions.AuthorizeFolder("/", "Permissons").AllowAnonymousToFolder("/Account").AllowAnonymousToFolder("/Statement/External");
+                    options.Conventions.AuthorizeFolder("/", "Permissons")
+                    .AllowAnonymousToFolder("/Account")
+                    .AllowAnonymousToFolder("/Statement/External")
+                    .AllowAnonymousToFolder("/ProductionManagement/ProductionOrder");
                 })
                 .SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
@@ -104,6 +110,9 @@ namespace PinhuaMaster
             services.AddTransient<IActionPermissionService, ActionPermissionService>();
             services.AddTransient<IAttendanceService, AttendanceService>();
             services.AddTransient<IAuthorizationHandler, PermissionHandler>();
+
+            // Asp.net Core 2.2 以后让RazorPage动态编译的设置
+            services.TryAddEnumerable(ServiceDescriptor.Singleton<IConfigureOptions<RazorViewEngineOptions>, RazorViewEngineOptionsSetup>());
 
             //初始化应用配置
             //InitAppConfig(services);
@@ -160,5 +169,17 @@ namespace PinhuaMaster
 
         //    services.Configure<List<NavbarMenu>>(config.GetSection("NavBarMenus"));
         //}
+    }
+
+    public class RazorViewEngineOptionsSetup : ConfigureOptions<RazorViewEngineOptions>
+    {
+        public RazorViewEngineOptionsSetup(IHostingEnvironment hostingEnvironment) :
+            base(options =>
+            {
+                options.AllowRecompilingViewsOnFileChange = true;
+            })
+        {
+
+        }
     }
 }
