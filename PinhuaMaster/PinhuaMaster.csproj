@@ -28,4 +28,9 @@
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.2.1" PrivateAssets="All" />
     <PackageReference Include="NPOI" Version="2.4.1" />
   </ItemGroup>
+  <ItemGroup>
+    <Content Update="NavbarMenus.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
 </Project>

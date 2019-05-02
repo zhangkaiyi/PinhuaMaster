@@ -80,7 +80,10 @@ namespace PinhuaMaster
                     .AllowAnonymousToFolder("/Statement/External")
                     .AllowAnonymousToFolder("/ProductionManagement/ProductionOrder");
                 })
-                .SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+                .SetCompatibilityVersion(CompatibilityVersion.Version_2_2)
+                .AddRazorPagesOptions(o => {
+                    o.Conventions.ConfigureFilter(new IgnoreAntiforgeryTokenAttribute()); //忽略XSRF验证, 方便ajax请求,我们的服务一般都是没关系的, 对于需要安全验证的内容, 最好在页面上增加属性, 如果需要开启全局关闭防伪令牌验证, 请注释这行代码
+                });
 
             services.AddAuthentication().AddCookie(options =>
             {
@@ -130,7 +133,9 @@ namespace PinhuaMaster
             }
             else
             {
-                app.UseExceptionHandler("/Error");
+                app.UseDeveloperExceptionPage();
+                app.UseDatabaseErrorPage();
+                //app.UseExceptionHandler("/Error");
                 // AspNetCore 2.1
                 app.UseHsts();
             }
