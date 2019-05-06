@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using PinhuaMaster.Data.Entities.Pinhua;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Threading.Tasks;
@@ -54,7 +55,33 @@ namespace PinhuaMaster.Extensions
                 .Where(p => p.StdId == stdId && p.Prefix == prefix)
                 .FirstOrDefault();
 
-            return obj == null ? string.Empty : prefix+ obj.MaxNum.ToString($"D{len}");
+            return obj == null ? string.Empty : prefix + obj.MaxNum.ToString($"D{len}");
+        }
+
+        /// <summary>
+        /// 获取自动编号
+        /// </summary>
+        /// <param name="context"></param>
+        /// <param name="stdId">ES_IdRule中的stdId</param>
+        /// <param name="prefix">需要的前缀</param>
+        /// <param name="n">需要增大的数字</param>
+        /// <param name="len">数字部分需要补足的位数</param>
+        /// <returns></returns>
+        public static string GetZkyAutoId(this PinhuaContext context, int stdId)
+        {
+
+            var outputNewId = new SqlParameter
+            {
+                ParameterName = "newId",
+                SqlDbType = SqlDbType.NVarChar,
+                Size = 100,
+                Direction = ParameterDirection.Output
+            };
+            context.Database.ExecuteSqlCommand($"exec ZKY_p_AutoId @theStdId, @newId output", new[]{
+                 new SqlParameter("theStdId", stdId) ,outputNewId
+            });
+
+            return outputNewId.Value.ToString();
         }
 
         /// <summary>
@@ -86,6 +113,32 @@ namespace PinhuaMaster.Extensions
         {
             var newId = context.GetNewId(26, 1);
             var rcId = "rc" + DateTime.Now.ToString("yyyyMMdd") + newId.ToString("D5");
+
+            return newId == 0 ? "" : rcId;
+        }
+
+        /// <summary>
+        /// 获取新的rcid文本
+        /// </summary>
+        /// <param name="context"></param>
+        /// <returns></returns>
+        public static string GetNewPicNo(this PinhuaContext context)
+        {
+            var newId = context.GetNewId(33, 1);
+            var rcId = "P" + DateTime.Now.ToString("yyyyMMdd") + newId.ToString("D5");
+
+            return newId == 0 ? "" : rcId;
+        }
+
+        /// <summary>
+        /// 获取新的rcid文本
+        /// </summary>
+        /// <param name="context"></param>
+        /// <returns></returns>
+        public static string GetNewLinkNo(this PinhuaContext context)
+        {
+            var newId = context.GetNewId(34, 1);
+            var rcId = "L" + DateTime.Now.ToString("yyyyMMdd") + newId.ToString("D5");
 
             return newId == 0 ? "" : rcId;
         }
@@ -159,6 +212,12 @@ namespace PinhuaMaster.Extensions
                          group p by p.Rank into g
                          select g.Key;
             var groupingCustomers = new List<SelectListItem>();
+
+            groupingCustomers.Add(new SelectListItem
+            {
+                Text = "",
+                Value = ""
+            });
             foreach (var key in groups)
             {
                 var optGroup = new SelectListGroup

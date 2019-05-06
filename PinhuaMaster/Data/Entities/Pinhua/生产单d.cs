@@ -6,10 +6,10 @@ namespace PinhuaMaster.Data.Entities.Pinhua
     public partial class 生产单d
     {
         public string 描述 { get; set; }
-        public int? 长 { get; set; }
-        public int? 宽 { get; set; }
-        public int? 高 { get; set; }
-        public int? 片数 { get; set; }
+        public decimal? 长 { get; set; }
+        public decimal? 宽 { get; set; }
+        public decimal? 高 { get; set; }
+        public decimal? 片数 { get; set; }
         public decimal? 平方数 { get; set; }
         public string 是否开槽 { get; set; }
         public string 开槽要求 { get; set; }

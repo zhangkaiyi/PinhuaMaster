@@ -23,6 +23,9 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.Extensions.Options;
 using Microsoft.AspNetCore.Mvc.Razor;
 using Microsoft.Extensions.DependencyInjection.Extensions;
+using Microsoft.Extensions.Logging;
+using NLog.Extensions.Logging;
+using NLog.Web;
 
 namespace PinhuaMaster
 {
@@ -123,7 +126,7 @@ namespace PinhuaMaster
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
         {
             if (env.IsDevelopment())
             {
@@ -158,6 +161,9 @@ namespace PinhuaMaster
             app.UseStaticHttpContext();
 
             app.UseUtility();
+
+            loggerFactory.AddNLog();
+            env.ConfigureNLog("nlog.config");
         }
 
         /// <summary>

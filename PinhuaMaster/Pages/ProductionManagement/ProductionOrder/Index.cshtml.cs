@@ -35,7 +35,7 @@ namespace PinhuaMaster.Pages.ProductionManagement.ProductionOrder
             settings.ContractResolver = new Newtonsoft.Json.Serialization.DefaultContractResolver();
 
             var orders = from p in _pinhuaContext.生产单
-                         orderby p.日期 descending, p.单号 descending
+                         orderby p.单号 descending
                          select _mapper.Map<生产单, dto生产单M>(p); 
 
             return new JsonResult(orders, settings);

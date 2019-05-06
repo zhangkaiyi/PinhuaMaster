@@ -49,7 +49,9 @@
     <script>
         function browseRecord (value, row) {
             //return '<a href="@(Url.Page("Delete"))/' + row.单位编号 + '">删除</a> <a href="@(Url.Page("Edit"))/' + row.单位编号 + '">修改</a>'
-            return '<a href="@(Url.Page("Details"))/' + row.单号 + '"><i class="fa fa-search"></i> 查看</a>'
+            return [
+                '<a href="@(Url.Page("Details"))/' + row.单号 + '">查看</a>',
+            ].join("")
         }
         function deleteRecord (value, row) {
             return '<a href="@(Url.Page("Delete"))/' + row.单位编号 + '"><i class="fa fa-minus"></i></a>'

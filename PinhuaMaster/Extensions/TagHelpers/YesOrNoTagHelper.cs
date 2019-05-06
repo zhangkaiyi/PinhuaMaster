@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Web;
 
 namespace TagHelpers
 {
@@ -26,8 +27,8 @@ namespace TagHelpers
 
             output.TagName = "span";
             output.TagMode = TagMode.StartTagAndEndTag;
-            var content = output.GetChildContentAsync().GetAwaiter().GetResult().GetContent();
-            if (content.ToLower() == "yes")
+            var content = HttpUtility.HtmlDecode(output.GetChildContentAsync().GetAwaiter().GetResult().GetContent());
+            if (content == "是" || content == "Yes")
             {
                 output.Attributes.SetAttribute("class", "text-primary");
                 output.Content.SetContent($"{content}，{Description}");

@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Http;
 using PinhuaMaster.Data.Entities.Pinhua;
 using PinhuaMaster.Extensions.Converters;
 using System;
@@ -19,9 +20,12 @@ namespace PinhuaMaster.Pages.ProductionManagement.ProductionOrder.ViewModel
     {
         public string 单号 { get; set; }
         [Newtonsoft.Json.JsonConverter(typeof(MyDateConverter))]
+        [Required]
         public DateTime? 日期 { get; set; }
         [Newtonsoft.Json.JsonConverter(typeof(MyDateConverter))]
+        [Required]
         public DateTime? 交期 { get; set; }
+        [Required]
         public string 客户号 { get; set; }
         public string 客户名 { get; set; }
         public string 状态 { get; set; }
@@ -36,14 +40,14 @@ namespace PinhuaMaster.Pages.ProductionManagement.ProductionOrder.ViewModel
         public string ExcelServerRtid { get; set; }
     }
 
-    public partial class dto生产单D
+    public class dto生产单D
     {
         public string 描述 { get; set; }
-        public int? 长 { get; set; }
-        public int? 宽 { get; set; }
-        public int? 高 { get; set; }
+        public decimal? 长 { get; set; }
+        public decimal? 宽 { get; set; }
+        public decimal? 高 { get; set; }
         [Newtonsoft.Json.JsonConverter(typeof(MyDecimalQtyConverter))]
-        public int? 片数 { get; set; }
+        public decimal? 片数 { get; set; }
         [Newtonsoft.Json.JsonConverter(typeof(MyDecimalSquareConverter))]
         public decimal? 平方数 { get; set; }
         public string 是否开槽 { get; set; }
@@ -55,6 +59,7 @@ namespace PinhuaMaster.Pages.ProductionManagement.ProductionOrder.ViewModel
         public string 是否油漆 { get; set; }
         public string 油漆要求 { get; set; }
         public string 图片 { get; set; }
+        public string 图片base64 { get; set; }
         public string 其他要求 { get; set; }
         public int Idx { get; set; }
         public string ExcelServerRcid { get; set; }
@@ -74,9 +79,13 @@ namespace PinhuaMaster.Pages.ProductionManagement.ProductionOrder.ViewModel
 
             CreateMap<生产单d, dto生产单D>()
             .ForMember(dst => dst.刻线要求, map => map.MapFrom(src => string.IsNullOrEmpty(src.刻线要求) ? "无" : src.刻线要求))
+            .ForMember(dst => dst.是否刻线, map => map.MapFrom(src => string.IsNullOrEmpty(src.刻线要求) ? "否" : "是"))
             .ForMember(dst => dst.拉丝要求, map => map.MapFrom(src => string.IsNullOrEmpty(src.拉丝要求) ? "无" : src.拉丝要求))
+            .ForMember(dst => dst.是否拉丝, map => map.MapFrom(src => string.IsNullOrEmpty(src.拉丝要求) ? "否" : "是"))
             .ForMember(dst => dst.开槽要求, map => map.MapFrom(src => string.IsNullOrEmpty(src.开槽要求) ? "无" : src.开槽要求))
+            .ForMember(dst => dst.是否开槽, map => map.MapFrom(src => string.IsNullOrEmpty(src.开槽要求) ? "否" : "是"))
             .ForMember(dst => dst.油漆要求, map => map.MapFrom(src => string.IsNullOrEmpty(src.油漆要求) ? "无" : src.油漆要求))
+            .ForMember(dst => dst.是否油漆, map => map.MapFrom(src => string.IsNullOrEmpty(src.油漆要求) ? "否" : "是"))
             .ForMember(dst => dst.其他要求, map => map.MapFrom(src => string.IsNullOrEmpty(src.其他要求) ? "无" : src.其他要求));
             CreateMap<dto生产单D, 生产单d>();
             //.ForMember(dst => dst.Id, map => map.MapFrom(src => int.Parse(src.Index)));

@@ -280,7 +280,7 @@ namespace PinhuaMaster.Data.Entities.Pinhua
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.HasAnnotation("ProductVersion", "2.2.1-servicing-10028");
+            modelBuilder.HasAnnotation("ProductVersion", "2.2.4-servicing-10062");
 
             modelBuilder.Entity<AttendanceReport>(entity =>
             {
@@ -7208,6 +7208,8 @@ namespace PinhuaMaster.Data.Entities.Pinhua
 
                 entity.Property(e => e.图片).HasMaxLength(20);
 
+                entity.Property(e => e.宽).HasColumnType("decimal(20, 3)");
+
                 entity.Property(e => e.平方数).HasColumnType("decimal(20, 3)");
 
                 entity.Property(e => e.开槽要求).HasMaxLength(100);
@@ -7225,6 +7227,12 @@ namespace PinhuaMaster.Data.Entities.Pinhua
                 entity.Property(e => e.是否油漆).HasMaxLength(20);
 
                 entity.Property(e => e.油漆要求).HasMaxLength(100);
+
+                entity.Property(e => e.片数).HasColumnType("decimal(20, 3)");
+
+                entity.Property(e => e.长).HasColumnType("decimal(20, 3)");
+
+                entity.Property(e => e.高).HasColumnType("decimal(20, 3)");
             });
 
             modelBuilder.Entity<生产型号>(entity =>
