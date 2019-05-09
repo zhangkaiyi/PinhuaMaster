@@ -29,5 +29,7 @@ namespace PinhuaMaster.Data.Entities.Pinhua
         public int? ExcelServerChg { get; set; }
         public string 其他要求 { get; set; }
         public int Idx { get; set; }
+        public string 图片name { get; set; }
+        public string 图片type { get; set; }
     }
 }

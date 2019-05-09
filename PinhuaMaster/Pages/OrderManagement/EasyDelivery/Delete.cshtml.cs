@@ -32,6 +32,8 @@ namespace PinhuaMaster.Pages.OrderManagement.EasyDelivery
             _pinhuaContext.Gi2Main.RemoveRange(b);
             var c = _pinhuaContext.Gi2Details.Where(x => x.ExcelServerRcid == rcId);
             _pinhuaContext.Gi2Details.RemoveRange(c);
+            var d = _pinhuaContext.EsCasePic.Where(x => x.RcId == rcId);
+            _pinhuaContext.EsCasePic.RemoveRange(d);
             _pinhuaContext.SaveChanges();
             return RedirectToPage("Index");
         }

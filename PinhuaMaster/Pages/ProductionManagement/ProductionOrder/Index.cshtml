@@ -11,7 +11,7 @@
                 <div id="tableContainer">
                     <div id="toolbar">
                         <div class="btn-group" role="group" aria-label="...">
-                            <a asp-page="Create" class="btn btn-default btn-flat"><i class="fa fa-plus"></i> 登记</a>
+                            <a asp-page="Create" class="btn btn-info btn-flat"><i class="fa fa-plus"></i> 新订单</a>
                         </div>
                     </div>
                     <table data-classes="table table-hover text-nowrap"
@@ -52,15 +52,6 @@
             return [
                 '<a href="@(Url.Page("Details"))/' + row.单号 + '">查看</a>',
             ].join("")
-        }
-        function deleteRecord (value, row) {
-            return '<a href="@(Url.Page("Delete"))/' + row.单位编号 + '"><i class="fa fa-minus"></i></a>'
-        }
-        function formatterDeliveryId(value, row) {
-            return '<a href="@(Url.Page("Details"))/' + row.单位编号 + '">' + value + '</a>'
-        }
-        function modelNameFormatter(value, row) {
-            return value + ' - ' + row.SubModelNumber
         }
 
         var mainTable = $('#mainTable')
@@ -124,6 +115,10 @@
 
         body .demo-class .layui-layer-btn {
             border-top: 1px solid #E9E7E7;
+        }
+
+        body{
+            font-size:14px;
         }
     </style>
 }

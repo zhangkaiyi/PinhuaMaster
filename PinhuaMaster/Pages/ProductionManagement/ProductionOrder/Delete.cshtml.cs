@@ -32,6 +32,8 @@ namespace PinhuaMaster.Pages.ProductionManagement.ProductionOrder
             _pinhuaContext.生产单.RemoveRange(b);
             var c = _pinhuaContext.生产单d.Where(x => x.ExcelServerRcid == rcId);
             _pinhuaContext.生产单d.RemoveRange(c);
+            var d = _pinhuaContext.EsCasePic.Where(x => x.RcId == rcId);
+            _pinhuaContext.EsCasePic.RemoveRange(d);
             _pinhuaContext.SaveChanges();
             return RedirectToPage("Index");
         }

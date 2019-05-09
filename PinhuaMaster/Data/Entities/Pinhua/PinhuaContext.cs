@@ -7208,6 +7208,10 @@ namespace PinhuaMaster.Data.Entities.Pinhua
 
                 entity.Property(e => e.图片).HasMaxLength(20);
 
+                entity.Property(e => e.图片name).HasMaxLength(50);
+
+                entity.Property(e => e.图片type).HasMaxLength(50);
+
                 entity.Property(e => e.宽).HasColumnType("decimal(20, 3)");
 
                 entity.Property(e => e.平方数).HasColumnType("decimal(20, 3)");

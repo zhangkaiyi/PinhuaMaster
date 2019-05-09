@@ -91,6 +91,8 @@ namespace PinhuaMaster.Pages.ProductionManagement.ProductionOrder
                         是否拉丝 = d.是否拉丝,
                         是否开槽 = d.是否开槽,
                         是否油漆 = d.是否油漆,
+                        图片name = d.图片name,
+                        图片type = d.图片type,
                     };
                     if (!string.IsNullOrEmpty(d.图片base64))   // base64非空，插入图片
                     {
@@ -101,7 +103,7 @@ namespace PinhuaMaster.Pages.ProductionManagement.ProductionOrder
                             RcId = Rcid,
                             PicNo = picNo,
                             Img = Convert.FromBase64String(newBase64),
-                            FileType = ".jpg",
+                            FileType = string.IsNullOrEmpty(d.图片name) ? ".jpg" : d.图片name.Substring(d.图片name.LastIndexOf(".")),
                             RtfId = 2573,
                             Sh = 2,
                             R = 21,
@@ -120,7 +122,6 @@ namespace PinhuaMaster.Pages.ProductionManagement.ProductionOrder
                 }
                 _pinhuaContext.EsRepCase.Add(repCase);
                 _pinhuaContext.生产单.Add(main);
-                //_pinhuaContext.生产单d.AddRange(details);
                 _pinhuaContext.SaveChanges();
 
                 return RedirectToPage("Index");

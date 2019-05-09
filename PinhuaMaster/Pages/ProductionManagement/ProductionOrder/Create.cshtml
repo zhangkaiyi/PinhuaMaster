@@ -10,10 +10,10 @@
 }
 @if (ModelState.Count > 0)
 {
-    <div class="alert alert-danger">
-        <h4><i class="icon fa fa-warning"></i> 提示</h4>
-        <div asp-validation-summary="All"></div>
-    </div>
+<div class="alert alert-danger">
+    <h4><i class="icon fa fa-warning"></i> 提示</h4>
+    <div asp-validation-summary="All"></div>
+</div>
 }
 <form method="post" enctype="multipart/form-data" id="vueScope">
     <div class="box box-solid">
@@ -111,6 +111,7 @@
                                     <th class="" style="min-width:80px;">开槽</th>
                                     <th class="" style="min-width:80px;">油漆</th>
                                     <th class="" style="min-width:80px;">其他</th>
+                                    <th class="" style="min-width:80px;">图片</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -131,9 +132,10 @@
                                     <td>{{ item.油漆要求 }}<input :name="buildName(index,'油漆要求')" type="hidden" v-bind:value="item.油漆要求" /></td>
                                     <td>{{ item.其他要求 }}<input :name="buildName(index,'其他要求')" type="hidden" v-bind:value="item.其他要求" /></td>
                                     <td>
-                                        <input type="file" accept="image/*" />
-                                        <input type="hidden" :name="buildName(index,'图片base64')" />
-                                        <img />
+                                        <input type="hidden" :name="buildName(index,'图片base64')" v-bind:value="item.图片base64" />
+                                        <input type="hidden" :name="buildName(index,'图片name')" v-bind:value="item.图片name" />
+                                        <input type="hidden" :name="buildName(index,'图片type')" v-bind:value="item.图片type" />
+                                        <img :src="item.图片base64" style="min-width: 80px;max-width: 80px;height: auto;" />
                                     </td>
 
                                 </tr>
@@ -301,6 +303,22 @@
                             </div>
                         </div>
                     </div>
+                    <div class="form-group has-error">
+                        <label class="control-label col-xs-4 col-md-3"><i class="fa fa-angle-double-right"></i> 图片</label>
+                        <div class="col-xs-8 col-md-9">
+                            <div class="input-group">
+                                <div class="form-control" style="height:120px">
+                                    <img :src="itemCurrent.图片base64" style="width:auto;height:100%" />
+                                </div>
+                                <div class="input-group-btn" style="height:120px">
+                                    <div class="btn btn-danger btn-file btn-flat" style="width:40px;height:100%;vertical-align:middle">
+                                        <i class="fa fa-paperclip"></i>
+                                        <input type="file" class="form-control" v-on:change="previewPic" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
             <div class="modal-footer">
@@ -313,9 +331,14 @@
     </div>
 </form>
 
-<a href="javascript:$('#vueScope').submit();" class="btn btn-default btn-flat"><i class="fa fa-check"></i>&nbsp;填报</a>
+<a href="javascript:$('#vueScope').submit();" class="btn btn-default btn-flat"><i class="fa fa-check"></i>&nbsp;提交</a>
 
 @section Styles{
+    <style>
+        body {
+            font-size: 14px;
+        }
+    </style>
 }
 
 @section Scripts{
@@ -334,24 +357,24 @@
             });
         }
 
-        $(function () {
-            $(document).on(
-                'change',
-                'input[type=file]',
-                function () {
-                    var reader = new FileReader();
-                    var that = this;
-                    reader.onload = function (e) {
-                        //console.log(reader.result);  //或者 e.target.result都是一样的，都是base64码
-                        //console.log($(that).siblings('input[type=text]').prop('id'))
-                        $(that).siblings('input[type=hidden]').val(reader.result)
-                        $(that).siblings('img')[0].src = reader.result
-                    }
-                    reader.readAsDataURL(this.files[0])
+        //$(function () {
+        //    $(document).on(
+        //        'change',
+        //        'input[type=file]',
+        //        function () {
+        //            var reader = new FileReader();
+        //            var that = this;
+        //            reader.onload = function (e) {
+        //                //console.log(reader.result);  //或者 e.target.result都是一样的，都是base64码
+        //                //console.log($(that).siblings('input[type=text]').prop('id'))
+        //                $(that).siblings('input[type=hidden]').val(reader.result)
+        //                $(that).siblings('img')[0].src = reader.result
+        //            }
+        //            reader.readAsDataURL(this.files[0])
 
-                    //filses就是input[type=file]文件列表，files[0]就是第一个文件，这里就是将选择的第一个图片文件转化为base64的码
-                })
-        })
+        //            //filses就是input[type=file]文件列表，files[0]就是第一个文件，这里就是将选择的第一个图片文件转化为base64的码
+        //        })
+        //})
     </script>
 
     <script>
@@ -397,6 +420,22 @@
                         return ""
                     return [item.长, item.宽, item.高].join("*")
                 },
+                previewPic: function ($event) {
+                    var reader = new FileReader();
+                    var that = this;
+                    reader.onload = function (e) {
+                        //console.log(reader.result);  //或者 e.target.result都是一样的，都是base64码
+                        //console.log($(that).siblings('input[type=text]').prop('id'))
+                        //$(that).siblings('input[type=hidden]').val(reader.result)
+                        //$(that).siblings('img')[0].src = reader.result
+                        that.itemCurrent.图片base64 = reader.result
+                    }
+                    if ($event.target.files.length > 0) {
+                        reader.readAsDataURL($event.target.files[0])
+                        this.itemCurrent.图片name = $event.target.files[0].name
+                        this.itemCurrent.图片type = $event.target.files[0].type
+                    }
+                }
             }
         })
     </script>
