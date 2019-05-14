@@ -13,6 +13,7 @@ namespace PinhuaMaster.Pages.BasicInformation.Partner.ViewModel
     public class PartnerDTO
     {
         public string 单位编号 { get; set; }
+        [Required]
         public string 单位名称 { get; set; }
         public string 电话 { get; set; }
         public string 传真 { get; set; }

@@ -26,6 +26,8 @@ namespace PinhuaMaster.Pages.OrderManagement.EasyDelivery
 
         public List<SelectListItem> DeliveryTypes { get; set; } = new List<SelectListItem>();
         public List<SelectListItem> Customers { get; set; } = new List<SelectListItem>();
+        public List<SelectListItem> ContactsSelectList { get; set; } = new List<SelectListItem>();
+        public List<往来单位联系人> ContactsList { get; set; }
 
         [BindProperty]
         public Gi2ViewModel Order { get; set; } = new Gi2ViewModel();
@@ -34,6 +36,8 @@ namespace PinhuaMaster.Pages.OrderManagement.EasyDelivery
         {
             DeliveryTypes = BuildTypes();
             Customers = _pinhuaContext.GetCustomerSelectList();
+            ContactsSelectList = _pinhuaContext.GetContactsSelectList();
+            ContactsList = _pinhuaContext.往来单位联系人.ToList();
 
             Order.Main = _mapper.Map<Gi2Main, Gi2MainDTO>(_pinhuaContext.Gi2Main.AsNoTracking().Where(p => p.DeliveryId == Id).FirstOrDefault());
             Order.Details = _mapper.Map<List<Gi2Details>, List<Gi2DetaislDTO>>(_pinhuaContext.Gi2Details.AsNoTracking().Where(p => p.DeliveryId == Id).ToList());

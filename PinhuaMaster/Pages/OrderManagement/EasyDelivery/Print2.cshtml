@@ -49,7 +49,7 @@
 
             LODOP.PRINT_INIT("分页打印 @(Model.Id)");
             LODOP.SET_PRINT_PAGESIZE(1, '241mm', '150mm');
-            var pageSize = 9;
+            var pageSize = 8;
             //strHtml = document.getElementById(tagId).contentWindow.document.documentElement.innerHTML;
             var $dom = $(document.getElementById(tagId).contentWindow.document.documentElement);
             var count = Math.ceil($dom.find('tbody>tr').length / pageSize);

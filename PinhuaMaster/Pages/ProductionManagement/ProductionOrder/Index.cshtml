@@ -2,16 +2,21 @@
 @model PinhuaMaster.Pages.ProductionManagement.ProductionOrder.IndexModel
 @{
     ViewData["Title"] = "Index";
+    ViewBag.NoContentHeader = true;
 }
 
 <div class="row">
     <div class="col-md-12">
         <div class="box box-solid">
+            <div class="box-header">
+                <i class="fa fa-globe"></i>
+                <h3 class="box-title"> 列表 - 生产订单</h3>
+            </div>
             <div class="box-body">
                 <div id="tableContainer">
                     <div id="toolbar">
                         <div class="btn-group" role="group" aria-label="...">
-                            <a asp-page="Create" class="btn btn-info btn-flat"><i class="fa fa-plus"></i> 新订单</a>
+                            <a asp-page="Create" class="btn btn-default btn-flat"><i class="fa fa-plus"></i> 生产下单</a>
                         </div>
                     </div>
                     <table data-classes="table table-hover text-nowrap"

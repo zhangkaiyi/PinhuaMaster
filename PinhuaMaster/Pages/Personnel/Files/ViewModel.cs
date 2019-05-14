@@ -53,7 +53,7 @@ namespace PinhuaMaster.Pages.Personnel.Files.ViewModel
                 .ForMember(dst => dst.SignedDate, map => map.MapFrom(src => src.登记时间))
                 .ForMember(dst => dst.Name, map => map.MapFrom(src => src.姓名))
                 .ForMember(dst => dst.State, map => map.MapFrom(src => src.状态))
-                .ForMember(dst => dst.Sex, map => map.ResolveUsing((src, dst) => string.IsNullOrEmpty(src.性别) ? "女" : src.性别))
+                .ForMember(dst => dst.Sex, map => map.MapFrom((src, dst) => string.IsNullOrEmpty(src.性别) ? "女" : src.性别))
                 .ForMember(dst => dst.IdentityCard, map => map.MapFrom(src => src.证件号码))
                 .ForMember(dst => dst.BirthDate, map => map.MapFrom(src => src.出生年月))
                 .ForMember(dst => dst.ContactNumber, map => map.MapFrom(src => src.联系电话))
@@ -61,8 +61,8 @@ namespace PinhuaMaster.Pages.Personnel.Files.ViewModel
                 .ForMember(dst => dst.InServiceFrom, map => map.MapFrom(src => src.入职时间))
                 .ForMember(dst => dst.InServiceEnd, map => map.MapFrom(src => src.离职时间))
                 .ForMember(dst => dst.ReasonOfLeave, map => map.MapFrom(src => src.离职或辞退原因))
-                .ForMember(dst => dst.PostId, map => map.ResolveUsing((src, dst) => string.IsNullOrEmpty(src.工作岗位) ? "1" : src.工作岗位))
-                .ForMember(dst => dst.SchemaId, map => map.ResolveUsing((src, dst) => string.IsNullOrEmpty(src.工资方案) ? "1" : src.工资方案))
+                .ForMember(dst => dst.PostId, map => map.MapFrom((src, dst) => string.IsNullOrEmpty(src.工作岗位) ? "1" : src.工作岗位))
+                .ForMember(dst => dst.SchemaId, map => map.MapFrom((src, dst) => string.IsNullOrEmpty(src.工资方案) ? "1" : src.工资方案))
                 .ForMember(dst => dst.ExcelServerRcid, map => map.MapFrom(src => src.ExcelServerRcid))
                 .ForMember(dst => dst.ExcelServerRtid, map => map.MapFrom(src => src.ExcelServerRtid));
 
@@ -81,8 +81,8 @@ namespace PinhuaMaster.Pages.Personnel.Files.ViewModel
                 .ForMember(dst => dst.离职或辞退原因, map => map.MapFrom(src => src.ReasonOfLeave))
                 .ForMember(dst => dst.工作岗位, map => map.MapFrom(src => src.PostId))
                 .ForMember(dst => dst.工资方案, map => map.MapFrom(src => src.SchemaId))
-                .ForMember(dst => dst.ExcelServerRcid, map => map.ResolveUsing((src, dst) => string.IsNullOrEmpty(src.ExcelServerRcid) ? dst.ExcelServerRcid : src.ExcelServerRcid))
-                .ForMember(dst => dst.ExcelServerRtid, map => map.ResolveUsing((src, dst) => string.IsNullOrEmpty(src.ExcelServerRtid) ? dst.ExcelServerRtid : src.ExcelServerRtid));
+                .ForMember(dst => dst.ExcelServerRcid, map => map.MapFrom((src, dst) => string.IsNullOrEmpty(src.ExcelServerRcid) ? dst.ExcelServerRcid : src.ExcelServerRcid))
+                .ForMember(dst => dst.ExcelServerRtid, map => map.MapFrom((src, dst) => string.IsNullOrEmpty(src.ExcelServerRtid) ? dst.ExcelServerRtid : src.ExcelServerRtid));
         }
     }
 

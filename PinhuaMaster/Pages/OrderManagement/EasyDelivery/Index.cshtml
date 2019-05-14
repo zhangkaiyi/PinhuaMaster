@@ -1,12 +1,17 @@
 ﻿@page
 @model PinhuaMaster.Pages.OrderManagement.EasyDelivery.IndexModel
 @{
-    ViewData["Title"] = "简易送货单";
+    ViewData["Title"] = "列表 - 简易送货单";
+    ViewBag.NoContentHeader = true;
 }
 
 <div class="row">
     <div class="col-md-12">
         <div class="box box-solid">
+            <div class="box-header">
+                <i class="fa fa-globe"></i>
+                <h3 class="box-title"> 列表 - 简易送货单</h3>
+            </div>
             <div class="box-body">
                 <div id="tableContainer">
                     <div id="toolbar">
@@ -279,7 +284,7 @@
 @section Scripts{
     <script>
         function browseRecord (value, row) {
-            return '<a href="@(Url.Page("Print2"))/' + row.DeliveryId + '">打印</a> <a href="@(Url.Page("Edit"))/' + row.DeliveryId + '">修改</a>'
+            return '<a href="@(Url.Page("Print"))/' + row.DeliveryId + '">打印</a> <a href="@(Url.Page("Edit"))/' + row.DeliveryId + '">修改</a>'
             //return '<a href="@(Url.Page("Details"))/' + row.DeliveryId + '"><i class="fa fa-search"></i> </a>'
         }
         function deleteRecord (value, row) {

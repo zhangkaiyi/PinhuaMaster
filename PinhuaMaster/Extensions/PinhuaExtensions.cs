@@ -198,6 +198,36 @@ namespace PinhuaMaster.Extensions
         }
 
         /// <summary>
+        /// 获取联系人数据
+        /// </summary>
+        /// <param name="_pinhuaContext"></param>
+        /// <returns></returns>
+        static public List<SelectListItem> GetContactsSelectList(this PinhuaContext _pinhuaContext)
+        {
+            var list = from p in _pinhuaContext.往来单位联系人.ToList()
+                       orderby p.联系人 ascending
+                       select p;
+
+            var selectList = new List<SelectListItem>();
+            selectList.Add(new SelectListItem
+            {
+                Text = "无",
+                Value = "",
+            });
+            foreach (var c in list)
+            {
+                selectList.Add(new SelectListItem
+                {
+                    Text = c.联系人,
+                    Value = c.联系人
+                });
+
+
+            }
+            return selectList;
+        }
+
+        /// <summary>
         /// 获取客户列表的下拉框数据
         /// </summary>
         /// <param name="_pinhuaContext"></param>
@@ -215,8 +245,8 @@ namespace PinhuaMaster.Extensions
 
             groupingCustomers.Add(new SelectListItem
             {
-                Text = "",
-                Value = ""
+                Text = "无",
+                Value = "",
             });
             foreach (var key in groups)
             {

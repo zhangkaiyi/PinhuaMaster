@@ -71,7 +71,7 @@ namespace PinhuaMaster
                 .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddDefaultTokenProviders();
 
-            services.AddAutoMapper();
+            services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
             services.AddMvc()
                 .AddRazorPagesOptions(options =>

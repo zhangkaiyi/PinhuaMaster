@@ -29,11 +29,15 @@ namespace PinhuaMaster.Pages.OrderManagement.EasyDelivery
         public Gi2ViewModel Order { get; set; }
         public List<SelectListItem> DeliveryTypes { get; set; } = new List<SelectListItem>();
         public List<SelectListItem> CustomerSelectList { get; set; } = new List<SelectListItem>();
+        public List<SelectListItem> ContactsSelectList { get; set; } = new List<SelectListItem>();
+        public List<往来单位联系人> ContactsList { get; set; }
 
         public void OnGet()
         {
             DeliveryTypes = BuildTypes();
             CustomerSelectList = _pinhuaContext.GetCustomerSelectList();
+            ContactsSelectList = _pinhuaContext.GetContactsSelectList();
+            ContactsList = _pinhuaContext.往来单位联系人.ToList();
         }
 
         public IActionResult OnPost()
@@ -72,6 +76,7 @@ namespace PinhuaMaster.Pages.OrderManagement.EasyDelivery
                     ModelState.AddModelError("", "出库清单不可为空");
                     DeliveryTypes = BuildTypes();
                     CustomerSelectList = _pinhuaContext.GetCustomerSelectList();
+                    ContactsSelectList = _pinhuaContext.GetContactsSelectList();
                     return Page();
                 }
                 _pinhuaContext.EsRepCase.Add(repCase);
@@ -85,15 +90,44 @@ namespace PinhuaMaster.Pages.OrderManagement.EasyDelivery
             {
                 DeliveryTypes = BuildTypes();
                 CustomerSelectList = _pinhuaContext.GetCustomerSelectList();
+                ContactsSelectList = _pinhuaContext.GetContactsSelectList();
                 return Page();
             }
+        }
+
+        public IActionResult OnGetContactNumber(string name)
+        {
+            var settings = new Newtonsoft.Json.JsonSerializerSettings();
+            //EF Core中默认为驼峰样式序列化处理key
+            //settings.ContractResolver = new CamelCasePropertyNamesContractResolver();
+            //使用默认方式，不更改元数据的key的大小写
+            settings.ContractResolver = new Newtonsoft.Json.Serialization.DefaultContractResolver();
+
+            var contact = _pinhuaContext.往来单位联系人.FirstOrDefault(p => p.联系人 == name) ?? new 往来单位联系人();
+
+            return new JsonResult(contact, settings);
+        }
+
+        public IActionResult OnGetContactsInfo(string Id)
+        {
+            var settings = new Newtonsoft.Json.JsonSerializerSettings();
+            //EF Core中默认为驼峰样式序列化处理key
+            //settings.ContractResolver = new CamelCasePropertyNamesContractResolver();
+            //使用默认方式，不更改元数据的key的大小写
+            settings.ContractResolver = new Newtonsoft.Json.Serialization.DefaultContractResolver();
+
+            var partner = _pinhuaContext.往来单位.FirstOrDefault(p => p.单位编号 == Id) ?? new 往来单位();
+
+            var contacts = _pinhuaContext.往来单位联系人.Where(p => p.ExcelServerRcid == partner.ExcelServerRcid).ToList();
+
+            return new JsonResult(contacts, settings);
         }
 
         private List<SelectListItem> BuildTypes()
         {
             var types = (from p in _pinhuaContext.业务类型.AsNoTracking()
-                        where p.状态 == "Yes" && p.MvP == "GI"
-                        select p).ToList();
+                         where p.状态 == "Yes" && p.MvP == "GI"
+                         select p).ToList();
             var groups = from p in types
                          group p by p.MvP into g
                          select g.Key;

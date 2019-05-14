@@ -183,6 +183,7 @@ namespace PinhuaMaster.Data.Entities.Pinhua
         public virtual DbSet<应付款对账单> 应付款对账单 { get; set; }
         public virtual DbSet<应收款对账单> 应收款对账单 { get; set; }
         public virtual DbSet<往来单位> 往来单位 { get; set; }
+        public virtual DbSet<往来单位联系人> 往来单位联系人 { get; set; }
         public virtual DbSet<打卡登记> 打卡登记 { get; set; }
         public virtual DbSet<打卡记录> 打卡记录 { get; set; }
         public virtual DbSet<收款单> 收款单 { get; set; }
@@ -6544,6 +6545,51 @@ namespace PinhuaMaster.Data.Entities.Pinhua
                 entity.Property(e => e.电话).HasMaxLength(20);
 
                 entity.Property(e => e.登记日期).HasColumnType("datetime");
+            });
+
+            modelBuilder.Entity<往来单位联系人>(entity =>
+            {
+                entity.HasKey(e => e.Idx)
+                    .HasName("pk_462");
+
+                entity.ToTable("往来单位_联系人");
+
+                entity.HasIndex(e => new { e.ExcelServerRcid, e.ExcelServerWiid })
+                    .HasName("idx1");
+
+                entity.Property(e => e.ExcelServerChg).HasColumnName("ExcelServerCHG");
+
+                entity.Property(e => e.ExcelServerCn).HasColumnName("ExcelServerCN");
+
+                entity.Property(e => e.ExcelServerRc1)
+                    .HasColumnName("ExcelServerRC1")
+                    .HasMaxLength(20);
+
+                entity.Property(e => e.ExcelServerRcid)
+                    .HasColumnName("ExcelServerRCID")
+                    .HasMaxLength(20);
+
+                entity.Property(e => e.ExcelServerRn).HasColumnName("ExcelServerRN");
+
+                entity.Property(e => e.ExcelServerRtid)
+                    .HasColumnName("ExcelServerRTID")
+                    .HasMaxLength(20);
+
+                entity.Property(e => e.ExcelServerWiid)
+                    .HasColumnName("ExcelServerWIID")
+                    .HasMaxLength(20);
+
+                entity.Property(e => e.传真).HasMaxLength(100);
+
+                entity.Property(e => e.手机).HasMaxLength(100);
+
+                entity.Property(e => e.电话).HasMaxLength(100);
+
+                entity.Property(e => e.职务).HasMaxLength(100);
+
+                entity.Property(e => e.联系人).HasMaxLength(100);
+
+                entity.Property(e => e.邮箱).HasMaxLength(100);
             });
 
             modelBuilder.Entity<打卡登记>(entity =>

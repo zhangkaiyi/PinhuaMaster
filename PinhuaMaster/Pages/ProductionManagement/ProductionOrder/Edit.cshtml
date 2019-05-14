@@ -4,12 +4,14 @@
 @using Newtonsoft.Json
 @{
     ViewData["Title"] = "Edit";
+    ViewBag.NoContentHeader = true;
 }
 
 <form method="post" enctype="multipart/form-data" id="vueScope">
     <div class="box box-solid">
         <div class="box-header">
-            <div class="box-title">修改 - 生产订单</div>
+            <i class="fa fa-globe"></i>
+            <h3 class="box-title"> 修改 - 生产订单</h3>
         </div>
         <div class="box-body">
             <div class="row">
@@ -324,7 +326,7 @@
                                 <div class="input-group-btn">
                                     <div class="btn btn-danger btn-file btn-flat no-padding" style="width:40px;height:120px;line-height:120px;">
                                         <i class="fa fa-paperclip" style=""></i>
-                                        <input type="file" class="form-control" v-on:change="previewPic" />
+                                        <input type="file" class="form-control" v-on:change="previewPic" accept="image/*" />
                                     </div>
                                 </div>
                             </div>
@@ -357,13 +359,13 @@
         function layerItemDetail() {
             layer.open({
                 type: 1,
-                area: $(window).width() < 992 ? ['98%', 'auto'] : ['800px', 'auto'],
+                area: $(window).width() < 992 ? ['95%', ($(window).height()*0.9).toString()+'px'] : ['800px', 'auto'],
                 content: $('#ItemDetail'),
                 shadeClose: true,
                 isOutAnim: false,
                 fixed: false,
                 //closeBtn: false,
-                //scrollbar: false,
+                scrollbar: false,
                 //title: false,
             });
         }

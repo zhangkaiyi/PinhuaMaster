@@ -10,29 +10,35 @@
         <div class="box box-solid">
             <div class="box-header">
                 <i class="fa fa-globe"></i>
-                <h3 class="box-title"> 生产订单</h3>
+                <h3 class="box-title"> 查看 - 生产订单</h3>
                 <div class="pull-right box-tools">
                     <!-- button with a dropdown -->
                     @if (User.Identity.IsAuthenticated)
                     {
-                    <div class="btn-group">
-                        <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-                            <i class="fa fa-bars"></i>
-                        </button>
-                        <ul class="dropdown-menu pull-right" role="menu">
-                            <li>
-                                <a href="@(Url.Page("Edit", new {Id = Model.Order.M?.单号}))">
-                                    <i class="fa fa-edit fa-fw"></i> 修改
-                                </a>
-                            </li>
-                            <li class="divider"></li>
-                            <li>
-                                <a href="@(Url.Page("Delete", new { Id = Model?.Order?.M?.单号 }))">
-                                    <i class="fa fa-times fa-fw"></i> 删除
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
+                            <a href="@(Url.Page("Edit", new {Id = Model.Order.M?.单号}))" class="btn btn-default">
+                                <i class="fa fa-edit fa-fw"></i> 修改
+                            </a>
+                            <a href="@(Url.Page("Delete", new { Id = Model?.Order?.M?.单号 }))" class="btn btn-default">
+                                <i class="fa fa-times fa-fw"></i> 删除
+                            </a>
+                        @*<div class="btn-group">
+                            <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                                <i class="fa fa-bars"></i>
+                            </button>
+                            <ul class="dropdown-menu pull-right" role="menu">
+                                <li>
+                                    <a href="@(Url.Page("Edit", new {Id = Model.Order.M?.单号}))">
+                                        <i class="fa fa-edit fa-fw"></i> 修改
+                                    </a>
+                                </li>
+                                <li class="divider"></li>
+                                <li>
+                                    <a href="@(Url.Page("Delete", new { Id = Model?.Order?.M?.单号 }))">
+                                        <i class="fa fa-times fa-fw"></i> 删除
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>*@
                     }
                 </div>
                 @*<div class="box-tools pull-right"><a href="@(Url.Page("Edit", new {Id = Model.Order.M?.单号}))" class="btn btn-primary"><i class="fa fa-edit"></i> 修改</a></div>*@
