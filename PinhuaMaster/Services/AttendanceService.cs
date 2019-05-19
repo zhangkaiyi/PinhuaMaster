@@ -102,25 +102,25 @@ namespace PinhuaMaster.Services
                                 日期 = g.Key,
                                 Details = g.Select(a => a)
                             };
-                foreach(var detail in group)
+                foreach (var detail in group)
                 {
                     var a = new List<AttendanceServiceDayDetail>();
-                    foreach(var x in detail.Details)
+                    foreach (var x in detail.Details)
                     {
                         a.Add(new AttendanceServiceDayDetail
                         {
-                            RangeId=x.班段,
-                            Range=x.班段描述,
-                            State=x.考勤结果,
-                            Time1Fix=x.上班,
-                            Time2Fix=x.下班,
-                            Hours=x.工时
+                            RangeId = x.班段,
+                            Range = x.班段描述,
+                            State = x.考勤结果,
+                            Time1Fix = x.上班,
+                            Time2Fix = x.下班,
+                            Hours = x.工时
                         });
                     }
                     dayResults.Add(new AttendanceServiceDayResult
                     {
-                        Date=detail.日期.Value,
-                        Details=a.OrderBy(d=>d.RangeId).ToList(),
+                        Date = detail.日期.Value,
+                        Details = a.OrderBy(d => d.RangeId).ToList(),
                     });
                 }
                 var person = new AttendanceServicePerson
@@ -136,7 +136,7 @@ namespace PinhuaMaster.Services
                     TimesOfLate = result.迟到,
                     TimesOfLeaveEarly = result.早退,
                     TotalHours = result.总工时,
-                    Results=dayResults.OrderBy(r=>r.Date).ToList()
+                    Results = dayResults.OrderBy(r => r.Date).ToList()
                 };
                 dto.PersonList.Add(person);
             }
@@ -195,6 +195,15 @@ namespace PinhuaMaster.Services
 
                     foreach (var range in rule.Ranges)
                     {
+                        if (_pinhuaContext.拖班登记.AsNoTracking().Any(p => p.人员编号 == person.Id && p.时间.Value.Date == result.Date)) // 计算延班情况
+                        {
+                            if (range.RangeId == 2)
+                                continue;
+                            if (range.RangeId == 1)
+                            {
+                                range.Ending = new DateTime(1900, 1, 1, 21, 0, 0);
+                            }
+                        }
                         (var workfrom, var workto) = 指定日期的班段起止(range, new DateTime(Y.Value, M.Value, D));
 
                         (var clockinfrom, var clockinto) = 指定日期的签到起止(range, new DateTime(Y.Value, M.Value, D));
@@ -222,7 +231,6 @@ namespace PinhuaMaster.Services
                             Time2 = checkout,
                             Time2Fix = checkout > workto ? (range.延迟算加班 == "是" ? checkout : workto) : checkout,
                         };
-
                         if (checkin.HasValue && checkout.HasValue)
                         {
                             if (range.RangeId == 2)
@@ -285,6 +293,10 @@ namespace PinhuaMaster.Services
                         if (holidays.Where(d => result.Date.IsBetween(d.期初, d.期末 ?? d.期初)).Count() > 0)
                         {
                             detail.State = "放假";
+                        }
+                        if (_pinhuaContext.拖班登记.AsNoTracking().Any(p => p.人员编号 == person.Id && p.时间.Value.Date == result.Date)) // 计算延班情况
+                        {
+                            detail.State = "延班";
                         }
                     }
                     result.DayHours = result.Details.Sum(p => p.Hours);

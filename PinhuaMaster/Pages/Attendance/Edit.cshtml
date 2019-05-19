@@ -6,6 +6,9 @@
     ViewData["Title"] = "Edit";
     var Y = PageContext.RouteData.Values["Y"];
     var M = PageContext.RouteData.Values["M"];
+    var rcid = pinhuaContext.AttendanceReport.AsNoTracking().FirstOrDefault(r => r.Y == int.Parse(PageContext.RouteData.Values["Y"].ToString()) && r.M == int.Parse(PageContext.RouteData.Values["M"].ToString())).ExcelServerRcid;
+    var refreshUrl = Url.Page("Create", "Ajax", new { Y = Y, M = M });
+    var getUrl = Url.Page("Edit", "AjaxExsitedAttendanceData", new { Y = PageContext.RouteData.Values["Y"], M = PageContext.RouteData.Values["M"] });
 }
 
 <div class="row">
@@ -49,11 +52,11 @@
                     </div>
                     <div class="form-group">
                         <div class="col-xs-12">
-                            <button class="form-control btn btn-default" onclick="toDelete('@pinhuaContext.AttendanceReport.AsNoTracking().FirstOrDefault(r=>r.Y==int.Parse(PageContext.RouteData.Values["Y"].ToString())&&r.M==int.Parse(PageContext.RouteData.Values["M"].ToString())).ExcelServerRcid')"><i class="fa fa-remove"></i> 删除</button>
+                            <button class="form-control btn btn-default" onclick="toDelete('@rcid')"><i class="fa fa-remove"></i> 删除</button>
                             <input type="hidden" id="hiddenYMList" value="" />
                         </div>
                     </div>
-                    <input type="hidden" value="@Url.Page("Create", "Ajax", new { Y=Y, M=M})" id="refreshUrl" />
+                    <input type="hidden" value="@(refreshUrl)" id="refreshUrl" />
                 </div>
             </div>
         </div>
@@ -64,7 +67,7 @@
                 <table data-toggle="table"
                        class="table table-bordered table-striped table-hover"
                        data-response-handler="responseHandler"
-                       data-url="@Url.Page("Edit","AjaxExsitedAttendanceData", new { Y=PageContext.RouteData.Values["Y"], M=PageContext.RouteData.Values["M"]})"
+                       data-url="@getUrl"
                        id="computedTable">
                     <thead>
                         <tr>
@@ -93,7 +96,7 @@
 <div class="modal" id="detailsModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
-            <div class="modal-header">
+            <div class="modal-header hidden">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                 <h4 class="modal-title" id="detailsTitle">Modal title</h4>
             </div>
@@ -104,6 +107,7 @@
                        id="detailsTable">
                     <thead>
                         <tr>
+                            <th data-field="Name">姓名</th>
                             <th data-field="Date">日期</th>
                             <th data-field="Range0" data-visible="false">班段</th>
                             <th data-field="State0">状态</th>
@@ -123,8 +127,8 @@
 
             </div>
             @*<div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-            </div>*@
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>*@
 
         </div>
     </div>
@@ -143,7 +147,7 @@
                 return '<span class="text-success">否</span>'
         }
 
-        getAttendance = function () {
+        function getAttendance() {
             //var refreshY = $('#refreshY').val()
             //var refreshM = $('#refreshM').val()
             //var refreshUrl = '/Attendance/Create?Handler=Ajax&Y=' + refreshY + '&M=' + refreshM
@@ -152,7 +156,7 @@
             $table.bootstrapTable('refresh', { url: refreshUrl });
         }
 
-        toDelete = function (rcid) {
+        function toDelete(rcid) {
             if (confirm('确定删除这条记录吗？')) {
                 $('#toDeleteRcid').val(rcid);
                 $('#toDeleteForm').submit();
@@ -183,6 +187,7 @@
                     var newResultList = []
                     for (var result of personList[i].Results) {
                         var newResult = {}
+                        newResult["Name"] = personList[i].Name
                         newResult["Date"] = result.Date
                         newResult["DayHours"] = result.DayHours
                         for (var z in result.Details) {

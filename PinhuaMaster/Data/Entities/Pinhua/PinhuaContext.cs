@@ -186,6 +186,7 @@ namespace PinhuaMaster.Data.Entities.Pinhua
         public virtual DbSet<往来单位联系人> 往来单位联系人 { get; set; }
         public virtual DbSet<打卡登记> 打卡登记 { get; set; }
         public virtual DbSet<打卡记录> 打卡记录 { get; set; }
+        public virtual DbSet<拖班登记> 拖班登记 { get; set; }
         public virtual DbSet<收款单> 收款单 { get; set; }
         public virtual DbSet<收货> 收货 { get; set; }
         public virtual DbSet<收货D> 收货D { get; set; }
@@ -6672,6 +6673,53 @@ namespace PinhuaMaster.Data.Entities.Pinhua
                 entity.Property(e => e.ExcelServerWiid)
                     .HasColumnName("ExcelServerWIID")
                     .HasMaxLength(20);
+            });
+
+            modelBuilder.Entity<拖班登记>(entity =>
+            {
+                entity.HasKey(e => e.Pk)
+                    .HasName("pk_463");
+
+                entity.HasIndex(e => new { e.ExcelServerRcid, e.ExcelServerWiid })
+                    .HasName("idx1");
+
+                entity.Property(e => e.Pk).HasColumnName("pk");
+
+                entity.Property(e => e.ExcelServerChg).HasColumnName("ExcelServerCHG");
+
+                entity.Property(e => e.ExcelServerCn).HasColumnName("ExcelServerCN");
+
+                entity.Property(e => e.ExcelServerRc1)
+                    .HasColumnName("ExcelServerRC1")
+                    .HasMaxLength(20);
+
+                entity.Property(e => e.ExcelServerRcid)
+                    .HasColumnName("ExcelServerRCID")
+                    .HasMaxLength(20);
+
+                entity.Property(e => e.ExcelServerRn).HasColumnName("ExcelServerRN");
+
+                entity.Property(e => e.ExcelServerRtid)
+                    .HasColumnName("ExcelServerRTID")
+                    .HasMaxLength(20);
+
+                entity.Property(e => e.ExcelServerWiid)
+                    .HasColumnName("ExcelServerWIID")
+                    .HasMaxLength(20);
+
+                entity.Property(e => e.人员编号).HasMaxLength(20);
+
+                entity.Property(e => e.姓名).HasMaxLength(20);
+
+                entity.Property(e => e.审核人).HasMaxLength(20);
+
+                entity.Property(e => e.审核时间).HasColumnType("datetime");
+
+                entity.Property(e => e.审核状态).HasMaxLength(20);
+
+                entity.Property(e => e.延班原因).HasMaxLength(20);
+
+                entity.Property(e => e.时间).HasColumnType("datetime");
             });
 
             modelBuilder.Entity<收款单>(entity =>
